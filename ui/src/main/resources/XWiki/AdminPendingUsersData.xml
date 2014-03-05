@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
+<xwikidoc>
+  <web>XWiki</web>
+  <name>AdminPendingUsersData</name>
+  <language/>
+  <defaultLanguage/>
+  <translation>0</translation>
+  <parent>XWiki.AdminSheet</parent>
+  <creator>xwiki:XWiki.Admin</creator>
+  <author>xwiki:XWiki.Admin</author>
+  <customClass/>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <creationDate>1393628431000</creationDate>
+  <date>1393883371000</date>
+  <contentUpdateDate>1393883371000</contentUpdateDate>
+  <version>1.1</version>
+  <title>AdminPendingUsersData</title>
+  <defaultTemplate/>
+  <validationScript/>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>xwiki/2.0</syntaxId>
+  <hidden>true</hidden>
+  <content>{{velocity}}
+$response.setContentType("application/x-json")
+##$response.setContentType("text")
+#set ($offset = $mathtool.toInteger($request.get('offset')))
+## offset starts from 0 in velocity and 1 in javascript
+#set ($off = $offset - 1)
+#set ($limit = $mathtool.toInteger($request.get('limit')))
+
+#set( $rm = $xwiki.rightsmanager.usersApi )
+
+#### get all the request parameters which are filters
+#set( $params = $request.getParameterMap() )
+#set( $keys = $params.keySet() )
+#set( $defaultKeys = ["xpage", "offset", "limit", "wiki", "reqNo", "sort", "dir", 'outputSyntax'] )
+#set( $docProps = ["fullName", "name"] )
+#set ($filterMap = {})
+#set ($orderList = [])
+
+#foreach( $key in $keys )
+  #if(! $defaultKeys.contains( $key ) )
+     ## build the filters map
+     #foreach( $i in $params.get( $key ) ) #set( $value = $i ) #end
+     #if( $docProps.contains( $key ))
+        #set ($arr = [])
+        #set( $discard = $arr.add( null ) ) ## this may be variable...
+        #set( $discard = $arr.add( "$value" ) )
+        #set( $discard = $filterMap.put("$key", $arr))
+        #set( $discard = $orderList.add( "$key" ))
+     #else
+        #set ($arr = [])
+        #set( $discard = $arr.add( "StringProperty" ) ) ## this may be variable...
+        #set( $discard = $arr.add( "$value" ) )
+        #set( $discard = $filterMap.put("$key", $arr ))
+        #set ($arr2 = [])
+        #set( $discard = $arr2.add( "$key" ) )
+        #set( $discard = $arr2.add( "StringProperty" ) )
+        #set( $discard = $orderList.add( $arr2 ))
+     #end
+  #end
+#end
+
+#if($orderList.size() == 0)
+#set($disc = $orderList.add("name")) ## initially fiter by "name" !!!
+#end
+
+
+#foreach( $i in $params.get( "wiki" ) ) #set( $value = $i ) #end
+#if( $value == "local" )
+  #set( $users = $rm.getAllMatchedLocalUsers( $filterMap, $limit, $off, $orderList ) )
+  #set( $countUsers = $rm.countAllMatchedLocalUsers( $filterMap ) )
+#elseif( $value == "global" )
+  #set( $users = $rm.getAllMatchedGlobalUsers( $filterMap, $limit, $off, $orderList ) )
+  #set( $countUsers = $rm.countAllMatchedGlobalUsers( $filterMap ) )
+#else
+  ## get both local and global users
+  #set( $users = $rm.getAllMatchedUsers( $filterMap, $limit, $off, $orderList ) )
+  #set( $countUsers = $rm.countAllMatchedUsers( $filterMap ) )
+#end
+
+## ================
+## Custom modifications. Loop over default results and check if active. Put into a new list.
+## Makes no modifications to old code, however, it changes some values before it is passed to JSON generation.
+## Worst choice from the perspective of performance.
+## ================
+#set ($nonActiveUsers = [])
+#set ($countUsers = 0)
+#foreach ($user in $users)
+  #set ($active = $user.getObject('XWiki.XWikiUsers').getProperty('active').getValue())
+  #if ($active == 0)
+    #set ($suppress = $nonActiveUsers.add($user))
+    #set ($countUsers = $countUsers + 1)
+  #end
+#end
+## json starts
+{
+"totalrows": $countUsers,
+"returnedrows": #if($countUsers &lt; $limit) $countUsers #else $limit #end,
+"offset": $offset,
+"reqNo": $mathtool.toInteger($request.reqNo),
+"rows": [
+#foreach( $user in $nonActiveUsers )
+  #if($xcontext.user == $user.fullName)
+    #set($grayed = true)
+   #else
+    #set($grayed = false)
+  #end
+   #set($wikiname = $user.getWiki())
+   #if($wikiname != "xwiki" || $wikiname == $xcontext.database) #set($wikiname = "local") #end
+   #if( $velocityCount &gt; 1 ) , #end
+   {"username" : "$!{escapetool.javascript($user.name)}",
+    "fullname" : "$!{escapetool.javascript($user.fullName)}",
+    "wikiname" : "$!{escapetool.javascript($wikiname)}",
+ 
+    "firstname" : "$!{escapetool.javascript($user.getObject('XWiki.XWikiUsers').getProperty('first_name').getValue())}",
+    "lastname" : "$!{escapetool.javascript($user.getObject('XWiki.XWikiUsers').getProperty('last_name').getValue())}",
+    "userurl" : "$xwiki.getURL($user.fullName)",
+    "usersaveurl" : "$user.getURL("save")",
+    "userinlineurl" : "$user.getURL("edit", "xpage=edituser")",
+    "docurl" : "$xwiki.getURL("XWiki.XWikiPreferences", "admin", "section=PendingUsers")",
+    "grayed" : "$grayed"
+  }
+#end
+]}
+
+### end of json
+{{/velocity}}</content>
+</xwikidoc>

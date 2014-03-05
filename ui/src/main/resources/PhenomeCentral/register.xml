@@ -31,9 +31,9 @@
   <author>xwiki:XWiki.Admin</author>
   <customClass/>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
-  <creationDate>1393561294000</creationDate>
-  <date>1393589784000</date>
-  <contentUpdateDate>1393589784000</contentUpdateDate>
+  <creationDate>1393954175000</creationDate>
+  <date>1394054149000</date>
+  <contentUpdateDate>1394054149000</contentUpdateDate>
   <version>1.1</version>
   <title>register</title>
   <defaultTemplate/>
@@ -127,6 +127,7 @@
   </object>
   <content>{{velocity output="false"}}
 ## #if ($isGuest)
+$xwiki.jsfx.use('uicomponents/widgets/validation/uniquenessvalidation.js')##
 $xwiki.ssx.use('data.WebHome')##
 $xwiki.jsx.use('data.WebHome')##
 $xwiki.ssx.use('PhenomeCentral.logo')##
@@ -165,7 +166,8 @@ $xwiki.jsfx.use('uicomponents/widgets/validation/livevalidation_prototype.js')##
       'comments' : $!{request.comments},
       'escapetool' : $escapetool
     })
-    $xwiki.mailsender.sendMessageFromTemplate("PhenomeCentral &lt;noreply@${request.serverName}&gt;", 'support@phenotips.org', ${NULL}, ${NULL}, $context.language, 'PhenomeCentral.RequestAccountMailForAdmins', {
+    ##support@phenotips.org
+    $xwiki.mailsender.sendMessageFromTemplate("PhenomeCentral &lt;noreply@${request.serverName}&gt;", 'andreyploskov@gmail.com', ${NULL}, ${NULL}, $context.language, 'PhenomeCentral.RequestAccountMailForAdmins', {
       'firstName' : $!{request.firstName},
       'lastName' : $!{request.lastName},
       'affiliation' : $!{request.affiliation},
@@ -175,7 +177,26 @@ $xwiki.jsfx.use('uicomponents/widgets/validation/livevalidation_prototype.js')##
       'comments' : $!{request.comments},
       'escapetool' : $escapetool
     })
-    #set ($success = true)
+    
+    ## Creating an inactive user.
+    ## --------------------------
+    #set ($newUserDoc = $xwiki.getDocument("XWiki.$!{request.username}"))
+    #if ($newUserDoc.isNew())
+      #set ($newUser = $newUserDoc.newObject("XWiki.XWikiUsers"))
+      $newUser.set("first_name", $!{request.firstName})
+      $newUser.set("last_name", $!{request.lastName})
+      $newUser.set("email", $!{request.email})
+      $newUser.set("company", $!{request.affiliation})
+      $newUser.set("comment", "$!{request.referral}\n$!{request.comments}")
+      $newUser.set("active", 0)
+    
+      $newUserDoc.save()
+      $xwiki.save()
+      #set ($success = true)
+    #else
+      #set ($userExists = true)
+      #set ($success = false)
+    #end
   #end
 #end
 ## #end
@@ -193,12 +214,16 @@ $xwiki.jsfx.use('uicomponents/widgets/validation/livevalidation_prototype.js')##
   #elseif ("$!{request.get('request')}" == '1')
     #if ($missingConfirmation)
       #error('PhenomeCentral is targeted to clinicians and scientists working in the rare disorder community. You should not request an account on PhenomeCentral unless you can confirm that you are a doctor, clinical geneticist or scientist working with patients affected by rare disorders.')
+    #elseif ($userExists)
+      #error('User already exists.')
     #else
       #error('Please provide all the required information.')
     #end
   #end
 &lt;input type="hidden" name="request" value="1"/&gt;
 &lt;dl&gt;
+&lt;dt class="username"&gt;&lt;label for="username" class="required"&gt;Username&lt;/label&gt;&lt;/dt&gt;
+&lt;dd class="username"&gt;&lt;input type="text" name="username" id="username" placeholder="Username" class="required check-unique" value="$!{escapetool.xml($request.username)}"/&gt;&lt;/dd&gt;
 &lt;dt class="firstName"&gt;&lt;label for="firstName" class="required"&gt;First name&lt;/label&gt;&lt;/dt&gt;
 &lt;dd class="firstName"&gt;&lt;input type="text" name="firstName" id="firstName" placeholder="First name" class="required" value="$!{escapetool.xml($request.firstName)}"/&gt;&lt;/dd&gt;
 &lt;dt class="lastName"&gt;&lt;label for="lastName" class="required"&gt;Last name&lt;/label&gt;&lt;/dt&gt;
