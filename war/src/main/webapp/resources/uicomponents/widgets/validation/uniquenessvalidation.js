@@ -22,8 +22,6 @@
  * This file can be easily modified for use with different parameters in different circumstances. However, since it is
  * being used in a single place (for now), it is left fairly hardcoded.
  * However, even in this state, it is fairly flexible.
- *
- * The bottom of the file contains the configurations that are run upon the inclusion of this file.
  */
 var XWiki = (function(XWiki) {
     // Start XWiki augmentation
