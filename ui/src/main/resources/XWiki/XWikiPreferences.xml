@@ -2747,7 +2747,8 @@ Subject: Your account request on ${wikiname}
 
 Hello ${xwiki.getUserName("XWiki.$xwikiname", false)},
 
-You have requested an account on ${wikiname}. It is now being reviewed. You will receive an email upon approval.
+Thank you for registering on ${wikiname}. We have received your request and we will review it shortly.
+You will receive an account activation email once your request is approved.
 
 Best wishes,
 The ${wikiname} Team
