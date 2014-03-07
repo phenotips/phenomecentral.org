@@ -1436,9 +1436,9 @@
     <name>XWiki.XWikiPreferences</name>
     <number>2</number>
     <className>XWiki.XWikiGlobalRights</className>
-    <guid>f4a7b65e-fc29-4ec7-9494-84ca6988f2f4</guid>
+    <guid>af358c64-bc7f-4e2f-9fd2-07e8f910d656</guid>
     <property>
-      <allow>0</allow>
+      <allow>1</allow>
     </property>
     <property>
       <levels>register</levels>
@@ -2586,6 +2586,9 @@
       <admin_email/>
     </property>
     <property>
+      <auth_active_check>1</auth_active_check>
+    </property>
+    <property>
       <authenticate_edit>0</authenticate_edit>
     </property>
     <property>
@@ -2734,17 +2737,21 @@ $xwiki.ssx.use($xwiki.getSpacePreference('colorTheme'))</meta>
       <upload_maxsize>33554432</upload_maxsize>
     </property>
     <property>
+      <use_email_verification>1</use_email_verification>
+    </property>
+    <property>
       <validation_email_content>#set ($wikiname = $request.serverName)
 #set ($host = ${request.getRequestURL()})
 #set ($host = ${host.substring(0, ${host.indexOf('/', ${mathtool.add(${host.indexOf('//')}, 2)})})})
-Subject: Validate your account on ${wikiname}
+Subject: Your account request on ${wikiname}
 
 Hello ${xwiki.getUserName("XWiki.$xwikiname", false)},
 
-This email address was used to register a new account on ${wikiname}. If you did not make the request, please ignore this message.
+You have requested an account on ${wikiname}. It is now being reviewed. You will receive an email upon approval.
 
-In order to activate your account, please follow this link:
-${host}${xwiki.getURL('XWiki.AccountValidation', 'view', "validkey=${validkey}&amp;xwikiname=${xwikiname}")}</validation_email_content>
+Best wishes,
+The ${wikiname} Team
+##${host}${xwiki.getURL('XWiki.AccountValidation', 'view', "validkey=${validkey}&amp;xwikiname=${xwikiname}")}</validation_email_content>
     </property>
     <property>
       <version>&lt;a href="http://phenotips.org"&gt;PhenoTips&lt;/a&gt; version $!{services.distribution.distributionExtension.id.version}</version>

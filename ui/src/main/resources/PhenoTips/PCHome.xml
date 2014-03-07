@@ -13675,7 +13675,7 @@ $xwiki.ssx.use('PhenoTips.PCHome')##
   &lt;div class="title-container half-width"&gt;
     &lt;h1&gt;PhenomeCentral&lt;/h1&gt;
     &lt;p&gt;An integrated portal for sharing and searching patient phenotype data for rare genetic disorders.&lt;/p&gt;
-    &lt;div class="buttons"&gt;&lt;a class="user-action sign-up" id="launch-register" href="$xwiki.getURL('PhenomeCentral.register')"&gt;Sign up&lt;/a&gt; &lt;a class="user-action login" id="launch-login" href="$xwiki.getURL('PhenomeCentral.login')"&gt;Login&lt;/a&gt;&lt;/div&gt;
+    &lt;div class="buttons"&gt;&lt;a class="user-action sign-up" id="launch-register" href="$xwiki.getURL('PhenomeCentral.', 'register')"&gt;Sign up&lt;/a&gt; &lt;a class="user-action login" id="launch-login" href="$xwiki.getURL('PhenomeCentral.login')"&gt;Login&lt;/a&gt;&lt;/div&gt;
   &lt;/div&gt;
   &lt;div class="clearfloats"&gt;&lt;/div&gt;
 &lt;/div&gt;

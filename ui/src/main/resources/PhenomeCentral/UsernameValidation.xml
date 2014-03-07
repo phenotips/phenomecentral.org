@@ -122,12 +122,12 @@
       <levels>view</levels>
     </property>
     <property>
-      <users/>
+      <users>XWikiGuest.XWikiGuest</users>
     </property>
   </object>
   <content>
 {{velocity}}
-#if ($xwiki.getDocument("XWiki.$!{request.eid}").isNew())
+#if ($xwiki.getDocumentAsAuthor("xwiki:XWiki.$!{request.eid}").isNew())
   $response.setStatus(404)
 #else
   $response.setStatus(409)
