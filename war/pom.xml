@@ -130,7 +130,7 @@
                 <xwikiDbDialect>org.hibernate.dialect.HSQLDialect</xwikiDbDialect>
                 <xwikiDbHbmXwiki>xwiki.hbm.xml</xwikiDbHbmXwiki>
                 <xwikiDbHbmFeeds>feeds.hbm.xml</xwikiDbHbmFeeds>
-                <xwikiDbHbmCommonExtraMappings>activitystream.hbm.xml,instance.hbm.xml</xwikiDbHbmCommonExtraMappings>
+                <xwikiDbHbmCommonExtraMappings>activitystream.hbm.xml</xwikiDbHbmCommonExtraMappings>
                 <xwikiCfgPlugins>\
   com.xpn.xwiki.monitor.api.MonitorPlugin,\
   com.xpn.xwiki.plugin.skinx.JsSkinExtensionPlugin,\
@@ -140,7 +140,6 @@
   com.xpn.xwiki.plugin.skinx.CssSkinFileExtensionPlugin,\
   com.xpn.xwiki.plugin.skinx.CssResourceSkinExtensionPlugin,\
   com.xpn.xwiki.plugin.skinx.LinkExtensionPlugin,\
-  com.xpn.xwiki.plugin.feed.FeedPlugin,\
   com.xpn.xwiki.plugin.mail.MailPlugin,\
   com.xpn.xwiki.plugin.packaging.PackagePlugin,\
   com.xpn.xwiki.plugin.svg.SVGPlugin,\
@@ -218,26 +217,14 @@ solr.remote.url=http://localhost:8080/solr/xwiki/
                - Exclude JavaBeans Activation Framework (activation-*.jar) since it's included in Java SE 6.
           -->
           <packagingExcludes>
-            WEB-INF/lib/xwiki-commons-component-api-*.jar,
-            WEB-INF/lib/xwiki-commons-component-default-*.jar,
-            WEB-INF/lib/xwiki-rendering-api-*.jar,
-            WEB-INF/lib/xwiki-platform-oldcore-*.jar,
-            WEB-INF/lib/xwiki-platform-office-importer-*.jar,
+            WEB-INF/lib/aspectjrt-1.6.11.jar,
             WEB-INF/lib/batik-js-*.jar,
-            WEB-INF/lib/commons-logging-*.jar,
-            %regex[WEB-INF/lib/log4j-(?!over-slf4j).*.jar],
-            WEB-INF/lib/activation-*.jar,
             WEB-INF/lib/commons-lang-2.5.jar,
-            WEB-INF/lib/asm-3.1.jar,
+            WEB-INF/lib/commons-logging-*.jar,
             WEB-INF/lib/guava-12.0.jar,
             WEB-INF/lib/jdom-1.0.jar,
-            WEB-INF/lib/jdom-1.1.jar,
-            WEB-INF/lib/log4j-over-slf4j-1.7.2.jar,
-            WEB-INF/lib/plexus-utils-2.0.6.jar,
             WEB-INF/lib/rome-0.9.jar,
-            WEB-INF/lib/slf4j-api-1.7.2.jar,
-            WEB-INF/lib/woodstox-core-asl-4.1.1.jar,
-            WEB-INF/lib/xercesImpl-2.10.0.jar
+            WEB-INF/lib/wstx-asl-3.2.7.jar
           </packagingExcludes>
         </configuration>
       </plugin>
