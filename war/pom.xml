@@ -173,6 +173,9 @@ xwiki.usedefaultaction=0
 xwiki.monitor=0
 xwiki.authentication.loginpage=/bin/PhenomeCentral/login
 xwiki.authentication.loginsubmitpage=/bin/loginsubmit/PhenomeCentral/login
+xwiki.store.attachment.hint=file
+xwiki.store.attachment.versioning.hint=file
+xwiki.store.attachment.recyclebin.hint=file
                 </xwikiCfgAdditionalProperties>
                 <xwikiPropertiesEnvironmentPermanentDirectory>/var/lib/phenotips/</xwikiPropertiesEnvironmentPermanentDirectory>
                 <xwikiPropertiesAdditionalProperties>
