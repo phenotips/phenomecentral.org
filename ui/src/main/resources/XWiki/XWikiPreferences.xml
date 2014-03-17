@@ -2731,7 +2731,7 @@ $xwiki.ssx.use($xwiki.getSpacePreference('colorTheme'))</meta>
       <title>#if ($doc.name != 'WebHome')$tdoc.getRenderedTitle("plain/1.0") | #{end}$!xwiki.getDocument("$!{doc.space}.WebHome").getRenderedTitle("plain/1.0")</title>
     </property>
     <property>
-      <upload_maxsize>33554432</upload_maxsize>
+      <upload_maxsize>1073741824</upload_maxsize>
     </property>
     <property>
       <validation_email_content>#set ($wikiname = $request.serverName)
