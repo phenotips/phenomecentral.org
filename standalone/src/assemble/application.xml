@@ -91,15 +91,31 @@
       <unpackOptions>
         <excludes>
           <exclude>jetty/contexts/search.xml</exclude>
+          <exclude>start.sh</exclude>
         </excludes>
       </unpackOptions>
       <useProjectArtifact>false</useProjectArtifact>
     </dependencySet>
   </dependencySets>
   <fileSets>
+    <!-- Copy shell scripts and set execute permissions -->
     <fileSet>
       <directory>${basedir}/src/main/resources</directory>
       <outputDirectory>/</outputDirectory>
+      <includes>
+        <include>**/*.sh</include>
+        <include>**/*.bat</include>
+      </includes>
+      <fileMode>755</fileMode>
+    </fileSet>
+    <!-- Copy non shell scripts -->
+    <fileSet>
+      <directory>${basedir}/src/main/resources</directory>
+      <outputDirectory>/</outputDirectory>
+      <excludes>
+        <exclude>**/*.sh</exclude>
+        <exclude>**/*.bat</exclude>
+      </excludes>
     </fileSet>
   </fileSets>
 </assembly>
