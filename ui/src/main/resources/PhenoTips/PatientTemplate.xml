@@ -20,29 +20,31 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc>
+<xwikidoc version="1.1">
   <web>PhenoTips</web>
   <name>PatientTemplate</name>
   <language/>
   <defaultLanguage/>
   <translation>0</translation>
-  <parent>PhenoTips.PatientClass</parent>
   <creator>xwiki:XWiki.Admin</creator>
+  <creationDate>1395991406000</creationDate>
+  <parent>PhenoTips.PatientClass</parent>
   <author>xwiki:XWiki.Admin</author>
-  <customClass/>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
-  <creationDate>1369253487000</creationDate>
-  <date>1381435012000</date>
-  <contentUpdateDate>1381435012000</contentUpdateDate>
+  <date>1395991406000</date>
+  <contentUpdateDate>1395991406000</contentUpdateDate>
   <version>1.1</version>
   <title>PatientClass Template</title>
-  <defaultTemplate/>
-  <validationScript/>
   <comment/>
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
-  <hidden>false</hidden>
+  <hidden>true</hidden>
+  <content/>
   <object>
+    <name>PhenoTips.PatientTemplate</name>
+    <number>0</number>
+    <className>PhenoTips.PatientClass</className>
+    <guid>a8a20625-bade-443d-bbd4-56dbdb830e1c</guid>
     <class>
       <name>PhenoTips.PatientClass</name>
       <customClass/>
@@ -153,7 +155,7 @@
       </consanguinity>
       <date_of_birth>
         <customDisplay>{{velocity}}{{html clean=false}}
-#set ($format = $services.patientConfiguration.dateOfBirthFormat)
+#set ($format = $services.recordConfiguration.activeConfiguration.dateOfBirthFormat)
 #set ($definedFormat = "$!object.xWikiClass.get($name).getProperty('dateFormat').value")
 #if ($xcontext.action == 'edit')
   #set ($date = $xwiki.jodatime.mutableDateTime)
@@ -221,7 +223,7 @@
       </date_of_birth>
       <exam_date>
         <customDisplay>{{velocity}}{{html clean=false}}
-#set ($format = $services.patientConfiguration.dateOfBirthFormat)
+#set ($format = $services.recordConfiguration.activeConfiguration.dateOfBirthFormat)
 #set ($definedFormat = "$!object.xWikiClass.get($name).getProperty('dateFormat').value")
 #if ($xcontext.action == 'edit')
   #set ($date = $xwiki.jodatime.mutableDateTime)
@@ -560,7 +562,9 @@
   'HP:0001426',
   'HP:0010984',
   'HP:0010983',
-  'HP:0010982'
+  'HP:0010982',
+
+  'HP:0001427'
 ])
 #set ($startWith = 'HP:0000005')
 {{/velocity}}
@@ -658,7 +662,7 @@
         <cache>0</cache>
         <customDisplay>{{velocity filter="indent"}}{{html wiki=true clean=false}}
 #if ($object.xWikiClass.get($name).getPropertyClass().isPicker() &amp;&amp; ($xcontext.action == 'edit' || $xcontext.action == 'inline'))
-#set($suggest_script = "${doc.getURL()}?xpage=suggest&amp;classname=${object.xWikiClass.name}&amp;fieldname=${name}&amp;")
+#set ($suggest_script = $xwiki.getURL('PhenoTips.EthnicitySearch', 'get', 'outputSyntax=plain'))
 {{html wiki=false clean=false}}&lt;input name="xwiki-free-multiselect-suggest-script" type="hidden" value="$!escapetool.xml($suggest_script)"/&gt;{{/html}}
 #end
 #macro (_fms__displayValue $v $counter) #if($xcontext.action == 'edit' || $xcontext.action == 'inline') {{html wiki=false clean=false}}&lt;input class="xwiki-free-multiselect-value" type="text" size="30" name="${prefix}${name}" id="${prefix}${name}_${counter}" value="$!escapetool.xml($v)"/&gt;{{/html}} #else $escapetool.xml($v) #end#end
@@ -794,7 +798,7 @@
         <cache>0</cache>
         <customDisplay>{{velocity filter="indent"}}{{html wiki=true clean=false}}
 #if ($object.xWikiClass.get($name).getPropertyClass().isPicker() &amp;&amp; ($xcontext.action == 'edit' || $xcontext.action == 'inline'))
-#set($suggest_script = "${doc.getURL()}?xpage=suggest&amp;classname=${object.xWikiClass.name}&amp;fieldname=${name}&amp;")
+#set ($suggest_script = $xwiki.getURL('PhenoTips.EthnicitySearch', 'get', 'outputSyntax=plain'))
 {{html wiki=false clean=false}}&lt;input name="xwiki-free-multiselect-suggest-script" type="hidden" value="$!escapetool.xml($suggest_script)"/&gt;{{/html}}
 #end
 #macro (_fms__displayValue $v $counter) #if($xcontext.action == 'edit' || $xcontext.action == 'inline') {{html wiki=false clean=false}}&lt;input class="xwiki-free-multiselect-value" type="text" size="30" name="${prefix}${name}" id="${prefix}${name}_${counter}" value="$!escapetool.xml($v)"/&gt;{{/html}} #else $escapetool.xml($v) #end#end
@@ -981,24 +985,8 @@
         <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
       </unaffected>
     </class>
-    <name>PhenoTips.PatientTemplate</name>
-    <number>0</number>
-    <className>PhenoTips.PatientClass</className>
-    <guid>a8a20625-bade-443d-bbd4-56dbdb830e1c</guid>
-    <property>
-      <comments/>
-    </property>
-    <property>
-      <date_of_birth/>
-    </property>
-    <property>
-      <exam_date/>
-    </property>
     <property>
       <extended_negative_phenotype/>
-    </property>
-    <property>
-      <extended_negative_prenatal_phenotype/>
     </property>
     <property>
       <extended_phenotype/>
@@ -1007,76 +995,29 @@
       <extended_prenatal_phenotype/>
     </property>
     <property>
-      <external_id/>
-    </property>
-    <property>
-      <family_comments/>
-    </property>
-    <property>
-      <family_of/>
-    </property>
-    <property>
-      <first_name/>
-    </property>
-    <property>
-      <gender/>
-    </property>
-    <property>
-      <gestation/>
-    </property>
-    <property>
-      <global_age_of_onset/>
-    </property>
-    <property>
-      <global_mode_of_inheritance/>
-    </property>
-    <property>
-      <health_card/>
-    </property>
-    <property>
-      <identifier/>
-    </property>
-    <property>
-      <indication_for_referral/>
-    </property>
-    <property>
-      <last_name/>
-    </property>
-    <property>
-      <maternal_ethnicity/>
-    </property>
-    <property>
-      <medical_developmental_history/>
-    </property>
-    <property>
       <negative_phenotype/>
     </property>
     <property>
       <negative_prenatal_phenotype/>
     </property>
     <property>
-      <omim_id/>
+      <phenotype/>
     </property>
     <property>
-      <paternal_ethnicity/>
-    </property>
-    <property>
-      <pedigree/>
-    </property>
-    <property>
-      <prenatal_comments/>
+      <prenatal_phenotype/>
     </property>
     <property>
       <proband>1</proband>
-    </property>
-    <property>
-      <reports_history/>
     </property>
     <property>
       <unaffected>0</unaffected>
     </property>
   </object>
   <object>
+    <name>PhenoTips.PatientTemplate</name>
+    <number>0</number>
+    <className>PhenoTips.PedigreeClass</className>
+    <guid>09879ef6-e139-47bc-adce-6feedb4c4d70</guid>
     <class>
       <name>PhenoTips.PedigreeClass</name>
       <customClass/>
@@ -1132,21 +1073,12 @@
         <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
       </image>
     </class>
-    <name>PhenoTips.PatientTemplate</name>
-    <number>0</number>
-    <className>PhenoTips.PedigreeClass</className>
-    <guid>09879ef6-e139-47bc-adce-6feedb4c4d70</guid>
-    <property>
-      <data/>
-    </property>
-    <property>
-      <description/>
-    </property>
-    <property>
-      <image/>
-    </property>
   </object>
   <object>
+    <name>PhenoTips.PatientTemplate</name>
+    <number>0</number>
+    <className>PhenoTips.VisibilityClass</className>
+    <guid>65fdddba-12bc-44c7-a23d-b771513a3ce4</guid>
     <class>
       <name>PhenoTips.VisibilityClass</name>
       <customClass/>
@@ -1170,13 +1102,8 @@
         <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
       </visibility>
     </class>
-    <name>PhenoTips.PatientTemplate</name>
-    <number>0</number>
-    <className>PhenoTips.VisibilityClass</className>
-    <guid>97b213b5-f87b-402b-a452-44cbe846629e</guid>
     <property>
       <visibility>matchable</visibility>
     </property>
   </object>
-  <content/>
 </xwikidoc>
