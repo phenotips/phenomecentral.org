@@ -896,6 +896,10 @@ TXVppcEAAAAASUVORK5CYII=
   overflow: visible;
   padding: 10px;
 }
+
+.actionmenu {
+  height: 1.8em;
+}
 #phenotips-mainmenu, #phenotips-globalTools {
   background-color: rgba(255, 255, 255, 0.1);
   box-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
@@ -911,13 +915,13 @@ TXVppcEAAAAASUVORK5CYII=
   float: none;
 }
 #phenotips-globalTools .search input {
-    margin-left: 0;
-    margin-right: 5px;
-    margin-top: -1px;
-    height: 1.8em;
-    min-height: 22px;
-    padding: 0 3px;
-    width: 20em;
+  height: 1.7em;
+  margin-left: 0;
+  margin-right: 5px;
+  margin-top: 0.05em;
+  min-height: 22px;
+  padding: 0 3px;
+  width: 20em;
 }
 
 #phenotips-globalTools label {
@@ -941,10 +945,6 @@ TXVppcEAAAAASUVORK5CYII=
   display: inline-block;
   margin-right: 5px;
 }
-
-##.editbody input[name=action_saveandcontinue] {
-##  display: none;
-##}
 
 .add-data-button,
 .buttonwrapper a.add-data-button:link,
@@ -1051,9 +1051,6 @@ h1:target, h2:target, h3:target {
 #mainmenu {
   background-image: none;
   box-shadow: none;
-}
-input.button, input.button:hover, .buttonwrapper a, .buttonwrapper a:link, .buttonwrapper a:active, .buttonwrapper a:hover {
-##  background-image: none;
 }
 #mainmenu * {
   text-shadow: none;
