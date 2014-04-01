@@ -2505,7 +2505,7 @@ $xwiki.jsx.use('PhenoTips.PhenotypeMappingPreview')##</codeToExecute>
       <position/>
     </property>
     <property>
-      <title>About (% style="float: right;" %)[[Read more »&gt;&gt;Main.PhenomeCentral]]</title>
+      <title>About (% style="float: right;" %)[[Read more »&gt;&gt;PhenomeCentral.About]]</title>
     </property>
   </object>
   <object>

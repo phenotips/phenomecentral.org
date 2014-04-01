@@ -30130,7 +30130,7 @@ The PhenomeCentral homepage provides quick access to all information of interest
 
 
 
-The homepage is immediately accessible from any other page by clicking on the PhenomeCentral logo or on the home icon ( [[{{icon name="home" /}}&gt;&gt;Main.WebHome]]) displayed at the bottom of the page header area.
+The homepage is immediately accessible from any other page by clicking on the PhenomeCentral logo or on the home icon ( [[{{icon name="home" /}}&gt;&gt;data.WebHome]]) displayed at the bottom of the page header area.
 
 [[image:@pc-header-home.png]]
 )))

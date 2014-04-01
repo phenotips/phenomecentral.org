@@ -321,7 +321,7 @@ $xwiki.ssx.use('PhenomeCentral.login')##
 {{html}}
 &lt;form class="xform pc-login" action="$xwiki.getURL('PhenomeCentral.login', 'loginsubmit')" method="post"&gt;
 &lt;h2&gt;Enter PhenomeCentral&lt;/h2&gt;
-&lt;div class="hidden"&gt;&lt;input type="hidden" name="xredirect" value="$xwiki.getDocument('Main.WebHome').getURL()"/&gt;
+&lt;div class="hidden"&gt;&lt;input type="hidden" name="xredirect" value="$xwiki.getDocument('data.WebHome').getURL()"/&gt;
 #if("$!request.srid" != '')
   &lt;input type="hidden" name="srid" value="$!escapetool.xml($request.srid)"/&gt;
 #end
