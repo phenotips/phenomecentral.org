@@ -253,7 +253,7 @@ $xwiki.ssx.use('PhenoTips.FontAwesomeIcons')##
 ##
 ## ABOUT
 ##
-#xwikitopmenuentry($!xwiki.getURL('Main.PhenomeCentral') 'About PhenomeCentral' 'tmAbout' 'icon-info-sign')
+#xwikitopmenuentry($!xwiki.getURL('PhenomeCentral.About') 'About PhenomeCentral' 'tmAbout' 'icon-info-sign')
 &lt;/div&gt;
 &lt;/div&gt;
 {{/html}}{{/velocity}}</content>
@@ -1144,7 +1144,7 @@ $xwiki.ssx.use('PhenoTips.FontAwesomeIcons')##
 ##
 ## ABOUT
 ##
-#xwikitopmenuentry($!xwiki.getURL('Main.PhenomeCentral') 'About PhenomeCentral' 'tmAbout' 'icon-info-sign')
+#xwikitopmenuentry($!xwiki.getURL('PhenomeCentral.About') 'About PhenomeCentral' 'tmAbout' 'icon-info-sign')
 &lt;/div&gt;
 &lt;/div&gt;
 {{/html}}{{/velocity}}</content>
@@ -1812,7 +1812,7 @@ $xwiki.ssx.use('PhenoTips.FontAwesomeIcons')##
 ##
 ## ABOUT
 ##
-#xwikitopmenuentry($!xwiki.getURL('Main.PhenomeCentral') 'About PhenomeCentral' 'tmAbout' 'icon-info-sign')
+#xwikitopmenuentry($!xwiki.getURL('PhenomeCentral.About') 'About PhenomeCentral' 'tmAbout' 'icon-info-sign')
 &lt;/div&gt;
 &lt;/div&gt;
 {{/html}}{{/velocity}}</content>
