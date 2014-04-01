@@ -184,15 +184,14 @@ $xwiki.jsfx.use('uicomponents/widgets/validation/livevalidation_prototype.js')##
 {{velocity}}
 {{html clean=false wiki=false}}
 &lt;form id="request" class="xform" action="" method="post"&gt;
-&lt;img src="$xwiki.getDocument('ColorThemes.Steel').getAttachmentURL('pc-logo.png')" alt="PhenomeCentral" style="margin-top: -40px; float: right"&gt;
-&lt;h2 style="margin-top: 40px;"&gt;Request an account&lt;/h2&gt; 
-&lt;div class="clearfloats"&gt;&lt;/div&gt;
+&lt;h2&gt;Request a PhenomeCentral account&lt;/h2&gt;
+&lt;p&gt;&lt;a href='$xwiki.getURL('data.WebHome')'&gt;PhenomeCentral&lt;/a&gt; accounts are limited to clinicians and scientists working with rare disorder patients.&lt;/p&gt;
 &lt;div class="contents"&gt;
   #if ($success)
-    #info('Thank you for your interest in PhenomeCentral. We took note of your request and we will process it shortly.')
+    #info("Thank you for your interest in PhenomeCentral. We took note of your request and we will process it shortly. &lt;a href='$xwiki.getURL('data.WebHome')'&gt;Return to homepage&lt;/a&gt;")
   #elseif ("$!{request.get('request')}" == '1')
     #if ($missingConfirmation)
-      #error('PhenomeCentral is targeted to clinicians and scientists working in the rare disorder community. You should not request an account on PhenomeCentral unless you can confirm that you are a doctor, clinical geneticist or scientist working with patients affected by rare disorders.')
+      #error('PhenomeCentral is targeted to clinicians and scientists working in the rare disorder community. You should not request an account on PhenomeCentral unless you can confirm that you are a clinician or scientist working with patients affected by rare disorders.')
     #else
       #error('Please provide all the required information.')
     #end
@@ -211,12 +210,12 @@ $xwiki.jsfx.use('uicomponents/widgets/validation/livevalidation_prototype.js')##
     &lt;label&gt;&lt;input type="radio" name="consortium" value="rdconnect"#if ("$!{request.consortium}" == 'rdconnect') checked="checked"#end/&gt;RD-Connect&lt;/label&gt; 
     &lt;label&gt;&lt;input type="radio" name="consortium" value="other"#if ("$!{request.consortium}" == 'other' || "$!{request.consortium}" == '') checked="checked"#end/&gt;Other&lt;/label&gt;&lt;/dd&gt;
 &lt;dt&gt;&lt;label for="email" class="required"&gt;Email address&lt;/label&gt;&lt;span class="xHint"&gt;The email address where you wish to receive your account information. Please use your institutional email address rather than gmail, yahoo, etc.&lt;/span&gt;&lt;/dt&gt;
-&lt;dd&gt;&lt;input type="text" name="email" id="email" placeholder="name@example.com" class="required" value="$!{escapetool.xml($request.email)}"/&gt;&lt;/dd&gt;
+&lt;dd&gt;&lt;input type="text" name="email" id="email" placeholder="name@myhospital.org" class="required" value="$!{escapetool.xml($request.email)}"/&gt;&lt;/dd&gt;
 &lt;dt&gt;&lt;label for="referral"&gt;How did you hear about / Who referred you to PhenomeCentral?&lt;/label&gt;&lt;/dt&gt;
 &lt;dd&gt;&lt;input type="text" name="referral" id="referral" placeholder="" value="$!{escapetool.xml($request.referral)}"/&gt;&lt;/dd&gt;
-&lt;dt&gt;&lt;label for="comments"&gt;Why are you requesting access to PhenomeCentral?&lt;/label&gt;&lt;/dt&gt;
-&lt;dd&gt;&lt;textarea name="comments" id="comments" rows="3" cols="40"&gt;$!{escapetool.xml($request.comments)}&lt;/textarea&gt;&lt;/dd&gt;
-&lt;dt&gt;&lt;label for="confirmation" class="required"&gt;&lt;input type="checkbox" name="confirmation" id="confirmation" value="1"/&gt; I confirm that I am a doctor, clinical geneticist or scientist working with patients affected by rare disorders.&lt;/label&gt;&lt;/dt&gt;
+&lt;dt&gt;&lt;label for="comments" class="required"&gt;Why are you requesting access to PhenomeCentral?&lt;/label&gt;&lt;/dt&gt;
+&lt;dd&gt;&lt;textarea name="comments" id="comments" rows="3" cols="40" class="required"&gt;$!{escapetool.xml($request.comments)}&lt;/textarea&gt;&lt;/dd&gt;
+&lt;dt&gt;&lt;label for="confirmation" class="required"&gt;&lt;input type="checkbox" name="confirmation" id="confirmation" value="1"/&gt; I confirm that I am a clinician or scientist working with patients affected by rare disorders.&lt;/label&gt;&lt;/dt&gt;
 &lt;/dl&gt;
 &lt;div class="buttons"&gt;
 &lt;input type="submit" value="Request access" class="button"&gt;
