@@ -49,14 +49,14 @@ $xwiki.ssx.use('PhenoTips.PCHome')##
   &lt;div class="title-container half-width"&gt;
     &lt;h1&gt;PhenomeCentral&lt;/h1&gt;
     &lt;p&gt;An integrated portal for sharing and searching patient phenotype data for rare genetic disorders.&lt;/p&gt;
-    &lt;div class="buttons"&gt;&lt;a class="user-action sign-up" id="launch-register" href="$xwiki.getURL('PhenomeCentral.register')"&gt;Sign up&lt;/a&gt; &lt;a class="user-action login" id="launch-login" href="$xwiki.getURL('PhenomeCentral.login')"&gt;Login&lt;/a&gt;&lt;/div&gt;
+    &lt;div class="buttons"&gt;&lt;a class="user-action sign-up" id="launch-register" href="$xwiki.getURL('PhenomeCentral.register')"&gt;Sign up&lt;/a&gt; &lt;a class="user-action login" id="launch-login" href="$xwiki.getURL('PhenomeCentral.login')"&gt;Login&lt;/a&gt; &lt;a class="user-action about" href="$xwiki.getURL('PhenomeCentral.About')"&gt;Read more...&lt;/a&gt;&lt;/div&gt;
   &lt;/div&gt;
   &lt;div class="clearfloats"&gt;&lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="contents"&gt;
   &lt;div class="info-box"&gt;
   &lt;h2&gt;About PhenomeCentral&lt;/h2&gt;
-  &lt;p&gt;PhenomeCentral is a repository for secure data sharing &lt;strong&gt;targeted to clinicians and scientists&lt;/strong&gt; working in the rare disorder community. PhenomeCentral encourages global scientific collaboration while respecting the privacy of patients profiled in this centralized database. &lt;a class="details" href="$xwiki.getURL('Main.PhenomeCentral')"&gt;Read more...&lt;/a&gt;&lt;/p&gt;
+  &lt;p&gt;PhenomeCentral is a repository for secure data sharing &lt;strong&gt;targeted to clinicians and scientists&lt;/strong&gt; working in the rare disorder community. PhenomeCentral encourages global scientific collaboration while respecting the privacy of patients profiled in this centralized database.&lt;/p&gt;
   &lt;/div&gt;
   &lt;div class="info-box"&gt;
   &lt;h2&gt;Why you should join&lt;/h2&gt;
@@ -207,12 +207,18 @@ h1 {
 .logo-container.half-width &gt; img {
     max-width: 250px;
 }
+.preamble .buttons {
+  margin: 20px 0;
+}
 .preamble .user-action {
     background: none repeat scroll 0 0 #FFF;
     display: inline-block;
     font-weight: bold;
     margin: 0 0.5em 0 0;
     padding: 0.5em;
+}
+.preamble .user-action.about {
+    float: right;
 }
 
 .info-box {
