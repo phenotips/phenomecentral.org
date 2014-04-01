@@ -77,9 +77,7 @@ $xwiki.ssx.use('PhenoTips.PCHome')##
 &lt;a class="consortium" href="#" title="CARE for RARE Australia"&gt;CARE for RARE Australia&lt;/a&gt;
 &lt;/div&gt;
 {{/html}}
-{{/velocity}}
-
-</content>
+{{/velocity}}</content>
   <attachment>
     <filename>PhenomeCentral-logo-bw.png</filename>
     <author>XWiki.Admin</author>
