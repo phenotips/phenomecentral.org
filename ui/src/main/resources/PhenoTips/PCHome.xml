@@ -48,7 +48,7 @@ $xwiki.ssx.use('PhenoTips.PCHome')##
   &lt;div class="logo-container half-width"&gt;&lt;img src="$doc.getAttachmentURL('PhenomeCentral-logo-bw.png')" alt="PhenomeCentral"/&gt;&lt;/div&gt;
   &lt;div class="title-container half-width"&gt;
     &lt;h1&gt;PhenomeCentral&lt;/h1&gt;
-    &lt;p&gt;An integrated portal for sharing and searching patient phenotype data for rare genetic disorders.&lt;/p&gt;
+    &lt;p&gt;A hub for secure data sharing within the rare disorder community&lt;/p&gt;
     &lt;div class="buttons"&gt;&lt;a class="user-action sign-up" id="launch-register" href="$xwiki.getURL('PhenomeCentral.register')"&gt;Sign up&lt;/a&gt; &lt;a class="user-action login" id="launch-login" href="$xwiki.getURL('PhenomeCentral.login')"&gt;Login&lt;/a&gt; &lt;a class="user-action about" href="$xwiki.getURL('PhenomeCentral.About')"&gt;Read more...&lt;/a&gt;&lt;/div&gt;
   &lt;/div&gt;
   &lt;div class="clearfloats"&gt;&lt;/div&gt;
@@ -56,12 +56,12 @@ $xwiki.ssx.use('PhenoTips.PCHome')##
 &lt;div class="contents"&gt;
   &lt;div class="info-box"&gt;
   &lt;h2&gt;About PhenomeCentral&lt;/h2&gt;
-  &lt;p&gt;PhenomeCentral is a repository for secure data sharing &lt;strong&gt;targeted to clinicians and scientists&lt;/strong&gt; working in the rare disorder community. PhenomeCentral encourages global scientific collaboration while respecting the privacy of patients profiled in this centralized database.&lt;/p&gt;
+  &lt;p&gt;PhenomeCentral is a repository for secure data sharing &lt;strong&gt;targeted to clinicians and scientists&lt;/strong&gt; working in the rare disorder community. PhenomeCentral encourages global scientific collaboration while respecting the privacy of patients profiled in this centralized database. Once users enter their patients' data, they are connected to other patient profiles within PhenomeCentral that share similar phenotypes and genotypes.&lt;/p&gt;
   &lt;/div&gt;
   &lt;div class="info-box"&gt;
   &lt;h2&gt;Why you should join&lt;/h2&gt;
   &lt;p&gt;&lt;strong&gt;PhenomeCentral enables the discovery of multiple individuals affected by the same unnamed disorder&lt;/strong&gt;.
-    Undiagnosed disorders may be present in only a handful of individuals seen at different hospitals and sequenced by different centers. The PhenomeCentral collaboration model enables effective and secure data-sharing techniques that allow clinicians and scientists to learn about the existence of cases similar to theirs, which eventually may help improve the understanding of disorder manifestations and confirm the underlying cause.&lt;/p&gt;
+    Undiagnosed disorders may be present in only a handful of individuals seen at different hospitals and sequenced by different centers. The PhenomeCentral collaboration model enables effective and secure data-sharing techniques that allow &lt;strong&gt;clinicians and scientists&lt;/strong&gt; to learn about the existence of cases similar to theirs, which eventually may help improve the understanding of disorder manifestations and confirm the underlying cause.&lt;/p&gt;
   &lt;/div&gt;
   &lt;div class="info-box"&gt;
   &lt;h2&gt;How it can help&lt;/h2&gt;
@@ -71,7 +71,7 @@ $xwiki.ssx.use('PhenoTips.PCHome')##
 &lt;/div&gt;
 &lt;div class="participants"&gt;
 &lt;h2&gt;Founding consortia&lt;/h2&gt;
-&lt;a class="consortium" href="http://care4rare.ca" title="CARE for RARE"&gt;&lt;img src="http://static.squarespace.com/static/51c0c362e4b0d73628427fe5/t/51c1b029e4b094d93e409038/1391463146444/?format=200w" alt="CARE for RARE"/&gt; Canada&lt;/a&gt;
+&lt;a class="consortium" href="http://care4rare.ca" title="CARE for RARE Canada"&gt;&lt;img src="http://static.squarespace.com/static/51c0c362e4b0d73628427fe5/t/51c1b029e4b094d93e409038/1391463146444/?format=200w" alt="CARE for RARE"/&gt;&lt;/a&gt;
 &lt;a class="consortium" href="http://rd-connect.eu"&gt;&lt;img src="http://rd-connect.eu/rdcon/wp-content/themes/dynamik/css/images/rdconnect_72dpi_rgb.jpg" alt="RD-Connect"/&gt;&lt;/a&gt;
 &lt;a class="consortium nih" href="http://rarediseases.info.nih.gov/research/pages/27/undiagnosed-diseases-program"&gt;&lt;img src="$xwiki.getDocument('PhenoTips.PCHome').getAttachmentURL('UDP_red_clearback.png')" alt="The NIH Undiagnosed Diseases Program"/&gt;&lt;/a&gt;
 &lt;a class="consortium" href="#" title="CARE for RARE Australia"&gt;CARE for RARE Australia&lt;/a&gt;
