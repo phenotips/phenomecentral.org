@@ -337,7 +337,7 @@ a.details {
       <allow>1</allow>
     </property>
     <property>
-      <groups>xwiki:XWiki.XWikiAllGroup,</groups>
+      <groups>xwiki:XWiki.XWikiAllGroup,XWiki.XWikiAllGroup</groups>
     </property>
     <property>
       <levels>view</levels>
