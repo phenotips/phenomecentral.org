@@ -40,6 +40,13 @@
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
+      <artifactId>patient-data-sharing-receiver-ui</artifactId>
+      <version>${phenotips.version}</version>
+      <type>xar</type>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
       <artifactId>patient-network-ui</artifactId>
       <version>${patientNetwork.version}</version>
       <type>xar</type>
