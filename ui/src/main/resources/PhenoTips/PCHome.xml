@@ -13494,7 +13494,7 @@ jDhIjKK1c6QBnR7bpf2dov8fBjj9u6Hkv4ZMoYtR1f4XFFkypgNjlWoAAAAASUVORK5CYII=
     <className>XWiki.StyleSheetExtension</className>
     <guid>ca3fea5f-f7f0-4cb1-9f9f-6978c486a773</guid>
     <property>
-      <cache>forbid</cache>
+      <cache>long</cache>
     </property>
     <property>
       <code>#mainContentArea {
@@ -13579,7 +13579,7 @@ a.details {
       <parse>1</parse>
     </property>
     <property>
-      <use>currentPage</use>
+      <use>onDemand</use>
     </property>
   </object>
   <object>
