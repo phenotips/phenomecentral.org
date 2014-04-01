@@ -225,6 +225,7 @@ solr.remote.url=http://localhost:8080/solr/xwiki/
                - Exclude JavaBeans Activation Framework (activation-*.jar) since it's included in Java SE 6.
           -->
           <packagingExcludes>
+            WEB-INF/lib/patient-data-sharing-push-api-*.jar,
             WEB-INF/lib/aspectjrt-1.6.11.jar,
             WEB-INF/lib/batik-js-*.jar,
             WEB-INF/lib/commons-lang-2.5.jar,

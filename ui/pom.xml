@@ -84,6 +84,11 @@
         <groupId>org.xwiki.commons</groupId>
         <artifactId>xwiki-commons-tool-xar-plugin</artifactId>
         <version>${xwiki.version}</version>
+        <configuration>
+          <excludes>
+            <exclude>**/PhenoTips/PushPatien*.xml</exclude>
+          </excludes>
+        </configuration>
       </plugin>
     </plugins>
   </build>
