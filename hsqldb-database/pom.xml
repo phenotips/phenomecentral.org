@@ -91,17 +91,17 @@
             <dependency>
               <groupId>org.phenotips</groupId>
               <artifactId>application-configuration-migrations</artifactId>
-              <version>${project.version}</version>
+              <version>${phenotips.version}</version>
             </dependency>
             <dependency>
               <groupId>org.phenotips</groupId>
               <artifactId>patient-data-migrations</artifactId>
-              <version>${project.version}</version>
+              <version>${phenotips.version}</version>
             </dependency>
             <dependency>
               <groupId>org.phenotips</groupId>
               <artifactId>patient-measurements-migrations</artifactId>
-              <version>${project.version}</version>
+              <version>${phenotips.version}</version>
             </dependency>
             <!-- WikiMacro classes are automatically generated. -->
             <dependency>
