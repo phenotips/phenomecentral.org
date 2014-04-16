@@ -239,18 +239,27 @@
     <property>
       <content>{{velocity}}
 #if ($xcontext.action == 'edit')
-$xwiki.ssx.use('PhenoTips.FormConfirmation')##
-#set ($fObj = $doc.getObject('PhenoTips.FormConfirmation'))
-#if (!$fObj)
-  #set ($fObj = $doc.getObject('PhenoTips.FormConfirmation', true))
-  $doc.save('Added consent confirmation object', true)##
+#set ($collaboratorObjects = $doc.getObjects("PhenoTips.CollaboratorClass"))
+#set ($flagShow = true)
+#foreach ($collaborator in $collaboratorObjects)
+  #if ($xwiki.getDocument($xwiki.getUser().getUser().getUser()) == $xwiki.getDocument($collaborator.getProperty("collaborator").getValue()))
+    #set ($flagShow = false)
+  #end
 #end
+#if ($flagShow == true)
+  $xwiki.ssx.use('PhenoTips.FormConfirmation')##
+  #set ($fObj = $doc.getObject('PhenoTips.FormConfirmation'))
+  #if (!$fObj)
+    #set ($fObj = $doc.getObject('PhenoTips.FormConfirmation', true))
+    $doc.save('Added consent confirmation object', true)##
+  #end
 
-(% class="consent-box plainmessage mandatory" %)(((
-//PhenomeCentral allows for the secure sharing of real patient data by clinicians and scientists working in the rare disorder community, promoting collaboration and discovery. Once you enter a patient's data, you will be connected to other patient profiles within PhenomeCentral that share similar phenotypes and genotypes.//
+  (% class="consent-box plainmessage mandatory" %)(((
+  //PhenomeCentral allows for the secure sharing of real patient data by clinicians and scientists working in the rare disorder community, promoting collaboration and discovery. Once you enter a patient's data, you will be connected to other patient profiles within PhenomeCentral that share similar phenotypes and genotypes.//
 
-$doc.display('confirmed', $fObj)
-)))
+  $doc.display('confirmed', $fObj)
+  )))
+  #end
 #end
 {{/velocity}}</content>
     </property>
