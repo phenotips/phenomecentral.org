@@ -238,29 +238,35 @@
     </class>
     <property>
       <content>{{velocity}}
-#if ($xcontext.action == 'edit')
-#set ($collaboratorObjects = $doc.getObjects("PhenoTips.CollaboratorClass"))
-#set ($flagShow = true)
-#foreach ($collaborator in $collaboratorObjects)
-  #if ($xwiki.getDocument($xwiki.getUser().getUser().getUser()) == $xwiki.getDocument($collaborator.getProperty("collaborator").getValue()))
-    #set ($flagShow = false)
-  #end
-#end
-#if ($flagShow == true)
-  $xwiki.ssx.use('PhenoTips.FormConfirmation')##
-  #set ($fObj = $doc.getObject('PhenoTips.FormConfirmation'))
-  #if (!$fObj)
-    #set ($fObj = $doc.getObject('PhenoTips.FormConfirmation', true))
-    $doc.save('Added consent confirmation object', true)##
-  #end
-
-  (% class="consent-box plainmessage mandatory" %)(((
-  //PhenomeCentral allows for the secure sharing of real patient data by clinicians and scientists working in the rare disorder community, promoting collaboration and discovery. Once you enter a patient's data, you will be connected to other patient profiles within PhenomeCentral that share similar phenotypes and genotypes.//
-
-  $doc.display('confirmed', $fObj)
-  )))
-  #end
-#end
+#if ($xcontext.action == 'edit')&#xd;
+#set ($flagShow = true)&#xd;
+#set ($patient = $services.patients.getPatientById($doc.documentReference))&#xd;
+#set ($_service = $services.permissions.getPatientAccess($patient))&#xd;
+#set ($owner = $_service.getOwner())&#xd;
+#if ($owner.isGroup)&#xd;
+  #if(!$xwiki.getUser.isUserInGroup($owner.getUsername()))&#xd;
+    #set ($flagShow = false)&#xd;
+  #end&#xd;
+#else&#xd;
+  #if (!$_service.isOwner())&#xd;
+    #set ($flagShow = false)&#xd;
+  #end&#xd;
+#end&#xd;
+#if ($flagShow)&#xd;
+  $xwiki.ssx.use('PhenoTips.FormConfirmation')##&#xd;
+  #set ($fObj = $doc.getObject('PhenoTips.FormConfirmation'))&#xd;
+  #if (!$fObj)&#xd;
+    #set ($fObj = $doc.getObject('PhenoTips.FormConfirmation', true))&#xd;
+    $doc.save('Added consent confirmation object', true)##&#xd;
+  #end&#xd;
+&#xd;
+  (% class="consent-box plainmessage mandatory" %)(((&#xd;
+  //PhenomeCentral allows for the secure sharing of real patient data by clinicians and scientists working in the rare disorder community, promoting collaboration and discovery. Once you enter a patient's data, you will be connected to other patient profiles within PhenomeCentral that share similar phenotypes and genotypes.//&#xd;
+&#xd;
+  $doc.display('confirmed', $fObj)&#xd;
+  )))&#xd;
+  #end&#xd;
+#end&#xd;
 {{/velocity}}</content>
     </property>
     <property>
