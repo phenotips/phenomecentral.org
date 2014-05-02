@@ -217,7 +217,7 @@ $xwiki.jsfx.use('uicomponents/widgets/validation/livevalidation_prototype.js')##
   &lt;dt&gt;&lt;label for="email" class="required"&gt;Email address&lt;/label&gt;&lt;span class="xHint"&gt;The email address where you wish to receive your account information. Please use your institutional email address rather than gmail, yahoo, etc.&lt;/span&gt;&lt;/dt&gt;
   &lt;dd&gt;&lt;input type="text" name="email" id="email" placeholder="name@myhospital.org" class="required" value="$!{escapetool.xml($request.email)}"/&gt;&lt;/dd&gt;
   &lt;dt&gt;&lt;label for="website"&gt;Website&lt;/label&gt;&lt;span class="xHint"&gt;The URL of your institutional website through which we can confirm your affiliation.&lt;/span&gt;&lt;/dt&gt;
-  &lt;dd&gt;&lt;input type="text" name="website" id="website" placeholder="www.myhospital.org/~mylastname" value="$!{escapetool.xml($request.website)}"/&gt;&lt;/dd&gt;
+  &lt;dd&gt;&lt;input type="text" name="website" id="website" placeholder="www.myhospital.org" value="$!{escapetool.xml($request.website)}"/&gt;&lt;/dd&gt;
   &lt;dt&gt;&lt;label for="referral"&gt;How did you hear about / Who referred you to PhenomeCentral?&lt;/label&gt;&lt;/dt&gt;
   &lt;dd&gt;&lt;input type="text" name="referral" id="referral" value="$!{escapetool.xml($request.referral)}"/&gt;&lt;/dd&gt;
   &lt;dt&gt;&lt;label for="comments" class="required"&gt;Why are you requesting access to PhenomeCentral?&lt;/label&gt;&lt;/dt&gt;
