@@ -134,7 +134,7 @@ $xwiki.ssx.use('PhenomeCentral.login')##
 $xwiki.ssfx.use('uicomponents/widgets/validation/livevalidation.css', true)##
 $xwiki.jsfx.use('uicomponents/widgets/validation/livevalidation_prototype.js')##
 #if ("$!{request.get('request')}" == '1')
-  #if ("$!{request.confirmation}" == '')
+  #if ("$!{request.isClinician}" == '' &amp;&amp; "$!{request.isScientist}" == '')
     #set ($missingConfirmation = true)
   #end
   #if ("$!{request.firstName}" == '')
@@ -161,6 +161,7 @@ $xwiki.jsfx.use('uicomponents/widgets/validation/livevalidation_prototype.js')##
       'affiliation' : $!{request.affiliation},
       'consortium' : $!{request.consortium},
       'email' : $!{request.email},
+      'website' : $!{request.website},
       'referral' : $!{request.referral},
       'comments' : $!{request.comments},
       'escapetool' : $escapetool
@@ -171,8 +172,11 @@ $xwiki.jsfx.use('uicomponents/widgets/validation/livevalidation_prototype.js')##
       'affiliation' : $!{request.affiliation},
       'consortium' : $!{request.consortium},
       'email' : $!{request.email},
+      'website' : $!{request.website},
       'referral' : $!{request.referral},
       'comments' : $!{request.comments},
+      'isClinician' : $!{request.isClinician},
+      'isScientist' : $!{request.isScientist},
       'escapetool' : $escapetool
     })
     #set ($success = true)
@@ -196,31 +200,36 @@ $xwiki.jsfx.use('uicomponents/widgets/validation/livevalidation_prototype.js')##
       #error('Please provide all the required information.')
     #end
   #end
-&lt;input type="hidden" name="request" value="1"/&gt;
-&lt;dl&gt;
-&lt;dt class="firstName"&gt;&lt;label for="firstName" class="required"&gt;First name&lt;/label&gt;&lt;/dt&gt;
-&lt;dd class="firstName"&gt;&lt;input type="text" name="firstName" id="firstName" placeholder="First name" class="required" value="$!{escapetool.xml($request.firstName)}"/&gt;&lt;/dd&gt;
-&lt;dt class="lastName"&gt;&lt;label for="lastName" class="required"&gt;Last name&lt;/label&gt;&lt;/dt&gt;
-&lt;dd class="lastName"&gt;&lt;input type="text" name="lastName" id="lastName" placeholder="Last name" class="required" value="$!{escapetool.xml($request.lastName)}"/&gt;&lt;/dd&gt;
-&lt;dt&gt;&lt;label for="affiliation" class="required"&gt;Affiliation&lt;/label&gt;&lt;/dt&gt;
-&lt;dd&gt;&lt;input type="text" name="affiliation" id="affiliation" placeholder="Institution name" class="required" value="$!{escapetool.xml($request.affiliation)}"/&gt;&lt;/dd&gt;
-&lt;dt&gt;&lt;label for="consortium" class="required"&gt;Consortium&lt;/label&gt;&lt;/dt&gt;
-&lt;dd&gt;&lt;label&gt;&lt;input type="radio" name="consortium" value="care4rare"#if ("$!{request.consortium}" == 'care4rare') checked="checked"#end/&gt;CARE for RARE&lt;/label&gt; 
+#if ($success != true)
+  &lt;input type="hidden" name="request" value="1"/&gt;
+  &lt;dl&gt;
+  &lt;dt class="firstName"&gt;&lt;label for="firstName" class="required"&gt;First name&lt;/label&gt;&lt;/dt&gt;
+  &lt;dd class="firstName"&gt;&lt;input type="text" name="firstName" id="firstName" placeholder="First name" class="required" value="$!{escapetool.xml($request.firstName)}"/&gt;&lt;/dd&gt;
+  &lt;dt class="lastName"&gt;&lt;label for="lastName" class="required"&gt;Last name&lt;/label&gt;&lt;/dt&gt;
+  &lt;dd class="lastName"&gt;&lt;input type="text" name="lastName" id="lastName" placeholder="Last name" class="required" value="$!{escapetool.xml($request.lastName)}"/&gt;&lt;/dd&gt;
+  &lt;dt&gt;&lt;label for="affiliation" class="required"&gt;Affiliation&lt;/label&gt;&lt;/dt&gt;
+  &lt;dd&gt;&lt;input type="text" name="affiliation" id="affiliation" placeholder="Institution name" class="required" value="$!{escapetool.xml($request.affiliation)}"/&gt;&lt;/dd&gt;
+  &lt;dt&gt;&lt;label for="consortium" class="required"&gt;Consortium&lt;/label&gt;&lt;/dt&gt;
+  &lt;dd&gt;&lt;label&gt;&lt;input type="radio" name="consortium" value="care4rare"#if ("$!{request.consortium}" == 'care4rare') checked="checked"#end/&gt;CARE for RARE&lt;/label&gt;
     &lt;label&gt;&lt;input type="radio" name="consortium" value="udp"#if ("$!{request.consortium}" == 'udp') checked="checked"#end/&gt;The NIH Undiagnosed Diseases Program (UDP)&lt;/label&gt;
-    &lt;label&gt;&lt;input type="radio" name="consortium" value="rdconnect"#if ("$!{request.consortium}" == 'rdconnect') checked="checked"#end/&gt;RD-Connect&lt;/label&gt; 
+    &lt;label&gt;&lt;input type="radio" name="consortium" value="rdconnect"#if ("$!{request.consortium}" == 'rdconnect') checked="checked"#end/&gt;RD-Connect&lt;/label&gt;
     &lt;label&gt;&lt;input type="radio" name="consortium" value="other"#if ("$!{request.consortium}" == 'other' || "$!{request.consortium}" == '') checked="checked"#end/&gt;Other&lt;/label&gt;&lt;/dd&gt;
-&lt;dt&gt;&lt;label for="email" class="required"&gt;Email address&lt;/label&gt;&lt;span class="xHint"&gt;The email address where you wish to receive your account information. Please use your institutional email address rather than gmail, yahoo, etc.&lt;/span&gt;&lt;/dt&gt;
-&lt;dd&gt;&lt;input type="text" name="email" id="email" placeholder="name@myhospital.org" class="required" value="$!{escapetool.xml($request.email)}"/&gt;&lt;/dd&gt;
-&lt;dt&gt;&lt;label for="referral"&gt;How did you hear about / Who referred you to PhenomeCentral?&lt;/label&gt;&lt;/dt&gt;
-&lt;dd&gt;&lt;input type="text" name="referral" id="referral" placeholder="" value="$!{escapetool.xml($request.referral)}"/&gt;&lt;/dd&gt;
-&lt;dt&gt;&lt;label for="comments" class="required"&gt;Why are you requesting access to PhenomeCentral?&lt;/label&gt;&lt;/dt&gt;
-&lt;dd&gt;&lt;textarea name="comments" id="comments" rows="3" cols="40" class="required"&gt;$!{escapetool.xml($request.comments)}&lt;/textarea&gt;&lt;/dd&gt;
-&lt;dt&gt;&lt;label for="confirmation" class="required"&gt;&lt;input type="checkbox" name="confirmation" id="confirmation" value="1"/&gt; I confirm that I am a clinician or scientist working with patients affected by rare disorders.&lt;/label&gt;&lt;/dt&gt;
-&lt;/dl&gt;
-&lt;div class="buttons"&gt;
-&lt;input type="submit" value="Request access" class="button"&gt;
-&lt;span class="buttonwrapper"&gt;&lt;a class="button secondary" href="$xwiki.getURL('data.WebHome')"&gt;Cancel and return to homepage&lt;/a&gt;&lt;/span&gt;
-&lt;/div&gt;
+  &lt;dt&gt;&lt;label for="email" class="required"&gt;Email address&lt;/label&gt;&lt;span class="xHint"&gt;The email address where you wish to receive your account information. Please use your institutional email address rather than gmail, yahoo, etc.&lt;/span&gt;&lt;/dt&gt;
+  &lt;dd&gt;&lt;input type="text" name="email" id="email" placeholder="name@myhospital.org" class="required" value="$!{escapetool.xml($request.email)}"/&gt;&lt;/dd&gt;
+  &lt;dt&gt;&lt;label for="website"&gt;Website&lt;/label&gt;&lt;span class="xHint"&gt;The URL of your institutional website through which we can confirm your affiliation.&lt;/span&gt;&lt;/dt&gt;
+  &lt;dd&gt;&lt;input type="text" name="website" id="website" placeholder="www.myhospital.org/~mylastname" value="$!{escapetool.xml($request.website)}"/&gt;&lt;/dd&gt;
+  &lt;dt&gt;&lt;label for="referral"&gt;How did you hear about / Who referred you to PhenomeCentral?&lt;/label&gt;&lt;/dt&gt;
+  &lt;dd&gt;&lt;input type="text" name="referral" id="referral" value="$!{escapetool.xml($request.referral)}"/&gt;&lt;/dd&gt;
+  &lt;dt&gt;&lt;label for="comments" class="required"&gt;Why are you requesting access to PhenomeCentral?&lt;/label&gt;&lt;/dt&gt;
+  &lt;dd&gt;&lt;textarea name="comments" id="comments" rows="3" cols="40" class="required"&gt;$!{escapetool.xml($request.comments)}&lt;/textarea&gt;&lt;/dd&gt;
+  &lt;dt&gt;&lt;label for="isClinician"&gt;&lt;input type="checkbox" name="isClinician" id="isClinician" value="Yes"/&gt; I am a clinician who sees rare disorder patients in my practice&lt;/label&gt;&lt;/dt&gt;
+  &lt;dt&gt;&lt;label for="isScientist"&gt;&lt;input type="checkbox" name="isScientist" id="isScientist" value="Yes"/&gt; I am a scientist affiliated with a government/non-profit research institute with rare disorder patient data&lt;/label&gt;&lt;/dt&gt;
+  &lt;/dl&gt;
+  &lt;div class="buttons"&gt;
+  &lt;input type="submit" value="Request access" class="button"&gt;
+  &lt;span class="buttonwrapper"&gt;&lt;a class="button secondary" href="$xwiki.getURL('data.WebHome')"&gt;Cancel and return to homepage&lt;/a&gt;&lt;/span&gt;
+  &lt;/div&gt;
+#end
 &lt;/form&gt;
 &lt;div class="clearfloats"&gt;&lt;/div&gt;
 {{/html}}

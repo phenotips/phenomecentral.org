@@ -102,8 +102,11 @@
 &lt;tr&gt;&lt;th&gt;Affiliation&lt;/th&gt;&lt;td&gt;$!{escapetool.xml($affiliation)}&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;th&gt;Consortium&lt;/th&gt;&lt;td&gt;$!{escapetool.xml($consortium)}&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;th&gt;Email address&lt;/th&gt;&lt;td&gt;$!{escapetool.xml($email)}&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;th&gt;Website&lt;/th&gt;&lt;td&gt;$!{escapetool.xml($website)}&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;th&gt;Referral&lt;/th&gt;&lt;td&gt;$!{escapetool.xml($referral)}&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;th&gt;Comments&lt;/th&gt;&lt;td&gt;$!{escapetool.xml($comments)}&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;th&gt;Is a clinician&lt;/th&gt;&lt;td&gt;$!{escapetool.xml($isClinician)}&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;th&gt;Is a scientist&lt;/th&gt;&lt;td&gt;$!{escapetool.xml($isScientist)}&lt;/td&gt;&lt;/tr&gt;
 &lt;/table&gt;</html>
     </property>
     <property>
@@ -120,8 +123,11 @@
 - Affiliation: $!{affiliation}
 - Consortium: $!{consortium}
 - Email address: $!{email}
+- Website: $!{website}
 - Referral: $!{referral}
-- Comments: $!{comments}</text>
+- Comments: $!{comments}
+- Is a clinician: $!{isClinician}
+- Is a scientist: $!{isScientist}</text>
     </property>
   </object>
 </xwikidoc>
