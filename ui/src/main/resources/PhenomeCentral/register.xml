@@ -177,6 +177,7 @@ $xwiki.jsfx.use('uicomponents/widgets/validation/livevalidation_prototype.js')##
       'comments' : $!{request.comments},
       'isClinician' : $!{request.isClinician},
       'isScientist' : $!{request.isScientist},
+      'isContributor' : $!{request.isContributor},
       'escapetool' : $escapetool
     })
     #set ($success = true)
@@ -224,6 +225,7 @@ $xwiki.jsfx.use('uicomponents/widgets/validation/livevalidation_prototype.js')##
   &lt;dd&gt;&lt;textarea name="comments" id="comments" rows="3" cols="40" class="required"&gt;$!{escapetool.xml($request.comments)}&lt;/textarea&gt;&lt;/dd&gt;
   &lt;dt&gt;&lt;label for="isClinician"&gt;&lt;input type="checkbox" name="isClinician" id="isClinician" value="Yes"/&gt; I am a clinician who sees rare disorder patients in my practice&lt;/label&gt;&lt;/dt&gt;
   &lt;dt&gt;&lt;label for="isScientist"&gt;&lt;input type="checkbox" name="isScientist" id="isScientist" value="Yes"/&gt; I am a scientist affiliated with a government/non-profit research institute with rare disorder patient data&lt;/label&gt;&lt;/dt&gt;
+  &lt;dt&gt;&lt;label for="isContributor"&gt;&lt;input type="checkbox" name="isContributor" id="isContributor" value="Yes"/&gt; I plan to contribute patient data&lt;/label&gt;&lt;/dt&gt;
   &lt;/dl&gt;
   &lt;div class="buttons"&gt;
   &lt;input type="submit" value="Request access" class="button"&gt;

@@ -107,6 +107,7 @@
 &lt;tr&gt;&lt;th&gt;Comments&lt;/th&gt;&lt;td&gt;$!{escapetool.xml($comments)}&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;th&gt;Is a clinician&lt;/th&gt;&lt;td&gt;$!{escapetool.xml($isClinician)}&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;th&gt;Is a scientist&lt;/th&gt;&lt;td&gt;$!{escapetool.xml($isScientist)}&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;th&gt;Will contribute&lt;/th&gt;&lt;td&gt;$!{escapetool.xml($isContributor)}&lt;/td&gt;&lt;/tr&gt;
 &lt;/table&gt;</html>
     </property>
     <property>
@@ -127,7 +128,8 @@
 - Referral: $!{referral}
 - Comments: $!{comments}
 - Is a clinician: $!{isClinician}
-- Is a scientist: $!{isScientist}</text>
+- Is a scientist: $!{isScientist}
+- Will contribute: $!{isContributor}</text>
     </property>
   </object>
 </xwikidoc>
