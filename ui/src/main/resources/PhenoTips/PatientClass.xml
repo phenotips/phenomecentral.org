@@ -1007,7 +1007,7 @@
       <sql/>
       <unmodifiable>0</unmodifiable>
       <validationMessage>vcf</validationMessage>
-      <validationRegExp>^text\/vcard$</validationRegExp>
+      <validationRegExp>.*</validationRegExp>
       <valueField/>
       <classType>com.xpn.xwiki.objects.classes.DBListClass</classType>
     </vcf>
