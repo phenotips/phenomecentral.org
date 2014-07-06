@@ -49,13 +49,6 @@
       <optional>true</optional>
     </dependency>
     <dependency>
-      <groupId>org.phenotips</groupId>
-      <artifactId>solr-war</artifactId>
-      <version>${phenotips.version}</version>
-      <type>war</type>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
       <groupId>edu.toronto.cs.medsavant</groupId>
       <artifactId>medsavant-json-client</artifactId>
       <version>${medsavant.version}</version>
@@ -81,13 +74,6 @@
       <artifactId>jetty-resources</artifactId>
       <version>${phenotips.version}</version>
       <type>zip</type>
-      <optional>true</optional>
-    </dependency>
-    <!-- Replace the Java SE logging backend with Logback, since it's very hard to disable the verbose logging otherwise. -->
-    <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-classic</artifactId>
-      <version>1.0.13</version>
       <optional>true</optional>
     </dependency>
   </dependencies>

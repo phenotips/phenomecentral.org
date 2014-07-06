@@ -45,15 +45,6 @@
       <unpack>true</unpack>
       <useProjectArtifact>false</useProjectArtifact>
     </dependencySet>
-    <!-- "solr" webapp. -->
-    <dependencySet>
-      <includes>
-        <include>org.phenotips:solr-war</include>
-      </includes>
-      <outputDirectory>webapps/solr</outputDirectory>
-      <unpack>true</unpack>
-      <useProjectArtifact>false</useProjectArtifact>
-    </dependencySet>
     <!-- "medsavant-json-client" webapp. -->
     <dependencySet>
       <includes>
@@ -68,17 +59,8 @@
       <includes>
         <include>org.phenotips:solr-configuration</include>
       </includes>
-      <outputDirectory>solrconfig/</outputDirectory>
+      <outputDirectory>/data/solr/</outputDirectory>
       <unpack>true</unpack>
-      <useProjectArtifact>false</useProjectArtifact>
-    </dependencySet>
-    <!-- Use Logback instead of Java SE logging -->
-    <dependencySet>
-      <includes>
-        <include>ch.qos.logback:*</include>
-      </includes>
-      <outputDirectory>webapps/solr/WEB-INF/lib</outputDirectory>
-      <unpack>false</unpack>
       <useProjectArtifact>false</useProjectArtifact>
     </dependencySet>
     <!-- Unpack Jetty files -->
@@ -90,7 +72,6 @@
       <unpack>true</unpack>
       <unpackOptions>
         <excludes>
-          <exclude>jetty/contexts/search.xml</exclude>
           <exclude>start.sh</exclude>
         </excludes>
       </unpackOptions>
