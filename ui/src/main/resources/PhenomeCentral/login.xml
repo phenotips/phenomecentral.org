@@ -44,7 +44,7 @@ $xwiki.ssx.use('data.WebHome')##
 $xwiki.ssx.use('PhenomeCentral.logo')##
 $xwiki.ssx.use('PhenomeCentral.login')##
 {{html}}
-&lt;div style="float: right"&gt;&lt;img src="$xwiki.getDocument('ColorThemes.Steel').getAttachmentURL('pc-logo.png')" alt="PhenomeCentral" style="margin-top: 30px; margin-right: 10px"&gt;&lt;/div&gt;
+&lt;div style="float: right"&gt;&lt;img src="$xwiki.getDocument('ColorThemes.Steel').getAttachmentURL('pc-logo.png')" alt="PhenomeCentral" style="margin-top: 30px; margin-right: 10px" /&gt;&lt;/div&gt;
 &lt;div style="margin-right: 160px"&gt;
 &lt;form class="xform pc-login" action="$xwiki.getURL('PhenomeCentral.login', 'loginsubmit')" method="post"&gt;
 &lt;h2&gt;Enter PhenomeCentral&lt;/h2&gt;
@@ -54,15 +54,15 @@ $xwiki.ssx.use('PhenomeCentral.login')##
 #end
   &lt;input type="hidden" name="form_token" value="$!{services.csrf.getToken()}"/&gt;
 &lt;/div&gt;
-#set($message = $services.localization.render($xwiki.parseMessage()))
+#set($message = $xcontext.message)
 #if($message)
   &lt;!-- previous login errors --&gt;
-  {{error}}${message}{{/error}}
+  {{error}}$services.localization.render($message){{/error}}
 #end
-&lt;p&gt;&lt;input class="username" type="text" id="j_username" name="j_username" value="" placeholder="$services.localization.render('username')" title="$services.localization.render('username')"/&gt;&lt;/p&gt;
+&lt;p&gt;&lt;input class="username" type="text" id="j_username" name="j_username" value="" placeholder="$services.localization.render('username')" title="$services.localization.render('username')" autofocus="autofocus"/&gt;&lt;/p&gt;
 &lt;p&gt;&lt;input class="password" type="password" id="j_pasword" name="j_password" value="" placeholder="$services.localization.render('password')" title="$services.localization.render('password')"/&gt;&lt;/p&gt;
 &lt;div class="buttons"&gt;&lt;input type="submit" class="button" value="Sign in"/&gt; &lt;span class="buttonwrapper"&gt;&lt;a class="button secondary" href="$xwiki.getURL('data.WebHome')"&gt;Cancel and return to homepage&lt;/a&gt;&lt;/span&gt;&lt;/div&gt;
-#if($xwiki.exists('XWiki.ResetPassword'))
+#if($xwiki.exists('XWiki.ResetPassword') &amp;&amp; $xwiki.hasAccessLevel('view', 'XWiki.ResetPassword'))
   &lt;div class="xHint" &gt;$services.localization.render('plaform.web.login.forgotUserNameOrPassword', ["&lt;a href='$xwiki.getURL('XWiki.ForgotUsername')'&gt;", '&lt;/a&gt;', "&lt;a href='$xwiki.getURL('XWiki.ResetPassword')'&gt;", '&lt;/a&gt;'])&lt;/div&gt;
 #end
 &lt;/form&gt;&lt;/div&gt;
