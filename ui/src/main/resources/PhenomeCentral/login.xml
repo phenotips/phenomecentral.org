@@ -20,29 +20,60 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc>
+<xwikidoc version="1.1">
   <web>PhenomeCentral</web>
   <name>login</name>
   <language/>
   <defaultLanguage/>
   <translation>0</translation>
-  <parent>PhenomeCentral.WebHome</parent>
   <creator>xwiki:XWiki.Admin</creator>
+  <creationDate>1404836668000</creationDate>
+  <parent>PhenomeCentral.WebHome</parent>
   <author>xwiki:XWiki.Admin</author>
-  <customClass/>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
-  <creationDate>1370619894000</creationDate>
   <date>1393590126000</date>
   <contentUpdateDate>1393590126000</contentUpdateDate>
   <version>1.1</version>
   <title>Login</title>
-  <defaultTemplate/>
-  <validationScript/>
   <comment/>
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>false</hidden>
+  <content>{{velocity}}
+$xwiki.ssx.use('data.WebHome')##
+$xwiki.ssx.use('PhenomeCentral.logo')##
+$xwiki.ssx.use('PhenomeCentral.login')##
+{{html}}
+&lt;div style="float: right"&gt;&lt;img src="$xwiki.getDocument('ColorThemes.Steel').getAttachmentURL('pc-logo.png')" alt="PhenomeCentral" style="margin-top: 30px; margin-right: 10px"&gt;&lt;/div&gt;
+&lt;div style="margin-right: 160px"&gt;
+&lt;form class="xform pc-login" action="$xwiki.getURL('PhenomeCentral.login', 'loginsubmit')" method="post"&gt;
+&lt;h2&gt;Enter PhenomeCentral&lt;/h2&gt;
+&lt;div class="hidden"&gt;&lt;input type="hidden" name="xredirect" value="$xwiki.getDocument('data.WebHome').getURL()"/&gt;
+#if("$!request.srid" != '')
+  &lt;input type="hidden" name="srid" value="$!escapetool.xml($request.srid)"/&gt;
+#end
+  &lt;input type="hidden" name="form_token" value="$!{services.csrf.getToken()}"/&gt;
+&lt;/div&gt;
+#set($message = $services.localization.render($xwiki.parseMessage()))
+#if($message)
+  &lt;!-- previous login errors --&gt;
+  {{error}}${message}{{/error}}
+#end
+&lt;p&gt;&lt;input class="username" type="text" id="j_username" name="j_username" value="" placeholder="$services.localization.render('username')" title="$services.localization.render('username')"/&gt;&lt;/p&gt;
+&lt;p&gt;&lt;input class="password" type="password" id="j_pasword" name="j_password" value="" placeholder="$services.localization.render('password')" title="$services.localization.render('password')"/&gt;&lt;/p&gt;
+&lt;div class="buttons"&gt;&lt;input type="submit" class="button" value="Sign in"/&gt; &lt;span class="buttonwrapper"&gt;&lt;a class="button secondary" href="$xwiki.getURL('data.WebHome')"&gt;Cancel and return to homepage&lt;/a&gt;&lt;/span&gt;&lt;/div&gt;
+#if($xwiki.exists('XWiki.ResetPassword'))
+  &lt;div class="xHint" &gt;$services.localization.render('plaform.web.login.forgotUserNameOrPassword', ["&lt;a href='$xwiki.getURL('XWiki.ForgotUsername')'&gt;", '&lt;/a&gt;', "&lt;a href='$xwiki.getURL('XWiki.ResetPassword')'&gt;", '&lt;/a&gt;'])&lt;/div&gt;
+#end
+&lt;/form&gt;&lt;/div&gt;
+{{/html}}
+{{/velocity}}
+</content>
   <object>
+    <name>PhenomeCentral.login</name>
+    <number>0</number>
+    <className>XWiki.StyleSheetExtension</className>
+    <guid>e907fb5a-6acd-4e26-a892-923aa1cdbdde</guid>
     <class>
       <name>XWiki.StyleSheetExtension</name>
       <customClass/>
@@ -114,10 +145,6 @@
         <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
       </use>
     </class>
-    <name>PhenomeCentral.login</name>
-    <number>0</number>
-    <className>XWiki.StyleSheetExtension</className>
-    <guid>e907fb5a-6acd-4e26-a892-923aa1cdbdde</guid>
     <property>
       <cache>forbid</cache>
     </property>
@@ -155,6 +182,10 @@
     </property>
   </object>
   <object>
+    <name>PhenomeCentral.login</name>
+    <number>0</number>
+    <className>XWiki.XWikiRights</className>
+    <guid>af8bec24-43ba-4ce0-aa83-d2f5a945b8be</guid>
     <class>
       <name>XWiki.XWikiRights</name>
       <customClass/>
@@ -220,10 +251,6 @@
         <classType>com.xpn.xwiki.objects.classes.UsersClass</classType>
       </users>
     </class>
-    <name>PhenomeCentral.login</name>
-    <number>0</number>
-    <className>XWiki.XWikiRights</className>
-    <guid>af8bec24-43ba-4ce0-aa83-d2f5a945b8be</guid>
     <property>
       <allow>1</allow>
     </property>
@@ -235,6 +262,10 @@
     </property>
   </object>
   <object>
+    <name>PhenomeCentral.login</name>
+    <number>1</number>
+    <className>XWiki.XWikiRights</className>
+    <guid>0581383c-a555-4af7-976c-e566bf97a17c</guid>
     <class>
       <name>XWiki.XWikiRights</name>
       <customClass/>
@@ -300,10 +331,6 @@
         <classType>com.xpn.xwiki.objects.classes.UsersClass</classType>
       </users>
     </class>
-    <name>PhenomeCentral.login</name>
-    <number>1</number>
-    <className>XWiki.XWikiRights</className>
-    <guid>0581383c-a555-4af7-976c-e566bf97a17c</guid>
     <property>
       <allow>1</allow>
     </property>
@@ -314,34 +341,4 @@
       <users>XWiki.XWikiGuest</users>
     </property>
   </object>
-  <content>{{velocity}}
-$xwiki.ssx.use('data.WebHome')##
-$xwiki.ssx.use('PhenomeCentral.logo')##
-$xwiki.ssx.use('PhenomeCentral.login')##
-{{html}}
-&lt;div style="float: right"&gt;&lt;img src="$xwiki.getDocument('ColorThemes.Steel').getAttachmentURL('pc-logo.png')" alt="PhenomeCentral" style="margin-top: 30px; margin-right: 10px"&gt;&lt;/div&gt;
-&lt;div style="margin-right: 160px"&gt;
-&lt;form class="xform pc-login" action="$xwiki.getURL('PhenomeCentral.login', 'loginsubmit')" method="post"&gt;
-&lt;h2&gt;Enter PhenomeCentral&lt;/h2&gt;
-&lt;div class="hidden"&gt;&lt;input type="hidden" name="xredirect" value="$xwiki.getDocument('data.WebHome').getURL()"/&gt;
-#if("$!request.srid" != '')
-  &lt;input type="hidden" name="srid" value="$!escapetool.xml($request.srid)"/&gt;
-#end
-  &lt;input type="hidden" name="form_token" value="$!{services.csrf.getToken()}"/&gt;
-&lt;/div&gt;
-#set($message = $services.localization.render($xwiki.parseMessage()))
-#if($message)
-  &lt;!-- previous login errors --&gt;
-  {{error}}${message}{{/error}}
-#end
-&lt;p&gt;&lt;input class="username" type="text" id="j_username" name="j_username" value="" placeholder="$services.localization.render('username')" title="$services.localization.render('username')"/&gt;&lt;/p&gt;
-&lt;p&gt;&lt;input class="password" type="password" id="j_pasword" name="j_password" value="" placeholder="$services.localization.render('password')" title="$services.localization.render('password')"/&gt;&lt;/p&gt;
-&lt;div class="buttons"&gt;&lt;input type="submit" class="button" value="Sign in"/&gt; &lt;span class="buttonwrapper"&gt;&lt;a class="button secondary" href="$xwiki.getURL('data.WebHome')"&gt;Cancel and return to homepage&lt;/a&gt;&lt;/span&gt;&lt;/div&gt;
-#if($xwiki.exists('XWiki.ResetPassword'))
-  &lt;div class="xHint" &gt;$services.localization.render('plaform.web.login.forgotUserNameOrPassword', ["&lt;a href='$xwiki.getURL('XWiki.ForgotUsername')'&gt;", '&lt;/a&gt;', "&lt;a href='$xwiki.getURL('XWiki.ResetPassword')'&gt;", '&lt;/a&gt;'])&lt;/div&gt;
-#end
-&lt;/form&gt;&lt;/div&gt;
-{{/html}}
-{{/velocity}}
-</content>
 </xwikidoc>
