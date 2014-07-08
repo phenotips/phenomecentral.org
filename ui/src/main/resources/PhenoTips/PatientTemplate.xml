@@ -27,12 +27,12 @@
   <defaultLanguage/>
   <translation>0</translation>
   <creator>xwiki:XWiki.Admin</creator>
-  <creationDate>1404836691000</creationDate>
+  <creationDate>1401822198000</creationDate>
   <parent>PhenoTips.PatientClass</parent>
   <author>xwiki:XWiki.Admin</author>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
-  <date>1404836691000</date>
-  <contentUpdateDate>1404836691000</contentUpdateDate>
+  <date>1401822198000</date>
+  <contentUpdateDate>1401822198000</contentUpdateDate>
   <version>1.1</version>
   <title>PatientClass Template</title>
   <comment/>
@@ -302,7 +302,8 @@
         <picker>0</picker>
         <prettyName>extended_negative_phenotype</prettyName>
         <relationalStorage>1</relationalStorage>
-        <separator> </separator>
+        <separator>
+</separator>
         <separators/>
         <size>1</size>
         <sort>none</sort>
@@ -326,7 +327,8 @@
         <picker>0</picker>
         <prettyName>extended_negative_prenatal_phenotype</prettyName>
         <relationalStorage>1</relationalStorage>
-        <separator> </separator>
+        <separator>
+</separator>
         <separators/>
         <size>1</size>
         <sort>none</sort>
@@ -350,7 +352,8 @@
         <picker>0</picker>
         <prettyName>extended_phenotype</prettyName>
         <relationalStorage>1</relationalStorage>
-        <separator> </separator>
+        <separator>
+</separator>
         <separators/>
         <size>1</size>
         <sort>none</sort>
@@ -374,7 +377,8 @@
         <picker>0</picker>
         <prettyName>extended_prenatal_phenotype</prettyName>
         <relationalStorage>1</relationalStorage>
-        <separator> </separator>
+        <separator>
+</separator>
         <separators/>
         <size>1</size>
         <sort>none</sort>
@@ -661,7 +665,7 @@
       <maternal_ethnicity>
         <cache>0</cache>
         <customDisplay>{{velocity filter="indent"}}{{html wiki=true clean=false}}
-#if ($object.xWikiClass.get($name).getPropertyClass().isPicker() &amp;&amp; ($xcontext.action == 'edit' || $xcontext.action == 'inline'))
+#if ($xcontext.action == 'edit' || $xcontext.action == 'inline')
 #set ($suggest_script = $xwiki.getURL('PhenoTips.EthnicitySearch', 'get', 'outputSyntax=plain'))
 {{html wiki=false clean=false}}&lt;input name="xwiki-free-multiselect-suggest-script" type="hidden" value="$!escapetool.xml($suggest_script)"/&gt;{{/html}}
 #end
@@ -735,7 +739,8 @@
         <picker>0</picker>
         <prettyName>Symptoms NOT observed in this patient</prettyName>
         <relationalStorage>1</relationalStorage>
-        <separator> </separator>
+        <separator>
+</separator>
         <separators/>
         <size>1</size>
         <sort>none</sort>
@@ -759,7 +764,8 @@
         <picker>0</picker>
         <prettyName>Prenatal symptoms NOT observed in this patient</prettyName>
         <relationalStorage>1</relationalStorage>
-        <separator> </separator>
+        <separator>
+</separator>
         <separators/>
         <size>1</size>
         <sort>none</sort>
@@ -783,7 +789,8 @@
         <picker>0</picker>
         <prettyName>OMIM disorder</prettyName>
         <relationalStorage>1</relationalStorage>
-        <separator> </separator>
+        <separator>
+</separator>
         <separators/>
         <size>1</size>
         <sort>none</sort>
@@ -797,7 +804,7 @@
       <paternal_ethnicity>
         <cache>0</cache>
         <customDisplay>{{velocity filter="indent"}}{{html wiki=true clean=false}}
-#if ($object.xWikiClass.get($name).getPropertyClass().isPicker() &amp;&amp; ($xcontext.action == 'edit' || $xcontext.action == 'inline'))
+#if ($xcontext.action == 'edit' || $xcontext.action == 'inline')
 #set ($suggest_script = $xwiki.getURL('PhenoTips.EthnicitySearch', 'get', 'outputSyntax=plain'))
 {{html wiki=false clean=false}}&lt;input name="xwiki-free-multiselect-suggest-script" type="hidden" value="$!escapetool.xml($suggest_script)"/&gt;{{/html}}
 #end
@@ -871,7 +878,8 @@
         <picker>0</picker>
         <prettyName>Clinical symptoms &amp; physical findings</prettyName>
         <relationalStorage>1</relationalStorage>
-        <separator> </separator>
+        <separator>
+</separator>
         <separators/>
         <size>1</size>
         <sort>none</sort>
@@ -915,7 +923,8 @@
         <picker>0</picker>
         <prettyName>Prenatal and Perinatal History</prettyName>
         <relationalStorage>1</relationalStorage>
-        <separator> </separator>
+        <separator>
+</separator>
         <separators/>
         <size>1</size>
         <sort>none</sort>

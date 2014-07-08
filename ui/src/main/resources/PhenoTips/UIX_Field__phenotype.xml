@@ -27,12 +27,12 @@
   <defaultLanguage/>
   <translation>0</translation>
   <creator>xwiki:XWiki.Admin</creator>
-  <creationDate>1404836694000</creationDate>
+  <creationDate>1401822210000</creationDate>
   <parent>PhenoTips.PatientSheet</parent>
   <author>xwiki:XWiki.Admin</author>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
-  <date>1393559995000</date>
-  <contentUpdateDate>1393559995000</contentUpdateDate>
+  <date>1401822210000</date>
+  <contentUpdateDate>1401822210000</contentUpdateDate>
   <version>1.1</version>
   <title>Clinical symptoms &amp; physical findings</title>
   <comment/>
@@ -124,31 +124,20 @@
   // ------------------------------------------------------------------------
   // Phenotype Section Nav Tools
   // ------------------------------------------------------------------------
-  if (!$('inline')) {return;}
+  if (!$('inline')) {
+    // If not in edit mode, no behavior to add
+    return;
+  }
 
   $$('.chapter .browser .browser-title').each(function(item){
-    //var phBrowserHide = new Element('span', {'class' : 'tool hide'}).update('Hide');
-    var phBrowserExpandTools = new Element('span', {'class' : 'expand-tools'})//.insert(phBrowserHide);
-    item.insert({after: phBrowserExpandTools});
-    [/*phBrowserHide, */item].invoke('observe', 'click', function (event) {
-      event.element().up('.browser').toggleClassName('collapsed');
-      event.element().up('.chapter').select('.current-phenotype-selection').invoke('toggleClassName', 'half-width');
-    });
+    item.insert({after: new Element('span', {'class' : 'expand-tools'})});
   });
   var phBrowserExpandAll = new Element('span', {'class' : 'tool expand-all'}).update('Expand all');
   var phBrowserCollapseAll = new Element('span', {'class' : 'tool collapse-all'}).update('Collapse all');
-  var phBrowserJumpTo = new Element('span', {'class' : 'tool jump-to'}).update('Jump to');
-  var phBrowserExpandTools =
-      new Element('span', {'class' : 'inner-expand-tools'})/*.insert(phBrowserJumpTo).insert(" · ")*/.insert(
-                  phBrowserExpandAll).insert(" · ").insert(phBrowserCollapseAll);//.insert(" · ");
-
-  var phBrowserTocList = new Element('ul');
-  var phBrowserToc = new Element('div', {'class' : 'chapter-toc'}).insert(phBrowserTocList);
+  var phBrowserExpandTools = new Element('span', {'class' : 'inner-expand-tools'}).insert(phBrowserExpandAll).insert(" · ").insert(phBrowserCollapseAll);
 
   $$('.chapter.phenotype-info .browser h3+.expand-tools').invoke('insert', {'top' : phBrowserExpandTools});
-  phBrowserExpandTools.up().insert({'after' : phBrowserToc});
   $$('.chapter.phenotype-info .collapsible-group h3').each(function(item) {
-     phBrowserTocList.insert(new Element('li').update(new Element('a', {'href' : '#' + item.getAttribute('id')}).update(item.innerHTML)));
      item.insert({'top': new Element('span', {'class' : 'expand-tool'}).update('▼')});
   });
 
@@ -187,14 +176,8 @@
     });
   });
 
-  phBrowserToc.toggle();
-  phBrowserJumpTo.observe('click', function(event){
-    phBrowserToc.toggle();
-  });
-  phBrowserToc.select('a').invoke('observe', 'click', function(event) {
-    phBrowserToc.toggle();
-    tocLinkClicked(event);
-  });
+  // FIXME: Re-enable once https://github.com/phenotips/phenotips/issues/822 is fixed.
+  // phBrowserCollapseAll.click();
 
   // ------------------------------------------------------------------------
   // Behavior of the quick search box
@@ -205,7 +188,7 @@
     var content = qsBox.up('div');
     if (content) {
       qsBox.__x_qsInput = qsBox.down('input[type=text]') || {};
-      var qsSticky = new StickyBox(qsBox, content, {shadowSize : offsetTop, isSticky : function(element) {return !element.__x_qsInput._activeSuggest} });
+      var qsSticky = new StickyBox(qsBox, content, {offsetTop : offsetTop, isSticky : function(element) {return !element.__x_qsInput._activeSuggest} });
       Event.observe(document, 'ms:suggest:containerCreated', function(event) {
         if (event.memo.suggest.fld == qsBox.__x_qsInput) {
           qsBox.__x_qsInput._activeSuggest = true;
@@ -228,12 +211,13 @@
   // ------------------------------------------------------------------------
   // Behavior of the selection summary box
   // ------------------------------------------------------------------------
+  var offsetBottom = document.documentElement.down('.bottombuttons') &amp;&amp; document.documentElement.down('.bottombuttons').getHeight();
   var summaryContent = $('current-phenotype-selection');
   var summary = summaryContent &amp;&amp; summaryContent.up('.selector-panel');
   if (summary) {
     var container = summary.up();
     summary.addClassName('absolute');
-    var sSticky  = new StickyBox(summary, container, {shadowSize : offsetTop, resize: true, isSticky : function(element) {return element.hasClassName('half-width') &amp;&amp; element.getHeight() &lt; element.previous().getHeight()}});
+    var sSticky  = new StickyBox(summary, container, {offsetTop : offsetTop, offsetBottom: offsetBottom, resize: true, isSticky : function(element) {return element.hasClassName('half-width') &amp;&amp; element.getHeight() &lt; element.previous().getHeight()}});
     summary.observe('size:changed', function(event) {
       if (!event.memo) {
          summaryContent.style.height = '';
@@ -251,10 +235,10 @@
       <name/>
     </property>
     <property>
-      <parse/>
+      <parse>0</parse>
     </property>
     <property>
-      <use>currentPage</use>
+      <use>onDemand</use>
     </property>
   </object>
   <object>
@@ -334,7 +318,7 @@
       </use>
     </class>
     <property>
-      <cache>forbid</cache>
+      <cache>long</cache>
     </property>
     <property>
       <code>#template("colorThemeInit.vm")
@@ -344,16 +328,19 @@
 .emphasized-box {
   background: $theme.backgroundSecondaryColor;
   border: 1px solid $theme.backgroundSecondaryColor;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2), 0 -1.8em 10px #f9f9f9, 0 10px 10px #F9F9F9, inset 0 0 50px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2), 0 10px 10px #F9F9F9, inset 0 0 50px rgba(0, 0, 0, 0.15);
+}
+.quick-search-box.sticky {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2), 0 -1.8em 0px #f9f9f9, 0 10px 10px #F9F9F9, inset 0 0 50px rgba(0, 0, 0, 0.15);
 }
 .quick-search-box {
   border: 0 none;
-  z-index: 2000;
+  z-index: 1000;
   #css3_backgroundLinearGradient({
     'to': 'bottom',
     'colors': [
-      {'color': $theme.panelHeaderGradientColor, 'position': '0%'},
-      {'color': $theme.panelHeaderBackgroundColor, 'position': '50%'}
+      {'color': $theme.menuGradientColor, 'position': '0%'},
+      {'color': $theme.menuBackgroundColor, 'position': '50%'}
     ]
   })
 }
@@ -370,13 +357,13 @@
   padding: 0;
 }
 .quick-search-box table label {
-  color: $theme.panelHeaderTextColor;
+  color: $theme.menuLinkColor;
   font-weight: bold;
+  text-shadow: 0 1px 1px $theme.menuBackgroundColor;
 }
 .quick-search-box table td.icon {
   width: 3.2em;
   vertical-align: middle;
-  opacity: .7;
 }
 .quick-search-box input:focus {
   color: $theme.textColor;
@@ -404,54 +391,7 @@
 .selector-panels {
   position: relative;
 }
-.browser.collapsed .expand-tools .inner-expand-tools,
-.browser.collapsed .expand-tools .hide,
-.browser.collapsed div {
-  display: none;
-}
-.browser.collapsed {
-  position: absolute;
-  top: 0;
-  left: 0;
-  border: 0 none;
-}
-.browser.collapsed + .current-phenotype-selection {
-}
-.browser.collapsed .browser-title {
-  text-transform: none;
-  font-size: 80%;
-  color: $theme.textPrimaryColor;
-  border: 0 none;
-  margin: 0;
-  padding: 0;
-}
-.browser.collapsed .browser-title:after {
-  content: " »";
-}
-.browser.collapsed .browser-title:hover{
-  cursor: pointer;
-  color: $theme.linkColor;
-}
 
-.phenotype-info .chapter-toc {
-  float: right;
-  height: 0;
-  margin: -5px -10px 0;
-  overflow: visible;
-  text-align: right;
-  position: relative;
-  z-index: 1950;
-}
-.phenotype-info .chapter-toc ul {
-  list-style-type: none;
-  background: $theme.pageBackgroundColor;
-  border: 1px solid $theme.borderColor;
-  border-radius: 4px 0 4px 4px;
-  list-style-type: none;
-  margin: 0;
-  padding: 0.3em 1em;
-  font-size: .8em;
-}
 .phenotype-info h3 .expand-tool {
   vertical-align: top;
   width: 1em;
@@ -545,14 +485,6 @@
   padding: 5px 20px 5px 15px !important;
   text-align: left;
   text-transform: uppercase;
-#*  background-color: $theme.panelHeaderBackgroundColor;
-background: -moz-linear-gradient(top, ${theme.panelHeaderGradientColor} 0%, ${theme.panelHeaderBackgroundColor} 100%); /* FF3.6+ */
-background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,${theme.panelHeaderGradientColor}), color-stop(100%,${theme.panelHeaderBackgroundColor})); /* Chrome,Safari4+ */
-background: -webkit-linear-gradient(top, ${theme.panelHeaderGradientColor} 0%,${theme.panelHeaderBackgroundColor} 100%); /* Chrome10+,Safari5.1+ */
-background: -o-linear-gradient(top, ${theme.panelHeaderGradientColor} 0%,${theme.panelHeaderBackgroundColor} 100%); /* Opera 11.10+ */
-background: -ms-linear-gradient(top, ${theme.panelHeaderGradientColor} 0%,${theme.panelHeaderBackgroundColor} 100%); /* IE10+ */
-background: linear-gradient(to bottom, ${theme.panelHeaderGradientColor} 0%,${theme.panelHeaderBackgroundColor} 100%); /* W3C */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='${theme.panelHeaderGradientColor}', endColorstr='${theme.panelHeaderBackgroundColor}',GradientType=0 ); /* IE6-9 */*#
   #css3_backgroundLinearGradient({
      'to': 'bottom',
      'colors': [
@@ -578,7 +510,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='${theme.panel
   display: none;
 }
 
-}
 .current-phenotype-selection h3 {
   margin-left: 1em;
   margin-right: 1em;
@@ -759,7 +690,7 @@ label.selected input[type="checkbox"] {
 
 {{velocity}}
 $xwiki.ssx.use('PhenoTips.UIX_Field__phenotype')##
-$xwiki.jsx.use('PhenoTips.UIX_Field__phenotype', {'minify' : false})##
+$xwiki.jsx.use('PhenoTips.UIX_Field__phenotype')##
 #macro (__qsBox $fieldName $cssClass)
   #if ($xcontext.action == 'edit')
    (% id="quick-search-box"  class="group-other quick-search-box emphasized-box $!{cssClass}" %)(((
@@ -787,15 +718,13 @@ $xwiki.jsx.use('PhenoTips.UIX_Field__phenotype', {'minify' : false})##
   #if ($xcontext.action == 'edit')
     $doc.display('unaffected') #__label('unaffected' '' "$class.get('unaffected').prettyName")
 
-    (% class="hint controlled" %)Or select observed phenotypes:(%%)
+    (% class="hint controlled" %)Or select observed phenotypes:(%%) {{icon name="question-circle" cssClass="xHelpButton" title="$services.localization.render("PhenoTips.PatientClass_select_phenotypes_hint")"/}}
   #else
     #if ($showUnaffected)$class.get('unaffected').prettyName#end
   #end
   )))
   (% class="controlled" %) (((
   #if ($xcontext.action == 'edit')
-    $xwiki.ssx.use('PhenoTips.YesNoNAPicker', {'colorTheme' : "$xwiki.getSpacePreference('colorTheme')"})##
-    $xwiki.jsx.use('PhenoTips.YesNoNAPicker')##
     (% class="selector-panels"%)(((
     (% class="half-width selector-panel browser browse-phenotype-categories force-collapse"%)(((
     #__qsBox("$!{class.name}_$!{obj.number}_phenotype" "controlled")

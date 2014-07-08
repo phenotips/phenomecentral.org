@@ -27,12 +27,12 @@
   <defaultLanguage/>
   <translation>0</translation>
   <creator>xwiki:XWiki.Admin</creator>
-  <creationDate>1404836693000</creationDate>
+  <creationDate>1401822207000</creationDate>
   <parent>PhenoTips.PatientSheet</parent>
   <author>xwiki:XWiki.Admin</author>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
-  <date>1377142504000</date>
-  <contentUpdateDate>1377142504000</contentUpdateDate>
+  <date>1401822207000</date>
+  <contentUpdateDate>1401822207000</contentUpdateDate>
   <version>1.1</version>
   <title>Patient name</title>
   <comment/>
@@ -138,7 +138,8 @@
 enabled=false
 required=
 order=4
-fields=last_name,first_name</parameters>
+fields=last_name,first_name
+contains_PII=true</parameters>
     </property>
     <property>
       <scope>wiki</scope>
