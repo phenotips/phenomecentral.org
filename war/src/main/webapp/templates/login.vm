@@ -1,0 +1,45 @@
+#if ($xcontext.user != 'XWiki.XWikiGuest')
+  #if ($request.xredirect)
+    $response.sendRedirect($request.xredirect)
+  #else
+    $response.sendRedirect($xwiki.getURL($services.model.resolveDocument('', 'default', $doc.documentReference.extractReference('WIKI'))))
+  #end
+#elseif($doc.fullName != 'PhenomeCentral.login')
+  #set($qs = "$!{request.queryString}")
+  #if(!$request.getParameter('xredirect'))
+    #set($qs = "xredirect=$escapetool.url($doc.getURL('view'))&${qs}")
+  #end
+  $response.sendRedirect($xwiki.getURL('PhenomeCentral.login', 'login', $qs))
+#else
+###
+### Login page
+###
+###
+#template("startpage.vm")
+$xwiki.ssx.use('data.WebHome')##
+<div class="main layoutsubsection">
+<div id="mainContentArea">
+<form class="xform pc-login" action="$xwiki.getURL('PhenomeCentral.login', 'loginsubmit')" method="post">
+<h2>Enter PhenomeCentral</h2>
+<div class="hidden"><input type="hidden" name="xredirect" value="$!{escapetool.xml($request.xredirect)}"/>
+#if("$!request.srid" != '')
+  <input type="hidden" name="srid" value="$!escapetool.xml($request.srid)"/>
+#end
+  <input type="hidden" name="form_token" value="$!{services.csrf.getToken()}"/>
+</div>
+#set($message = $xcontext.message)
+#if($message)
+  <!-- previous login errors -->
+  #error($services.localization.render($message))
+#end
+<p><input class="username" type="text" id="j_username" name="j_username" value="" placeholder="$services.localization.render('username')" title="$services.localization.render('username')" autofocus="autofocus"/></p>
+<p><input class="password" type="password" id="j_pasword" name="j_password" value="" placeholder="$services.localization.render('password')" title="$services.localization.render('password')"/></p>
+<div class="buttons"><input type="submit" class="button" value="Sign in"/></div>
+#if($xwiki.exists('XWiki.ResetPassword') && $xwiki.hasAccessLevel('view', 'XWiki.ResetPassword'))
+  <div class="xHint" >$services.localization.render('plaform.web.login.forgotUserNameOrPassword', ["<a href='$xwiki.getURL('XWiki.ForgotUsername')'>", '</a>', "<a href='$xwiki.getURL('XWiki.ResetPassword')'>", '</a>'])</div>
+#end
+</form>
+</div>## mainContentArea
+</div>## main
+#template("endpage.vm")
+#end
