@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
+<xwikidoc>
+  <web>XWiki</web>
+  <name>ManualAccountValidation</name>
+  <language/>
+  <defaultLanguage/>
+  <translation>0</translation>
+  <parent>XWiki.WebHome</parent>
+  <creator>xwiki:XWiki.Admin</creator>
+  <author>xwiki:XWiki.Admin</author>
+  <customClass/>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <creationDate>1393874349000</creationDate>
+  <date>1393887447000</date>
+  <contentUpdateDate>1393887447000</contentUpdateDate>
+  <version>1.1</version>
+  <title/>
+  <defaultTemplate/>
+  <validationScript/>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>xwiki/2.0</syntaxId>
+  <hidden>true</hidden>
+  <object>
+    <class>
+      <name>XWiki.Mail</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <html>
+        <disabled>0</disabled>
+        <name>html</name>
+        <number>4</number>
+        <prettyName>HTML</prettyName>
+        <rows>15</rows>
+        <size>80</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </html>
+      <language>
+        <disabled>0</disabled>
+        <name>language</name>
+        <number>2</number>
+        <prettyName>Language</prettyName>
+        <size>5</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </language>
+      <subject>
+        <disabled>0</disabled>
+        <name>subject</name>
+        <number>1</number>
+        <prettyName>Subject</prettyName>
+        <size>40</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </subject>
+      <text>
+        <disabled>0</disabled>
+        <name>text</name>
+        <number>3</number>
+        <prettyName>Text</prettyName>
+        <rows>15</rows>
+        <size>80</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </text>
+    </class>
+    <name>XWiki.ManualAccountValidation</name>
+    <number>0</number>
+    <className>XWiki.Mail</className>
+    <guid>bf97bf71-ec20-42b0-8577-21068d41d00c</guid>
+    <property>
+      <html>&lt;p&gt;Hello,&lt;/p&gt;
+&lt;p&gt;Your account ${userName} has been activated.&lt;/p&gt;
+&lt;p&gt;You can now log in at &lt;a href="${loginURL}"&gt;${platformName}&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Best wishes,&lt;br&gt;
+The ${platformName} team&lt;/p&gt;</html>
+    </property>
+    <property>
+      <language/>
+    </property>
+    <property>
+      <subject>You account at PhenomeCentral has been approved</subject>
+    </property>
+    <property>
+      <text>Hello,
+Your account ${userName} has been activated.
+You can now log in at ${loginURL}.
+
+Best wishes,
+The ${platformName} team</text>
+    </property>
+  </object>
+  <content>{{velocity}}
+$response.setContentType("application/x-json")
+#if("$!{request.xwikiname}" != '')
+  #set ($userDoc = $xwiki.getDocument(${request.xwikiname}))
+  #set ($user = $userDoc.getObject("XWiki.XWikiUsers"))
+  $user.set('active', 1)
+  #set ($email = $user.getProperty('email').getValue())
+
+  #if ($!{email} != "")
+    ##set ($userName = )
+    #set ($emailStatus = $xwiki.mailsender.sendMessageFromTemplate("PhenomeCentral &lt;noreply@phenomecentral.org&gt;", "$email", $xwiki.null, $xwiki.null, "", "XWiki.ManualAccountValidation", 
+      {"userName": $xwiki.getDocument($request.xwikiname).name,
+       "platformName": "PhenomeCentral",
+       "loginURL": $xwiki.getDocument($services.model.resolveDocument('', 'default', $doc.documentReference.extractReference('WIKI'))).getExternalURL()}))
+  #else
+    #set ($emailStatus = 0)
+  #end
+  #if ($emailStatus == 0)
+    $userDoc.save()
+true
+  #else
+false
+  #end 
+#end
+{{/velocity}}
+</content>
+</xwikidoc>

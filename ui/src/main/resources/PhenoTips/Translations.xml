@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
+<xwikidoc>
+  <web>PhenoTips</web>
+  <name>Translations</name>
+  <language/>
+  <defaultLanguage/>
+  <translation>0</translation>
+  <parent>PhenoTips.WebHome</parent>
+  <creator>xwiki:XWiki.Admin</creator>
+  <author>xwiki:XWiki.Admin</author>
+  <customClass/>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <creationDate>1393352581000</creationDate>
+  <date>1393882772000</date>
+  <contentUpdateDate>1393882772000</contentUpdateDate>
+  <version>1.1</version>
+  <title>Translations</title>
+  <defaultTemplate/>
+  <validationScript/>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>xwiki/2.1</syntaxId>
+  <hidden>true</hidden>
+  <content>patient.livetable.doc.name=Report name
+patient.livetable.doc.creator=Reported by
+patient.livetable.doc.author=Last modified by
+patient.livetable.doc.creationDate=Report date
+patient.livetable.doc.date=Last modification date
+patient.livetable.last_name=Last name
+patient.livetable.first_name=First name
+patient.livetable.gender=Gender
+patient.livetable.date_of_birth=Date of birth
+patient.livetable.health_card=Provincial health card #
+patient.livetable.relative_of=Relative of
+patient.livetable._actions=
+patient.livetable.emptyvalue=-
+patient.livetable.p_id=Identifier
+patient.livetable.congenital=Congenital
+patient.livetable.sex=Sex
+patient.livetable.global_age_of_onset=Onset
+patient.livetable.phenotype=Phenotype
+patient.livetable.negative_phenotype=Negative phenotype
+patient.livetable.omim_id=Disorder
+patient.livetable.identifier=Identifier
+patient.livetable.external_id=Identifier
+patient.livetable.global_mode_of_inheritance=Global mode of inheritance
+patient.livetable.unaffected=Clinically normal
+patient.livetable.exam_date=Exam Date
+patient.livetable.relative=Relative
+patient.livetable.consanguinity=Consanguinity
+patient.livetable.omim_id=OMIM disorder
+patient.livetable.gestation=Gestation at delivery (weeks)
+patient.livetable.proband=Proband
+patient.livetable.in_vitro=In vitro
+patient.livetable.maternal_ethnicity=Maternal ethnicity
+patient.livetable.paternal_ethnicity=Paternal ethnicity
+patient.livetable.family_of=Pedigree number
+patient.livetable.miscarriages=Parents with at least 3 miscarriages
+
+admin.phenotips=PhenoTips
+admin.phenotips.description=Phenotype data settings.
+admin.welcome=Welcome message
+admin.tablesconfig=Data tables
+admin.dataformats=Data formats
+admin.menuconfig=Menu configuration
+admin.formconfig=Patient form structure
+admin.mapping=Phenotypes displayed by default
+admin.ontology=Ontology index
+admin.workgroups=Work groups
+admin.studies=Studies
+admin.pendingusers=Pending Users
+
+saveandview=Save
+
+phenotips.profile.preferences=PhenoTips preferences
+phenotips.profile.preferences.mapping=Preferred mapping</content>
+</xwikidoc>

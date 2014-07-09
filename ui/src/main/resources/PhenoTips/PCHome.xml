@@ -49,7 +49,7 @@ $xwiki.ssx.use('PhenoTips.PCHome')##
   &lt;div class="title-container half-width"&gt;
     &lt;h1&gt;PhenomeCentral&lt;/h1&gt;
     &lt;p&gt;A hub for secure data sharing within the rare disorder community&lt;/p&gt;
-    &lt;div class="buttons"&gt;&lt;a class="user-action sign-up" id="launch-register" href="$xwiki.getURL('PhenomeCentral.register')"&gt;Sign up&lt;/a&gt; &lt;a class="user-action login" id="launch-login" href="$xwiki.getURL('PhenomeCentral.login')"&gt;Login&lt;/a&gt; &lt;a class="user-action about" href="$xwiki.getURL('PhenomeCentral.About')"&gt;Read more...&lt;/a&gt;&lt;/div&gt;
+    &lt;div class="buttons"&gt;&lt;a class="user-action sign-up" id="launch-register" href="$xwiki.getURL('PhenomeCentral.', 'register')"&gt;Sign up&lt;/a&gt; &lt;a class="user-action login" id="launch-login" href="$xwiki.getURL('PhenomeCentral.login')"&gt;Login&lt;/a&gt; &lt;a class="user-action about" href="$xwiki.getURL('PhenomeCentral.About')"&gt;Read more...&lt;/a&gt;&lt;/div&gt;
   &lt;/div&gt;
   &lt;div class="clearfloats"&gt;&lt;/div&gt;
 &lt;/div&gt;
