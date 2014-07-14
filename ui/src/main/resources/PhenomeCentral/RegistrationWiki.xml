@@ -521,15 +521,6 @@ $xwiki.get('ssfx').use('uicomponents/widgets/validation/livevalidation.css', tru
     }
   })
 #set($discard = $fields.add($field))
-#set($field = 
-  {'name' : 'register_referral',
-    'label' : "How did you hear about / Who referred you to PhenomeCentral?",
-    'params' : { 
-      'type' : 'text', 
-      'size' : '100' 
-    }
-  })
-#set($discard = $fields.add($field))
 ##------------------------------------------------------------
 ##
 #*********
@@ -702,11 +693,6 @@ $xwiki.get('ssfx').use('uicomponents/widgets/validation/livevalidation.css', tru
   ## This must not be in a #set directive as it will output messages if something goes wrong.
   #validateFields($fields, $request)
   ##-------------------------------------
-  #if ("$!{request.confirmation}" == '')
-    #set ($missingConfirmation = true)
-    #set ($registrationFailed = true)
-  #end
-  ##-------------------------------------
   ## If server side validation was successfull, create the user
   #if(!$registrationFailed)
     #createUser($fields, $request, $response, $doAfterRegistration)
@@ -720,10 +706,6 @@ $xwiki.get('ssfx').use('uicomponents/widgets/validation/livevalidation.css', tru
 
   {{html clean=false wiki=false}}
     ##----------------------------------
-    #if ($missingConfirmation)
-      #error('PhenomeCentral is targeted to clinicians and scientists working in the rare disorder community. You should not request an account on PhenomeCentral unless you can confirm that you are a doctor, clinical geneticist or scientist working with patients affected by rare disorders.')
-    #end
-    ##----------------------------------
     &lt;form id="register" action="" method="post" class="xform"&gt;
     &lt;div&gt;
     &lt;input type="hidden" name="form_token" value="$!{services.csrf.getToken()}" /&gt;
@@ -734,19 +716,6 @@ $xwiki.get('ssfx').use('uicomponents/widgets/validation/livevalidation.css', tru
     #generateHtml($fields, $fieldMandatoryStar, $failureMessageParams)
     ##
     ##----------------------------------
-    &lt;dt&gt;
-      &lt;label for="comment"&gt;Why are you requesting access to PhenomeCentral?&lt;/label&gt;
-    &lt;/dt&gt;
-    &lt;dd&gt;
-      &lt;textarea id="register_comment" name="register_comment" rows="3" mlb_binding_key="8"&gt;&lt;/textarea&gt;
-    &lt;/dd&gt;
-    &lt;dt&gt;
-      &lt;label for="confirmation"&gt;&lt;input id="confirmation" type="checkbox" name="confirmation" style="margin-right: 16px;" mlb_binding_key="9"&gt;
-      I confirm that I am a doctor, clinical geneticist or scientist working with patients affected by rare disorders.
-      &lt;span class="xRequired"&gt;(Required)&lt;/span&gt;
-      &lt;/label&gt;
-    &lt;/dt&gt;
-    ##-----------------------------------
     ##
     &lt;div class="wikimodel-emptyline"&gt;&lt;/div&gt;
     &lt;span class="buttonwrapper"&gt;
