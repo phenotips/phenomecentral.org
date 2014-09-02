@@ -2753,7 +2753,7 @@ The ${wikiname} Team
 ##${host}${xwiki.getURL('XWiki.AccountValidation', 'view', "validkey=${validkey}&amp;xwikiname=${xwikiname}")}</validation_email_content>
     </property>
     <property>
-      <version>&lt;a href="http://phenotips.org"&gt;PhenoTips&lt;/a&gt; version $!{services.distribution.distributionExtension.id.version}</version>
+      <version>&lt;a href="http://phenomecentral.org"&gt;PhenomeCentral&lt;/a&gt; version $!{services.distribution.distributionExtension.id.version}</version>
     </property>
     <property>
       <webcopyright>Reproducing or distributing this clinical information without permission from the institution that owns it is strictly forbidden.</webcopyright>
