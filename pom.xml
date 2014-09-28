@@ -35,7 +35,7 @@
   <packaging>pom</packaging>
   <name>PhenomeCentral - Parent POM</name>
   <description>PhenomeCentral is a repository for secure data sharing targeted to clinicians and scientists working in the rare disorder community.</description>
-  <url>http://phenomecentral.org/</url>
+  <url>https://phenomecentral.org/</url>
   <inceptionYear>2012</inceptionYear>
 
   <licenses>
