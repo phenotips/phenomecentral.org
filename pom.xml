@@ -25,7 +25,7 @@
   <parent>
     <groupId>org.phenotips</groupId>
     <artifactId>phenotips-parent</artifactId>
-    <version>1.0-milestone-13</version>
+    <version>1.0-rc-2</version>
     <relativePath>../phenotips/</relativePath>
   </parent>
 
@@ -129,7 +129,7 @@
 
   <properties>
     <!-- Downstream project versions -->
-    <phenotips.version>1.0-milestone-13</phenotips.version>
+    <phenotips.version>1.0-rc-2</phenotips.version>
     <patientNetwork.version>1.0-SNAPSHOT</patientNetwork.version>
     <medsavant.version>1.2-SNAPSHOT</medsavant.version>
 

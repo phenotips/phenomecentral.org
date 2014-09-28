@@ -41,30 +41,15 @@
     <xwiki.extension.distribution.ui>org.phenomecentral:phenomecentral-ui</xwiki.extension.distribution.ui>
   </properties>
   <dependencies>
-    <!-- Needed for compiling patched Java code -->
+    <!-- Extend the base war -->
     <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>servlet-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.xwiki.platform</groupId>
-      <artifactId>xwiki-platform-container-servlet</artifactId>
-      <version>${xwiki.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.xwiki.platform</groupId>
-      <artifactId>xwiki-platform-skin-skinx</artifactId>
-      <version>${xwiki.version}</version>
-    </dependency>
-    <!-- XWiki dependencies -->
-    <!-- Depend on the platform WAR to get all web resources. We then need to add all libraries we need for XE. -->
-    <dependency>
-      <groupId>org.xwiki.platform</groupId>
-      <artifactId>xwiki-platform-web</artifactId>
-      <version>${xwiki.version}</version>
+      <groupId>org.phenotips</groupId>
+      <artifactId>phenotips-base-war</artifactId>
+      <version>${phenotips.version}</version>
       <type>war</type>
     </dependency>
 
+    <!-- XWiki dependencies -->
     <!-- Make sure to include the proper version of antlr for hibernate-core -->
     <dependency>
       <groupId>antlr</groupId>
@@ -76,20 +61,21 @@
     <dependency>
       <groupId>net.sourceforge.htmlcleaner</groupId>
       <artifactId>htmlcleaner</artifactId>
-      <version>2.8</version>
+      <version>2.9</version>
     </dependency>
 
-    <!-- Dependencies we need inside the XE WAR -->
+    <!-- The Big Old Core -->
+    <dependency>
+      <groupId>org.xwiki.platform</groupId>
+      <artifactId>xwiki-platform-oldcore</artifactId>
+      <version>${xwiki.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+
     <!-- Components Modules -->
     <dependency>
       <groupId>org.xwiki.platform</groupId>
       <artifactId>xwiki-platform-component-script</artifactId>
-      <version>${xwiki.version}</version>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.xwiki.platform</groupId>
-      <artifactId>xwiki-platform-component-wiki</artifactId>
       <version>${xwiki.version}</version>
       <scope>runtime</scope>
     </dependency>
@@ -107,9 +93,10 @@
       <version>${xwiki.version}</version>
       <scope>runtime</scope>
     </dependency>
+    <!-- Container -->
     <dependency>
       <groupId>org.xwiki.platform</groupId>
-      <artifactId>xwiki-platform-classloader-protocol-attachmentjar</artifactId>
+      <artifactId>xwiki-platform-container-servlet</artifactId>
       <version>${xwiki.version}</version>
       <scope>runtime</scope>
     </dependency>
@@ -207,8 +194,6 @@
       <version>${xwiki.version}</version>
       <scope>runtime</scope>
     </dependency>
-    <!-- Default Platform Macros we want available by default in XE.
-         Please keep them in alphabetical order -->
     <dependency>
       <groupId>org.xwiki.platform</groupId>
       <artifactId>xwiki-platform-dashboard-macro</artifactId>
@@ -301,16 +286,6 @@
       <version>${xwiki.version}</version>
       <scope>runtime</scope>
     </dependency>
-    <!-- Skins
-         Note: even though the dependency plugin below doesn't need explicit dependencies set to work it's a best
-         practice to put them here since they are real dependencies -->
-    <dependency>
-      <groupId>org.xwiki.platform</groupId>
-      <artifactId>xwiki-platform-colibri</artifactId>
-      <version>${xwiki.version}</version>
-      <type>zip</type>
-      <scope>runtime</scope>
-    </dependency>
     <!-- Captcha component -->
     <dependency>
       <groupId>org.xwiki.platform</groupId>
@@ -355,7 +330,7 @@
     </dependency>
     <dependency>
       <groupId>org.xwiki.platform</groupId>
-      <artifactId>xwiki-platform-panels-api</artifactId>
+      <artifactId>xwiki-platform-skin-skinx</artifactId>
       <version>${xwiki.version}</version>
       <scope>runtime</scope>
     </dependency>
@@ -383,13 +358,6 @@
     <dependency>
       <groupId>org.xwiki.platform</groupId>
       <artifactId>xwiki-platform-scheduler-api</artifactId>
-      <version>${xwiki.version}</version>
-      <scope>runtime</scope>
-    </dependency>
-    <!-- Tags -->
-    <dependency>
-      <groupId>org.xwiki.platform</groupId>
-      <artifactId>xwiki-platform-tag-api</artifactId>
       <version>${xwiki.version}</version>
       <scope>runtime</scope>
     </dependency>
@@ -551,42 +519,6 @@
       <version>${xwiki.version}</version>
       <scope>runtime</scope>
     </dependency>
-    <dependency>
-      <groupId>org.xwiki.platform</groupId>
-      <artifactId>xwiki-platform-wiki-script</artifactId>
-      <version>${xwiki.version}</version>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.xwiki.platform</groupId>
-      <artifactId>xwiki-platform-wiki-template-default</artifactId>
-      <version>${xwiki.version}</version>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.xwiki.platform</groupId>
-      <artifactId>xwiki-platform-wiki-template-script</artifactId>
-      <version>${xwiki.version}</version>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.xwiki.platform</groupId>
-      <artifactId>xwiki-platform-wiki-user-default</artifactId>
-      <version>${xwiki.version}</version>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.xwiki.platform</groupId>
-      <artifactId>xwiki-platform-wiki-user-script</artifactId>
-      <version>${xwiki.version}</version>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.xwiki.platform</groupId>
-      <artifactId>xwiki-platform-wiki-workspaces-migrator</artifactId>
-      <version>${xwiki.version}</version>
-      <scope>runtime</scope>
-    </dependency>
     <!-- PhenoTips components -->
     <dependency>
       <groupId>org.phenotips</groupId>
@@ -595,7 +527,7 @@
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
-      <artifactId>solr-access-service</artifactId>
+      <artifactId>solr-access-service-api</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
@@ -611,6 +543,11 @@
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>ontology-omim-access-api</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
+      <artifactId>ontology-hgnc-access-api</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
@@ -631,6 +568,21 @@
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>patient-data-indexing</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
+      <artifactId>phenotips-data-export-api</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
+      <artifactId>phenotips-authorization</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
+      <artifactId>phenotips-security-bridge</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
@@ -695,11 +647,6 @@
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
-      <artifactId>patient-update-listeners</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.phenotips</groupId>
       <artifactId>obo2solr</artifactId>
       <version>${project.version}</version>
     </dependency>
@@ -710,26 +657,36 @@
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
-      <artifactId>pedigree-editor</artifactId>
+      <artifactId>phenotips-navigation-api</artifactId>
       <version>${project.version}</version>
-      <scope>provided</scope>
-    </dependency>
-    <!-- Database connectors for MySQL and HSQLDB, the most commonly used ones. -->
-    <dependency>
-      <groupId>org.hsqldb</groupId>
-      <artifactId>hsqldb</artifactId>
-      <version>2.3.2</version>
     </dependency>
     <dependency>
-      <groupId>mysql</groupId>
-      <artifactId>mysql-connector-java</artifactId>
-      <version>5.1.29</version>
+      <groupId>org.phenotips</groupId>
+      <artifactId>jodatime-service</artifactId>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-classic</artifactId>
-      <version>1.0.13</version>
+      <groupId>org.phenotips</groupId>
+      <artifactId>storage-migrators-api</artifactId>
+      <version>${project.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
+      <artifactId>storage-migrators-attachments-migrator</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
+      <artifactId>storage-migrators-attachments-database</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
+      <artifactId>storage-migrators-attachments-filesystem</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
+    <!-- PhenomeCentral specific -->
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>patient-data-sharing-receiver-api</artifactId>
@@ -841,8 +798,7 @@
   com.xpn.xwiki.plugin.scheduler.SchedulerPlugin,\
   com.xpn.xwiki.plugin.mailsender.MailSenderPlugin,\
   com.xpn.xwiki.plugin.activitystream.plugin.ActivityStreamPlugin, \
-  com.xpn.xwiki.plugin.watchlist.WatchListPlugin, \
-  com.xpn.xwiki.plugin.tag.TagPlugin</xwikiCfgPlugins>
+  com.xpn.xwiki.plugin.watchlist.WatchListPlugin</xwikiCfgPlugins>
                 <xwikiCfgVirtual>0</xwikiCfgVirtual>
                 <xwikiCfgVirtualUsepath>0</xwikiCfgVirtualUsepath>
                 <xwikiCfgEditCommentMandatory>0</xwikiCfgEditCommentMandatory>
@@ -852,6 +808,7 @@
                 <xwikiCfgAdditionalProperties>
 xwiki.plugin.watchlist.automaticwatch=none
 xwiki.authentication.group.allgroupimplicit=1
+xwiki.authentication.rightsclass=org.phenotips.security.authorization.ModularRightServiceImpl
 xwiki.section.edit=0
 xwiki.backlinks=0
 xwiki.showviewaction=0
@@ -870,9 +827,7 @@ xwiki.store.attachment.recyclebin.hint=file
 model.reference.default.space=data
 extension.repositories=maven-xwiki:maven:http://nexus.xwiki.org/nexus/content/groups/public
 extension.repositories=maven-phenotips:maven:http://nexus.cs.toronto.edu/nexus/content/repositories/releases/
-extension.repositories=extensions.xwiki.org:xwiki:http://extensions.xwiki.org/xwiki/rest/
-solr.type=remote
-solr.remote.url=http://localhost:8080/solr/xwiki/
+extension.repositories=phenotips.org:xwiki:http://phenotips.org/rest/
 rendering.transformations=macro
                 </xwikiPropertiesAdditionalProperties>
               </properties>
@@ -917,15 +872,9 @@ rendering.transformations=macro
           <overlays>
             <overlay>
               <groupId>org.phenotips</groupId>
-              <artifactId>pedigree-editor</artifactId>
-              <type>jar</type>
-              <targetPath>resources/uicomponents/</targetPath>
-            </overlay>
-            <overlay>
-              <groupId>org.xwiki.platform</groupId>
-              <artifactId>xwiki-platform-colibri</artifactId>
-              <type>zip</type>
-              <targetPath>skins/</targetPath>
+              <artifactId>phenotips-base-war</artifactId>
+              <type>war</type>
+              <targetPath>/</targetPath>
             </overlay>
           </overlays>
         </configuration>
