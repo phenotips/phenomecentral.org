@@ -951,6 +951,9 @@
    box-shadow: none;
    color: $theme.textColor !important;
 }
+#create-patient-record {
+  text-shadow: 0 1px 1px #FFF !important;
+}
 
 #phenotips-mainmenu {
   ##border-radius: 0 0 0 0.9em;
