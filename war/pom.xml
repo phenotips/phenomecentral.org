@@ -523,167 +523,167 @@
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>component-registry</artifactId>
-      <version>${project.version}</version>
+      <version>${phenotips.version}</version>
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>solr-access-service-api</artifactId>
-      <version>${project.version}</version>
+      <version>${phenotips.version}</version>
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>ontology-access-api</artifactId>
-      <version>${project.version}</version>
+      <version>${phenotips.version}</version>
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>ontology-hpo-access-api</artifactId>
-      <version>${project.version}</version>
+      <version>${phenotips.version}</version>
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>ontology-omim-access-api</artifactId>
-      <version>${project.version}</version>
+      <version>${phenotips.version}</version>
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>ontology-hgnc-access-api</artifactId>
-      <version>${project.version}</version>
+      <version>${phenotips.version}</version>
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>ontology-ethnicity-access-api</artifactId>
-      <version>${project.version}</version>
+      <version>${phenotips.version}</version>
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>patient-data-default-impl</artifactId>
-      <version>${project.version}</version>
+      <version>${phenotips.version}</version>
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>patient-data-migrations</artifactId>
-      <version>${project.version}</version>
+      <version>${phenotips.version}</version>
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>patient-data-indexing</artifactId>
-      <version>${project.version}</version>
+      <version>${phenotips.version}</version>
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>phenotips-data-export-api</artifactId>
-      <version>${project.version}</version>
+      <version>${phenotips.version}</version>
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>phenotips-authorization</artifactId>
-      <version>${project.version}</version>
+      <version>${phenotips.version}</version>
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>phenotips-security-bridge</artifactId>
-      <version>${project.version}</version>
+      <version>${phenotips.version}</version>
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>patient-access-rules-api</artifactId>
-      <version>${project.version}</version>
+      <version>${phenotips.version}</version>
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>patient-access-rules-migrations</artifactId>
-      <version>${project.version}</version>
+      <version>${phenotips.version}</version>
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>patient-measurements-api</artifactId>
-      <version>${project.version}</version>
+      <version>${phenotips.version}</version>
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>patient-measurements-migrations</artifactId>
-      <version>${project.version}</version>
+      <version>${phenotips.version}</version>
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>users-api</artifactId>
-      <version>${project.version}</version>
+      <version>${phenotips.version}</version>
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>xwiki-platform-users-api</artifactId>
-      <version>${project.version}</version>
+      <version>${phenotips.version}</version>
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>xwiki-platform-users-wiki</artifactId>
-      <version>${project.version}</version>
+      <version>${phenotips.version}</version>
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>application-configuration-api</artifactId>
-      <version>${project.version}</version>
+      <version>${phenotips.version}</version>
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>application-configuration-migrations</artifactId>
-      <version>${project.version}</version>
+      <version>${phenotips.version}</version>
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>patient-tools</artifactId>
-      <version>${project.version}</version>
+      <version>${phenotips.version}</version>
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>ncbieutils-services-api</artifactId>
-      <version>${project.version}</version>
+      <version>${phenotips.version}</version>
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>phenotype-mapping-service</artifactId>
-      <version>${project.version}</version>
+      <version>${phenotips.version}</version>
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>obo2solr</artifactId>
-      <version>${project.version}</version>
+      <version>${phenotips.version}</version>
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>specificity-meter-api</artifactId>
-      <version>${project.version}</version>
+      <version>${phenotips.version}</version>
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>phenotips-navigation-api</artifactId>
-      <version>${project.version}</version>
+      <version>${phenotips.version}</version>
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>jodatime-service</artifactId>
-      <version>${project.version}</version>
+      <version>${phenotips.version}</version>
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>storage-migrators-api</artifactId>
-      <version>${project.version}</version>
+      <version>${phenotips.version}</version>
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>storage-migrators-attachments-migrator</artifactId>
-      <version>${project.version}</version>
+      <version>${phenotips.version}</version>
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>storage-migrators-attachments-database</artifactId>
-      <version>${project.version}</version>
+      <version>${phenotips.version}</version>
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>storage-migrators-attachments-filesystem</artifactId>
-      <version>${project.version}</version>
+      <version>${phenotips.version}</version>
     </dependency>
 
     <!-- PhenomeCentral specific -->
