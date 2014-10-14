@@ -124,21 +124,6 @@
         <validationRegExp/>
         <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
       </assistedReproduction_surrogacy>
-      <comments>
-        <customDisplay/>
-        <disabled>0</disabled>
-        <editor>---</editor>
-        <name>comments</name>
-        <number>29</number>
-        <picker>0</picker>
-        <prettyName>Additional comments</prettyName>
-        <rows>5</rows>
-        <size>40</size>
-        <unmodifiable>0</unmodifiable>
-        <validationMessage/>
-        <validationRegExp/>
-        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
-      </comments>
       <consanguinity>
         <customDisplay>{{include document="PhenoTips.YesNoNAPicker" /}}</customDisplay>
         <defaultValue/>
@@ -158,16 +143,16 @@
 #set ($format = $services.recordConfiguration.activeConfiguration.dateOfBirthFormat)
 #set ($definedFormat = "$!object.xWikiClass.get($name).getProperty('dateFormat').value")
 #if ($xcontext.action == 'edit')
-  #set ($date = $xwiki.jodatime.mutableDateTime)
+  #set ($date = $services.jodatime.mutableDateTime)
   #if ("$!xwiki.getUserPreference('timezone')" != '')
-    #set ($discard = $date.setZone($xwiki.jodatime.getTimezone($xwiki.getUserPreference('timezone'))))
+    #set ($discard = $date.setZone($services.jodatime.getTimezone($xwiki.getUserPreference('timezone'))))
   #end
   #if (!$value)
     #set ($value = $date)
   #else
-    #set ($value = $xwiki.jodatime.getMutableDateTime($value.time))
+    #set ($value = $services.jodatime.getMutableDateTime($value.time))
     #if ("$!xwiki.getUserPreference('timezone')" != '')
-      #set ($discard = $value.setZoneRetainFields($xwiki.jodatime.getTimezone($xwiki.getUserPreference('timezone'))))
+      #set ($discard = $value.setZoneRetainFields($services.jodatime.getTimezone($xwiki.getUserPreference('timezone'))))
     #end
   #end
   #if ($format.indexOf('d') &lt; 0)
@@ -200,9 +185,9 @@
   #end
 #else
 #if ($value)
-  #set ($value = $xwiki.jodatime.getMutableDateTime($value.time))
+  #set ($value = $services.jodatime.getMutableDateTime($value.time))
   #if ("$!xwiki.getUserPreference('timezone')" != '')
-    #set ($discard = $value.setZoneRetainFields($xwiki.jodatime.getTimezone($xwiki.getUserPreference('timezone'))))
+    #set ($discard = $value.setZoneRetainFields($services.jodatime.getTimezone($xwiki.getUserPreference('timezone'))))
   #end
   &lt;span class="date"&gt;$!xwiki.formatDate($value.toDate(), $format)&lt;/span&gt;
 #end
@@ -221,21 +206,36 @@
         <validationRegExp/>
         <classType>com.xpn.xwiki.objects.classes.DateClass</classType>
       </date_of_birth>
+      <diagnosis_notes>
+        <customDisplay/>
+        <disabled>0</disabled>
+        <editor>---</editor>
+        <name>diagnosis_notes</name>
+        <number>29</number>
+        <picker>0</picker>
+        <prettyName>Additional comments</prettyName>
+        <rows>5</rows>
+        <size>40</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </diagnosis_notes>
       <exam_date>
         <customDisplay>{{velocity}}{{html clean=false}}
 #set ($format = $services.recordConfiguration.activeConfiguration.dateOfBirthFormat)
 #set ($definedFormat = "$!object.xWikiClass.get($name).getProperty('dateFormat').value")
 #if ($xcontext.action == 'edit')
-  #set ($date = $xwiki.jodatime.mutableDateTime)
+  #set ($date = $services.jodatime.mutableDateTime)
   #if ("$!xwiki.getUserPreference('timezone')" != '')
-    #set ($discard = $date.setZone($xwiki.jodatime.getTimezone($xwiki.getUserPreference('timezone'))))
+    #set ($discard = $date.setZone($services.jodatime.getTimezone($xwiki.getUserPreference('timezone'))))
   #end
   #if (!$value)
     #set ($value = $date)
   #else
-    #set ($value = $xwiki.jodatime.getMutableDateTime($value.time))
+    #set ($value = $services.jodatime.getMutableDateTime($value.time))
     #if ("$!xwiki.getUserPreference('timezone')" != '')
-      #set ($discard = $value.setZoneRetainFields($xwiki.jodatime.getTimezone($xwiki.getUserPreference('timezone'))))
+      #set ($discard = $value.setZoneRetainFields($services.jodatime.getTimezone($xwiki.getUserPreference('timezone'))))
     #end
   #end
   #if ($format.indexOf('d') &lt; 0)
@@ -268,9 +268,9 @@
   #end
 #else
 #if ($value)
-  #set ($value = $xwiki.jodatime.getMutableDateTime($value.time))
+  #set ($value = $services.jodatime.getMutableDateTime($value.time))
   #if ("$!xwiki.getUserPreference('timezone')" != '')
-    #set ($discard = $value.setZoneRetainFields($xwiki.jodatime.getTimezone($xwiki.getUserPreference('timezone'))))
+    #set ($discard = $value.setZoneRetainFields($services.jodatime.getTimezone($xwiki.getUserPreference('timezone'))))
   #end
   &lt;span class="date"&gt;$!xwiki.formatDate($value.toDate(), $format)&lt;/span&gt;
 #end
@@ -402,11 +402,11 @@
         <validationRegExp/>
         <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
       </external_id>
-      <family_comments>
+      <family_history>
         <customDisplay/>
         <disabled>0</disabled>
         <editor>---</editor>
-        <name>family_comments</name>
+        <name>family_history</name>
         <number>27</number>
         <picker>0</picker>
         <prettyName>List health conditions found in family (describe the relationship with proband)</prettyName>
@@ -416,7 +416,7 @@
         <validationMessage/>
         <validationRegExp/>
         <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
-      </family_comments>
+      </family_history>
       <family_of>
         <cache>0</cache>
         <classname/>
@@ -687,8 +687,8 @@
         <picker>1</picker>
         <prettyName>Maternal ethnicity</prettyName>
         <relationalStorage>1</relationalStorage>
-        <separator> </separator>
-        <separators> ,|</separators>
+        <separator>, </separator>
+        <separators/>
         <size>1</size>
         <sort>none</sort>
         <unmodifiable>0</unmodifiable>
@@ -697,11 +697,11 @@
         <values/>
         <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
       </maternal_ethnicity>
-      <medical_developmental_history>
+      <medical_history>
         <customDisplay/>
         <disabled>0</disabled>
         <editor>---</editor>
-        <name>medical_developmental_history</name>
+        <name>medical_history</name>
         <number>30</number>
         <picker>0</picker>
         <prettyName>Medical and developmental history</prettyName>
@@ -711,7 +711,7 @@
         <validationMessage/>
         <validationRegExp/>
         <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
-      </medical_developmental_history>
+      </medical_history>
       <miscarriages>
         <customDisplay>{{include document="PhenoTips.YesNoNAPicker" /}}</customDisplay>
         <defaultValue/>
@@ -826,7 +826,7 @@
         <picker>1</picker>
         <prettyName>Paternal ethnicity</prettyName>
         <relationalStorage>1</relationalStorage>
-        <separator> </separator>
+        <separator>, </separator>
         <separators/>
         <size>1</size>
         <sort>none</sort>
@@ -890,11 +890,11 @@
         <valueField/>
         <classType>com.xpn.xwiki.objects.classes.DBListClass</classType>
       </phenotype>
-      <prenatal_comments>
+      <prenatal_development>
         <customDisplay/>
         <disabled>0</disabled>
         <editor>---</editor>
-        <name>prenatal_comments</name>
+        <name>prenatal_development</name>
         <number>25</number>
         <picker>0</picker>
         <prettyName>Notes</prettyName>
@@ -904,7 +904,7 @@
         <validationMessage/>
         <validationRegExp/>
         <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
-      </prenatal_comments>
+      </prenatal_development>
       <prenatal_phenotype>
         <cache>0</cache>
         <classname/>
