@@ -25,6 +25,8 @@
 #   START_OPTS - parameters passed to the Java VM when running Jetty
 #     e.g. to increase the memory allocated to the JVM to 1GB, use
 #       set START_OPTS=-Xmx1024m
+#   JETTY_PORT - the port on which to start Jetty, 8080 by default
+#   JETTY_STOP_PORT - the port on which Jetty listens for a Stop command, 8079 by default
 # ---------------------------------------------------------------------------
 
 # Ensure that the commands below are always started in the directory where this script is
@@ -49,21 +51,27 @@ if [ -z "$START_OPTS" ] ; then
   START_OPTS="-Xmx2g -XX:MaxPermSize=256m"
 fi
 
-# The port on which to start Jetty can be passed to this script as the first argument
-if [ -n "$1" ]; then
-  JETTY_PORT=$1
-else
-  JETTY_PORT=8080
+# The port on which to start Jetty can be defined in an enviroment variable called JETTY_PORT
+if [ -z "$JETTY_PORT" ]; then
+  # Alternatively, it can be passed to this script as the first argument
+  if [ -n "$1" ]; then
+    JETTY_PORT=$1
+  else
+    JETTY_PORT=8080
+  fi
 fi
 
-# The port on which to stop Jetty can be passed to this script as the second argument
-if [ -n "$2" ]; then
-  JETTY_STOPPORT=$2
-else
-  JETTY_STOPPORT=8079
+# The port on which Jetty listens for a Stop command can be defined in an enviroment variable called JETTY_STOP_PORT
+if [ -z "$JETTY_STOP_PORT" ]; then
+  # Alternatively, it can be passed to this script as the second argument
+  if [ -n "$2" ]; then
+    JETTY_STOP_PORT=$2
+  else
+    JETTY_STOP_PORT=8079
+  fi
 fi
 
-echo Starting Jetty on port $JETTY_PORT ...
+echo Starting Jetty on port ${JETTY_PORT}, please wait...
 
 # Location where XWiki stores generated data and where database files are.
 XWIKI_DATA_DIR=data
@@ -85,7 +93,7 @@ START_OPTS="$START_OPTS -Djetty.port=$JETTY_PORT"
 START_OPTS="$START_OPTS -Djetty.home=$JETTY_HOME"
 
 # Specify port and key to stop a running Jetty instance
-START_OPTS="$START_OPTS -DSTOP.KEY=phenotipsstop -DSTOP.PORT=$JETTY_STOPPORT"
+START_OPTS="$START_OPTS -DSTOP.KEY=phenotipsstop -DSTOP.PORT=$JETTY_STOP_PORT"
 
 # Force UTF8 as the global JVM encoding
 START_OPTS="$START_OPTS -Dfile.encoding=UTF8"
@@ -100,8 +108,5 @@ START_OPTS="$START_OPTS -Dfile.encoding=UTF8"
 # Note that setting this value too high can leave your server vulnerable to denial of
 # service attacks.
 START_OPTS="$START_OPTS -Dorg.eclipse.jetty.server.Request.maxFormContentSize=1000000"
-
-# If there are no optional configuration files, make bash ignore the last parameter instead of passing it verbatim
-shopt -s nullglob
 
 java $START_OPTS $3 $4 $5 $6 $7 $8 $9 -jar $JETTY_HOME/start.jar ${JETTY_HOME}/etc/jetty.xml ${JETTY_HOME}/etc/jetty-*.xml
