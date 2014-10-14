@@ -30,7 +30,7 @@
   <artifactId>phenomecentral-standalone</artifactId>
   <name>PhenomeCentral - Standalone Distribution</name>
   <packaging>pom</packaging>
-  <description>Distribution including a Jetty server, Solr, MedSavant JSON Client, and an UI based on XWiki</description>
+  <description>Distribution including a Jetty server, embedded HSQLDB, and an UI based on XWiki</description>
   <properties>
     <maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
   </properties>
