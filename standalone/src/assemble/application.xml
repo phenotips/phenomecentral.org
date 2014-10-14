@@ -45,15 +45,6 @@
       <unpack>true</unpack>
       <useProjectArtifact>false</useProjectArtifact>
     </dependencySet>
-    <!-- "medsavant-json-client" webapp. -->
-    <dependencySet>
-      <includes>
-        <include>edu.toronto.cs.medsavant:medsavant-json-client</include>
-      </includes>
-      <outputDirectory>webapps/medsavant-json-client</outputDirectory>
-      <unpack>true</unpack>
-      <useProjectArtifact>false</useProjectArtifact>
-    </dependencySet>
     <!-- Solr configuration. -->
     <dependencySet>
       <includes>
@@ -88,15 +79,6 @@
         <include>**/*.bat</include>
       </includes>
       <fileMode>755</fileMode>
-    </fileSet>
-    <!-- Copy non shell scripts -->
-    <fileSet>
-      <directory>${basedir}/src/main/resources</directory>
-      <outputDirectory>/</outputDirectory>
-      <excludes>
-        <exclude>**/*.sh</exclude>
-        <exclude>**/*.bat</exclude>
-      </excludes>
     </fileSet>
   </fileSets>
 </assembly>

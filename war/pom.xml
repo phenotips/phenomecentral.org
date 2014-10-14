@@ -740,13 +740,6 @@
       <artifactId>anonymous-communication</artifactId>
       <version>${patientNetwork.version}</version>
     </dependency>
-    <!-- Disabled since this module isn't ready yet.
-    <dependency>
-      <groupId>org.phenotips</groupId>
-      <artifactId>medsavant-client-api</artifactId>
-      <version>${phenotips.version}</version>
-    </dependency>
-    -->
   </dependencies>
   <build>
     <plugins>

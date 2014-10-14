@@ -132,7 +132,6 @@
     <!-- Downstream project versions -->
     <phenotips.version>1.0</phenotips.version>
     <patientNetwork.version>1.0-SNAPSHOT</patientNetwork.version>
-    <medsavant.version>1.2-SNAPSHOT</medsavant.version>
 
     <!-- There is no Java code, speedup the build by skipping Clirr and Checkstyle checks -->
     <checkstyle.skip>true</checkstyle.skip>

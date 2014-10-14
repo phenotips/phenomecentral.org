@@ -46,13 +46,6 @@
       <optional>true</optional>
     </dependency>
     <dependency>
-      <groupId>edu.toronto.cs.medsavant</groupId>
-      <artifactId>medsavant-json-client</artifactId>
-      <version>${medsavant.version}</version>
-      <type>war</type>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>solr-configuration</artifactId>
       <version>${phenotips.version}</version>
