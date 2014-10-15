@@ -40,17 +40,16 @@
   <syntaxId>xwiki/2.0</syntaxId>
   <hidden>true</hidden>
   <content>{{velocity}}
-$response.setContentType("application/x-json")
-#if("$!{request.xwikiname}" != '')
+#if ("$!{request.xwikiname}" != '')
+$response.setContentType("application/json")
   #set ($userDoc = $xwiki.getDocument(${request.xwikiname}))
-  #set ($user = $userDoc.getObject("XWiki.XWikiUsers"))
+  #set ($user = $userDoc.getObject('XWiki.XWikiUsers'))
   $user.set('active', 1)
   #set ($email = $user.getProperty('email').getValue())
 
-  #if ($!{email} != "")
-    ##set ($userName = )
-    #set ($emailStatus = $xwiki.mailsender.sendMessageFromTemplate("PhenomeCentral &lt;noreply@phenomecentral.org&gt;", "$email", $xwiki.null, $xwiki.null, "", "XWiki.ManualAccountValidation", 
-      {"userName": $xwiki.getDocument($request.xwikiname).name,
+  #if ("$!{email}" != '')
+    #set ($emailStatus = $xwiki.mailsender.sendMessageFromTemplate('PhenomeCentral &lt;noreply@phenomecentral.org&gt;', $email, $NULL, $NULL, '', 'XWiki.ManualAccountValidation', {
+       "userName": $xwiki.getDocument($request.xwikiname).name,
        "platformName": "PhenomeCentral",
        "loginURL": $xwiki.getDocument($services.model.resolveDocument('', 'default', $doc.documentReference.extractReference('WIKI'))).getExternalURL()}))
   #else
@@ -61,7 +60,7 @@ $response.setContentType("application/x-json")
 true
   #else
 false
-  #end 
+  #end
 #end
 {{/velocity}}
 </content>
