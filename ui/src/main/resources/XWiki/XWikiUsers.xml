@@ -20,28 +20,26 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc>
+<xwikidoc version="1.1">
   <web>XWiki</web>
   <name>XWikiUsers</name>
   <language/>
   <defaultLanguage/>
   <translation>0</translation>
-  <parent>XWiki.XWikiClasses</parent>
   <creator>xwiki:XWiki.Admin</creator>
+  <creationDate>1413312903000</creationDate>
+  <parent>XWiki.XWikiClasses</parent>
   <author>xwiki:XWiki.Admin</author>
-  <customClass/>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
-  <creationDate>1394145486000</creationDate>
-  <date>1394149023000</date>
-  <contentUpdateDate>1394149023000</contentUpdateDate>
+  <date>1413312903000</date>
+  <contentUpdateDate>1413312903000</contentUpdateDate>
   <version>1.1</version>
   <title>XWiki User Class</title>
-  <defaultTemplate/>
-  <validationScript/>
   <comment/>
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
+  <content/>
   <class>
     <name>XWiki.XWikiUsers</name>
     <customClass/>
@@ -315,6 +313,10 @@
     </validkey>
   </class>
   <object>
+    <name>XWiki.XWikiUsers</name>
+    <number>0</number>
+    <className>XWiki.ClassSheetBinding</className>
+    <guid>a099ae40-73fb-427d-82e1-6b6088eba0f4</guid>
     <class>
       <name>XWiki.ClassSheetBinding</name>
       <customClass/>
@@ -338,15 +340,15 @@
         <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
       </sheet>
     </class>
-    <name>XWiki.XWikiUsers</name>
-    <number>0</number>
-    <className>XWiki.ClassSheetBinding</className>
-    <guid>a099ae40-73fb-427d-82e1-6b6088eba0f4</guid>
     <property>
       <sheet>XWikiUserSheet</sheet>
     </property>
   </object>
   <object>
+    <name>XWiki.XWikiUsers</name>
+    <number>0</number>
+    <className>XWiki.DocumentSheetBinding</className>
+    <guid>dababa48-1a6c-4a80-9c1c-60b7bcdbd64f</guid>
     <class>
       <name>XWiki.DocumentSheetBinding</name>
       <customClass/>
@@ -370,13 +372,8 @@
         <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
       </sheet>
     </class>
-    <name>XWiki.XWikiUsers</name>
-    <number>0</number>
-    <className>XWiki.DocumentSheetBinding</className>
-    <guid>dababa48-1a6c-4a80-9c1c-60b7bcdbd64f</guid>
     <property>
       <sheet>ClassSheet</sheet>
     </property>
   </object>
-  <content/>
 </xwikidoc>
