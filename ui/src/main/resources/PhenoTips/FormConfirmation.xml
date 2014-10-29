@@ -239,24 +239,24 @@
     <property>
       <content>{{velocity}}
 #if ($xcontext.action == 'edit')
-#set ($flagShow = true)
+#set ($isOwner = true)
 #set ($patient = $services.patients.getPatientById($doc.documentReference))
-#set ($_service = $services.permissions.getPatientAccess($patient))
-#set ($owner = $_service.getOwner())
+#set ($patientAccess = $services.permissions.getPatientAccess($patient))
+#set ($owner = $patientAccess.getOwner())
 #if ($owner.isGroup())
   #set ($group = "Groups." + $owner.getUsername())
   #if (!$xwiki.getUser().isUserInGroup($group))
     #set ($adminGroup = "Groups." + $owner.getUsername() + " Administrators")
     #if (!$xwiki.getUser().isUserInGroup($adminGroup))
-      #set ($flagShow = false)
+      #set ($isOwner = false)
     #end
   #end
 #else
-  #if (!$_service.isOwner())
-    #set ($flagShow = false)
+  #if (!$patientAccess.isOwner())
+    #set ($isOwner = false)
   #end
 #end
-#if ($flagShow)
+#if ($isOwner)
   $xwiki.ssx.use('PhenoTips.FormConfirmation')##
   #set ($fObj = $doc.getObject('PhenoTips.FormConfirmation'))
   #if (!$fObj)
