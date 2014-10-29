@@ -1,13 +1,14 @@
 #if ($xcontext.user != 'XWiki.XWikiGuest')
-  #if ($request.xredirect)
+  #if ("$!request.xredirect" != '')
     $response.sendRedirect($request.xredirect)
   #else
-    $response.sendRedirect($xwiki.getURL($services.model.resolveDocument('', 'default', $doc.documentReference.extractReference('WIKI'))))
+    $response.sendRedirect($stringtool.defaultIfBlank($xwiki.getURL($services.model.resolveDocument('', 'default', $doc.documentReference.extractReference('WIKI'))), '/'))
   #end
+  #break
 #elseif($doc.fullName != 'PhenomeCentral.login')
   #set($qs = "$!{request.queryString}")
   #if(!$request.getParameter('xredirect'))
-    #set($qs = "xredirect=$escapetool.url($doc.getURL('view'))&${qs}")
+    #set($qs = "xredirect=$escapetool.url($stringtool.defaultIfBlank($doc.getURL('view'), '/'))&${qs}")
   #end
   $response.sendRedirect($xwiki.getURL('PhenomeCentral.login', 'login', $qs))
 #else
@@ -25,7 +26,7 @@ $xwiki.ssx.use('PhenomeCentral.login')##
 <div style="margin-right: 160px">
 <form class="xform pc-login" action="$xwiki.getURL('PhenomeCentral.login', 'loginsubmit')" method="post">
 <h2>Enter PhenomeCentral</h2>
-<div class="hidden"><input type="hidden" name="xredirect" value="$!{escapetool.xml($request.xredirect)}"/>
+<div class="hidden"><input type="hidden" name="xredirect" value="$!{escapetool.xml($stringtool.defaultIfBlank($request.xredirect, $stringtool.defaultIfBlank($xwiki.getURL($services.model.resolveDocument('', 'default', $doc.documentReference.extractReference('WIKI'))), '/')))}"/>
 #if("$!request.srid" != '')
   <input type="hidden" name="srid" value="$!escapetool.xml($request.srid)"/>
 #end
