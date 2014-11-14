@@ -246,8 +246,6 @@ $!value
         <value>doc.author</value>
         <value>doc.creationDate</value>
         <value>external_id</value>
-        <value>first_name</value>
-        <value>last_name</value>
       </livetableColumns>
     </property>
     <property>
