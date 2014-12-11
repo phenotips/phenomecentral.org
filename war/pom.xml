@@ -238,6 +238,12 @@
     </dependency>
     <dependency>
       <groupId>org.xwiki.platform</groupId>
+      <artifactId>xwiki-platform-rendering-macro-gallery</artifactId>
+      <version>${xwiki.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.xwiki.platform</groupId>
       <artifactId>xwiki-platform-rendering-macro-velocity</artifactId>
       <version>${xwiki.version}</version>
       <scope>runtime</scope>
@@ -542,6 +548,11 @@
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
+      <artifactId>ontology-chebi-access-api</artifactId>
+      <version>${phenotips.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
       <artifactId>ontology-omim-access-api</artifactId>
       <version>${phenotips.version}</version>
     </dependency>
@@ -683,6 +694,16 @@
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>storage-migrators-attachments-filesystem</artifactId>
+      <version>${phenotips.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
+      <artifactId>diagnosis-suggestion-api</artifactId>
+      <version>${phenotips.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
+      <artifactId>phenotips-proxy-authentication</artifactId>
       <version>${phenotips.version}</version>
     </dependency>
 
