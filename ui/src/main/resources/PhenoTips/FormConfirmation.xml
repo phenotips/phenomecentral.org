@@ -67,7 +67,7 @@
       <unmodifiable>0</unmodifiable>
       <validationMessage/>
       <validationRegExp/>
-      <values>confirm_data_source=I confirm that the data entered in this form corresponds to a real patient in my care|confirm_consent=I confirm that the patient has provided informed consent to allow me to share this de-identified clinical information with international collaborators and researchers</values>
+      <values>confirm_data_source=I confirm that the data entered in this form corresponds to a real patient|confirm_consent=I confirm that I have permission to share this de-identified clinical information with international collaborators and researchers</values>
       <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
     </confirmed>
   </class>
