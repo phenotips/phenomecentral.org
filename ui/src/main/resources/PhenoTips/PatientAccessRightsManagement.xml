@@ -407,10 +407,8 @@
           if (event.target) {
             if (event.target.checked === false) {
               // Remove journal collaborator
-              console.log('Removing journal: ' + item.id);
               _this._removeJournal(item.id);
             } else {
-              console.log('Adding journal: ' + item.id);
               _this._addCollaborator(item);
             }
           }
@@ -533,7 +531,6 @@
     _updateCollaborators : function (collaborators) {
       // Clear existing collaborators and uncheck journals
       this._collaboratorsList.update('');
-      console.log(this._journalsManager);
       var checkboxes = this._journalsManager.down('input[type="checkbox"][name="journal"]');
       for (var i = 0; i &lt; checkboxes.length; i++) {
         checkboxes[i].checked = false;
@@ -570,7 +567,6 @@
           // Ensure checkbox is checked
           var checkbox = this._journalsManager.down('input[type="checkbox"][value="' + c.id + '"]');
           if (checkbox) {
-            console.log('Found checkbox... checking');
             checkbox.checked = true;
           }
         }
