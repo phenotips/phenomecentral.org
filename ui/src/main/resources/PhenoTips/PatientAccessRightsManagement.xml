@@ -1,0 +1,967 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
+<xwikidoc version="1.1">
+  <web>PhenoTips</web>
+  <name>PatientAccessRightsManagement</name>
+  <language/>
+  <defaultLanguage/>
+  <translation>0</translation>
+  <creator>xwiki:XWiki.Admin</creator>
+  <creationDate>1401822202000</creationDate>
+  <parent>PhenoTips.PatientSheet</parent>
+  <author>xwiki:XWiki.Admin</author>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <date>1401822202000</date>
+  <contentUpdateDate>1401822202000</contentUpdateDate>
+  <version>1.1</version>
+  <title/>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>xwiki/2.1</syntaxId>
+  <hidden>true</hidden>
+  <content>{{velocity}}
+#set ($_service = $services.permissions)
+#set ($patient = $services.patients.getPatientById("$!{request.patient}"))
+#if ("$!{request.xaction}" == 'meta')
+  ## ===========================================================
+  ## Get meta information about available accessLevels
+  ## -----------------------------------------------------------
+  #set ($discard = $response.setContentType('application/json'))
+  #set ($accessLevelsMeta = {})
+  #set ($discard = $accessLevelsMeta.put('reqNo', "$!{request.reqNo}"))
+  #set ($discard = $accessLevelsMeta.put('visibilityOptions', $_service.listVisibilityOptions()))
+  #set ($discard = $accessLevelsMeta.put('userAccessLevels', $_service.listAccessLevels()))
+  $jsontool.serialize($accessLevelsMeta)
+#elseif ("$!{request.xaction}" == 'get')
+  #if (!$patient)
+    #set ($discard = $response.setStatus(400))## no patient, bad request
+  #else
+    ## ===========================================================
+    ## Get information about access levels and collaborators
+    ## -----------------------------------------------------------
+    #set ($patientAccess = $_service.getPatientAccess($patient))
+    #set ($discard = $response.setContentType('application/json'))
+    #set ($collaborators = $patientAccess.getCollaborators())
+    #set ($visibility =  $patientAccess.getVisibility())
+    #set ($data = {})
+    #set ($discard = $data.put('reqNo', "$!{request.reqNo}"))
+    #set ($discard = $data.put('query', "$!{request.patient}"))
+    #set ($discard = $data.put('visibility', "$!{visibility.name}"))
+    #set ($discard = $data.put('collaboratorsCount', $collaborators.size()))
+    #set ($collaboratorsData = [])
+    #foreach ($c in $collaborators)
+      #set ($collaborator = {})
+      #set ($discard = $collaborator.put('id', $c.user.toString()))
+      #set ($discard = $collaborator.put('type', $c.type))
+      #if($c.type == 'user')
+        #set ($discard = $collaborator.put('name', $xwiki.getUserName("${c.user}", false)))
+      #else
+        #set ($discard = $collaborator.put('name', "$!{xwiki.getDocument($c.user).plainTitle}"))
+      #end
+      #set ($discard = $collaborator.put('accessLevel', $c.accessLevel.name))
+      #set ($discard = $collaboratorsData.add($collaborator))
+    #end
+    #set ($discard = $data.put('collaborators', $collaboratorsData))
+    $jsontool.serialize($data)
+  #end## Patient exists
+#elseif ("$!{request.xaction}" == 'update')
+  ## ===========================================================
+  ## Send update about access levels and collaborators
+  ## -----------------------------------------------------------
+  #set ($visibility = $_service.resolveVisibility("$!{request.visibility}"))
+  #set ($data = {})
+  #set ($result = true)
+  #set ($collaborators = $request.getParameterValues('collaborator'))
+  #set ($accessLevels = $request.getParameterValues('accessLevel'))
+  #set ($owner = "$!{request.get('owner')}")
+  #if (!$patient)
+    #set ($discard = $response.setStatus(400))## no patient : bad request
+    Could not find patient with identifier "$!{request.patient}", cannot complete the update action.
+  #elseif($collaborators.size() != $accessLevels.size())
+    #set ($discard = $response.setStatus(400))## mismatched user/level parameters, bad request
+    The request is malformed: could not match each collaborator with exactly one level of access.
+  #else
+    #set ($patientAccess = $_service.getPatientAccess($patient))
+    #foreach ($collaborator in $collaborators)
+      #set ($discard = $data.put($services.model.resolveDocument($collaborator), $_service.resolveAccessLevel($accessLevels.get($foreach.index))))
+    #end
+    #set ($result = $result &amp;&amp; $patientAccess.updateCollaborators($data))
+    #if ($visibility)
+      #set ($result = $result &amp;&amp; $patientAccess.setVisibility($visibility))
+    #end
+    #if ($owner != '')
+      #set ($result = $result &amp;&amp; $patientAccess.setOwner($services.model.resolveDocument($owner)))
+    #end
+    #if ($result)
+      #set ($discard = $response.setStatus(204))## success, no content
+    #else
+      #set ($discard = $response.setStatus(400))## unable to do the update
+      Unable to perform the update.
+    #end
+  #end## Patient exists and user/level parameters match
+#end
+{{/velocity}}</content>
+  <object>
+    <name>PhenoTips.PatientAccessRightsManagement</name>
+    <number>0</number>
+    <className>XWiki.JavaScriptExtension</className>
+    <guid>ab66e72f-1d22-4a38-ad9b-f55d74a0473f</guid>
+    <class>
+      <name>XWiki.JavaScriptExtension</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <cache>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>cache</name>
+        <number>5</number>
+        <prettyName>Caching policy</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators> ,|</separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>long|short|default|forbid</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </cache>
+      <code>
+        <disabled>0</disabled>
+        <name>code</name>
+        <number>2</number>
+        <prettyName>Code</prettyName>
+        <rows>20</rows>
+        <size>50</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </code>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+      <parse>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType>yesno</displayType>
+        <name>parse</name>
+        <number>4</number>
+        <prettyName>Parse content</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </parse>
+      <use>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>use</name>
+        <number>3</number>
+        <prettyName>Use this extension</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators> ,|</separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>currentPage=Always on this page|onDemand=On demand|always=Always on this wiki</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </use>
+    </class>
+    <property>
+      <cache>long</cache>
+    </property>
+    <property>
+      <code>var PhenoTips = (function (PhenoTips) {
+  var widgets = PhenoTips.widgets = PhenoTips.widgets || {};
+  widgets.AccessRightsManager = Class.create({
+    initialize : function (patientId) {
+      this.patientId = patientId;
+      // ---------------------------------------------------------------------
+      // Search for access levels manager elements. Exist if missing.
+      // ---------------------------------------------------------------------
+      this._element = $('access-rights-summary');
+      if (!this._element) { return; }
+      this._editorLauncher = this._element.down('.tool.edit a');
+      if (!this._editorLauncher) { return; }
+      this._serviceURL = this._element.down('input[name="serviceURL"]');
+      if (this._serviceURL) {
+        this._serviceURL = this._serviceURL.value;
+      } else {
+        return;
+      }
+      // ---------------------------------------------------------------------
+      // Initialize the manager UI
+      // ---------------------------------------------------------------------
+      this._initAccessLevels();
+      this._initManagerUI();
+      // ---------------------------------------------------------------------
+      // Attach manager launcher behavior:
+      // ---------------------------------------------------------------------
+      var _this = this;
+      this._editorLauncher.observe('click', function(event) {
+        event.stop();
+        event.findElement().blur();
+        _this._launchEditor();
+      });
+      // ---------------------------------------------------------------------
+      // Initialization done
+      // ---------------------------------------------------------------------
+    },
+    _initAccessLevels : function() {
+      var levels = {'access-level' : [], 'visibility' : []};
+      this._element.select('input[name="access-level"], input[name="visibility"]').each(function (item) {
+        levels[item.name].push({id : item.value, name : item.alt, title : item.title, icon: item.next('span.fa') || ''});
+      });
+      this.ACCESS_LEVELS = levels['access-level'];
+      this.VISIBILITY = levels['visibility'];
+    },
+    _initManagerUI : function() {
+      this._container = new Element('form', {'id' : 'access-levels-manager', 'class' : 'xform', 'method' : 'post', 'action' : this._serviceURL});
+      //this._element.insert({'after' : this._container});
+      this._container.insert(this._generateSection('manage-ownership', 'Ownership', 'The owner has full editing and managing capabilities for a case.'))
+                     .insert(this._generateSection('manage-visibility', 'Global visibility', 'Global visibility refers to how registered users can VIEW this case. Visibility levels do not change editing or managing permissions.'))
+                     .insert(this._generateSection('manage-collaborators', 'Collaborators', 'Collaborators can be given access to view, edit or share specific cases, regardless of the case\'s visibility setting. The type of advanced privileges can be established by the owner when selecting a collaborator:'))
+                     .insert(this._generateSection('manage-journals', 'Journals', 'If this case is being submitted to one of the following journals, please check the appropriate box. You give the journal permission to access this record, and to make this record public if the case is published.'))
+                     .insert(new Element('div', {id : 'manager-messages'}));
+      this._ownershipManager = this._container.down('#manage-ownership .section-contents');
+      this._visibilityManager = this._container.down('#manage-visibility .section-contents');
+      this._collaboratorsManager = this._container.down('#manage-collaborators .section-contents');
+      this._journalsManager = this._container.down('#manage-journals .section-contents');
+      this._messages = this._container.down('#manager-messages');
+      this._initOwnershipManager();
+      this._initVisibilityManager();
+      this._initCollaboratorsManager();
+      this._initJournalsManager();
+      this._initManagerActions();
+      this._dialog = new PhenoTips.widgets.ModalPopup(this._container, false, {'title': 'Access rights for ' + this.patientId, 'verticalPosition': 'top', 'removeOnClose': false});
+      //document.fire('xwiki:dom:updated', {'elements' : [this._container]});
+    },
+    _generateSection : function(id, title, intro) {
+      return new Element('fieldset', {'id': id, 'class' : 'section'})
+                 .insert(title &amp;&amp; new Element('h2').update(title) || '')
+                 .insert(intro &amp;&amp; new Element('p', {'class' : 'intro xHint'}).update(intro) || '')
+                 .insert(new Element ('div', {'class' : 'section-contents'}));
+    },
+    _updateOwnershipManager : function(owner) {
+      this._ownerInfo.update('This case is owned by ' + owner + ".");
+      if (this._canTransferOwnership) {
+        this._ownerInfo.insert(" You can:");
+        this._checkKeepOwnershipOption();
+      }
+    },
+    _initOwnershipManager : function() {
+      this._ownerInfo = new Element('div', {id : 'owner', 'class' : 'intro xHint'});
+      this._ownershipManager.update(this._ownerInfo);
+
+      // HACK: 'new-owner-input' control had to be put into the document from the start
+      //       to make suggest picker attach to it correctly; it now has to be moved into
+      //       the `owner` section of this "access rights" dialog/popup
+      var newOwnerInput       = $('new-owner-input') || '';
+      var newOwnerGroupSelect = $('new-owner-group-select') || '';
+
+      this._defaultOwnerOption   = undefined;
+      this._removeSelectedUser   = undefined;
+      this._canTransferOwnership = newOwnerInput || newOwnerGroupSelect;
+
+      if (this._canTransferOwnership) {
+        var transfer = new Element('table', {id : 'transfer'});
+        this._removeSelectedUser = function() {  // removes previously selected user displayed by the suggest user picker
+            transfer.select('.delete-tool').each(function (item) {
+               item.click();
+            });
+        }
+        var _this = this;
+        var _getTransferOption = function (type, text, controlledElement) {
+           var optionWrapper = new Element('tr');
+           var input = new Element('input', {"type" : "radio", name : "transfer-to"});
+           var label = new Element('label').insert(input).insert(text);
+           input.observe('change', function() {
+             transfer.select('.controlled-element input, .controlled-element select').each(function (item) {
+                item.disable();
+             });
+             _this._removeSelectedUser();
+             if (input.checked &amp;&amp; controlledElement) {
+               input.up('tr').select('.controlled-element input, .controlled-element select').each(function (item) {
+                  item.enable();
+               });
+             }
+           });
+           optionWrapper.insert(new Element('span', {'class' : 'fa fa-' + type}).wrap('td'))
+                        .insert(label.wrap('td'))
+                        .insert(controlledElement &amp;&amp; controlledElement.wrap('td', {'class' : 'controlled-element'}) || '');
+           return optionWrapper;
+        }
+        this._defaultOwnerOption = _getTransferOption("check", "Keep current owner", "");
+        transfer.insert(this._defaultOwnerOption);
+        //this._checkKeepOwnershipOption();
+        if (newOwnerGroupSelect) {
+          transfer.insert(_getTransferOption("group", "Transfer ownership to one of your groups", newOwnerGroupSelect));
+        }
+        if (newOwnerInput) {
+          transfer.insert(_getTransferOption("user", "Transfer ownership to another user", newOwnerInput));
+        }
+        transfer.select('.controlled-element input, .controlled-element select').each(function (item) {
+          item.disable();
+        });
+        this._ownershipManager.insert(transfer);
+      }
+    },
+    _checkKeepOwnershipOption : function() {
+      if (this._defaultOwnerOption) {
+        this._defaultOwnerOption.down('input').click();   // check the "keep current owner" radio (which also triggers all
+                                                          // corresponding actions such as disable/enable controlled elements)
+      }
+    },
+    _initVisibilityManager : function() {
+      var table = new Element('table', {id : 'collaborators'});
+      this._visibilityManager.insert(table);
+      this.VISIBILITY.each(function (item) {
+         var input = new Element ('input', {'type' : 'radio', 'name' : 'visibility', 'value' : item.id});
+         var label = new Element('label', {'class' : 'visibility', title : item.title}).insert(input).insert(item.name);
+         var info  = new Element('p', {'class' : 'xHint'}).update(item.title);
+         var row = new Element('tr')
+                .insert(new Element('td').insert(item.icon))
+                .insert(new Element('td').insert(label))
+                .insert(new Element('td').insert(info));
+         table.insert(row);
+      });
+    },
+    _initCollaboratorsManager : function () {
+      var _this = this;
+      var table = new Element('table', {id : 'collaborators'});
+      // Body: collaborators
+      this._collaboratorsList = new Element('tbody');
+      // Foot: input for adding a new collaborator
+      var newCollaborator = new Element('tfoot');
+      var newCollaboratorInput = $('new-collaborator-input') || '';
+      var newGroupInput = $('new-group-input') || '';
+      newCollaborator.insert(new Element('td', {'colspan' : 4}).insert(newCollaboratorInput).insert('&lt;br/&gt;').insert(newGroupInput));
+      // Add the two sections
+      this._collaboratorsManager.insert(table.insert(newCollaborator).insert(this._collaboratorsList));
+      // Capture selection events
+      newCollaborator.select('input').invoke('observe', "xwiki:suggest:selected", function(event) {
+         if (event.memo) {
+           var id = event.memo.value;
+           var existingCollaborator = _this._collaboratorsList.down('tr input[value="' + id.replace('"', '\\"') + '"]');
+           if (existingCollaborator) {
+             existingCollaborator.up('tr').addClassName('highlight');
+             // remove highlight after a while
+             new PeriodicalExecuter(function(pe) {
+                existingCollaborator.up('tr').removeClassName('highlight');
+                pe.stop();
+             }, 5);
+           } else {
+             var name = event.memo.info;
+             var type = event.findElement('input').name;
+             var newCollaborator = {'id' : id , 'name' : name , 'type' : type};
+             _this._addCollaborator(newCollaborator, true);
+             event.findElement().value = '';
+           }
+         }
+      });
+    },
+    _initJournalsManager : function() {
+      var _this = this;
+      // A list of collaborator objects
+      this.JOURNALS = [{"id":"xwiki:XWiki.ClinicalGenetics", "type":"user", "name":"Clinical Genetics", "accessLevel":"manage"}];
+      var table = new Element('table', {id : 'journals'});
+      this._journalsManager.insert(table);
+      this.JOURNALS.each(function (item) {
+        var input = new Element ('input', {'type' : 'checkbox', 'name' : 'journal', 'value' : item.id});
+        var label = new Element('label').insert(input).insert(item.name);
+        var row = new Element('tr')
+               .insert(new Element('td').insert(label));
+        table.insert(row);
+
+        input.observe('change', function(event) {
+          if (event.target) {
+            if (event.target.checked === false) {
+              // Remove journal collaborator
+              _this._removeJournal(item.id);
+            } else {
+              _this._addCollaborator(item);
+            }
+          }
+        });
+      });
+    },
+    _initManagerActions : function() {
+      var _this = this;
+      var buttons = new Element('div', {'class' : 'buttons'});
+      buttons.insert(new Element('input', {type: 'hidden', name : 'xaction', 'value': 'update'}));
+      buttons.insert(new Element('input', {type: 'hidden', name : 'patient', 'value': this.patientId}));
+      buttons.insert(new Element('input', {type: 'submit', name : 'submit',  'value': 'Update', 'class' : 'button'}).wrap('span', {'class' : 'buttonwrapper'}));
+      buttons.insert(new Element('input', {type: 'button', name : 'close',   'value': 'Cancel', 'class' : 'button secondary'}).wrap('span', {'class' : 'buttonwrapper'}));
+      this._container.insert(buttons);
+
+      buttons.down('input[name="close"]').observe('click', function(event) {
+        _this._dialog.closeDialog();
+      })
+
+      this._container.observe('submit', function(event) {
+        event.stop();
+        var trigger = event.findElement();
+        if (trigger._disbaled) {return; }
+        var formData = _this._container.serialize(true)
+        new Ajax.Request(_this._container.action, {
+          method: _this._container.method,
+          parameters : formData,
+          onCreate : function() {
+            trigger._disabled = true;
+            trigger.addClassName('loading');
+            _this._messages.update(new Element('div', {'class' : 'xHint'}).update('Updating global visibility and collaborators...'));
+          },
+          onSuccess : function(response) {
+            var ownershipTransfer = $('transfer');
+            var owner = _this._element.down('.owner');
+            if (owner &amp;&amp; ownershipTransfer) {
+              var newOwner = '';
+              var newOwnerGroup = ownershipTransfer.down('select');
+              if (newOwnerGroup &amp;&amp; !newOwnerGroup.disabled &amp;&amp; newOwnerGroup.selectedIndex &gt; 0) {
+                newOwner = newOwnerGroup.options[newOwnerGroup.selectedIndex].text;
+              } else {
+                var newOwnerUser = ownershipTransfer.down('input[type="text"]');
+                if (newOwnerUser) {
+                  var userName = ownershipTransfer.down('.accepted-suggestions li .user-name');
+                  if (!newOwnerUser.disabled &amp;&amp; userName) {
+                    newOwner = userName.firstChild.nodeValue;
+                  }
+                }
+              }
+              if (newOwner) {
+                owner.update(newOwner);
+              }
+            }
+            var visibility = _this._element.down('.visibility');
+            if (visibility) {
+              _this.VISIBILITY.each(function (item) {
+                 if (item.id == formData.visibility) {
+                   visibility.update('');
+                   visibility.insert(item.icon.clone(true)).insert(item.name);
+                   visibility.title = item.title;
+                 }
+              });
+            }
+            var collaborators = _this._element.down('.collaborators');
+            var collaboratorsCount = formData.collaborator ? (formData.collaborator.size &amp;&amp; formData.collaborator.size() || 1) : 0;
+            if (collaborators) {
+              collaborators.update(collaboratorsCount + ' collaborator' + (collaboratorsCount != 1 ? 's' : ''));
+            }
+            _this._dialog.closeDialog();
+          },
+          onFailure : function(response) {
+            var failureReason = response.responseText || response.statusText;
+            if (response.statusText == '' /* No response */ || response.status == 12031 /* In IE */) {
+               failureReason = 'Server not responding';
+            }
+            _this._messages.update(new Element('div', {'class' : 'errormessage'}).update('Failed to update. ' + failureReason));
+          },
+          on0 : function (response) {
+            response.request.options.onFailure(response);
+          },
+          onComplete : function() {
+            trigger._disabled = false;
+            trigger.removeClassName('loading');
+          }
+        });
+      })
+    },
+
+    _launchEditor : function () {
+      var _this = this;
+      if (this._editorLauncher._disabled) { return; }
+      new Ajax.Request(this._container.action, {
+        parameters : {'xaction': 'get', 'patient' : this.patientId},
+        onCreate : function() {
+          _this._editorLauncher._disabled = true;
+          _this._messages.update('');
+          _this._dialog.showDialog();
+          _this._container.up('.msdialog-modal-container').style.zIndex = 3001;
+          _this._collaboratorsList.update('&lt;tr&gt;&lt;td colspan="3"&gt;&lt;img src="$xwiki.getSkinFile('icons/xwiki/ajax-loader-large.gif')"/&gt;&lt;/td&gt;&lt;/tr&gt;');
+        },
+        onSuccess : function(response) {
+           var data = response.responseJSON;
+           _this._updateOwnershipManager(_this._element.down(".owner").innerHTML);   // get current owner from document HTML
+           _this._updateVisibility(data.visibility);
+           _this._updateCollaborators(data.collaborators);
+        },
+        onComplete : function() {
+          _this._editorLauncher._disabled = false;
+        }
+      });
+    },
+
+    _updateVisibility : function (value) {
+      var elt = this._visibilityManager.down('input[type="radio"][value="' + value + '"]');
+      if (elt) {
+        elt.checked = true;
+      }
+    },
+
+    _updateCollaborators : function (collaborators) {
+      // Clear existing collaborators and uncheck journals
+      this._collaboratorsList.update('');
+      var checkboxes = this._journalsManager.down('input[type="checkbox"][name="journal"]');
+      for (var i = 0; i &lt; checkboxes.length; i++) {
+        checkboxes[i].checked = false;
+      }
+      collaborators.each(this._addCollaborator.bind(this));
+    },
+
+    _isJournalCollaborator : function (id) {
+      for (var i = 0; i &lt; this.JOURNALS.length; i++) {
+        if (this.JOURNALS[i].id == id) {
+          return true;
+        }
+      }
+      return false;
+    },
+
+    _removeJournal : function (id) {
+      // Remove hidden journal collaborator
+      var collab = this._collaboratorsList.down('input[name="collaborator"][value="' + id + '"]'); 
+      if (collab) {
+        var row = collab.up('tr');
+        if (row) {
+          row.remove();
+        }
+      }
+    },
+
+    /* Expected format for the collaborator object c : {id : 'string', 'type' : 'string', name : 'string', 'accessLevel' : 'string' } */
+    _addCollaborator : function (c, highlight) {
+      var row = this._generateCollaborator(c, highlight);
+      if (row) {
+        if (this._isJournalCollaborator(c.id)) {
+          row.addClassName('journal');
+          // Ensure checkbox is checked
+          var checkbox = this._journalsManager.down('input[type="checkbox"][value="' + c.id + '"]');
+          if (checkbox) {
+            checkbox.checked = true;
+          }
+        }
+        this._collaboratorsList.insert(row);
+      }
+    },
+
+    _generateCollaborator : function (c, highlight) {
+      var row = new Element('tr', {'class' : (highlight === true ? 'new' : '')});
+      row.insert(new Element('td').insert(new Element('span', {'class' : 'fa fa-' + c.type}).update(' ')));
+      row.insert(new Element('td')
+              .insert(c.name)
+              .insert(new Element('input', {'type': 'hidden', 'name' : 'collaborator', 'value' : c.id}))
+      );
+      var rights = this._generateCollaborationOptions('accessLevel', c.accessLevel)
+      row.insert(rights.wrap('td'));
+      var deleteTool = new Element('span', {'class' : 'tool delete fa fa-times', title : 'Remove this collaborator'});
+      row.insert(deleteTool.wrap('td'));
+      deleteTool.observe('click', function(event) {
+        event.findElement('tr').remove();
+      });
+      return row;
+    },
+
+    _generateCollaborationOptions : function (name, value) {
+      var selected = value || this.ACCESS_LEVELS[0].id;
+      var result = new Element('select', {name : name});
+      this.ACCESS_LEVELS.each(function (l) {
+            var o = new Element('option', {value : l.id}).update(l.name);
+            result.insert(o);
+      });
+      for (var i = 0; i &lt; result.options.length; i++ ) {
+        if (result.options[i].value == value) {
+          result.options[i].selected = true;
+          break;
+        }
+      }
+      return result;
+    }
+  });
+  return PhenoTips;
+}(PhenoTips || {}));
+
+document.observe("xwiki:dom:loaded", function() {
+  new PhenoTips.widgets.AccessRightsManager(document.documentElement.down('meta[name="page"]').content);
+});</code>
+    </property>
+    <property>
+      <name/>
+    </property>
+    <property>
+      <parse>1</parse>
+    </property>
+    <property>
+      <use>onDemand</use>
+    </property>
+  </object>
+  <object>
+    <name>PhenoTips.PatientAccessRightsManagement</name>
+    <number>0</number>
+    <className>XWiki.StyleSheetExtension</className>
+    <guid>3f13b7c9-93f5-4e94-b01e-b180d2a383de</guid>
+    <class>
+      <name>XWiki.StyleSheetExtension</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <cache>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>cache</name>
+        <number>5</number>
+        <prettyName>Caching policy</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators> ,|</separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>long|short|default|forbid</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </cache>
+      <code>
+        <disabled>0</disabled>
+        <name>code</name>
+        <number>2</number>
+        <prettyName>Code</prettyName>
+        <rows>20</rows>
+        <size>50</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </code>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+      <parse>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType>yesno</displayType>
+        <name>parse</name>
+        <number>4</number>
+        <prettyName>Parse content</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </parse>
+      <use>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>use</name>
+        <number>3</number>
+        <prettyName>Use this extension</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators> ,|</separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>currentPage=Always on this page|onDemand=On demand|always=Always on this wiki</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </use>
+    </class>
+    <property>
+      <cache>long</cache>
+    </property>
+    <property>
+      <code>#template("colorThemeInit.vm")
+
+#access-rights-summary {
+  font-size: .87em;
+  float: right;
+}
+#access-rights-summary .access-rights-info {
+  border: 1px solid #fff;
+  box-shadow: inset 1px 1px 1px $theme.borderColor, 1px 1px 1px $theme.borderColor;
+  border-radius: 3px;
+  display: inline-block;
+  font-weight: bold;
+  margin: 5px 5px 0 0;
+  padding: 2px 3px;
+}
+#access-rights-summary a.button {
+  font-size: 1em;
+  text-transform: none;
+  font-weight: normal;
+}
+
+#access-levels-manager h2 {
+  margin-top: 0;
+}
+
+#manage-visibility label {
+  margin-right: 1em;
+  white-space: nowrap;
+}
+
+#access-levels-manager td {
+  border: 0 none;
+  padding: .3em;
+  text-align: left;
+  vertical-align: top;
+}
+#access-levels-manager .accepted-suggestions {
+  margin: 0 !important;
+}
+#access-levels-manager .accepted-suggestions li .delete-tool {
+  background: transparent;
+}
+#collaborators tbody td {
+  border-bottom: 1px solid $theme.borderColor;
+}
+#collaborators tfoot td {
+  border-top: 3px solid $theme.borderColor;
+}
+#collaborators .tool.delete {
+  color: $theme.notificationErrorColor;
+  cursor: pointer;
+}
+#collaborators .highlight {
+  background-color: $theme.highlightColor !important;
+  color: $theme.notificationErrorColor;
+}
+
+#collaborators .new {
+  background-color: $theme.highlightColor;
+}
+
+#collaborators .journal {
+  display: none;
+}</code>
+    </property>
+    <property>
+      <name/>
+    </property>
+    <property>
+      <parse>1</parse>
+    </property>
+    <property>
+      <use>onDemand</use>
+    </property>
+  </object>
+  <object>
+    <name>PhenoTips.PatientAccessRightsManagement</name>
+    <number>0</number>
+    <className>XWiki.UIExtensionClass</className>
+    <guid>3d24805b-d647-4e9b-a7ca-00f55fb5a7f3</guid>
+    <class>
+      <name>XWiki.UIExtensionClass</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <content>
+        <disabled>0</disabled>
+        <name>content</name>
+        <number>3</number>
+        <prettyName>Extension Content</prettyName>
+        <rows>10</rows>
+        <size>40</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </content>
+      <extensionPointId>
+        <disabled>0</disabled>
+        <name>extensionPointId</name>
+        <number>1</number>
+        <prettyName>Extension Point ID</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </extensionPointId>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>2</number>
+        <prettyName>Extension ID</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+      <parameters>
+        <disabled>0</disabled>
+        <name>parameters</name>
+        <number>4</number>
+        <prettyName>Extension Parameters</prettyName>
+        <rows>10</rows>
+        <size>40</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </parameters>
+      <scope>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>scope</name>
+        <number>5</number>
+        <prettyName>Extension Scope</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators> ,|</separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>wiki=Current Wiki|user=Current User|global=Global</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </scope>
+    </class>
+    <property>
+      <content>{{velocity output="false"}}
+#set ($serviceDocName = 'PhenoTips.PatientAccessRightsManagement')
+#set ($serviceDoc = $xwiki.getDocument($serviceDocName))
+$xwiki.ssfx.use('uicomponents/suggest/suggestPicker.css', true)
+$xwiki.jsfx.use('uicomponents/suggest/suggestPicker.js', true)
+$xwiki.ssfx.use('uicomponents/widgets/userpicker/userPicker.css', true)
+$xwiki.jsfx.use('uicomponents/widgets/userpicker/userPicker.js', true)
+$xwiki.jsx.use($serviceDocName)
+$xwiki.ssx.use($serviceDocName)
+{{/velocity}}
+
+{{velocity}}
+#if ($xcontext.action != 'export')
+#set ($patient = $services.patients.getPatientById($doc.documentReference))
+#if ($patient)
+  #set ($_service = $services.permissions)
+  #set ($patientAccess = $_service.getPatientAccess($patient))
+  ## ===========================================================
+  ## Display access summary for this patient and enable changing
+  ## -----------------------------------------------------------
+  #set ($visibility =  $patientAccess.visibility)
+  #set ($collaborators = $patientAccess.collaborators)
+  #set ($collaboratorsCount = $collaborators.size())
+  #set ($owner = $patientAccess.getOwner())
+  #set ($ownerReference = $owner.user)
+  #if (!$ownerReference)
+    #set ($ownerName = 'nobody')
+  #elseif ($ownerReference.equals($xcontext.userReference))
+    #set ($ownerName = 'you')
+  #else
+    #set ($ownerName = $xwiki.getUserName("$ownerReference", false))
+  #end
+  #set ($canTransfer = $patientAccess.hasAccessLevel('owner'))
+  #if ($owner.isGroup())
+    #set ($adminGroup = $xcontext.getDatabase() + ":Groups." + $owner.getUsername() + " Administrators")
+    #if (!$xwiki.getUser().isUserInGroup($adminGroup))
+      #set ($canTransfer = false)
+    #end
+  #end
+  #set ($canManage = $patientAccess.hasAccessLevel('manage'))
+  (% id="access-rights-summary" %)(((
+    This case is owned by (% class="access-rights-info" %){{html wiki="true" clean="false"}}{{icon name="user"/}}&lt;span class="owner"&gt;$ownerName&lt;/span&gt;{{/html}}(%%)##
+    #if ($canManage),#else and#end it is (% class="access-rights-info visibility" title="$!{visibility.description}" %){{icon name="$visibility"/}}${visibility.label}(%%)##
+    #if ($canManage) ##
+      and it is shared with (% class="access-rights-info" %){{html wiki="true" clean="false"}}{{icon name="group"/}}&lt;span class="collaborators"&gt;$collaboratorsCount collaborator#if ($collaboratorsCount != 1)s#{end}&lt;/span&gt;{{/html}}. ##
+      (% class="buttonwrapper tool edit" %)[[ {{icon name="wrench" title="Modify visibility and collaborations" /}} Modify permissions&gt;&gt;path:#||class="button"]]##
+      (% class="hidden" %)((({{html wiki="true" clean="false"}}
+        &lt;input type="hidden" name="serviceURL" value="$serviceDoc.getURL('get', 'outputSyntax=plain')"/&gt;
+        #foreach ($l in $_service.listAccessLevels())
+          &lt;input type="hidden" name="access-level" value="${l.name}" alt="$!{l.description}" /&gt;
+        #end
+        #foreach ($l in $_service.listVisibilityOptions())
+          &lt;input type="hidden" name="visibility" value="${l.name}" alt="$!{l.label}" title="$!{l.description}" /&gt;{{icon name="${l.name}" /}}
+        #end
+        #if ($canManage)
+          &lt;input type="text" name="user" class="suggestUsers" value="" placeholder="New collaborator" id="new-collaborator-input" /&gt;
+          &lt;input type="text" name="group" class="suggestGroups" value="" placeholder="New collaborating group" id="new-group-input" /&gt;
+        #end
+        #if ($canTransfer)
+          &lt;div id="new-owner-input"&gt;&lt;input type="text" name="owner" id="new-owner-user-select" class="suggestUsers" value="" placeholder="New owner" /&gt;&lt;/div&gt;
+          #set ($toProcess = $collectionstool.queue)
+          #set ($discard = $toProcess.add($xcontext.userReference.toString()))
+          #set ($groups = $collectionstool.sortedMap)
+          #foreach ($iteration in [0..1000])
+            #if ($toProcess.empty)
+              #break
+            #end
+            #set ($item = $toProcess.poll())
+            #foreach ($group in $xwiki.wrapDocs($xwiki.rightsmanager.getAllGroupsNamesForMember($item)))
+              #set ($groupObj = $group.getObject('PhenoTips.PhenoTipsGroupClass'))
+              #if (!$groupObj &amp;&amp; $group.documentReference.name.endsWith(' Administrators'))
+                #set ($group = $xwiki.getDocument($services.model.resolveDocument($stringtool.removeEnd($group.documentReference.name, ' Administrators'), $group.documentReference.parent)))
+                #set ($groupObj = $group.getObject('PhenoTips.PhenoTipsGroupClass'))
+              #end
+              #if ($groupObj &amp;&amp; !$groups.containsKey($group.documentReference))
+                #set ($discard = $toProcess.add($group.documentReference.toString()))
+                #if ("$group.plainTitle" != '')
+                  #set ($discard = $groups.put($group.documentReference, $group.plainTitle))
+                #else
+                  #set ($discard = $groups.put($group.documentReference, $group.documentReference.name))
+                #end
+              #end
+            #end
+          #end
+          #if (!$groups.isEmpty())
+          &lt;select name="owner" id="new-owner-group-select"&gt;
+            &lt;option value="" selected="selected"&gt;New owner group&lt;/option&gt;
+            &lt;optgroup label="New owner group"&gt;
+            #foreach ($g in $groups.entrySet())
+              &lt;option value="${g.key}"#if ("$!{ownerReference}" == "$g.key") selected="selected"#end&gt;${g.value}&lt;/option&gt;
+            #end
+            &lt;/optgroup&gt;
+          &lt;/select&gt;
+          #end
+        #end
+      {{/html}})))
+    #end
+  )))
+#end## Patient exists
+#end## xcontext.action
+{{/velocity}}</content>
+    </property>
+    <property>
+      <extensionPointId>org.phenotips.patientSheet.before</extensionPointId>
+    </property>
+    <property>
+      <name>org.phenotips.patientSheet.accessLevels</name>
+    </property>
+    <property>
+      <parameters/>
+    </property>
+    <property>
+      <scope>wiki</scope>
+    </property>
+  </object>
+</xwikidoc>
