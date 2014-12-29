@@ -195,13 +195,19 @@
       </scope>
     </class>
     <property>
-      <content/>
+      <content>{{velocity}}
+  #if ($xcontext.action == 'edit' &amp;&amp; ($editor == 'wiki' || $editor == 'wysiwyg') &amp;&amp; !$request.section)
+    {{html clean=false}}
+    #template('editmeta.vm')
+    {{/html}}
+  #end
+{{/velocity}}</content>
     </property>
     <property>
       <extensionPointId>org.phenotips.main.top:PhenomeCentral</extensionPointId>
     </property>
     <property>
-      <name>org.phenotips.main.top.empty</name>
+      <name>org.phenotips.main.top</name>
     </property>
     <property>
       <parameters/>
