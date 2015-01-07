@@ -52,6 +52,13 @@
       <type>xar</type>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
+      <artifactId>remote-matching-ui</artifactId>
+      <version>${remoteMatching.version}</version>
+      <type>xar</type>
+      <scope>provided</scope>
+    </dependency>
   </dependencies>
   <build>
     <pluginManagement>
