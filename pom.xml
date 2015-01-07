@@ -25,7 +25,7 @@
   <parent>
     <groupId>org.phenotips</groupId>
     <artifactId>phenotips-parent</artifactId>
-    <version>1.0</version>
+    <version>1.1-milestone-1</version>
     <relativePath />
   </parent>
 
@@ -130,8 +130,8 @@
 
   <properties>
     <!-- Downstream project versions -->
-    <phenotips.version>1.1-SNAPSHOT</phenotips.version>
-    <patientNetwork.version>1.0-SNAPSHOT</patientNetwork.version>
+    <phenotips.version>1.1-milestone-1</phenotips.version>
+    <patientNetwork.version>1.0-milestone-4</patientNetwork.version>
     <remoteMatching.version>1.0-milestone-1</remoteMatching.version>
 
     <!-- There is no Java code, speedup the build by skipping Clirr and Checkstyle checks -->
