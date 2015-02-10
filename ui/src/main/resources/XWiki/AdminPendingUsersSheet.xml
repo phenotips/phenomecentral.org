@@ -85,12 +85,16 @@
               &lt;th class="xwiki-livetable-display-header-text" scope="col"&gt;$services.localization.render('xe.admin.users.username')&lt;/th&gt;
               &lt;th class="xwiki-livetable-display-header-text" scope="col"&gt;$services.localization.render('xe.admin.users.firstname')&lt;/th&gt;
               &lt;th class="xwiki-livetable-display-header-text" scope="col"&gt;$services.localization.render('xe.admin.users.lastname')&lt;/th&gt;
+              &lt;th class="xwiki-livetable-display-header-text" scope="col"&gt;$services.localization.render('email')&lt;/th&gt;
+              &lt;th class="xwiki-livetable-display-header-text" scope="col"&gt;$services.localization.render('affiliation')&lt;/th&gt;
+              &lt;th class="xwiki-livetable-display-header-text" scope="col"&gt;$services.localization.render('referral')&lt;/th&gt;
+              &lt;th class="xwiki-livetable-display-header-text" scope="col"&gt;$services.localization.render('comment')&lt;/th&gt;
               &lt;th class="xwiki-livetable-display-header-text" scope="col"&gt;$services.localization.render('xe.admin.users.manage')&lt;/th&gt;
             &lt;/tr&gt;
           &lt;/thead&gt;
           &lt;tbody id="userstable-display" class="xwiki-livetable-display-body"&gt;
             &lt;tr&gt;
-              &lt;td colspan="4"&gt;&amp;nbsp;&lt;/td&gt;
+              &lt;td colspan="8"&gt;&amp;nbsp;&lt;/td&gt;
             &lt;/tr&gt;
           &lt;/tbody&gt;
         &lt;/table&gt;

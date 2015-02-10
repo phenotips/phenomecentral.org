@@ -68,9 +68,12 @@ $response.setContentType("application/json")
   {"username" : "$!{escapetool.javascript($user.name)}",
     "fullname" : "$!{escapetool.javascript($user.fullName)}",
     "wikiname" : "$!{escapetool.javascript($wikiname)}",
- 
     "firstname" : "$!{escapetool.javascript($user.getObject('XWiki.XWikiUsers').getProperty('first_name').getValue())}",
     "lastname" : "$!{escapetool.javascript($user.getObject('XWiki.XWikiUsers').getProperty('last_name').getValue())}",
+    "email" : "$!{escapetool.javascript($user.getObject('XWiki.XWikiUsers').getProperty('email').getValue())}",
+    "affiliation" : "$!{escapetool.javascript($user.getObject('XWiki.XWikiUsers').getProperty('affiliation').getValue())}",
+    "referral" : "$!{escapetool.javascript($user.getObject('XWiki.XWikiUsers').getProperty('referral').getValue())}",
+    "comment" : "$!{escapetool.javascript($user.getObject('XWiki.XWikiUsers').getProperty('comment').getValue())}",
     "active" : $user.getObject('XWiki.XWikiUsers').getProperty('active').getValue(),
     "objectNumber" : $user.getObject('XWiki.XWikiUsers').number,
     "userurl" : "$xwiki.getURL($user.fullName)",

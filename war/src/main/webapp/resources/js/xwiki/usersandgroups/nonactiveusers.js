@@ -227,6 +227,22 @@ function displayUsers(row, i, table, form_token)
   lastname.appendChild(document.createTextNode(row.lastname) );
   tr.appendChild(lastname);
 
+  var email = document.createElement('td');
+  email.appendChild(document.createTextNode(row.email) );
+  tr.appendChild(email);
+
+  var affiliation = document.createElement('td');
+  affiliation.appendChild(document.createTextNode(row.affiliation) );
+  tr.appendChild(affiliation);
+
+  var referral = document.createElement('td');
+  referral.appendChild(document.createTextNode(row.referral) );
+  tr.appendChild(referral);
+
+  var comment = document.createElement('td');
+  comment.appendChild(document.createTextNode(row.comment) );
+  tr.appendChild(comment);
+
   var manage = document.createElement('td');
   manage.className = "manage";
 
