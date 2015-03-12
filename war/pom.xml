@@ -602,6 +602,11 @@
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
+      <artifactId>phenotips-studies-api</artifactId>
+      <version>${phenotips.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
       <artifactId>xwiki-platform-users-api</artifactId>
       <version>${phenotips.version}</version>
     </dependency>
@@ -648,6 +653,21 @@
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>phenotips-navigation-api</artifactId>
+      <version>${phenotips.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
+      <artifactId>phenotips-pedigree-api</artifactId>
+      <version>${phenotips.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
+      <artifactId>phenotips-skin-api</artifactId>
+      <version>${phenotips.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
+      <artifactId>phenotips-widgets-api</artifactId>
       <version>${phenotips.version}</version>
     </dependency>
     <dependency>
