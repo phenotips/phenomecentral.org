@@ -1112,6 +1112,15 @@
         <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
       </image>
     </class>
+    <property>
+      <data/>
+    </property>
+    <property>
+      <description/>
+    </property>
+    <property>
+      <image/>
+    </property>
   </object>
   <object>
     <name>PhenoTips.PatientTemplate</name>
