@@ -702,7 +702,9 @@ $xwiki.get('ssfx').use('uicomponents/widgets/validation/livevalidation.css', tru
   ## This must not be in a #set directive as it will output messages if something goes wrong.
   #validateFields($fields, $request)
   ##-------------------------------------
-  #if ("$!{request.confirmation}" == '')
+  #if ("$!{request.confirmation_clinician}" == '' || "$!{request.confirmation_research}" == '' ||
+      "$!{request.confirmation_identify}" == '' || "$!{request.confirmation_publication}" == '' ||
+      "$!{request.confirmation_funding}" == '')
     #set ($missingConfirmation = true)
     #set ($registrationFailed = true)
   #end
@@ -721,7 +723,7 @@ $xwiki.get('ssfx').use('uicomponents/widgets/validation/livevalidation.css', tru
   {{html clean=false wiki=false}}
     ##----------------------------------
     #if ($missingConfirmation)
-      #error('PhenomeCentral is targeted to clinicians and scientists working in the rare disorder community. You should not request an account on PhenomeCentral unless you can confirm that you are a doctor, clinical geneticist or scientist working with patients affected by rare disorders.')
+      #error('You must accept and/or confirm all conditions to be eligible for an account at PhenomeCentral.')
     #end
     ##----------------------------------
     &lt;form id="register" action="" method="post" class="xform"&gt;
@@ -741,9 +743,32 @@ $xwiki.get('ssfx').use('uicomponents/widgets/validation/livevalidation.css', tru
       &lt;textarea id="register_comment" name="register_comment" rows="3" mlb_binding_key="8"&gt;&lt;/textarea&gt;
     &lt;/dd&gt;
     &lt;dt&gt;
-      &lt;label for="confirmation"&gt;&lt;input id="confirmation" type="checkbox" name="confirmation" style="margin-right: 16px;" mlb_binding_key="9"&gt;
+      &lt;label for="confirmation_clinician"&gt;&lt;input id="confirmation_clinician" type="checkbox" name="confirmation_clinician" style="margin-right: 16px;" mlb_binding_key="9"&gt;
       I confirm that I am a doctor, clinical geneticist or scientist working with patients affected by rare disorders.
       &lt;span class="xRequired"&gt;(Required)&lt;/span&gt;
+      &lt;/label&gt;
+    &lt;/dt&gt;
+    &lt;dt&gt;
+      &lt;label for="confirmation_research"&gt;&lt;input id="confirmation_research" type="checkbox" name="confirmation_research" style="margin-right: 16px;" mlb_binding_key="10"&gt;
+          PhenomeCentral provides data in good faith as a research tool, but without verifying the accuracy, clinical validity or utility of the data. PhenomeCentral makes no warranty, express or implied, nor assumes any legal liability or responsibility for any purpose for which the data are used.
+          &lt;span class="xRequired"&gt;(Required)&lt;/span&gt;
+      &lt;/label&gt;
+    &lt;/dt&gt;
+    &lt;dt&gt;
+      &lt;label for="confirmation_identify"&gt;&lt;input id="confirmation_identify" type="checkbox" name="confirmation_identify" style="margin-right: 16px;" mlb_binding_key="11"&gt;
+          The user certifies that no attempt to identify individual patients will be undertaken.
+      &lt;span class="xRequired"&gt;(Required)&lt;/span&gt;
+      &lt;/label&gt;
+    &lt;/dt&gt;
+    &lt;dt&gt;
+      &lt;label for="confirmation_publication"&gt;&lt;input id="confirmation_publication" type="checkbox" name="confirmation_publication" style="margin-right: 16px;" mlb_binding_key="12"&gt;
+          Prior to using PhenomeCentral data in a publication, the user will contact the owner of the matching dataset to assess the integrity of the match and if validated will offer appropriate agreed recognition of their contribution, which may include co-authorship if the magnitude of the contribution warrants it to at least one representative from the project/participating centre (possibly the member who submitted the patient data).
+          &lt;span class="xRequired"&gt;(Required)&lt;/span&gt;
+      &lt;/label&gt;
+    &lt;/dt&gt;
+    &lt;dt&gt;&lt;label for="confirmation_funding"&gt;&lt;input id="confirmation_funding" type="checkbox" name="confirmation_funding" style="margin-right: 16px;" mlb_binding_key="13"&gt;
+          If PhenomeCentral enables a research publication, the authors must acknowledge PhenomeCentral using the following wording: "This study makes use of data shared through the PhenomeCentral repository. Funding for PhenomeCentral was provided by Genome Canada and Canadian Institute of Health Research (CIHR).
+          &lt;span class="xRequired"&gt;(Required)&lt;/span&gt;
       &lt;/label&gt;
     &lt;/dt&gt;
     ##-----------------------------------
