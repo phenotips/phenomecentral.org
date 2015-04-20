@@ -42,215 +42,6 @@
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.0</syntaxId>
   <hidden>true</hidden>
-  <class>
-    <name>PhenomeCentral.RegistrationWiki</name>
-    <customClass/>
-    <customMapping/>
-    <defaultViewSheet/>
-    <defaultEditSheet/>
-    <defaultWeb/>
-    <nameField/>
-    <validationScript/>
-    <defaultRedirect>
-      <disabled>0</disabled>
-      <name>defaultRedirect</name>
-      <number>7</number>
-      <picker>0</picker>
-      <prettyName>Redirect here after registration</prettyName>
-      <size>30</size>
-      <unmodifiable>0</unmodifiable>
-      <validationMessage/>
-      <validationRegExp/>
-      <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-    </defaultRedirect>
-    <heading>
-      <disabled>0</disabled>
-      <name>heading</name>
-      <number>1</number>
-      <picker>0</picker>
-      <prettyName>Registration page heading</prettyName>
-      <size>30</size>
-      <unmodifiable>0</unmodifiable>
-      <validationMessage/>
-      <validationRegExp/>
-      <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-    </heading>
-    <liveValidation_defaultFieldOkMessage>
-      <disabled>0</disabled>
-      <name>liveValidation_defaultFieldOkMessage</name>
-      <number>4</number>
-      <picker>0</picker>
-      <prettyName>Default field okay message</prettyName>
-      <size>30</size>
-      <unmodifiable>0</unmodifiable>
-      <validationMessage/>
-      <validationRegExp/>
-      <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-    </liveValidation_defaultFieldOkMessage>
-    <liveValidation_enabled>
-      <defaultValue/>
-      <disabled>0</disabled>
-      <displayFormType>checkbox</displayFormType>
-      <displayType/>
-      <name>liveValidation_enabled</name>
-      <number>3</number>
-      <prettyName>Enable Javascript field validation</prettyName>
-      <unmodifiable>0</unmodifiable>
-      <validationMessage/>
-      <validationRegExp/>
-      <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
-    </liveValidation_enabled>
-    <loginButton_autoLogin_enabled>
-      <defaultValue/>
-      <disabled>0</disabled>
-      <displayFormType>checkbox</displayFormType>
-      <displayType/>
-      <name>loginButton_autoLogin_enabled</name>
-      <number>6</number>
-      <prettyName>Enable automatic login</prettyName>
-      <unmodifiable>0</unmodifiable>
-      <validationMessage/>
-      <validationRegExp/>
-      <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
-    </loginButton_autoLogin_enabled>
-    <loginButton_enabled>
-      <defaultValue/>
-      <disabled>0</disabled>
-      <displayFormType>checkbox</displayFormType>
-      <displayType/>
-      <name>loginButton_enabled</name>
-      <number>5</number>
-      <prettyName>Enable login button</prettyName>
-      <unmodifiable>0</unmodifiable>
-      <validationMessage/>
-      <validationRegExp/>
-      <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
-    </loginButton_enabled>
-    <registrationSuccessMessage>
-      <disabled>0</disabled>
-      <editor>PureText</editor>
-      <name>registrationSuccessMessage</name>
-      <number>9</number>
-      <picker>0</picker>
-      <prettyName>Registration Successful Message</prettyName>
-      <rows>12</rows>
-      <size>40</size>
-      <unmodifiable>0</unmodifiable>
-      <validationMessage/>
-      <validationRegExp/>
-      <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
-    </registrationSuccessMessage>
-    <requireCaptcha>
-      <defaultValue/>
-      <disabled>0</disabled>
-      <displayFormType>checkbox</displayFormType>
-      <displayType/>
-      <name>requireCaptcha</name>
-      <number>8</number>
-      <prettyName>Require captcha to register</prettyName>
-      <unmodifiable>0</unmodifiable>
-      <validationMessage/>
-      <validationRegExp/>
-      <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
-    </requireCaptcha>
-    <welcomeMessage>
-      <disabled>0</disabled>
-      <editor>PureText</editor>
-      <name>welcomeMessage</name>
-      <number>2</number>
-      <picker>0</picker>
-      <prettyName>Welcome message</prettyName>
-      <rows>12</rows>
-      <size>40</size>
-      <unmodifiable>0</unmodifiable>
-      <validationMessage/>
-      <validationRegExp/>
-      <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
-    </welcomeMessage>
-  </class>
-  <object>
-    <class>
-      <name>XWiki.XWikiRights</name>
-      <customClass/>
-      <customMapping/>
-      <defaultViewSheet/>
-      <defaultEditSheet/>
-      <defaultWeb/>
-      <nameField/>
-      <validationScript/>
-      <allow>
-        <defaultValue>1</defaultValue>
-        <disabled>0</disabled>
-        <displayFormType>select</displayFormType>
-        <displayType>allow</displayType>
-        <name>allow</name>
-        <number>4</number>
-        <prettyName>Allow/Deny</prettyName>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
-      </allow>
-      <groups>
-        <cache>0</cache>
-        <disabled>0</disabled>
-        <displayType>input</displayType>
-        <multiSelect>1</multiSelect>
-        <name>groups</name>
-        <number>1</number>
-        <picker>1</picker>
-        <prettyName>Groups</prettyName>
-        <relationalStorage>0</relationalStorage>
-        <separator> </separator>
-        <size>5</size>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.GroupsClass</classType>
-      </groups>
-      <levels>
-        <cache>0</cache>
-        <disabled>0</disabled>
-        <displayType>select</displayType>
-        <multiSelect>1</multiSelect>
-        <name>levels</name>
-        <number>2</number>
-        <prettyName>Levels</prettyName>
-        <relationalStorage>0</relationalStorage>
-        <separator> </separator>
-        <size>3</size>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.LevelsClass</classType>
-      </levels>
-      <users>
-        <cache>0</cache>
-        <disabled>0</disabled>
-        <displayType>input</displayType>
-        <multiSelect>1</multiSelect>
-        <name>users</name>
-        <number>3</number>
-        <picker>1</picker>
-        <prettyName>Users</prettyName>
-        <relationalStorage>0</relationalStorage>
-        <separator> </separator>
-        <size>5</size>
-        <unmodifiable>0</unmodifiable>
-        <classType>com.xpn.xwiki.objects.classes.UsersClass</classType>
-      </users>
-    </class>
-    <name>PhenomeCentral.RegistrationWiki</name>
-    <number>0</number>
-    <className>XWiki.XWikiRights</className>
-    <guid>cf6b2353-d01f-41f5-93d8-ab55c77db4f0</guid>
-    <property>
-      <allow>1</allow>
-    </property>
-    <property>
-      <groups>XWiki.XWikiAllGroup,xwiki:XWiki.XWikiAllGroup</groups>
-    </property>
-    <property>
-      <levels>view</levels>
-    </property>
-    <property>
-      <users>XWiki.XWikiGuest</users>
-    </property>
-  </object>
   <content>{{velocity}}
 ##---
 $xwiki.ssx.use('data.WebHome')##
@@ -980,6 +771,30 @@ $xwiki.get('ssfx').use('uicomponents/widgets/validation/livevalidation.css', tru
     #set($userName = $!request.get('xwikiname'))
     #set($password = $!request.get('register_password'))
     #set($loginURL = $xwiki.getURL($loginPage, $loginAction))
+    ## Getting the new user document
+    ## Couldn't find a service to return a reference/User object
+    #set($userDoc = $xwiki.getDocument("XWiki.$!{userName}"))
+    #set($discard = $userDoc.createNewObject('PhenomeCentral.UserConsent'))
+    #set($consentObject = $userDoc.getObject('PhenomeCentral.UserConsent'))
+    ## Setting consent fields
+    #set($consentClinician = 0)
+    #set($consentResearch = 0)
+    #set($consentIdentify = 0)
+    #set($consentPublication = 0)
+    #set($consentFunding = 0)
+    #if("$!{request.confirmation_clinician}" != '') #set($consentClinician = 1) #end
+    #if("$!{request.confirmation_research}" != '') #set($consentResearch = 1) #end
+    #if("$!{request.confirmation_identify}" != '') #set($consentIdentify = 1) #end
+    #if("$!{request.confirmation_publication}" != '') #set($consentPublication = 1) #end
+    #if("$!{request.confirmation_funding}" != '') #set($consentFunding = 1) #end
+    #set($discard = $consentObject.set("clinician", $consentClinician))
+    #set($discard = $consentObject.set("research", $consentResearch))
+    #set($discard = $consentObject.set("identify", $consentIdentify))
+    #set($discard = $consentObject.set("publication", $consentPublication))
+    #set($discard = $consentObject.set("funding", $consentFunding))
+    ##
+    #set($discard = $userDoc.save('Attaching a consent object on registration'))
+    ##
     #if("$!request.getParameter($redirectParam)" != '')
       #set($redirect = $request.getParameter($redirectParam))
     #else
@@ -1188,5 +1003,215 @@ $xwiki.get('ssfx').use('uicomponents/widgets/validation/livevalidation.css', tru
     #end
   #end
 #end
-{{/velocity}}</content>
+{{/velocity}}
+</content>
+  <class>
+    <name>PhenomeCentral.RegistrationWiki</name>
+    <customClass/>
+    <customMapping/>
+    <defaultViewSheet/>
+    <defaultEditSheet/>
+    <defaultWeb/>
+    <nameField/>
+    <validationScript/>
+    <defaultRedirect>
+      <disabled>0</disabled>
+      <name>defaultRedirect</name>
+      <number>7</number>
+      <picker>0</picker>
+      <prettyName>Redirect here after registration</prettyName>
+      <size>30</size>
+      <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
+      <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+    </defaultRedirect>
+    <heading>
+      <disabled>0</disabled>
+      <name>heading</name>
+      <number>1</number>
+      <picker>0</picker>
+      <prettyName>Registration page heading</prettyName>
+      <size>30</size>
+      <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
+      <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+    </heading>
+    <liveValidation_defaultFieldOkMessage>
+      <disabled>0</disabled>
+      <name>liveValidation_defaultFieldOkMessage</name>
+      <number>4</number>
+      <picker>0</picker>
+      <prettyName>Default field okay message</prettyName>
+      <size>30</size>
+      <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
+      <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+    </liveValidation_defaultFieldOkMessage>
+    <liveValidation_enabled>
+      <defaultValue/>
+      <disabled>0</disabled>
+      <displayFormType>checkbox</displayFormType>
+      <displayType/>
+      <name>liveValidation_enabled</name>
+      <number>3</number>
+      <prettyName>Enable Javascript field validation</prettyName>
+      <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
+      <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+    </liveValidation_enabled>
+    <loginButton_autoLogin_enabled>
+      <defaultValue/>
+      <disabled>0</disabled>
+      <displayFormType>checkbox</displayFormType>
+      <displayType/>
+      <name>loginButton_autoLogin_enabled</name>
+      <number>6</number>
+      <prettyName>Enable automatic login</prettyName>
+      <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
+      <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+    </loginButton_autoLogin_enabled>
+    <loginButton_enabled>
+      <defaultValue/>
+      <disabled>0</disabled>
+      <displayFormType>checkbox</displayFormType>
+      <displayType/>
+      <name>loginButton_enabled</name>
+      <number>5</number>
+      <prettyName>Enable login button</prettyName>
+      <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
+      <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+    </loginButton_enabled>
+    <registrationSuccessMessage>
+      <disabled>0</disabled>
+      <editor>PureText</editor>
+      <name>registrationSuccessMessage</name>
+      <number>9</number>
+      <picker>0</picker>
+      <prettyName>Registration Successful Message</prettyName>
+      <rows>12</rows>
+      <size>40</size>
+      <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
+      <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+    </registrationSuccessMessage>
+    <requireCaptcha>
+      <defaultValue/>
+      <disabled>0</disabled>
+      <displayFormType>checkbox</displayFormType>
+      <displayType/>
+      <name>requireCaptcha</name>
+      <number>8</number>
+      <prettyName>Require captcha to register</prettyName>
+      <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
+      <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+    </requireCaptcha>
+    <welcomeMessage>
+      <disabled>0</disabled>
+      <editor>PureText</editor>
+      <name>welcomeMessage</name>
+      <number>2</number>
+      <picker>0</picker>
+      <prettyName>Welcome message</prettyName>
+      <rows>12</rows>
+      <size>40</size>
+      <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
+      <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+    </welcomeMessage>
+  </class>
+  <object>
+    <name>PhenomeCentral.RegistrationWiki</name>
+    <number>0</number>
+    <className>XWiki.XWikiRights</className>
+    <guid>cf6b2353-d01f-41f5-93d8-ab55c77db4f0</guid>
+    <class>
+      <name>XWiki.XWikiRights</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <allow>
+        <defaultValue>1</defaultValue>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType>allow</displayType>
+        <name>allow</name>
+        <number>4</number>
+        <prettyName>Allow/Deny</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </allow>
+      <groups>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>input</displayType>
+        <multiSelect>1</multiSelect>
+        <name>groups</name>
+        <number>1</number>
+        <picker>1</picker>
+        <prettyName>Groups</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <size>5</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.GroupsClass</classType>
+      </groups>
+      <levels>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>1</multiSelect>
+        <name>levels</name>
+        <number>2</number>
+        <prettyName>Levels</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <size>3</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.LevelsClass</classType>
+      </levels>
+      <users>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>input</displayType>
+        <multiSelect>1</multiSelect>
+        <name>users</name>
+        <number>3</number>
+        <picker>1</picker>
+        <prettyName>Users</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <size>5</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.UsersClass</classType>
+      </users>
+    </class>
+    <property>
+      <allow>1</allow>
+    </property>
+    <property>
+      <groups>XWiki.XWikiAllGroup,xwiki:XWiki.XWikiAllGroup</groups>
+    </property>
+    <property>
+      <levels>view</levels>
+    </property>
+    <property>
+      <users>XWiki.XWikiGuest</users>
+    </property>
+  </object>
 </xwikidoc>
