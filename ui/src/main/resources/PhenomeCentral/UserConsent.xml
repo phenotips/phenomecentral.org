@@ -26,6 +26,7 @@
   <translation>0</translation>
   <creator>xwiki:XWiki.Admin</creator>
   <creationDate>1429461923000</creationDate>
+  <parent>XWiki.XWikiUsers</parent>
   <author>xwiki:XWiki.Admin</author>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
   <date>1429486468000</date>
