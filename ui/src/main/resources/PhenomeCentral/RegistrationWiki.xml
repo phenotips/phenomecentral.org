@@ -18,24 +18,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
-<xwikidoc>
+<xwikidoc version="1.1">
   <web>PhenomeCentral</web>
   <name>RegistrationWiki</name>
   <language/>
   <defaultLanguage/>
   <translation>0</translation>
-  <parent>XWiki.WebHome</parent>
   <creator>xwiki:XWiki.Admin</creator>
+  <creationDate>1430347253000</creationDate>
+  <parent>XWiki.WebHome</parent>
   <author>xwiki:XWiki.Admin</author>
-  <customClass/>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
-  <creationDate>1394145490000</creationDate>
-  <date>1394149207000</date>
-  <contentUpdateDate>1394149207000</contentUpdateDate>
+  <date>1430347851000</date>
+  <contentUpdateDate>1430347851000</contentUpdateDate>
   <version>1.1</version>
   <title>RegistrationWiki</title>
-  <defaultTemplate/>
-  <validationScript/>
   <comment/>
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.0</syntaxId>
@@ -1009,8 +1006,7 @@ $xwiki.get('ssfx').use('uicomponents/widgets/validation/livevalidation.css', tru
     #end
   #end
 #end
-{{/velocity}}
-</content>
+{{/velocity}}</content>
   <class>
     <name>PhenomeCentral.RegistrationWiki</name>
     <customClass/>
