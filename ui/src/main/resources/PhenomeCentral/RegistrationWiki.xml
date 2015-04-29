@@ -770,28 +770,36 @@ $xwiki.get('ssfx').use('uicomponents/widgets/validation/livevalidation.css', tru
     #set($password = $!request.get('register_password'))
     #set($loginURL = $xwiki.getURL($loginPage, $loginAction))
     ## Getting the new user document
-    ## Couldn't find a service to return a reference/User object
-    #set($userDoc = $xwiki.getDocument("XWiki.$!{userName}"))
-    #set($discard = $userDoc.createNewObject('PhenomeCentral.UserConsent'))
-    #set($consentObject = $userDoc.getObject('PhenomeCentral.UserConsent'))
+    #set( $userDoc = $xwiki.getDocument($services.model.createDocumentReference($xcontext.database, 'XWiki', $userName)))
+    #set( $consentObject = $userDoc.getObject('PhenomeCentral.UserConsent', true))
     ## Setting consent fields
-    #set($consentClinician = 0)
-    #set($consentResearch = 0)
-    #set($consentIdentify = 0)
-    #set($consentPublication = 0)
-    #set($consentFunding = 0)
-    #if("$!{request.confirmation_clinician}" != '') #set($consentClinician = 1) #end
-    #if("$!{request.confirmation_research}" != '') #set($consentResearch = 1) #end
-    #if("$!{request.confirmation_identify}" != '') #set($consentIdentify = 1) #end
-    #if("$!{request.confirmation_publication}" != '') #set($consentPublication = 1) #end
-    #if("$!{request.confirmation_funding}" != '') #set($consentFunding = 1) #end
-    #set($discard = $consentObject.set("clinician", $consentClinician))
-    #set($discard = $consentObject.set("research", $consentResearch))
-    #set($discard = $consentObject.set("identify", $consentIdentify))
-    #set($discard = $consentObject.set("publication", $consentPublication))
-    #set($discard = $consentObject.set("funding", $consentFunding))
+    #set ($consentClinician = 0)
+    #set ($consentResearch = 0)
+    #set ($consentIdentify = 0)
+    #set ($consentPublication = 0)
+    #set ($consentFunding = 0)
+    #if ("$!{request.confirmation_clinician}" != '')
+      #set ($consentClinician = 1)
+    #end
+    #if ("$!{request.confirmation_research}" != '')
+      #set ($consentResearch = 1)
+    #end
+    #if ("$!{request.confirmation_identify}" != '')
+      #set ($consentIdentify = 1)
+    #end
+    #if ("$!{request.confirmation_publication}" != '')
+      #set ($consentPublication = 1)
+    #end
+    #if ("$!{request.confirmation_funding}" != '')
+      #set ($consentFunding = 1)
+    #end
+    #set ($discard = $consentObject.set('clinician', $consentClinician))
+    #set ($discard = $consentObject.set('research', $consentResearch))
+    #set ($discard = $consentObject.set('identify', $consentIdentify))
+    #set ($discard = $consentObject.set('publication', $consentPublication))
+    #set ($discard = $consentObject.set('funding', $consentFunding))
     ##
-    #set($discard = $userDoc.save('Attaching a consent object on registration'))
+    #set($discard = $userDoc.save('Attaching a consent object on registration', true))
     ##
     #if("$!request.getParameter($redirectParam)" != '')
       #set($redirect = $request.getParameter($redirectParam))
