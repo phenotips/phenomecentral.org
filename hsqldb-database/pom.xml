@@ -151,6 +151,11 @@ xwiki.store.attachment.recyclebin.hint=file
             <artifactId>patient-measurements-migrations</artifactId>
             <version>${phenotips.version}</version>
           </dependency>
+          <dependency>
+            <groupId>org.phenotips</groupId>
+            <artifactId>patient-data-default-impl</artifactId>
+            <version>${phenotips.version}</version>
+          </dependency>
           <!-- WikiMacro classes are automatically generated. -->
           <dependency>
             <groupId>org.xwiki.platform</groupId>
