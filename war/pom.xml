@@ -344,33 +344,6 @@
       <version>${xwiki.version}</version>
       <scope>runtime</scope>
     </dependency>
-    <!-- Activity Stream -->
-    <dependency>
-      <groupId>org.xwiki.platform</groupId>
-      <artifactId>xwiki-platform-activitystream-api</artifactId>
-      <version>${xwiki.version}</version>
-      <scope>runtime</scope>
-    </dependency>
-    <!-- Event & Message Stream Modules -->
-    <dependency>
-      <groupId>org.xwiki.platform</groupId>
-      <artifactId>xwiki-platform-eventstream</artifactId>
-      <version>${xwiki.version}</version>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.xwiki.platform</groupId>
-      <artifactId>xwiki-platform-messagestream-api</artifactId>
-      <version>${xwiki.version}</version>
-      <scope>runtime</scope>
-    </dependency>
-    <!-- Scheduler -->
-    <dependency>
-      <groupId>org.xwiki.platform</groupId>
-      <artifactId>xwiki-platform-scheduler-api</artifactId>
-      <version>${xwiki.version}</version>
-      <scope>runtime</scope>
-    </dependency>
     <!-- ZIP Explorer -->
     <dependency>
       <groupId>org.xwiki.platform</groupId>
@@ -391,19 +364,6 @@
       <artifactId>xwiki-platform-jodatime</artifactId>
       <version>${xwiki.version}</version>
       <scope>runtime</scope>
-    </dependency>
-    <!-- Watchlist -->
-    <dependency>
-      <groupId>org.xwiki.platform</groupId>
-      <artifactId>xwiki-platform-watchlist-api</artifactId>
-      <version>${xwiki.version}</version>
-      <scope>runtime</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>commons-logging</groupId>
-          <artifactId>commons-logging</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <!-- Diff Script Services -->
     <dependency>
@@ -745,6 +705,14 @@
       <artifactId>remote-matching-core-server</artifactId>
       <version>${remoteMatching.version}</version>
     </dependency>
+
+    <!-- Add dependencies on the XAR distributions so that we transitively include all JAR dependencies in the generated WAR -->
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>phenomecentral-ui</artifactId>
+      <version>${project.version}</version>
+      <type>xar</type>
+    </dependency>
   </dependencies>
   <build>
     <plugins>
@@ -773,7 +741,6 @@
                 <xwikiDbDialect>org.hibernate.dialect.HSQLDialect</xwikiDbDialect>
                 <xwikiDbHbmXwiki>xwiki.hbm.xml</xwikiDbHbmXwiki>
                 <xwikiDbHbmFeeds>feeds.hbm.xml</xwikiDbHbmFeeds>
-                <xwikiDbHbmCommonExtraMappings>activitystream.hbm.xml</xwikiDbHbmCommonExtraMappings>
                 <xwikiCfgPlugins>\
   com.xpn.xwiki.monitor.api.MonitorPlugin,\
   com.xpn.xwiki.plugin.skinx.JsSkinExtensionPlugin,\
@@ -792,10 +759,7 @@
   com.xpn.xwiki.plugin.diff.DiffPlugin,\
   com.xpn.xwiki.plugin.rightsmanager.RightsManagerPlugin,\
   com.xpn.xwiki.plugin.jodatime.JodaTimePlugin,\
-  com.xpn.xwiki.plugin.scheduler.SchedulerPlugin,\
-  com.xpn.xwiki.plugin.mailsender.MailSenderPlugin,\
-  com.xpn.xwiki.plugin.activitystream.plugin.ActivityStreamPlugin, \
-  com.xpn.xwiki.plugin.watchlist.WatchListPlugin</xwikiCfgPlugins>
+  com.xpn.xwiki.plugin.mailsender.MailSenderPlugin</xwikiCfgPlugins>
                 <xwikiCfgVirtual>0</xwikiCfgVirtual>
                 <xwikiCfgVirtualUsepath>0</xwikiCfgVirtualUsepath>
                 <xwikiCfgEditCommentMandatory>0</xwikiCfgEditCommentMandatory>
