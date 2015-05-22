@@ -278,7 +278,7 @@
       <name>org.phenotips.patientSheet.field.consent</name>
     </property>
     <property>
-      <parameters/>
+      <parameters>disabled=true</parameters>
     </property>
     <property>
       <scope>wiki</scope>
