@@ -63,7 +63,7 @@
     #foreach ($phen in $parts[1].split('\|'))
       #set ($phenParts = $phen.split(','))
       #set ($phenotype = $phenParts[0])
-      #set ($pterm = $services.ontologies.resolveTerm($phenotype))
+      #set ($pterm = $services.vocabularies.resolveTerm($phenotype))
       #if ($pterm.ancestors.contains('HP:0011007'))
         #set ($discard = $o.set('global_age_of_onset', $phenotype))
       #elseif ($pterm.ancestors.contains('HP:0000005'))
