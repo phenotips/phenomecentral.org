@@ -243,6 +243,10 @@ function displayUsers(row, i, table, form_token)
   comment.appendChild(document.createTextNode(row.comment) );
   tr.appendChild(comment);
 
+  var date = document.createElement('td');
+  date.appendChild(document.createTextNode(row.date) );
+  tr.appendChild(date);
+
   var manage = document.createElement('td');
   manage.className = "manage";
 

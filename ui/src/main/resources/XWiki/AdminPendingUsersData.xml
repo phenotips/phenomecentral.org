@@ -61,6 +61,9 @@ $response.setContentType("application/json")
 "rows": [
 #foreach( $user in $users )
   #set($wikiname = $user.getWiki())
+  #set($creationDate = $user.getCreationDate())
+  #set($dateTimeDate = $services.jodatime.getDateTime($creationDate.getTime()))
+  #set($stringDate = $dateTimeDate.toLocalDate().toString('MMM dd'))
   #if($wikiname != "xwiki" || $wikiname == $xcontext.database) #set($wikiname = "local") #end
   #if( $velocityCount &gt; 1 ) , #end
   {"username" : "$!{escapetool.javascript($user.name)}",
@@ -72,6 +75,7 @@ $response.setContentType("application/json")
     "affiliation" : "$!{escapetool.javascript($user.getObject('XWiki.XWikiUsers').getProperty('affiliation').getValue())}",
     "referral" : "$!{escapetool.javascript($user.getObject('XWiki.XWikiUsers').getProperty('referral').getValue())}",
     "comment" : "$!{escapetool.javascript($user.getObject('XWiki.XWikiUsers').getProperty('comment').getValue())}",
+    "date" : "$!{escapetool.javascript($stringDate)}",
     "active" : $user.getObject('XWiki.XWikiUsers').getProperty('active').getValue(),
     "objectNumber" : $user.getObject('XWiki.XWikiUsers').number,
     "userurl" : "$xwiki.getURL($user.fullName)",
