@@ -78,7 +78,7 @@ $xwiki.ssx.use('PhenoTips.PCHome')##
 {{/velocity}}</content>
   <attachment>
     <filename>PhenomeCentral-logo-bw.png</filename>
-    <author>XWiki.Admin</author>
+    <author>xwiki:XWiki.Admin</author>
     <date>1396322323000</date>
     <version>1.1</version>
     <comment/>
@@ -87,7 +87,7 @@ $xwiki.ssx.use('PhenoTips.PCHome')##
   </attachment>
   <attachment>
     <filename>UDP_red_clearback.png</filename>
-    <author>XWiki.Admin</author>
+    <author>xwiki:XWiki.Admin</author>
     <date>1396322297000</date>
     <version>1.1</version>
     <comment/>
@@ -96,7 +96,7 @@ $xwiki.ssx.use('PhenoTips.PCHome')##
   </attachment>
   <attachment>
     <filename>c4r.png</filename>
-    <author>XWiki.Admin</author>
+    <author>xwiki:XWiki.Admin</author>
     <date>1404326129000</date>
     <version>1.1</version>
     <comment/>
@@ -105,7 +105,7 @@ $xwiki.ssx.use('PhenoTips.PCHome')##
   </attachment>
   <attachment>
     <filename>rd-connect.png</filename>
-    <author>XWiki.Admin</author>
+    <author>xwiki:XWiki.Admin</author>
     <date>1404326806000</date>
     <version>1.1</version>
     <comment/>

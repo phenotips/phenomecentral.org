@@ -123,7 +123,7 @@
 {{/velocity}}</content>
   <attachment>
     <filename>prototypes.hpo</filename>
-    <author>XWiki.Admin</author>
+    <author>xwiki:XWiki.Admin</author>
     <date>1392434539000</date>
     <version>1.1</version>
     <comment/>
