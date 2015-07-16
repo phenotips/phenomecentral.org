@@ -73,5 +73,6 @@ phenotips.UIXDirectory.options.download=Export this extension as xar
 phenotips.UIXDirectory.options.delete=Delete this extension
 phenotips.UIXDirectory.newExtension.create=Create
 phenotips.UIXDirectory.sortedBy= Sorted by {0}
-phenotips.UIXDirectory.sortBy= Sort by {0}</content>
+phenotips.UIXDirectory.sortBy= Sort by {0}
+phenotips.homepage.title=PhenomeCentral</content>
 </xwikidoc>
