@@ -80,12 +80,6 @@
       <artifactId>xwiki-platform-rest-server</artifactId>
       <version>${xwiki.version}</version>
       <scope>runtime</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>org.xwiki.platform</groupId>
-          <artifactId>xwiki-platform-search-lucene-api</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <!-- ClassLoader -->
     <dependency>
@@ -283,6 +277,12 @@
     </dependency>
     <dependency>
       <groupId>org.xwiki.rendering</groupId>
+      <artifactId>xwiki-rendering-syntax-html5</artifactId>
+      <version>${xwiki.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.xwiki.rendering</groupId>
       <artifactId>xwiki-rendering-syntax-html</artifactId>
       <version>${xwiki.version}</version>
       <scope>runtime</scope>
@@ -304,6 +304,18 @@
     <dependency>
       <groupId>org.xwiki.platform</groupId>
       <artifactId>xwiki-platform-crypto-script</artifactId>
+      <version>${xwiki.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.xwiki.commons</groupId>
+      <artifactId>xwiki-commons-crypto-store-filesystem</artifactId>
+      <version>${xwiki.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.xwiki.platform</groupId>
+      <artifactId>xwiki-platform-crypto-store-wiki</artifactId>
       <version>${xwiki.version}</version>
       <scope>runtime</scope>
     </dependency>
@@ -453,7 +465,7 @@
     <!-- URL -->
     <dependency>
       <groupId>org.xwiki.platform</groupId>
-      <artifactId>xwiki-platform-url-standard</artifactId>
+      <artifactId>xwiki-platform-url-scheme-standard</artifactId>
       <version>${xwiki.version}</version>
       <scope>runtime</scope>
     </dependency>
@@ -514,6 +526,12 @@
       <artifactId>jquery</artifactId>
       <version>1.11.1</version>
     </dependency>
+    <!-- Servlets for Resource API -->
+    <dependency>
+      <groupId>org.xwiki.platform</groupId>
+      <artifactId>xwiki-platform-resource-servlet</artifactId>
+      <version>${xwiki.version}</version>
+    </dependency>
     <!-- PhenoTips components -->
     <dependency>
       <groupId>org.phenotips</groupId>
@@ -558,6 +576,11 @@
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>patient-data-default-impl</artifactId>
+      <version>${phenotips.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
+      <artifactId>patient-data-rest</artifactId>
       <version>${phenotips.version}</version>
     </dependency>
     <dependency>
@@ -904,6 +927,7 @@ rendering.transformations=macro
                     <exclude>org.jmock:*</exclude>
                     <exclude>junit:*</exclude>
                     <exclude>javax.servlet:servlet-api:*:*:compile</exclude>
+                    <exclude>javax.servlet:javax.servlet-api:*:*:compile</exclude>
                   </excludes>
                   <includes>
                     <!-- Allow only JUnit and JMock with scope test because -->
