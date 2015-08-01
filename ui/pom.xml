@@ -34,42 +34,27 @@
       <artifactId>phenotips-ui</artifactId>
       <version>${phenotips.version}</version>
       <type>xar</type>
-      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>patient-data-sharing-receiver-ui</artifactId>
       <version>${phenotips.version}</version>
       <type>xar</type>
-      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>patient-network-ui</artifactId>
       <version>${patientNetwork.version}</version>
       <type>xar</type>
-      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>remote-matching-ui</artifactId>
       <version>${remoteMatching.version}</version>
       <type>xar</type>
-      <scope>provided</scope>
     </dependency>
   </dependencies>
   <build>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>org.xwiki.commons</groupId>
-          <artifactId>xwiki-commons-tool-xar-plugin</artifactId>
-          <configuration>
-            <includeDependencies>true</includeDependencies>
-          </configuration>
-        </plugin>
-      </plugins>
-    </pluginManagement>
     <extensions>
       <extension>
         <groupId>org.xwiki.commons</groupId>
@@ -77,17 +62,5 @@
         <version>${xwiki.version}</version>
       </extension>
     </extensions>
-    <plugins>
-      <plugin>
-        <groupId>org.xwiki.commons</groupId>
-        <artifactId>xwiki-commons-tool-xar-plugin</artifactId>
-        <version>${xwiki.version}</version>
-        <configuration>
-          <excludes>
-            <exclude>**/PhenoTips/PushPatien*.xml</exclude>
-          </excludes>
-        </configuration>
-      </plugin>
-    </plugins>
   </build>
 </project>
