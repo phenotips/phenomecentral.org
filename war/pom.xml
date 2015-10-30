@@ -56,7 +56,7 @@
     <dependency>
       <groupId>net.sourceforge.htmlcleaner</groupId>
       <artifactId>htmlcleaner</artifactId>
-      <version>2.12</version>
+      <version>2.14</version>
     </dependency>
 
     <!-- The Big Old Core -->
@@ -65,6 +65,12 @@
       <artifactId>xwiki-platform-oldcore</artifactId>
       <version>${xwiki.version}</version>
       <scope>runtime</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>org.codehaus.groovy</groupId>
+          <artifactId>groovy-all</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
 
     <!-- Components Modules -->
@@ -210,12 +216,6 @@
     <dependency>
       <groupId>org.xwiki.platform</groupId>
       <artifactId>xwiki-platform-rendering-macro-gallery</artifactId>
-      <version>${xwiki.version}</version>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.xwiki.platform</groupId>
-      <artifactId>xwiki-platform-rendering-macro-groovy</artifactId>
       <version>${xwiki.version}</version>
       <scope>runtime</scope>
     </dependency>
@@ -566,6 +566,11 @@
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>vocabulary-hgnc-api</artifactId>
+      <version>${phenotips.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
+      <artifactId>vocabularies-rest</artifactId>
       <version>${phenotips.version}</version>
     </dependency>
     <dependency>
