@@ -67,6 +67,19 @@ $xwiki.ssx.use('PhenoTips.PCHome')##
     The semantic model which is the basis of our matching process helps reveal subtle similarities between disorder manifestations and may provide justification for reconsidering diagnoses that were initially discarded due to atypical phenotypes.&lt;/p&gt;
   &lt;/div&gt;
 &lt;/div&gt;
+{{/html}}
+{{/velocity}}
+
+{{velocity}}
+{{html}}
+
+&lt;div class="citing"&gt;
+&lt;h2&gt;Citation&lt;/h2&gt;
+&lt;code&gt;
+Buske OJ*, Girdea M*, Dumitriu S, Gallinger B, Hartley T, Trang H, Misyura A, Friedman T, Beaulieu C, Bone WP, Links AE, Washington NL, Haendel MA, Robinson PN, Boerkoel CF, Adams D, Gahl WA, Boycott KM, Brudno M. 2015. &lt;a href="http://onlinelibrary.wiley.com/enhanced/doi/10.1002/humu.22851/"&gt;PhenomeCentral: A Portal for Phenotypic and Genotypic Matchmaking of Patients with Rare Genetic Diseases&lt;/a&gt;. &lt;em&gt;Human Mutation&lt;/em&gt;, 36: 931–940. &lt;a href="http://dx.doi.org/10.1002/humu.22851"&gt;doi:10.1002/humu.22851&lt;/a&gt; [&lt;a href="$doc.getAttachmentURL('phenomecentral.bib')"&gt;BibTeX&lt;/a&gt;]
+&lt;/code&gt;
+&lt;/div&gt;
+
 &lt;div class="participants"&gt;
 &lt;h2&gt;Founding consortia&lt;/h2&gt;
 &lt;a class="consortium" href="http://care4rare.ca" title="CARE for RARE Canada"&gt;&lt;img src="$xwiki.getDocument('PhenoTips.PCHome').getAttachmentURL('c4r.png')" alt="CARE for RARE"/&gt;&lt;/a&gt;
@@ -249,7 +262,7 @@ a.details {
     padding: 0.2em;
 }
 
-.participants {
+.participants, .citing {
     padding: 2em 1%;
     clear: both;
 }
