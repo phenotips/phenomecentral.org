@@ -80,6 +80,10 @@ Buske OJ*, Girdea M*, Dumitriu S, Gallinger B, Hartley T, Trang H, Misyura A, Fr
 &lt;/code&gt;
 &lt;/div&gt;
 
+&lt;div class="info-box badge"&gt;
+  &lt;p&gt;&lt;a href="http://www.irdirc.org/activities/irdirc-recommended/" title="IRDiRC recommends PhenomeCentral"&gt;&lt;img src="http://www.irdirc.org/wp-content/uploads/2015/03/IRDiRC_Recommended.jpg" alt="IRDiRC recommended"/&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+
 &lt;div class="participants"&gt;
 &lt;h2&gt;Founding consortia&lt;/h2&gt;
 &lt;a class="consortium" href="http://care4rare.ca" title="CARE for RARE Canada"&gt;&lt;img src="$xwiki.getDocument('PhenoTips.PCHome').getAttachmentURL('c4r.png')" alt="CARE for RARE"/&gt;&lt;/a&gt;
@@ -262,9 +266,22 @@ a.details {
     padding: 0.2em;
 }
 
-.participants, .citing {
+.participants {
     padding: 2em 1%;
     clear: both;
+}
+.citing {
+  clear: left;
+  padding: 2em 1%;
+  width: 71%;
+  float: left;
+}
+.badge {
+  padding: 2em 0;
+}
+.badge img {
+  width: 100%;
+  max-width: 100%;
 }
 .consortium {
     color: #333333 !important;
