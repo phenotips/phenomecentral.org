@@ -38,23 +38,71 @@
   <syntaxId>xwiki/2.0</syntaxId>
   <hidden>true</hidden>
   <content>{{velocity}}
-#if ("$!{request.xwikiname}" != '')
-$response.setContentType("application/json")
+#if ("$!{request.xwikiname}" != '' &amp;&amp; "$!{request.action}" != '')
+  $response.setContentType("application/json")
   #set ($userDoc = $xwiki.getDocument(${request.xwikiname}))
   #set ($user = $userDoc.getObject('XWiki.XWikiUsers'))
-  $user.set('active', 1)
+  #set ($firstName = $user.getValue('first_name'))
+  #set ($lastName = $user.getValue('last_name'))
+  #set ($realName = "$!{firstName} $!{lastName}")
   #set ($email = $user.getProperty('email').getValue())
 
   #if ("$!{email}" != '')
-    #set ($emailStatus = $xwiki.mailsender.sendMessageFromTemplate('PhenomeCentral &lt;noreply@phenomecentral.org&gt;', $email, $NULL, $NULL, '', 'XWiki.ManualAccountValidation', {
-       "userName": $xwiki.getDocument($request.xwikiname).name,
+
+    #set ($adminGroupName = 'XWiki.SignUpAdmins')
+    #set ($adminsGroupDoc = $xwiki.getDocument($adminGroupName))
+    #set ($adminObjects = $adminsGroupDoc.getObjects('XWiki.XWikiGroups'))
+    #set($cc = '')
+    #set($mainAdminEmail = '')
+    #set($mainAdminName = '')
+    #set($first = true)
+    #foreach ($adminObj in $adminObjects)
+      #set($v = $adminObj.getValue('member'))
+      #if ($!v != '')
+        #set($adminDoc = $xwiki.getDocument($v))
+        #set($adminUser = $adminDoc.getObject('XWiki.XWikiUsers'))
+        #set($adminEmail = $adminUser.getValue('email'))
+        #if($first)
+          #set($first = $adminUser.getValue('first_name'))
+          #set($last = $adminUser.getValue('last_name'))
+          #set($mainAdminName = "$first $last")
+          #set($mainAdminEmail = $adminEmail)
+          #set($first = false)
+          #set($cc = $mainAdminEmail)
+        #else
+          #set($cc = "${cc}, ${adminEmail}")
+        #end
+      #end
+    #end
+
+    #if ("$!{request.action}" == 'accept')
+      #set($emailTemplate = 'XWiki.ManualAccountValidation')
+    #elseif("$!{request.action}" == 'reject')
+      #set($emailTemplate = 'XWiki.AccountRejectionTemplate')
+    #end
+
+    #set ($emailStatus = $xwiki.mailsender.sendMessageFromTemplate('PhenomeCentral &lt;noreply@phenomecentral.org&gt;', $email, $cc, $NULL, '', $emailTemplate, {
+       "userRealName": $realName.trim(),
+       "userName": $userDoc.name,
+       "adminName": $mainAdminName,
+       "adminEmail": $mainAdminEmail,
        "platformName": "PhenomeCentral",
        "loginURL": $xwiki.getDocument($services.model.resolveDocument('', 'default', $doc.documentReference.extractReference('WIKI'))).getExternalURL()}))
+
   #else
     #set ($emailStatus = 0)
   #end
+
+  #if ("$!{request.action}" == 'accept')
+    $user.set('active', 1)
+  #elseif("$!{request.action}" == 'reject')
+    $userDoc.delete()
+  #endhttps://en.wikipedia.org/wiki/
+
   #if ($emailStatus == 0)
-    $userDoc.save()
+    #if ("$!{request.action}" == 'accept')
+      $userDoc.save()
+    #end
 true
   #else
 false
@@ -116,12 +164,25 @@ false
       </text>
     </class>
     <property>
-      <html>&lt;p&gt;Hello,&lt;/p&gt;
-&lt;p&gt;Your account ${userName} has been activated.&lt;/p&gt;
-&lt;p&gt;You can now log in at &lt;a href="${loginURL}"&gt;${platformName}&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;Best wishes,&lt;br&gt;
-The ${platformName} team&lt;/p&gt;</html>
+      <html>&lt;p&gt;Dear ${userRealName},&lt;/p&gt;
+&lt;p&gt;An account has been created for you on ${platformName}. If you forgot your password, please visit &lt;a href="https://phenomecentral.org/XWiki/ResetPassword"&gt;https://phenomecentral.org/XWiki/ResetPassword&lt;/a&gt; and enter your username ${userName}. Please do not hesitate to contact us if you experience any difficulties with your account.&lt;/p&gt;
+&lt;p&gt;You can view your closest matches immediately after entering your patient into ${platformName}! Simply create the patient record, click Save and View Summary and scroll down to Similar Cases Available in the Database. You will be able to find similar cases in ${platformName}, DECIPHER and GeneMatcher based on phenotype and candidate genes.&lt;/p&gt;
+&lt;p&gt;For more detailed instructions, please visit: &lt;a href="http://monarch-initiative.blogspot.ca/2015/01/how-to-annotate-patients-phenotypic.html"&gt;http://monarch-initiative.blogspot.ca/2015/01/how-to-annotate-patients-phenotypic.html&lt;/a&gt;. You can contact me at ${adminEmail} if you want tips on how to effectively enter your patients into the database.&lt;/p&gt;
+&lt;p&gt;If you are submitting a case for the Clinical Genetics journal, please follow the instructions listed at &lt;a href="https://phenomecentral.org/PhenomeCentral/Instructions+for+Submitting+to+Clinical+Genetics"&gt;https://phenomecentral.org/PhenomeCentral/Instructions+for+Submitting+to+Clinical+Genetics&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;We look forward to collaborating with you through ${platformName}.&lt;/p&gt;
+&lt;p&gt;Sincerely,&lt;br&gt;
+${adminName}&lt;br&gt;
+${platformName} Team&lt;/p&gt;
+&lt;br&gt;
+&lt;span style="color: darkgray; font-size: small"&gt;
+&lt;p style="display: none"&gt;====================================&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;TERMS AND CONDITIONS OF REGISTRATION&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;1. I confirm that I am a doctor, clinical geneticist or scientist working with patients affected by rare disorders.&lt;/p&gt;
+&lt;p&gt;2. PhenomeCentral provides data in good faith as a research tool, but without verifying the accuracy, clinical validity or utility of the data. PhenomeCentral makes no warranty, express or implied, nor assumes any legal liability or responsibility for any purpose for which the data are used.&lt;/p&gt;
+&lt;p&gt;3. The user certifies that no attempt to identify individual patients will be undertaken.&lt;/p&gt;
+&lt;p&gt;4. Prior to using PhenomeCentral data in a publication, the user will contact the owner of the matching dataset to assess the integrity of the match and if validated will offer appropriate agreed recognition of their contribution, which may include co-authorhship if the magnitude of the contribution warrants it to at least on representative from the project/participating centre (possibly the member who submitted the patient data).&lt;/p&gt;
+&lt;p&gt;5. If PhenomeCentral enables a research publication, the authors must acknowledge PhenomeCentral using the following wording: “This study makes use of data shared the PhenomeCentral repository. Funding for PhenomeCentral provided by Genome Canada and the Canadian Institute of Health Research (CIHR).&lt;/p&gt;
+&lt;/span&gt;</html>
     </property>
     <property>
       <language/>
@@ -130,12 +191,44 @@ The ${platformName} team&lt;/p&gt;</html>
       <subject>Your account at PhenomeCentral has been approved</subject>
     </property>
     <property>
-      <text>Hello,
-Your account ${userName} has been activated.
-You can now log in at ${loginURL}.
+      <text>Dear ${userRealName},
 
-Best wishes,
-The ${platformName} team</text>
+An account has been created for you on ${platformName}. If you forgot your password, please visit https://phenomecentral.org/XWiki/ResetPassword and enter your username ${userName}. Please do not hesitate to contact us if you experience any difficulties with your account.
+
+You can view your closest matches immediately after entering your patient into ${platformName}! Simply create the patient record, click Save and View Summary and scroll down to Similar Cases Available in the Database. You will be able to find similar cases in ${platformName}, DECIPHER and GeneMatcher based on phenotype and candidate genes.
+ 
+For more detailed instructions, please visit: http://monarch-initiative.blogspot.ca/2015/01/how-to-annotate-patients-phenotypic.html. You can contact me at ${adminEmail} if you want tips on how to effectively enter your patients into the database.
+
+If you are submitting a case for the Clinical Genetics journal, please follow the instructions listed at https://phenomecentral.org/PhenomeCentral/Instructions+for+Submitting+to+Clinical+Genetics
+ 
+We look forward to collaborating with you through ${platformName}.
+ 
+Sincerely,
+
+${adminName}
+${platformName} Team
+
+
+====================================
+
+TERMS AND CONDITIONS OF REGISTRATION
+
+1. I confirm that I am a doctor, clinical geneticist or scientist working with patients affected
+by rare disorders.
+2. PhenomeCentral provides data in good faith as a research tool, but without verifying the
+accuracy, clinical validity or utility of the data. PhenomeCentral makes no warranty,
+express or implied, nor assumes any legal liability or responsibility for any purpose for
+which the data are used.
+3. The user certifies that no attempt to identify individual patients will be undertaken.
+4. Prior to using PhenomeCentral data in a publication, the user will contact the owner of
+the matching dataset to assess the integrity of the match and if validated will offer
+appropriate agreed recognition of their contribution, which may include co-authorhship if
+the magnitude of the contribution warrants it to at least on representative from the
+project/participating centre (possibly the member who submitted the patient data).
+5. If PhenomeCentral enables a research publication, the authors must acknowledge
+PhenomeCentral using the following wording: “This study makes use of data shared
+though the PhenomeCentral repository. Funding for PhenomeCentral was provided by
+Genome Canada and the Canadian Institute of Health Research (CIHR).</text>
     </property>
   </object>
 </xwikidoc>
