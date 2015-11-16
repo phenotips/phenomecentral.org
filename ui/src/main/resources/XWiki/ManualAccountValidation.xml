@@ -97,7 +97,7 @@
     $user.set('active', 1)
   #elseif("$!{request.action}" == 'reject')
     $userDoc.delete()
-  #endhttps://en.wikipedia.org/wiki/
+  #end
 
   #if ($emailStatus == 0)
     #if ("$!{request.action}" == 'accept')
@@ -178,10 +178,10 @@ ${platformName} Team&lt;/p&gt;
 &lt;p style="display: none"&gt;====================================&lt;/p&gt;
 &lt;p&gt;&lt;b&gt;TERMS AND CONDITIONS OF REGISTRATION&lt;/b&gt;&lt;/p&gt;
 &lt;p&gt;1. I confirm that I am a doctor, clinical geneticist or scientist working with patients affected by rare disorders.&lt;/p&gt;
-&lt;p&gt;2. PhenomeCentral provides data in good faith as a research tool, but without verifying the accuracy, clinical validity or utility of the data. PhenomeCentral makes no warranty, express or implied, nor assumes any legal liability or responsibility for any purpose for which the data are used.&lt;/p&gt;
+&lt;p&gt;2. ${platformName} provides data in good faith as a research tool, but without verifying the accuracy, clinical validity or utility of the data. ${platformName} makes no warranty, express or implied, nor assumes any legal liability or responsibility for any purpose for which the data are used.&lt;/p&gt;
 &lt;p&gt;3. The user certifies that no attempt to identify individual patients will be undertaken.&lt;/p&gt;
-&lt;p&gt;4. Prior to using PhenomeCentral data in a publication, the user will contact the owner of the matching dataset to assess the integrity of the match and if validated will offer appropriate agreed recognition of their contribution, which may include co-authorhship if the magnitude of the contribution warrants it to at least on representative from the project/participating centre (possibly the member who submitted the patient data).&lt;/p&gt;
-&lt;p&gt;5. If PhenomeCentral enables a research publication, the authors must acknowledge PhenomeCentral using the following wording: “This study makes use of data shared the PhenomeCentral repository. Funding for PhenomeCentral provided by Genome Canada and the Canadian Institute of Health Research (CIHR).&lt;/p&gt;
+&lt;p&gt;4. Prior to using ${platformName} data in a publication, the user will contact the owner of the matching dataset to assess the integrity of the match and if validated will offer appropriate agreed recognition of their contribution, which may include co-authorhship if the magnitude of the contribution warrants it to at least on representative from the project/participating centre (possibly the member who submitted the patient data).&lt;/p&gt;
+&lt;p&gt;5. If ${platformName} enables a research publication, the authors must acknowledge ${platformName} using the following wording: “This study makes use of data shared the ${platformName} repository. Funding for ${platformName} provided by Genome Canada and the Canadian Institute of Health Research (CIHR).&lt;/p&gt;
 &lt;/span&gt;</html>
     </property>
     <property>
@@ -215,19 +215,19 @@ TERMS AND CONDITIONS OF REGISTRATION
 
 1. I confirm that I am a doctor, clinical geneticist or scientist working with patients affected
 by rare disorders.
-2. PhenomeCentral provides data in good faith as a research tool, but without verifying the
-accuracy, clinical validity or utility of the data. PhenomeCentral makes no warranty,
+2. ${platformName} provides data in good faith as a research tool, but without verifying the
+accuracy, clinical validity or utility of the data. ${platformName} makes no warranty,
 express or implied, nor assumes any legal liability or responsibility for any purpose for
 which the data are used.
 3. The user certifies that no attempt to identify individual patients will be undertaken.
-4. Prior to using PhenomeCentral data in a publication, the user will contact the owner of
+4. Prior to using ${platformName} data in a publication, the user will contact the owner of
 the matching dataset to assess the integrity of the match and if validated will offer
 appropriate agreed recognition of their contribution, which may include co-authorhship if
 the magnitude of the contribution warrants it to at least on representative from the
 project/participating centre (possibly the member who submitted the patient data).
-5. If PhenomeCentral enables a research publication, the authors must acknowledge
-PhenomeCentral using the following wording: “This study makes use of data shared
-though the PhenomeCentral repository. Funding for PhenomeCentral was provided by
+5. If ${platformName} enables a research publication, the authors must acknowledge
+${platformName} using the following wording: “This study makes use of data shared
+though the ${platformName} repository. Funding for ${platformName} was provided by
 Genome Canada and the Canadian Institute of Health Research (CIHR).</text>
     </property>
   </object>
