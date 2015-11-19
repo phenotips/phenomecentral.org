@@ -93,15 +93,12 @@
     #set ($emailStatus = 0)
   #end
 
-  #if ("$!{request.action}" == 'accept')
-    $user.set('active', 1)
-  #elseif("$!{request.action}" == 'reject')
-    $userDoc.delete()
-  #end
-
   #if ($emailStatus == 0)
     #if ("$!{request.action}" == 'accept')
+      $user.set('active', 1)
       $userDoc.save()
+    #elseif("$!{request.action}" == 'reject')
+      $userDoc.delete()
     #end
 true
   #else
@@ -188,7 +185,7 @@ ${platformName} Team&lt;/p&gt;
       <language/>
     </property>
     <property>
-      <subject>Your account at PhenomeCentral has been approved</subject>
+      <subject>Your account at ${platformName} has been approved</subject>
     </property>
     <property>
       <text>Dear ${userRealName},

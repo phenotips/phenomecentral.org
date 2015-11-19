@@ -107,7 +107,7 @@ ${platformName} Support Team&lt;/p&gt;
       <language/>
     </property>
     <property>
-      <subject>PhenomeCentral account status</subject>
+      <subject>${platformName} account status</subject>
     </property>
     <property>
       <text>Dear ${userRealName},

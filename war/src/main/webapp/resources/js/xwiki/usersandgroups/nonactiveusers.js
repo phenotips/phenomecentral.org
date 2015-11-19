@@ -475,7 +475,9 @@ function deleteUserOrGroup(i, table, docname, uorg, form_token)
       new Ajax.Request(url, {
         method: 'get',
         onSuccess: function(transport) {
-          table.deleteRow(i);
+          if (transport.responseText == "true") {
+            table.deleteRow(i)
+          }
         }
       });
     }
