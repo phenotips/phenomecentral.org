@@ -775,6 +775,11 @@
       <artifactId>remote-matching-core-server</artifactId>
       <version>${remoteMatching.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
+      <artifactId>remote-matching-core-client</artifactId>
+      <version>${remoteMatching.version}</version>
+    </dependency>
 
     <!-- Add dependencies on the XAR distributions so that we transitively include all JAR dependencies in the generated WAR -->
     <dependency>
