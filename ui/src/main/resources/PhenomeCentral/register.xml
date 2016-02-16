@@ -101,7 +101,7 @@ $xwiki.jsfx.use('uicomponents/widgets/validation/livevalidation_prototype.js')##
 {{velocity}}
 {{html clean=false wiki=false}}
 &lt;form id="request" class="xform" action="" method="post"&gt;
-&lt;h2&gt;Request a PhenomeCentral account&lt;/h2&gt;
+&lt;h2&gt;Request your PhenomeCentral account&lt;/h2&gt;
 &lt;p&gt;&lt;a href='$xwiki.getURL('data.WebHome')'&gt;PhenomeCentral&lt;/a&gt; accounts are limited to clinicians and scientists working with rare disorder patients.&lt;/p&gt;
 &lt;div class="contents"&gt;
   #if ($success)
