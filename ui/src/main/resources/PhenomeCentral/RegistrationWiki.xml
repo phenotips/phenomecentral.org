@@ -595,6 +595,7 @@ $xwiki.get('ssfx').use('uicomponents/widgets/validation/livevalidation.css', tru
     #else
       ## Not using the LightBox
       &lt;input type="submit" value="$services.localization.render('core.register.submit')" class="button"/&gt;
+      &lt;span class="buttonwrapper"&gt;&lt;a class="button secondary" href="$xwiki.getURL('data.WebHome')"&gt;Cancel and return to homepage&lt;/a&gt;&lt;/span&gt;
     #end
     &lt;/span&gt;## ButtonWrapper
     &lt;/div&gt;
