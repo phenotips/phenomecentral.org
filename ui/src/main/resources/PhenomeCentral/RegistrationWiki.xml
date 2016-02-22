@@ -475,7 +475,7 @@ $xwiki.get('ssfx').use('uicomponents/widgets/validation/livevalidation.css', tru
 &lt;/style&gt;
 &lt;div id="request" class="xform"&gt;
   &lt;img src="$xwiki.getDocument('ColorThemes.Steel').getAttachmentURL('pc-logo.png')" alt="PhenomeCentral" style="margin-top: -15px; float: right"&gt;
-  &lt;h2 style="margin-top: 30px;"&gt;Request an account&lt;/h2&gt; 
+  &lt;h2 style="margin-top: 30px;"&gt;Request an account&lt;/h2&gt;
   &lt;div class="clearfloats"&gt;&lt;/div&gt;
 
   &lt;div class="contents" style="position:relative; top:5px"&gt;
