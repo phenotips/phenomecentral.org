@@ -80,10 +80,10 @@ $xwiki.get('ssfx').use('uicomponents/widgets/validation/livevalidation.css', tru
  *
  * The fields which will be seen on the registration page are defined here.
  * $fields is an array and each field is a Map. The names shown below are Map keys.
- * 
+ *
  * Each field must have:
  *   name - this is the name of the field, it will be the value for "name" and "id"
- * 
+ *
  * Each field may have:
  *   label - this String will be written above the field.
  *
@@ -104,7 +104,7 @@ $xwiki.get('ssfx').use('uicomponents/widgets/validation/livevalidation.css', tru
  *   | |                  validation are optional, but if you provide neither, then your field will not be validated.
  *   | |
  *   | +-failureMessage (Optional) - The message to display if the regex evaluation returns false.
- *   | +-jsFailureMessage (Optional) - The message for Javascript to display if regex fails. 
+ *   | +-jsFailureMessage (Optional) - The message for Javascript to display if regex fails.
  *   | |                               If jsFailureMessage is not defined Javascript uses failureMessage.
  *   | |                               NOTE: Javascript injects the failure message using createTextNode so &amp;lt; will
  *   | |                                     be displayed as &amp;lt;
@@ -116,7 +116,7 @@ $xwiki.get('ssfx').use('uicomponents/widgets/validation/livevalidation.css', tru
  *   | +-jsPattern (Optional) - The regular expression to use for client side, you can use escaped characters to avoid
  *   | |                        them being parsed as HTML or javascript. To get javascript to unescape characters use:
  *   | |                        {"jsPattern" : "'+unescape('%5E%5B%24')+'"}
- *   | |                        NOTE: If no jsPattern is specified, the jsValidator will try to validate 
+ *   | |                        NOTE: If no jsPattern is specified, the jsValidator will try to validate
  *   | |                              using the server pattern.
  *   | |
  *   | +-noscript (Optional) - will not be checked by javascript
@@ -138,16 +138,16 @@ $xwiki.get('ssfx').use('uicomponents/widgets/validation/livevalidation.css', tru
  *   |
  *   +-fieldOkayMessage (Optional) - The message which is displayed by LiveValidation when a field is validated as okay.
  *                                   If not specified, will be $defaultFieldOkayMessage
- *  
+ *
  *   noReturn - If this is specified, the field will not be filled in if there is an error and the user has to fix their
  *              registration information. If you don't want a password to be passed back in html then set this true
  *              for the password fields. Used for the captcha because it makes no sense to pass back a captcha answer.
- *  
- *   doAfterRegistration - Some Velocity code which will be executed after a successfull registration. 
+ *
+ *   doAfterRegistration - Some Velocity code which will be executed after a successfull registration.
  *                         This is used in the favorite color example.
  *                         Remember to put the code in singel quotes ('') because you want the 'code' entry to equal the literal
  *                         code, not the output from running it.
- *  
+ *
  * Each field may not have: (reserved names)
  *   error - This is used to pass back any error message from the server side code.
  *
@@ -165,39 +165,39 @@ $xwiki.get('ssfx').use('uicomponents/widgets/validation/livevalidation.css', tru
 #set($fields = [])
 ##
 ## The first name field
-#set($field = 
+#set($field =
   {'name' : 'register_first_name',
     'label' : $services.localization.render('core.register.firstName'),
-    'params' : { 
-      'type' : 'text', 
-      'size' : '60' 
+    'params' : {
+      'type' : 'text',
+      'size' : '60'
     },
     'validate' : {
-      'mandatory' : { 
-        'failureMessage' : $services.localization.render('core.validation.required.message') 
+      'mandatory' : {
+        'failureMessage' : $services.localization.render('core.validation.required.message')
       }
      }
   })
 #set($discard = $fields.add($field))
 ##
 ## The last name field
-#set($field = 
+#set($field =
   {'name' : 'register_last_name',
     'label' : $services.localization.render('core.register.lastName'),
-    'params' : { 
-      'type' : 'text', 
-      'size' : '60' 
+    'params' : {
+      'type' : 'text',
+      'size' : '60'
     },
     'validate' : {
-      'mandatory' : { 
-        'failureMessage' : $services.localization.render('core.validation.required.message') 
+      'mandatory' : {
+        'failureMessage' : $services.localization.render('core.validation.required.message')
       }
      }
   })
 #set($discard = $fields.add($field))
 ##
 ## The user name field, mandatory and programmatically checked to make sure the username doesn't exist.
-#set($field = 
+#set($field =
   {'name' : 'xwikiname',
     'label' : $services.localization.render('core.register.username'),
     'params' : {
@@ -207,8 +207,8 @@ $xwiki.get('ssfx').use('uicomponents/widgets/validation/livevalidation.css', tru
       'class' : 'check-unique'
     },
     'validate' : {
-      'mandatory' : { 
-        'failureMessage' : $services.localization.render('core.validation.required.message') 
+      'mandatory' : {
+        'failureMessage' : $services.localization.render('core.validation.required.message')
       },
       'programmaticValidation' : {
         'code' : '#nameAvailable($request.get("xwikiname"))',
@@ -226,7 +226,7 @@ $xwiki.get('ssfx').use('uicomponents/widgets/validation/livevalidation.css', tru
 #end
 ##
 ##The password field, mandatory and must be at least 6 characters long.
-#set($field = 
+#set($field =
   {'name' : 'register_password',
     'label' : $services.localization.render('core.register.password'),
     'params' : {
@@ -235,8 +235,8 @@ $xwiki.get('ssfx').use('uicomponents/widgets/validation/livevalidation.css', tru
       'size' : '60'
     },
     'validate' : {
-      'mandatory' : { 
-        'failureMessage' : $services.localization.render('core.validation.required.message') 
+      'mandatory' : {
+        'failureMessage' : $services.localization.render('core.validation.required.message')
       },
       'regex' : {
         'pattern' : '/.{6,}/',
@@ -247,7 +247,7 @@ $xwiki.get('ssfx').use('uicomponents/widgets/validation/livevalidation.css', tru
 #set($discard = $fields.add($field))
 ##
 ##The confirm password field, mandatory, must match password field, and must also be 6+ characters long.
-#set($field = 
+#set($field =
   {'name' : 'register2_password',
     'label' : $services.localization.render('core.register.passwordRepeat'),
     'params' : {
@@ -256,8 +256,8 @@ $xwiki.get('ssfx').use('uicomponents/widgets/validation/livevalidation.css', tru
       'size' : '60'
     },
     'validate' : {
-      'mandatory' : { 
-        'failureMessage' : $services.localization.render('core.validation.required.message') 
+      'mandatory' : {
+        'failureMessage' : $services.localization.render('core.validation.required.message')
       },
       'mustMatch' : {
         'name' : 'register_password',
@@ -272,20 +272,20 @@ $xwiki.get('ssfx').use('uicomponents/widgets/validation/livevalidation.css', tru
 #set($discard = $fields.add($field))
 ##
 ## The email address field, regex checked with an email pattern.
-#set($field = 
+#set($field =
   {'name' : 'register_email',
     'label' : $services.localization.render('core.register.email'),
-    'params' : { 
-      'type' : 'text', 
-      'size' : '60' 
+    'params' : {
+      'type' : 'text',
+      'size' : '60'
     },
     'validate' : {
       'regex' : {
         'pattern' : '/^([^@\s]+)@((?:[-a-zA-Z0-9]+\.)+[a-zA-Z]{2,})$/',
         'failureMessage' : $services.localization.render('xe.admin.registration.invalidEmail')
       },
-     'mandatory' : { 
-        'failureMessage' : $services.localization.render('core.validation.required.message') 
+     'mandatory' : {
+        'failureMessage' : $services.localization.render('core.validation.required.message')
       }
     }
   })
@@ -293,26 +293,26 @@ $xwiki.get('ssfx').use('uicomponents/widgets/validation/livevalidation.css', tru
 ##-------------------------------------------------------------
 ##Customization
 ##-------------
-#set($field = 
+#set($field =
   {'name' : 'register_affiliation',
     'label' : 'Affiliation',
-    'params' : { 
-      'type' : 'text', 
-      'size' : '60' 
+    'params' : {
+      'type' : 'text',
+      'size' : '60'
     },
     'validate' : {
-      'mandatory' : { 
-        'failureMessage' : $services.localization.render('core.validation.required.message') 
+      'mandatory' : {
+        'failureMessage' : $services.localization.render('core.validation.required.message')
       }
     }
   })
 #set($discard = $fields.add($field))
-#set($field = 
+#set($field =
   {'name' : 'register_referral',
     'label' : "How did you hear about / Who referred you to PhenomeCentral?",
-    'params' : { 
-      'type' : 'text', 
-      'size' : '100' 
+    'params' : {
+      'type' : 'text',
+      'size' : '100'
     }
   })
 #set($discard = $fields.add($field))
@@ -323,7 +323,7 @@ $xwiki.get('ssfx').use('uicomponents/widgets/validation/livevalidation.css', tru
 ## NOTE: In order to save the favorite color in the "doAfterRegistration" hook, this page must be
 ## saved by an administrator and can not self sandboxing.
 #set($sandbox = false)
-#set($field = 
+#set($field =
   {'name' : 'favorite_color',
     'label' : 'What is your favorite color',
     'params' : {
@@ -362,7 +362,7 @@ $xwiki.get('ssfx').use('uicomponents/widgets/validation/livevalidation.css', tru
     &amp;&amp; $requireCaptcha)
   ## Empty label field used for padding.
   ## Empty 'name' field overriddes name="captcha_image" with "" so name is not specified at all.
-  #set($field = 
+  #set($field =
     {'name' : 'captcha_image',
       'label' : "&lt;span class='hidden'&gt;$services.localization.render('core.captcha.image.label')&lt;/span&gt;",
       'tag' : 'img',
@@ -374,15 +374,15 @@ $xwiki.get('ssfx').use('uicomponents/widgets/validation/livevalidation.css', tru
     })
   #set($discard = $fields.add($field))
   ## The captcha field, mandatory, programmatically checked to make sure the captcha is right
-  ## Not checked by javascript because javascript can't check the captcha and the Ok message because it passes the 
+  ## Not checked by javascript because javascript can't check the captcha and the Ok message because it passes the
   ## mandatory test is misleading.
   ## and not filled back in if there is an error ('noReturn')
-  #set($field = 
+  #set($field =
     {'name' : 'captcha_answer',
       'label' : $services.localization.render('core.captcha.image.instruction'),
-      'params' : { 
-        'type' : 'text', 
-        'size' : '60' 
+      'params' : {
+        'type' : 'text',
+        'size' : '60'
       },
       'validate' : {
         'mandatory' : {
@@ -408,7 +408,7 @@ $xwiki.get('ssfx').use('uicomponents/widgets/validation/livevalidation.css', tru
 #end
 ##
 ## Pass the name of the template to $xwiki.createUser so any contained information will be passed in.
-#set($field = 
+#set($field =
   {'name' : 'template',
     'params' : {
       'type' : 'hidden',
@@ -419,7 +419,7 @@ $xwiki.get('ssfx').use('uicomponents/widgets/validation/livevalidation.css', tru
 ##
 ## Pass the redirect parameter on so that the login page may redirect to the right place.
 ## Not necessary in Firefox 3.0.10 or Opera 9.64, I don't know about IE or Safari.
-#set($field = 
+#set($field =
   {'name' : $redirectParam,
     'params' : {
       'type' : 'hidden'
@@ -440,7 +440,7 @@ $xwiki.get('ssfx').use('uicomponents/widgets/validation/livevalidation.css', tru
   $response.sendRedirect("$xwiki.getURL($doc.getFullName(), 'edit')?editor=wiki")
 #end
 ##
-## If this document has PR and is not included from another document then it's author should be set to Guest 
+## If this document has PR and is not included from another document then it's author should be set to Guest
 ## for the duration of it's execution in order to improve security.
 ## Note we compare document ids because
 #if($sandbox
@@ -453,7 +453,7 @@ $xwiki.get('ssfx').use('uicomponents/widgets/validation/livevalidation.css', tru
 ## Access level to register must be explicitly checked because it is only checked in XWiki.prepareDocuments
 ## and this page is accessible through view action.
 #if(!$xcontext.hasAccessLevel('register', 'XWiki.XWikiPreferences'))
-  ## Make an exception if another document with programming permission (Invitation app) has included this 
+  ## Make an exception if another document with programming permission (Invitation app) has included this
   ## document and set $invited to true.
   #if(!$invited || !$xcontext.hasProgrammingRights())
     $response.sendRedirect("$xwiki.getURL($doc.getFullName(), 'login')")
@@ -504,7 +504,7 @@ $xwiki.get('ssfx').use('uicomponents/widgets/validation/livevalidation.css', tru
 ## Then we display the registration form.
 #if(!$registrationDone)
   ##Don't need this anymore.
-  ##$welcomeMessage 
+  ##$welcomeMessage
 
   {{html clean=false wiki=false}}
     ##----------------------------------
@@ -651,7 +651,7 @@ $xwiki.get('ssfx').use('uicomponents/widgets/validation/livevalidation.css', tru
               #set($error = $mustMatch.get('failureMessage'))
             #end
           #else
-            ERROR: In field: ${fieldName}: mustMatch validation required both name 
+            ERROR: In field: ${fieldName}: mustMatch validation required both name
                    (of field which this field must match) and failureMessage.
           #end
         #end
@@ -813,7 +813,7 @@ $xwiki.get('ssfx').use('uicomponents/widgets/validation/livevalidation.css', tru
     ##========================================
     #if($loginButton)
       {{html clean=false wiki=false}}
-        #info('Thank you for your interest in PhenomeCentral. We took note of your request and we will process it shortly.')        
+        #info('Thank you for your interest in PhenomeCentral. We took note of your request and we will process it shortly.')
       {{/html}}
     #end
   #end
@@ -931,7 +931,7 @@ $xwiki.get('ssfx').use('uicomponents/widgets/validation/livevalidation.css', tru
             #set($failMessage = $regex.get('jsFailureMessage'))
           #elseif($regex.get('failureMessage'))
             #set($failMessage = $regex.get('failureMessage'))
-          #end          
+          #end
           #if($pattern != '' &amp;&amp; $failMessage != '' &amp;&amp; !$regex.get('noscript'))
             ${fieldName}Validator.add( Validate.Format, { pattern: $pattern, failureMessage: "$failMessage"} );
           #end
