@@ -20,15 +20,16 @@
   <web>PhenomeCentral</web>
   <name>TermsOfUse</name>
   <language/>
-  <defaultLanguage>en</defaultLanguage>
+  <defaultLanguage/>
   <translation>0</translation>
-  <creator>XWiki.Admin</creator>
+  <creator>xwiki:XWiki.Admin</creator>
   <creationDate>1456184630000</creationDate>
-  <author>XWiki.Admin</author>
-  <contentAuthor>XWiki.Admin</contentAuthor>
+  <parent>data.WebHome</parent>
+  <author>xwiki:XWiki.Admin</author>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
   <date>1456185622000</date>
   <contentUpdateDate>1456185194000</contentUpdateDate>
-  <version>4.1</version>
+  <version>1.1</version>
   <title/>
   <comment/>
   <minorEdit>false</minorEdit>
