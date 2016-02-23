@@ -160,7 +160,11 @@ $xwiki.ssx.use('PhenomeCentral.login')##
   padding: 5px;
 }
 .pc-login h2 {
-  font-family: serif;
+  font-family: sans-serif;;
+  text-transform: uppercase;
+  font-weight: normal;
+  margin-top: .5em;
+  border: 0 none;
 }
 .pc-login input[type="text"], .pc-login input[type="password"]{
   border: 1px solid #fff !important;
