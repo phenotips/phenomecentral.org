@@ -270,6 +270,9 @@ $xwiki.ssx.use('PhenomeCentral.login')##
     <property>
       <levels>view</levels>
     </property>
+    <property>
+      <users/>
+    </property>
   </object>
   <object>
     <name>PhenomeCentral.login</name>
@@ -343,6 +346,9 @@ $xwiki.ssx.use('PhenomeCentral.login')##
     </class>
     <property>
       <allow>1</allow>
+    </property>
+    <property>
+      <groups/>
     </property>
     <property>
       <levels>view</levels>
