@@ -131,7 +131,7 @@ $text
 &lt;div class="contents citing"&gt;
 &lt;h2&gt;Citation&lt;/h2&gt;
 &lt;p class="citation""&gt;
-Buske OJ*, Girdea M*, Dumitriu S, Gallinger B, Hartley T, Trang H, Misyura A, Friedman T, Beaulieu C, Bone WP, Links AE, Washington NL, Haendel MA, Robinson PN, Boerkoel CF, Adams D, Gahl WA, Boycott KM, Brudno M. 2015. &lt;a href="http://onlinelibrary.wiley.com/enhanced/doi/10.1002/humu.22851/"&gt;PhenomeCentral: A Portal for Phenotypic and Genotypic Matchmaking of Patients with Rare Genetic Diseases&lt;/a&gt;. &lt;em&gt;Human Mutation&lt;/em&gt;, 36: 931&amp;ndash;940. &lt;a href="http://dx.doi.org/10.1002/humu.22851" rel="__blank"&gt;doi:10.1002/humu.22851&lt;/a&gt; [&lt;a target="_blank" href="/get/PhenoTips/PCCitation?outputSyntax=plain" rel="__blank" class="bibtex-link"&gt;BibTeX&lt;/a&gt;]
+Buske OJ*, Girdea M*, Dumitriu S, Gallinger B, Hartley T, Trang H, Misyura A, Friedman T, Beaulieu C, Bone WP, Links AE, Washington NL, Haendel MA, Robinson PN, Boerkoel CF, Adams D, Gahl WA, Boycott KM, Brudno M. 2015. &lt;a href="http://onlinelibrary.wiley.com/enhanced/doi/10.1002/humu.22851/"&gt;PhenomeCentral: A Portal for Phenotypic and Genotypic Matchmaking of Patients with Rare Genetic Diseases&lt;/a&gt;. &lt;em&gt;Human Mutation&lt;/em&gt;, 36: 931&amp;ndash;940. &lt;a href="http://dx.doi.org/10.1002/humu.22851" rel="__blank"&gt;doi:10.1002/humu.22851&lt;/a&gt; [&lt;a target="_blank" href="$xwiki.getDocument('PhenoTips.PCCitation').getURL('get', 'outputSyntax=plain')" rel="__blank" class="bibtex-link"&gt;BibTeX&lt;/a&gt;]
 &lt;/p&gt;
 &lt;div class="bibtex"&gt;
 &lt;pre&gt;@article{buske2015phenomecentral,
