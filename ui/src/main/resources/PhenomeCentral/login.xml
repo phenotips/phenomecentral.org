@@ -50,8 +50,8 @@ $xwiki.ssx.use('data.WebHome')##
 $xwiki.ssx.use('PhenomeCentral.logo')##
 $xwiki.ssx.use('PhenomeCentral.login')##
 {{html}}
-&lt;div style="float: right"&gt;&lt;img src="$xwiki.getDocument('ColorThemes.Steel').getAttachmentURL('pc-logo.png')" alt="PhenomeCentral" style="margin-top: 30px; margin-right: 10px" /&gt;&lt;/div&gt;
-&lt;div style="margin-right: 160px"&gt;
+&lt;div style="float: right"&gt;&lt;img src="$xwiki.getDocument($xwiki.getSpacePreference('colorTheme')).getAttachmentURL('phenomecentral_dark.png')" alt="PhenomeCentral" style="margin-top: 30px; margin-right: 10px" /&gt;&lt;/div&gt;
+&lt;div style="margin-right: 260px"&gt;
 &lt;form class="xform pc-login" action="$xwiki.getURL('PhenomeCentral.login', 'loginsubmit')" method="post"&gt;
 &lt;h2&gt;Enter PhenomeCentral&lt;/h2&gt;
 &lt;div class="hidden"&gt;&lt;input type="hidden" name="xredirect" value="$!{escapetool.xml($stringtool.defaultIfBlank($request.xredirect, $stringtool.defaultIfBlank($xwiki.getURL($services.model.resolveDocument('', 'default', $doc.documentReference.extractReference('WIKI'))), '/')))}"/&gt;
