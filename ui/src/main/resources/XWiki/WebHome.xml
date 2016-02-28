@@ -158,7 +158,7 @@ $xwiki.ssx.use('PhenoTips.FontAwesomeIcons')##
 ##
 ## ABOUT
 ##
-#xwikitopmenuentry($!xwiki.getURL('PhenomeCentral.About') 'About PhenomeCentral' 'tmAbout' 'fa fa-info-circle')
+#xwikitopmenuentry($!xwiki.getURL('data.About') 'About PhenomeCentral' 'tmAbout' 'fa fa-info-circle')
 &lt;/div&gt;
 &lt;/div&gt;
 {{/html}}{{/velocity}}</content>
