@@ -39,7 +39,7 @@
   <hidden>false</hidden>
   <content>{{velocity}}
 #if ($isGuest)
-{{display reference="PhenoTips.PCHome" /}}
+{{display reference="PhenoTips.PCHomeFlat" /}}
 #else
 $xwiki.ssx.use('Main.Dashboard')##
 {{dashboard style="panels" /}}
