@@ -465,7 +465,7 @@ Please address your questions or report issues encountered while using PhenomeCe
       </use>
     </class>
     <property>
-      <cache>forbid</cache>
+      <cache>long</cache>
     </property>
     <property>
       <code>h1, h2, h3, h4, h5, h6, #xwikidoctitleinput {
@@ -498,48 +498,48 @@ Please address your questions or report issues encountered while using PhenomeCe
   margin: 0;
 }
 .contents-box &gt; ul {
-    list-style-type: none;
-    margin: 0;
+  list-style-type: none;
+  margin: 0;
 }
 .box &gt; ul &gt; li &gt; span {
-    display: none;
+  display: none;
 }
 #partners img {
-    float: left;
-    margin-right: 10px;
-    margin-bottom: 10px;
-    max-width: 100%;
-    max-height: 100px;
+  float: left;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  max-width: 100%;
+  max-height: 100px;
 }
 #partners .read-more-link {
-    font-size: .8em;
+  font-size: .8em;
 }
 h2 {
-    font-family: sans-serif;
-    font-size: 1.1em;
-    text-align: left;
-    font-weight: bold;
-    text-transform: uppercase;
-    margin: 3em 0 1.5em;
+  font-family: sans-serif;
+  font-size: 1.1em;
+  text-align: left;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin: 3em 0 1.5em;
 }
 h3 {
-    font-family: sans-serif;
-    font-size: 1em;
-    text-align: left;
-    text-transform: uppercase;
-    margin: 3em 0 1em;
+  font-family: sans-serif;
+  font-size: 1em;
+  text-align: left;
+  text-transform: uppercase;
+  margin: 3em 0 1em;
 }
 h4 {
-    font-family: sans-serif;
-    font-size: 1em;
-    text-align: left;
-    font-weight: bold;
-    margin: 1em 0 0;
+  font-family: sans-serif;
+  font-size: 1em;
+  text-align: left;
+  font-weight: bold;
+  margin: 1em 0 0;
 }
 .info-box {
-    float: left;
-    margin: 0 1%;
-    width: 23%;
+  float: left;
+  margin: 0 1%;
+  width: 23%;
 }
 .citation {
   margin-bottom: 0;
@@ -557,8 +557,8 @@ h4 {
   visibility: hidden;
 }
 .bibtex pre {
-	font-family: monospace;
-	white-space: pre-wrap;
+  font-family: monospace;
+  white-space: pre-wrap;
 }
 .bibtex-link:after {
   border-color: transparent transparent #333;
