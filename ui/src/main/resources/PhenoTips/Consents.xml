@@ -1,0 +1,866 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see http://www.gnu.org/licenses/
+-->
+
+<xwikidoc version="1.1">
+  <web>PhenoTips</web>
+  <name>Consents</name>
+  <language/>
+  <defaultLanguage/>
+  <translation>0</translation>
+  <creator>xwiki:XWiki.Admin</creator>
+  <creationDate>1456606651000</creationDate>
+  <parent>PhenoTips.PatientClass</parent>
+  <author>xwiki:XWiki.Admin</author>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <date>1456606698000</date>
+  <contentUpdateDate>1456606674000</contentUpdateDate>
+  <version>1.1</version>
+  <title/>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>xwiki/2.1</syntaxId>
+  <hidden>false</hidden>
+  <content>phenomecentral.consent.real=I confirm that the data entered in this form corresponds to a real patient. (required)
+phenomecentral.consent.genetic=I confirm that consent has been obtained to share this patient's genetic data on restricted access databases.
+phenomecentral.consent.shareHistory=I confirm that consent has been obtained to share this patient's medical and family history on restricted access databases.
+phenomecentral.consent.shareImages=I confirm that consent has been obtained to share this patient's medical images/photos on restricted access databases.
+phenomecentral.consent.matching=This patient is matchable through the MatchmakerExchange and you may receive occasional match notifications (unless you set the visibility to Private).
+</content>
+  <object>
+    <name>PhenoTips.Consents</name>
+    <number>0</number>
+    <className>PhenoTips.PatientConsentConfiguration</className>
+    <guid>7110e02d-fb88-403f-ba32-5779f9f265dc</guid>
+    <class>
+      <name>PhenoTips.PatientConsentConfiguration</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <affectsFields>
+        <customDisplay/>
+        <defaultValue/>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType/>
+        <name>affectsFields</name>
+        <number>5</number>
+        <prettyName>Are any patient form fields affected by this consent?</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </affectsFields>
+      <description>
+        <contenttype>FullyRenderedText</contenttype>
+        <customDisplay/>
+        <disabled>0</disabled>
+        <editor>---</editor>
+        <name>description</name>
+        <number>3</number>
+        <picker>0</picker>
+        <prettyName>Description (optional, may include HTML)</prettyName>
+        <rows>5</rows>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </description>
+      <fields>
+        <cache>0</cache>
+        <classname/>
+        <customDisplay>(% class="affected-fields-list" %)(((
+{{velocity}}
+## Extensions making up the main content, the actual information about the patient
+#set ($recordConfiguration = $services.recordConfiguration.getActiveConfiguration())
+#foreach ($section in $recordConfiguration.enabledSections)
+ #set ($sectionContent = '')
+ #foreach ($element in $section.enabledElements)
+   #set ($itemContent = "&lt;li&gt;&lt;label&gt;&lt;input type=""checkbox"" name=""$!{prefix}$!{name}"" value=""$element.extension.id"" #if ($value.contains(""$element.extension.id"")) checked=""checked"" #end/&gt; $element.name&lt;/label&gt;&lt;/li&gt;")
+   #set ($sectionContent = $sectionContent.concat($itemContent))
+ #end
+ #if ($sectionContent.trim() != '')
+ **$section.name**
+ {{html clean="false" wiki="false"}}&lt;ul style="list-style-type: none;"&gt;$sectionContent.trim()&lt;/ul&gt;{{/html}}
+ #end
+#end
+{{html clean="false" wiki="false"}}&lt;input type="hidden" name="$!{prefix}$!{name}" value="" /&gt;{{/html}}
+{{/velocity}}
+)))</customDisplay>
+        <disabled>0</disabled>
+        <displayType>checkbox</displayType>
+        <idField/>
+        <multiSelect>1</multiSelect>
+        <name>fields</name>
+        <number>6</number>
+        <picker>0</picker>
+        <prettyName>Fields allowed by this consent (none selected implies all affected)</prettyName>
+        <relationalStorage>1</relationalStorage>
+        <separator> </separator>
+        <separators/>
+        <size>1</size>
+        <sort>none</sort>
+        <sql/>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <valueField/>
+        <classType>com.xpn.xwiki.objects.classes.DBListClass</classType>
+      </fields>
+      <id>
+        <customDisplay/>
+        <disabled>0</disabled>
+        <name>id</name>
+        <number>1</number>
+        <picker>0</picker>
+        <prettyName>Id</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </id>
+      <label>
+        <customDisplay/>
+        <disabled>0</disabled>
+        <name>label</name>
+        <number>2</number>
+        <picker>0</picker>
+        <prettyName>Label</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </label>
+      <required>
+        <customDisplay/>
+        <defaultValue/>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType/>
+        <name>required</name>
+        <number>4</number>
+        <prettyName>Required?</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </required>
+    </class>
+    <property>
+      <affectsFields>1</affectsFields>
+    </property>
+    <property>
+      <description/>
+    </property>
+    <property>
+      <fields>
+        <value>org.phenotips.patientSheet.field.external_id</value>
+        <value>org.phenotips.patientSheet.field.date_of_birth</value>
+        <value>org.phenotips.patientSheet.field.date_of_death</value>
+        <value>org.phenotips.patientSheet.field.gender</value>
+        <value>org.phenotips.patientSheet.field.indication_for_referral</value>
+        <value>org.phenotips.patientSheet.field.family_study</value>
+        <value>org.phenotips.patientSheet.field.ethnicity</value>
+        <value>org.phenotips.patientSheet.field.family_history</value>
+        <value>org.phenotips.patientSheet.field.consanguinity</value>
+        <value>org.phenotips.patientSheet.field.miscarriages</value>
+        <value>org.phenotips.patientSheet.field.affectedRelatives</value>
+        <value>org.phenotips.patientSheet.field.global_mode_of_inheritance</value>
+        <value>org.phenotips.patientSheet.field.pedigree</value>
+        <value>org.phenotips.patientSheet.field.multipleGestation</value>
+        <value>org.phenotips.patientSheet.field.gestation</value>
+        <value>org.phenotips.patientSheet.assistedReproduction</value>
+        <value>org.phenotips.patientSheet.parentalAge</value>
+        <value>org.phenotips.patientSheet.field.apgar</value>
+        <value>org.phenotips.patientSheet.field.prenatal_phenotype</value>
+        <value>org.phenotips.patientSheet.field.prenatal_development</value>
+        <value>org.phenotips.patientSheet.field.medical_history</value>
+        <value>org.phenotips.patientSheet.field.allergies</value>
+        <value>org.phenotips.patientSheet.field.global_age_of_onset</value>
+        <value>org.phenotips.patientSheet.field.reports_history</value>
+        <value>org.phenotips.patientSheet.field.required-measurements</value>
+        <value>org.phenotips.patientSheet.field.measurements</value>
+        <value>org.phenotips.patientSheet.field.charts</value>
+        <value>org.phenotips.patientSheet.field.gene-variants</value>
+        <value>org.phenotips.patientSheet.field.rejected_genes</value>
+        <value>org.phenotips.patientSheet.field.vcf</value>
+        <value>org.phenotips.patientSheet.field.variantdisplay</value>
+        <value>org.phenotips.patientSheet.field.phenotype</value>
+        <value>org.phenotips.patientSheet.field.omim_id</value>
+        <value>org.phenotips.patientSheet.field.diagnosis_notes</value>
+        <value>org.phenotips.patientSheet.field.omim_suggestions</value>
+        <value>org.phenotips.patientSheet.field.solved</value>
+      </fields>
+    </property>
+    <property>
+      <id>real</id>
+    </property>
+    <property>
+      <label>{{translation key="phenomecentral.consent.real" /}}</label>
+    </property>
+    <property>
+      <required>1</required>
+    </property>
+  </object>
+  <object>
+    <name>PhenoTips.Consents</name>
+    <number>1</number>
+    <className>PhenoTips.PatientConsentConfiguration</className>
+    <guid>1bc01f33-2c84-4af2-be25-2b4d272ceaee</guid>
+    <class>
+      <name>PhenoTips.PatientConsentConfiguration</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <affectsFields>
+        <customDisplay/>
+        <defaultValue/>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType/>
+        <name>affectsFields</name>
+        <number>5</number>
+        <prettyName>Are any patient form fields affected by this consent?</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </affectsFields>
+      <description>
+        <contenttype>FullyRenderedText</contenttype>
+        <customDisplay/>
+        <disabled>0</disabled>
+        <editor>---</editor>
+        <name>description</name>
+        <number>3</number>
+        <picker>0</picker>
+        <prettyName>Description (optional, may include HTML)</prettyName>
+        <rows>5</rows>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </description>
+      <fields>
+        <cache>0</cache>
+        <classname/>
+        <customDisplay>(% class="affected-fields-list" %)(((
+{{velocity}}
+## Extensions making up the main content, the actual information about the patient
+#set ($recordConfiguration = $services.recordConfiguration.getActiveConfiguration())
+#foreach ($section in $recordConfiguration.enabledSections)
+ #set ($sectionContent = '')
+ #foreach ($element in $section.enabledElements)
+   #set ($itemContent = "&lt;li&gt;&lt;label&gt;&lt;input type=""checkbox"" name=""$!{prefix}$!{name}"" value=""$element.extension.id"" #if ($value.contains(""$element.extension.id"")) checked=""checked"" #end/&gt; $element.name&lt;/label&gt;&lt;/li&gt;")
+   #set ($sectionContent = $sectionContent.concat($itemContent))
+ #end
+ #if ($sectionContent.trim() != '')
+ **$section.name**
+ {{html clean="false" wiki="false"}}&lt;ul style="list-style-type: none;"&gt;$sectionContent.trim()&lt;/ul&gt;{{/html}}
+ #end
+#end
+{{html clean="false" wiki="false"}}&lt;input type="hidden" name="$!{prefix}$!{name}" value="" /&gt;{{/html}}
+{{/velocity}}
+)))</customDisplay>
+        <disabled>0</disabled>
+        <displayType>checkbox</displayType>
+        <idField/>
+        <multiSelect>1</multiSelect>
+        <name>fields</name>
+        <number>6</number>
+        <picker>0</picker>
+        <prettyName>Fields allowed by this consent (none selected implies all affected)</prettyName>
+        <relationalStorage>1</relationalStorage>
+        <separator> </separator>
+        <separators/>
+        <size>1</size>
+        <sort>none</sort>
+        <sql/>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <valueField/>
+        <classType>com.xpn.xwiki.objects.classes.DBListClass</classType>
+      </fields>
+      <id>
+        <customDisplay/>
+        <disabled>0</disabled>
+        <name>id</name>
+        <number>1</number>
+        <picker>0</picker>
+        <prettyName>Id</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </id>
+      <label>
+        <customDisplay/>
+        <disabled>0</disabled>
+        <name>label</name>
+        <number>2</number>
+        <picker>0</picker>
+        <prettyName>Label</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </label>
+      <required>
+        <customDisplay/>
+        <defaultValue/>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType/>
+        <name>required</name>
+        <number>4</number>
+        <prettyName>Required?</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </required>
+    </class>
+    <property>
+      <affectsFields>1</affectsFields>
+    </property>
+    <property>
+      <description/>
+    </property>
+    <property>
+      <fields>
+        <value>org.phenotips.patientSheet.field.gene-variants</value>
+        <value>org.phenotips.patientSheet.field.rejected_genes</value>
+        <value>org.phenotips.patientSheet.field.vcf</value>
+        <value>org.phenotips.patientSheet.field.variantdisplay</value>
+      </fields>
+    </property>
+    <property>
+      <id>genetic</id>
+    </property>
+    <property>
+      <label>{{translation key="phenomecentral.consent.genetic" /}}</label>
+    </property>
+    <property>
+      <required>0</required>
+    </property>
+  </object>
+  <object>
+    <name>PhenoTips.Consents</name>
+    <number>2</number>
+    <className>PhenoTips.PatientConsentConfiguration</className>
+    <guid>13796f12-3b64-4462-9fe9-d80df9f1a527</guid>
+    <class>
+      <name>PhenoTips.PatientConsentConfiguration</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <affectsFields>
+        <customDisplay/>
+        <defaultValue/>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType/>
+        <name>affectsFields</name>
+        <number>5</number>
+        <prettyName>Are any patient form fields affected by this consent?</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </affectsFields>
+      <description>
+        <contenttype>FullyRenderedText</contenttype>
+        <customDisplay/>
+        <disabled>0</disabled>
+        <editor>---</editor>
+        <name>description</name>
+        <number>3</number>
+        <picker>0</picker>
+        <prettyName>Description (optional, may include HTML)</prettyName>
+        <rows>5</rows>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </description>
+      <fields>
+        <cache>0</cache>
+        <classname/>
+        <customDisplay>(% class="affected-fields-list" %)(((
+{{velocity}}
+## Extensions making up the main content, the actual information about the patient
+#set ($recordConfiguration = $services.recordConfiguration.getActiveConfiguration())
+#foreach ($section in $recordConfiguration.enabledSections)
+ #set ($sectionContent = '')
+ #foreach ($element in $section.enabledElements)
+   #set ($itemContent = "&lt;li&gt;&lt;label&gt;&lt;input type=""checkbox"" name=""$!{prefix}$!{name}"" value=""$element.extension.id"" #if ($value.contains(""$element.extension.id"")) checked=""checked"" #end/&gt; $element.name&lt;/label&gt;&lt;/li&gt;")
+   #set ($sectionContent = $sectionContent.concat($itemContent))
+ #end
+ #if ($sectionContent.trim() != '')
+ **$section.name**
+ {{html clean="false" wiki="false"}}&lt;ul style="list-style-type: none;"&gt;$sectionContent.trim()&lt;/ul&gt;{{/html}}
+ #end
+#end
+{{html clean="false" wiki="false"}}&lt;input type="hidden" name="$!{prefix}$!{name}" value="" /&gt;{{/html}}
+{{/velocity}}
+)))</customDisplay>
+        <disabled>0</disabled>
+        <displayType>checkbox</displayType>
+        <idField/>
+        <multiSelect>1</multiSelect>
+        <name>fields</name>
+        <number>6</number>
+        <picker>0</picker>
+        <prettyName>Fields allowed by this consent (none selected implies all affected)</prettyName>
+        <relationalStorage>1</relationalStorage>
+        <separator> </separator>
+        <separators/>
+        <size>1</size>
+        <sort>none</sort>
+        <sql/>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <valueField/>
+        <classType>com.xpn.xwiki.objects.classes.DBListClass</classType>
+      </fields>
+      <id>
+        <customDisplay/>
+        <disabled>0</disabled>
+        <name>id</name>
+        <number>1</number>
+        <picker>0</picker>
+        <prettyName>Id</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </id>
+      <label>
+        <customDisplay/>
+        <disabled>0</disabled>
+        <name>label</name>
+        <number>2</number>
+        <picker>0</picker>
+        <prettyName>Label</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </label>
+      <required>
+        <customDisplay/>
+        <defaultValue/>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType/>
+        <name>required</name>
+        <number>4</number>
+        <prettyName>Required?</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </required>
+    </class>
+    <property>
+      <affectsFields>1</affectsFields>
+    </property>
+    <property>
+      <description/>
+    </property>
+    <property>
+      <fields>
+        <value>org.phenotips.patientSheet.field.indication_for_referral</value>
+        <value>org.phenotips.patientSheet.field.family_study</value>
+        <value>org.phenotips.patientSheet.field.ethnicity</value>
+        <value>org.phenotips.patientSheet.field.family_history</value>
+        <value>org.phenotips.patientSheet.field.consanguinity</value>
+        <value>org.phenotips.patientSheet.field.miscarriages</value>
+        <value>org.phenotips.patientSheet.field.affectedRelatives</value>
+        <value>org.phenotips.patientSheet.field.global_mode_of_inheritance</value>
+        <value>org.phenotips.patientSheet.field.pedigree</value>
+        <value>org.phenotips.patientSheet.field.multipleGestation</value>
+        <value>org.phenotips.patientSheet.field.gestation</value>
+        <value>org.phenotips.patientSheet.assistedReproduction</value>
+        <value>org.phenotips.patientSheet.parentalAge</value>
+        <value>org.phenotips.patientSheet.field.apgar</value>
+        <value>org.phenotips.patientSheet.field.prenatal_phenotype</value>
+        <value>org.phenotips.patientSheet.field.prenatal_development</value>
+        <value>org.phenotips.patientSheet.field.medical_history</value>
+        <value>org.phenotips.patientSheet.field.allergies</value>
+        <value>org.phenotips.patientSheet.field.global_age_of_onset</value>
+        <value>org.phenotips.patientSheet.field.reports_history</value>
+      </fields>
+    </property>
+    <property>
+      <id>share_history</id>
+    </property>
+    <property>
+      <label>{{translation key="phenomecentral.consent.shareHistory" /}}</label>
+    </property>
+    <property>
+      <required>0</required>
+    </property>
+  </object>
+  <object>
+    <name>PhenoTips.Consents</name>
+    <number>3</number>
+    <className>PhenoTips.PatientConsentConfiguration</className>
+    <guid>ec6f1c76-08b2-4134-9241-d219cda3d550</guid>
+    <class>
+      <name>PhenoTips.PatientConsentConfiguration</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <affectsFields>
+        <customDisplay/>
+        <defaultValue/>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType/>
+        <name>affectsFields</name>
+        <number>5</number>
+        <prettyName>Are any patient form fields affected by this consent?</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </affectsFields>
+      <description>
+        <contenttype>FullyRenderedText</contenttype>
+        <customDisplay/>
+        <disabled>0</disabled>
+        <editor>---</editor>
+        <name>description</name>
+        <number>3</number>
+        <picker>0</picker>
+        <prettyName>Description (optional, may include HTML)</prettyName>
+        <rows>5</rows>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </description>
+      <fields>
+        <cache>0</cache>
+        <classname/>
+        <customDisplay>(% class="affected-fields-list" %)(((
+{{velocity}}
+## Extensions making up the main content, the actual information about the patient
+#set ($recordConfiguration = $services.recordConfiguration.getActiveConfiguration())
+#foreach ($section in $recordConfiguration.enabledSections)
+ #set ($sectionContent = '')
+ #foreach ($element in $section.enabledElements)
+   #set ($itemContent = "&lt;li&gt;&lt;label&gt;&lt;input type=""checkbox"" name=""$!{prefix}$!{name}"" value=""$element.extension.id"" #if ($value.contains(""$element.extension.id"")) checked=""checked"" #end/&gt; $element.name&lt;/label&gt;&lt;/li&gt;")
+   #set ($sectionContent = $sectionContent.concat($itemContent))
+ #end
+ #if ($sectionContent.trim() != '')
+ **$section.name**
+ {{html clean="false" wiki="false"}}&lt;ul style="list-style-type: none;"&gt;$sectionContent.trim()&lt;/ul&gt;{{/html}}
+ #end
+#end
+{{html clean="false" wiki="false"}}&lt;input type="hidden" name="$!{prefix}$!{name}" value="" /&gt;{{/html}}
+{{/velocity}}
+)))</customDisplay>
+        <disabled>0</disabled>
+        <displayType>checkbox</displayType>
+        <idField/>
+        <multiSelect>1</multiSelect>
+        <name>fields</name>
+        <number>6</number>
+        <picker>0</picker>
+        <prettyName>Fields allowed by this consent (none selected implies all affected)</prettyName>
+        <relationalStorage>1</relationalStorage>
+        <separator> </separator>
+        <separators/>
+        <size>1</size>
+        <sort>none</sort>
+        <sql/>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <valueField/>
+        <classType>com.xpn.xwiki.objects.classes.DBListClass</classType>
+      </fields>
+      <id>
+        <customDisplay/>
+        <disabled>0</disabled>
+        <name>id</name>
+        <number>1</number>
+        <picker>0</picker>
+        <prettyName>Id</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </id>
+      <label>
+        <customDisplay/>
+        <disabled>0</disabled>
+        <name>label</name>
+        <number>2</number>
+        <picker>0</picker>
+        <prettyName>Label</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </label>
+      <required>
+        <customDisplay/>
+        <defaultValue/>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType/>
+        <name>required</name>
+        <number>4</number>
+        <prettyName>Required?</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </required>
+    </class>
+    <property>
+      <affectsFields>0</affectsFields>
+    </property>
+    <property>
+      <description/>
+    </property>
+    <property>
+      <fields/>
+    </property>
+    <property>
+      <id>share_images</id>
+    </property>
+    <property>
+      <label>{{translation key="phenomecentral.consent.shareImages" /}}</label>
+    </property>
+    <property>
+      <required>0</required>
+    </property>
+  </object>
+  <object>
+    <name>PhenoTips.Consents</name>
+    <number>4</number>
+    <className>PhenoTips.PatientConsentConfiguration</className>
+    <guid>aaa999eb-eecc-45f8-b8cc-46bffe9de152</guid>
+    <class>
+      <name>PhenoTips.PatientConsentConfiguration</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <affectsFields>
+        <customDisplay/>
+        <defaultValue/>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType/>
+        <name>affectsFields</name>
+        <number>5</number>
+        <prettyName>Are any patient form fields affected by this consent?</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </affectsFields>
+      <description>
+        <contenttype>FullyRenderedText</contenttype>
+        <customDisplay/>
+        <disabled>0</disabled>
+        <editor>---</editor>
+        <name>description</name>
+        <number>3</number>
+        <picker>0</picker>
+        <prettyName>Description (optional, may include HTML)</prettyName>
+        <rows>5</rows>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </description>
+      <fields>
+        <cache>0</cache>
+        <classname/>
+        <customDisplay>(% class="affected-fields-list" %)(((
+{{velocity}}
+## Extensions making up the main content, the actual information about the patient
+#set ($recordConfiguration = $services.recordConfiguration.getActiveConfiguration())
+#foreach ($section in $recordConfiguration.enabledSections)
+ #set ($sectionContent = '')
+ #foreach ($element in $section.enabledElements)
+   #set ($itemContent = "&lt;li&gt;&lt;label&gt;&lt;input type=""checkbox"" name=""$!{prefix}$!{name}"" value=""$element.extension.id"" #if ($value.contains(""$element.extension.id"")) checked=""checked"" #end/&gt; $element.name&lt;/label&gt;&lt;/li&gt;")
+   #set ($sectionContent = $sectionContent.concat($itemContent))
+ #end
+ #if ($sectionContent.trim() != '')
+ **$section.name**
+ {{html clean="false" wiki="false"}}&lt;ul style="list-style-type: none;"&gt;$sectionContent.trim()&lt;/ul&gt;{{/html}}
+ #end
+#end
+{{html clean="false" wiki="false"}}&lt;input type="hidden" name="$!{prefix}$!{name}" value="" /&gt;{{/html}}
+{{/velocity}}
+)))</customDisplay>
+        <disabled>0</disabled>
+        <displayType>checkbox</displayType>
+        <idField/>
+        <multiSelect>1</multiSelect>
+        <name>fields</name>
+        <number>6</number>
+        <picker>0</picker>
+        <prettyName>Fields allowed by this consent (none selected implies all affected)</prettyName>
+        <relationalStorage>1</relationalStorage>
+        <separator> </separator>
+        <separators/>
+        <size>1</size>
+        <sort>none</sort>
+        <sql/>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <valueField/>
+        <classType>com.xpn.xwiki.objects.classes.DBListClass</classType>
+      </fields>
+      <id>
+        <customDisplay/>
+        <disabled>0</disabled>
+        <name>id</name>
+        <number>1</number>
+        <picker>0</picker>
+        <prettyName>Id</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </id>
+      <label>
+        <customDisplay/>
+        <disabled>0</disabled>
+        <name>label</name>
+        <number>2</number>
+        <picker>0</picker>
+        <prettyName>Label</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </label>
+      <required>
+        <customDisplay/>
+        <defaultValue/>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType/>
+        <name>required</name>
+        <number>4</number>
+        <prettyName>Required?</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </required>
+    </class>
+    <property>
+      <affectsFields>0</affectsFields>
+    </property>
+    <property>
+      <description/>
+    </property>
+    <property>
+      <fields/>
+    </property>
+    <property>
+      <id>matching</id>
+    </property>
+    <property>
+      <label>{{translation key="phenomecentral.consent.matching" /}}</label>
+    </property>
+    <property>
+      <required>0</required>
+    </property>
+  </object>
+  <object>
+    <name>PhenoTips.Consents</name>
+    <number>0</number>
+    <className>XWiki.TranslationDocumentClass</className>
+    <guid>dd1f44d7-cc24-4128-a326-ef830f7500d2</guid>
+    <class>
+      <name>XWiki.TranslationDocumentClass</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <scope>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>scope</name>
+        <number>1</number>
+        <prettyName>Scope</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>GLOBAL|WIKI|USER|ON_DEMAND</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </scope>
+    </class>
+  </object>
+</xwikidoc>
