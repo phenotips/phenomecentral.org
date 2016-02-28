@@ -136,7 +136,7 @@ After entering a case, contributors can see the most similar cases found in the 
 
 **Private cases do not participate in any way in the similarity matching process**: if your case is private you will not be able to see similar cases and private cases will not be included in the list of matching similar cases for any other users. If you wish to benefit from the system's similarity feature, please consider giving your cases at least the {{icon name="matchable" /}}**matchable** visibility level. 
 
-[[image:pc-similarity.png]]
+[[image:@pc-similarity.png]]
 
 As the owners of matchable cases are not disclosed, the system allows users to initiate contact without disclosing any actual contact information:
 
