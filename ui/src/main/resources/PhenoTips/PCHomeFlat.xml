@@ -555,9 +555,8 @@ a.details {
 
 .citing, .participants {
   clear: left;
-  padding: 0 1%;
   float: left;
-  margin: 2em 0;
+  margin: 2em 1%;
   position: relative;
 }
 
