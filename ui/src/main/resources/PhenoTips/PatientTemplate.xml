@@ -1287,6 +1287,126 @@ $!{value}#if("$!{value}" != ''){{html clean=false}}&lt;input type='hidden' name=
   <object>
     <name>PhenoTips.PatientTemplate</name>
     <number>0</number>
+    <className>PhenoTips.PatientConsent</className>
+    <guid>958488aa-308b-47cb-805e-4fd93d5c2a19</guid>
+    <class>
+      <name>PhenoTips.PatientConsent</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <genetic>
+        <customDisplay/>
+        <defaultValue/>
+        <disabled>0</disabled>
+        <displayFormType>checkbox</displayFormType>
+        <displayType/>
+        <name>genetic</name>
+        <number>3</number>
+        <prettyName>genetic</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </genetic>
+      <matching>
+        <customDisplay/>
+        <defaultValue>1</defaultValue>
+        <disabled>0</disabled>
+        <displayFormType>checkbox</displayFormType>
+        <displayType/>
+        <name>matching</name>
+        <number>6</number>
+        <prettyName>matching</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </matching>
+      <message_holder>
+        <customDisplay>{{velocity}}
+#set ($consentDoc = $xwiki.getDocument('PhenoTips.PatientConsent'))
+#set ($formUrl = $consentDoc.getAttachmentURL('PhenomeCentral_Consent.pdf'))
+{{html wiki='false' clean='false'}}
+$services.localization.render('PhenoTips.PatientConsent_message', ["$!{formUrl}"])
+{{/html}}
+{{/velocity}}</customDisplay>
+        <disabled>0</disabled>
+        <name>message_holder</name>
+        <number>2</number>
+        <picker>0</picker>
+        <prettyName/>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </message_holder>
+      <real>
+        <customDisplay/>
+        <defaultValue/>
+        <disabled>0</disabled>
+        <displayFormType>checkbox</displayFormType>
+        <displayType/>
+        <name>real</name>
+        <number>1</number>
+        <prettyName>real</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </real>
+      <share_history>
+        <customDisplay/>
+        <defaultValue/>
+        <disabled>0</disabled>
+        <displayFormType>checkbox</displayFormType>
+        <displayType/>
+        <name>share_history</name>
+        <number>4</number>
+        <prettyName>share</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </share_history>
+      <share_images>
+        <customDisplay/>
+        <defaultValue/>
+        <disabled>0</disabled>
+        <displayFormType>checkbox</displayFormType>
+        <displayType/>
+        <name>share_images</name>
+        <number>5</number>
+        <prettyName>share_images</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </share_images>
+    </class>
+    <property>
+      <genetic>0</genetic>
+    </property>
+    <property>
+      <matching>0</matching>
+    </property>
+    <property>
+      <real>0</real>
+    </property>
+    <property>
+      <share_history>0</share_history>
+    </property>
+    <property>
+      <share_images>0</share_images>
+    </property>
+  </object>
+  <object>
+    <name>PhenoTips.PatientTemplate</name>
+    <number>0</number>
     <className>PhenoTips.PedigreeClass</className>
     <guid>09879ef6-e139-47bc-adce-6feedb4c4d70</guid>
     <class>
@@ -1352,6 +1472,49 @@ $!{value}#if("$!{value}" != ''){{html clean=false}}&lt;input type='hidden' name=
     </property>
     <property>
       <image/>
+    </property>
+  </object>
+  <object>
+    <name>PhenoTips.PatientTemplate</name>
+    <number>0</number>
+    <className>PhenoTips.StudyBindingClass</className>
+    <guid>8dd03f6f-2468-4962-bd77-634e052fe452</guid>
+    <class>
+      <name>PhenoTips.StudyBindingClass</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <studyReference>
+        <cache>0</cache>
+        <classname/>
+        <customDisplay>{{include reference="PhenoTips.StudyBindingClass" /}}</customDisplay>
+        <disabled>0</disabled>
+        <displayType>radio</displayType>
+        <idField/>
+        <multiSelect>0</multiSelect>
+        <name>studyReference</name>
+        <number>1</number>
+        <picker>0</picker>
+        <prettyName>Configuration to use</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators/>
+        <size>1</size>
+        <sort>none</sort>
+        <sql/>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <valueField/>
+        <classType>com.xpn.xwiki.objects.classes.DBListClass</classType>
+      </studyReference>
+    </class>
+    <property>
+      <studyReference/>
     </property>
   </object>
   <object>
