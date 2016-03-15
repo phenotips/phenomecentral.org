@@ -67,8 +67,7 @@ $xwiki.jsx.use('PhenoTips.PCHomeFlat')##
   &lt;/div&gt;
   &lt;div class="info-box"&gt;
   &lt;h2&gt;How it can help&lt;/h2&gt;
-  &lt;p&gt;&lt;strong&gt;PhenomeCentral uses state-of-the-art algorithms to match cases on phenotype and genotype&lt;/strong&gt;. You can find similar cases even if there are no phenotypes in common, because terms are matched semantically rather than using textual similarity. You can enter candidate genes or let the [[Exomiser&gt;&gt;http://www.sanger.ac.uk/science/tools/exomiser/||rel="__blank"]] automatically prioritize genes from exome sequencing data.
-    .&lt;/p&gt;
+  &lt;p&gt;&lt;strong&gt;PhenomeCentral uses state-of-the-art algorithms to match cases on phenotype and genotype&lt;/strong&gt;. You can find similar cases even if there are no phenotypes in common, because terms are matched semantically rather than using textual similarity. You can enter candidate genes or let the [[Exomiser&gt;&gt;http://www.sanger.ac.uk/science/tools/exomiser/||rel="__blank"]] automatically prioritize genes from exome sequencing data.&lt;/p&gt;
   &lt;/div&gt;
   &lt;div class="info-box"&gt;
   &lt;h2&gt;A piece of the puzzle&lt;/h2&gt;
