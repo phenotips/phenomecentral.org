@@ -420,13 +420,11 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>jcl-over-slf4j</artifactId>
-      <version>${slf4j.version}</version>
       <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>log4j-over-slf4j</artifactId>
-      <version>${slf4j.version}</version>
       <scope>runtime</scope>
     </dependency>
     <!-- Configuration -->
@@ -680,6 +678,16 @@
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
+      <artifactId>patient-data-sharing-push-api</artifactId>
+      <version>${phenotips.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
+      <artifactId>patient-data-sharing-receiver-api</artifactId>
+      <version>${phenotips.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
       <artifactId>specificity-meter-api</artifactId>
       <version>${phenotips.version}</version>
     </dependency>
@@ -738,13 +746,18 @@
       <artifactId>phenotips-proxy-authentication</artifactId>
       <version>${phenotips.version}</version>
     </dependency>
-
-    <!-- PhenomeCentral specific -->
     <dependency>
       <groupId>org.phenotips</groupId>
-      <artifactId>patient-data-sharing-receiver-api</artifactId>
-      <version>${phenotips.version}</version>
+      <artifactId>pingback-common</artifactId>
+      <version>1.0</version>
     </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
+      <artifactId>pingback-client-api</artifactId>
+      <version>1.0</version>
+    </dependency>
+
+    <!-- PhenomeCentral specific -->
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>patient-similarity-data-api</artifactId>
@@ -821,6 +834,7 @@
                 <xwikiDbDialect>org.hibernate.dialect.HSQLDialect</xwikiDbDialect>
                 <xwikiDbHbmXwiki>xwiki.hbm.xml</xwikiDbHbmXwiki>
                 <xwikiDbHbmFeeds>feeds.hbm.xml</xwikiDbHbmFeeds>
+                <xwikiDbHbmCommonExtraMappings>instance.hbm.xml</xwikiDbHbmCommonExtraMappings>
                 <xwikiCfgPlugins>\
   com.xpn.xwiki.monitor.api.MonitorPlugin,\
   com.xpn.xwiki.plugin.skinx.JsSkinExtensionPlugin,\
@@ -857,8 +871,8 @@ xwiki.defaultweb=data
 xwiki.usedefaultweb=1
 xwiki.usedefaultaction=0
 xwiki.monitor=0
-xwiki.authentication.loginpage=/bin/PhenomeCentral/login
-xwiki.authentication.loginsubmitpage=/bin/loginsubmit/PhenomeCentral/login
+xwiki.authentication.loginpage=/PhenomeCentral/login
+xwiki.authentication.loginsubmitpage=/loginsubmit/PhenomeCentral/login
 xwiki.store.attachment.hint=file
 xwiki.store.attachment.versioning.hint=file
 xwiki.store.attachment.recyclebin.hint=file
@@ -870,6 +884,8 @@ extension.repositories=maven-central:maven:https://nexus.phenotips.org/nexus/con
 extension.repositories=maven-phenotips:maven:https://nexus.phenotips.org/nexus/content/repositories/releases/
 extension.repositories=phenotips.org:xwiki:https://phenotips.org/rest/
 rendering.transformations=macro
+activeinstalls.pingURL=https://stats.phenotips.org
+activeinstalls.ipFetchURL=https://phenotips.org/get/Stats/Id
                 </xwikiPropertiesAdditionalProperties>
               </properties>
             </configuration>
