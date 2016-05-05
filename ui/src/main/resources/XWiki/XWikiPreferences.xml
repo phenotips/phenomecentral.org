@@ -2988,10 +2988,10 @@ The ${wikiname} Team
 ##${host}${xwiki.getURL('XWiki.AccountValidation', 'view', "validkey=${validkey}&amp;xwikiname=${xwikiname}")}</validation_email_content>
     </property>
     <property>
-      <version>&lt;a href="http://phenomecentral.org"&gt;PhenomeCentral&lt;/a&gt; version $!{services.distribution.distributionExtension.id.version}</version>
+      <version>#set($TaC=$xwiki.getDocument('data.Terms_and_Conditions_of_Use'))#if ($TaC)&lt;a href="$TaC.getURL()"&gt;Terms and Conditions&lt;/a&gt;#else &amp;nbsp; #end</version>
     </property>
     <property>
-      <webcopyright>Reproducing or distributing this clinical information without permission from the institution that owns it is strictly forbidden.</webcopyright>
+      <webcopyright>&lt;a href="http://phenomecentral.org"&gt;PhenomeCentral&lt;/a&gt; version $!{services.distribution.distributionExtension.id.version}</webcopyright>
     </property>
     <property>
       <xwiki.title.mandatory>0</xwiki.title.mandatory>
