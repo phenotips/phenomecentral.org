@@ -2519,7 +2519,7 @@ $xwiki.ssfx.use('js/xwiki/table/livetable.css', {'colorTheme' : "$xwiki.getSpace
 }
 #document-info {display:none}
 
-#headerglobal, #menuview, #document-title, #footerglobal, #contentmenu, #hierarchy {
+#headerglobal, #menuview, #document-title, #contentmenu, #hierarchy {
   display: none;
 }
 #mainContentArea {
