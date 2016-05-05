@@ -100,7 +100,7 @@ $!value
       </enableImperialUnitSystem>
       <livetableColumns>
         <cache>0</cache>
-        <customDisplay>//Meta information: //
+        <customDisplay>//{{translation key="phenotips.DBConfigurationClass.metaInfo" /}}//
 
 {{velocity output=false}}
 #set ($docFields = ['doc.name', 'doc.creator', 'doc.author', 'doc.creationDate', 'doc.date'])
@@ -122,7 +122,7 @@ $!value
 &lt;/ul&gt;
 {{/html}}{{/velocity}}
 
-//Patient information: //
+//{{translation key="phenotips.DBConfigurationClass.patientInfo" /}}//
 
 {{include reference="PhenoTips.DBConfigurationClassDisplayer" /}}</customDisplay>
         <disabled>0</disabled>
@@ -240,10 +240,10 @@ $!value
     <property>
       <livetableColumns>
         <value>doc.name</value>
+        <value>external_id</value>
         <value>doc.creator</value>
         <value>doc.author</value>
         <value>doc.creationDate</value>
-        <value>external_id</value>
       </livetableColumns>
     </property>
     <property>
@@ -274,6 +274,7 @@ $!value
       <nameField/>
       <validationScript/>
       <data>
+        <contenttype>PureText</contenttype>
         <customDisplay/>
         <disabled>0</disabled>
         <editor>PureText</editor>
@@ -289,9 +290,10 @@ $!value
         <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
       </data>
       <description>
+        <contenttype>PureText</contenttype>
         <customDisplay/>
         <disabled>0</disabled>
-        <editor>---</editor>
+        <editor>PureText</editor>
         <name>description</name>
         <number>3</number>
         <picker>0</picker>
@@ -304,6 +306,7 @@ $!value
         <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
       </description>
       <image>
+        <contenttype>PureText</contenttype>
         <customDisplay/>
         <disabled>0</disabled>
         <editor>PureText</editor>
@@ -344,6 +347,7 @@ $!value
       <nameField/>
       <validationScript/>
       <data>
+        <contenttype>PureText</contenttype>
         <customDisplay/>
         <disabled>0</disabled>
         <editor>PureText</editor>
@@ -359,9 +363,10 @@ $!value
         <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
       </data>
       <description>
+        <contenttype>PureText</contenttype>
         <customDisplay/>
         <disabled>0</disabled>
-        <editor>---</editor>
+        <editor>PureText</editor>
         <name>description</name>
         <number>3</number>
         <picker>0</picker>
@@ -374,6 +379,7 @@ $!value
         <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
       </description>
       <image>
+        <contenttype>PureText</contenttype>
         <customDisplay/>
         <disabled>0</disabled>
         <editor>PureText</editor>
@@ -414,6 +420,7 @@ $!value
       <nameField/>
       <validationScript/>
       <data>
+        <contenttype>PureText</contenttype>
         <customDisplay/>
         <disabled>0</disabled>
         <editor>PureText</editor>
@@ -429,9 +436,10 @@ $!value
         <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
       </data>
       <description>
+        <contenttype>PureText</contenttype>
         <customDisplay/>
         <disabled>0</disabled>
-        <editor>---</editor>
+        <editor>PureText</editor>
         <name>description</name>
         <number>3</number>
         <picker>0</picker>
@@ -444,6 +452,7 @@ $!value
         <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
       </description>
       <image>
+        <contenttype>PureText</contenttype>
         <customDisplay/>
         <disabled>0</disabled>
         <editor>PureText</editor>
@@ -484,6 +493,7 @@ $!value
       <nameField/>
       <validationScript/>
       <data>
+        <contenttype>PureText</contenttype>
         <customDisplay/>
         <disabled>0</disabled>
         <editor>PureText</editor>
@@ -499,9 +509,10 @@ $!value
         <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
       </data>
       <description>
+        <contenttype>PureText</contenttype>
         <customDisplay/>
         <disabled>0</disabled>
-        <editor>---</editor>
+        <editor>PureText</editor>
         <name>description</name>
         <number>3</number>
         <picker>0</picker>
@@ -514,6 +525,7 @@ $!value
         <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
       </description>
       <image>
+        <contenttype>PureText</contenttype>
         <customDisplay/>
         <disabled>0</disabled>
         <editor>PureText</editor>
@@ -554,6 +566,7 @@ $!value
       <nameField/>
       <validationScript/>
       <data>
+        <contenttype>PureText</contenttype>
         <customDisplay/>
         <disabled>0</disabled>
         <editor>PureText</editor>
@@ -569,9 +582,10 @@ $!value
         <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
       </data>
       <description>
+        <contenttype>PureText</contenttype>
         <customDisplay/>
         <disabled>0</disabled>
-        <editor>---</editor>
+        <editor>PureText</editor>
         <name>description</name>
         <number>3</number>
         <picker>0</picker>
@@ -584,6 +598,7 @@ $!value
         <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
       </description>
       <image>
+        <contenttype>PureText</contenttype>
         <customDisplay/>
         <disabled>0</disabled>
         <editor>PureText</editor>
@@ -1511,7 +1526,7 @@ $!value
 
 #end
 {{html clean=false}}
-&lt;form class="xformInline" action="$doc.getURL($xcontext.action, $request.queryString)" method="post"&gt;&lt;div&gt;
+&lt;form class="xformInline" action="$escapetool.xml($doc.getURL($xcontext.action, $request.queryString))" method="post"&gt;&lt;div&gt;
   &lt;input type="hidden" name="form_token" value="$!{services.csrf.getToken()}" /&gt;
   &lt;input type="hidden" name="doCreate" value="1" /&gt;
   &lt;input type="hidden" name="classTemplate" value="PhenoTips.PhenotypeMappingTemplate" /&gt;
@@ -2663,7 +2678,7 @@ $xwiki.ssfx.use('js/xwiki/table/livetable.css', {'colorTheme' : "$xwiki.getSpace
         <prettyName>Extension Scope</prettyName>
         <relationalStorage>0</relationalStorage>
         <separator> </separator>
-        <separators> ,|</separators>
+        <separators>|, </separators>
         <size>1</size>
         <unmodifiable>0</unmodifiable>
         <values>wiki=Current Wiki|user=Current User|global=Global</values>
@@ -2799,7 +2814,7 @@ $xwiki.ssx.use('PhenoTips.FontAwesomeIcons')##
         <prettyName>Extension Scope</prettyName>
         <relationalStorage>0</relationalStorage>
         <separator> </separator>
-        <separators> ,|</separators>
+        <separators>|, </separators>
         <size>1</size>
         <unmodifiable>0</unmodifiable>
         <values>wiki=Current Wiki|user=Current User|global=Global</values>
@@ -2914,7 +2929,7 @@ $xwiki.ssx.use('PhenoTips.FontAwesomeIcons')##
         <prettyName>Extension Scope</prettyName>
         <relationalStorage>0</relationalStorage>
         <separator> </separator>
-        <separators> ,|</separators>
+        <separators>|, </separators>
         <size>1</size>
         <unmodifiable>0</unmodifiable>
         <values>wiki=Current Wiki|user=Current User|global=Global</values>
@@ -2999,7 +3014,7 @@ $xwiki.ssx.use('PhenoTips.FontAwesomeIcons')##
         <prettyName>Extension Scope</prettyName>
         <relationalStorage>0</relationalStorage>
         <separator> </separator>
-        <separators> ,|</separators>
+        <separators>|, </separators>
         <size>1</size>
         <unmodifiable>0</unmodifiable>
         <values>wiki=Current Wiki|user=Current User|global=Global</values>

@@ -137,8 +137,7 @@ enabled=false
 required=
 order=4
 fields=last_name,first_name
-contains_PII=true
-privacy_level=1</parameters>
+contains_PII=true</parameters>
     </property>
     <property>
       <scope>wiki</scope>
