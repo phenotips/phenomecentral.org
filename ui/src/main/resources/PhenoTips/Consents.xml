@@ -862,5 +862,8 @@ phenomecentral.consent.matching=This patient is matchable through the Matchmaker
         <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
       </scope>
     </class>
+    <property>
+      <scope>WIKI</scope>
+    </property>
   </object>
 </xwikidoc>
