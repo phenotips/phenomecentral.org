@@ -69,74 +69,78 @@ This Policy outlines general principles to govern contribution, matching and dis
 
 == SCOPE ==
 PhenomeCentral acts as the portal to facilitate data discovery and matching, and is not, as such, engaged in data sharing and transfer. 
-In addition, sample access is not addressed by PhenomeCentral. 
-PROCEDURES
+In addition, sample access is not addressed by PhenomeCentral.
+
+== PROCEDURES ==
 The following policies guide PhenomeCentral in the implementation of Data depositing, display and matching procedures.
-PhenomeCentral User Registration Procedures
+
+=== PhenomeCentral User Registration Procedures ===
 PhenomeCentral accounts are appropriate for clinicians and scientists who can contribute phenotype and genotype information about Patients with genetic disorders under their care or being studied in their research environment. 
-Applicants can be a part of many different worldwide institutions. Prior to contribution, viewing and matching of Data, Applicants must request a PhenomeCentral account. 
+Applicants can be a part of many different worldwide institutions. Prior to contribution, viewing and matching of Data, Applicants must request a PhenomeCentral account.
+
 The Applicant must provide:
-Full name;
-Username;
-Password;
-Institutional email address (G-mail/Hotmail/Yahoo/other non-academic or non-institutional e-mail addresses etc. will not be accepted);
-Affiliation;
-Indicate how they heard about PhenomeCentral;
-State why they are requesting access to PhenomeCentral. 
+* Full name;
+* Username;
+* Password;
+* Institutional email address (G-mail/Hotmail/Yahoo/other non-academic or non-institutional e-mail addresses etc. will not be accepted);
+* Affiliation;
+* Indicate how they heard about PhenomeCentral;
+* State why they are requesting access to PhenomeCentral.
+
 In addition, all Applicants will be required to certify the following statements (online checkboxes), and to agree to comply with the [[PhenomeCentral Terms and Conditions of Use&gt;&gt;Terms_and_Conditions_of_Use]]:
+
+{{box}}
 I CONFIRM THAT: 
-
-	I AM A DOCTOR, CLINICAL GENETICIST OR SCIENTIST WORKING WITH PATIENTS AFFECTED BY RARE DISORDERS. 
-
-
-	THAT NO ATTEMPT TO IDENTIFY INDIVIDUAL PATIENTS WILL BE UNDERTAKEN. 
-
-	PRIOR TO USING DATA DISPLAYED IN PHENOMECENTRAL IN A PUBLICATION, I WILL CONTACT THE DEPOSITOR OF THE MATCHING DATASET TO ASSESS THE INTEGRITY OF THE MATCH AND IF VALIDATED WILL OFFER APPROPRIATE AGREED RECOGNITION OF THEIR CONTRIBUTION, WHICH MAY INCLUDE CO-AUTHORSHIP IF THE MAGNITUDE OF THE CONTRIBUTION WARRANTS IT TO AT LEAST ONE REPRESENTATIVE FROM THE PROJECT/PARTICIPATING CENTRE (POSSIBLY THE MEMBER WHO SUBMITTED THE PATIENT DATA). 
-
-	PRIOR TO RESEARCH PUBLICATION, THE AUTHORS ACKNOWLEDGE PHENOMECENTRAL USING THE FOLLOWING WORDING: "THIS STUDY MADE USE OF DATA  DISPLAYED THROUGH THE PHENOMECENTRAL REPOSITORY. FUNDING FOR PHENOMECENTRAL WAS PROVIDED BY GENOME CANADA AND THE CANADIAN INSTITUTES OF HEALTH RESEARCH (CIHR). 
-
-	PHENOMECENTRAL DISPLAYS DATA IN GOOD FAITH AS A RESEARCH TOOL, BUT WITHOUT VERIFYING THE ACCURACY, CLINICAL VALIDITY OR UTILITY OF THE DATA. ETHICAL APPROVALS TO CONTRIBUTE DATA REMAIN THE RESPONSIBILITY OF THE DATA DEPOSITOR. THE DATA DEPOSITOR IS ULTIMATELY RESPONSIBLE FOR MAKING APPROPRIATE VERIFICATIONS THAT DATA CAN BE DEPOSITED AND DISPLAYED INTO PHENOMECENTRAL. PHENOMECENTRAL MAKES NO WARRANTY, EXPRESS OR IMPLIED, NOR ASSUMES ANY LEGAL LIABILITY OR RESPONSIBILITY FOR ANY PURPOSE FOR WHICH THE DATA ARE USED. 
-
-	I have read, and I agree to abide by the [[PhenomeCentral Terms and Conditions of Use&gt;&gt;Terms_and_Conditions_of_Use]], at all times. 
-
-
+* I AM A DOCTOR, CLINICAL GENETICIST OR SCIENTIST WORKING WITH PATIENTS AFFECTED BY RARE DISORDERS. 
+* NO ATTEMPT TO IDENTIFY INDIVIDUAL PATIENTS WILL BE UNDERTAKEN. 
+* PRIOR TO USING DATA DISPLAYED IN PHENOMECENTRAL IN A PUBLICATION, I WILL CONTACT THE DEPOSITOR OF THE MATCHING DATASET TO ASSESS THE INTEGRITY OF THE MATCH AND IF VALIDATED WILL OFFER APPROPRIATE AGREED RECOGNITION OF THEIR CONTRIBUTION, WHICH MAY INCLUDE CO-AUTHORSHIP IF THE MAGNITUDE OF THE CONTRIBUTION WARRANTS IT TO AT LEAST ONE REPRESENTATIVE FROM THE PROJECT/PARTICIPATING CENTRE (POSSIBLY THE MEMBER WHO SUBMITTED THE PATIENT DATA). 
+* PRIOR TO RESEARCH PUBLICATION, THE AUTHORS ACKNOWLEDGE PHENOMECENTRAL USING THE FOLLOWING WORDING: "THIS STUDY MADE USE OF DATA  DISPLAYED THROUGH THE PHENOMECENTRAL REPOSITORY. FUNDING FOR PHENOMECENTRAL WAS PROVIDED BY GENOME CANADA AND THE CANADIAN INSTITUTES OF HEALTH RESEARCH (CIHR). 
+* PHENOMECENTRAL DISPLAYS DATA IN GOOD FAITH AS A RESEARCH TOOL, BUT WITHOUT VERIFYING THE ACCURACY, CLINICAL VALIDITY OR UTILITY OF THE DATA. ETHICAL APPROVALS TO CONTRIBUTE DATA REMAIN THE RESPONSIBILITY OF THE DATA DEPOSITOR. THE DATA DEPOSITOR IS ULTIMATELY RESPONSIBLE FOR MAKING APPROPRIATE VERIFICATIONS THAT DATA CAN BE DEPOSITED AND DISPLAYED INTO PHENOMECENTRAL. PHENOMECENTRAL MAKES NO WARRANTY, EXPRESS OR IMPLIED, NOR ASSUMES ANY LEGAL LIABILITY OR RESPONSIBILITY FOR ANY PURPOSE FOR WHICH THE DATA ARE USED. 
+* I have read, and I agree to abide by the [[PhenomeCentral Terms and Conditions of Use&gt;&gt;Terms_and_Conditions_of_Use]], at all times. 
+{{/box}}
 
 The application once received by a PhenomeCentral administrator will be assessed and PhenomeCentral will either create or deny a request for an account. Prior to providing an account, the administrator will undertake some verification that is, a (“background check”) of the Applicant through sites such as LinkedIn, hospital websites, and PubMed. The administrator can e-mail the prospective user to clarify their intentions and eligibility (e.g. are they employed; do they actually have access to patient data, etc.). 
+
 Applicants will not be provided accounts for the purpose of browsing PhenomeCentral as the software is not designed for these types of searches. If the Applicant requesting an account is a student or research assistant, their PI/supervisor must apply for an account. 
+
 Once approved, Users will be able to contribute, match and display Data on PhenomeCentral. 
-Contribution of Data to PhenomeCentral by Data Depositor 
+
+=== Contribution of Data to PhenomeCentral by Data Depositor ===
+
 The Global Alliance for Genomics and Health (GA4GH) has distinguished two levels of matchmaking based on the Data and the probability of re-identifying the Patient:
-Level 1: This level of matchmaking involves a Data Requester querying on a broad phenotype description or disease name using standardized terms (Human Phenotype Ontology (HPO), OMIM, Orphanet) and/or a candidate gene name.  Based on clinical judgment, if the Data Depositor considers that the Data is not identifiable by the User, either by itself or in combination with other data that the User could have access to about the Patient, the Patient’s consent for this activity is determined to not be required. However, in cases where the Data Depositor considers that the Data contains identifying information, either by itself or in combination with other data that the User could have access to about the Patient, the Data Depositor must obtain consent from the Patient prior to displaying and matching Data within PhenomeCentral. 
-Level 2: This level of matchmaking involves a data request or querying on a unique or sensitive phenotype description and/or sequence level and related information, such as defined variants and/or genomic datasets.  It requires the Data Depositors to obtain proof of consent from the Patient, Patient’s parent or legal guardian, or Patient’s substitute decision maker. User may use an institutional consent form or the PhenomeCentral consent form prior to contributing data to PhenomeCentral (https://phenomecentral.org/download/PhenoTips/PatientConsent/PhenomeCentral_Consent.pdf )  If the Data Depositor has documented prior consent for data to be shared in an open or registered access database whose declared purpose involves data sharing/display/matching for purposes consistent with matchmaking, no additional consent is required.
-Based on these categories, when a Data Depositor creates a new Patient record, he/she must verify and indicate what type of consent has been obtained prior to entering any Patient Data. 
-The verification that consent and any other applicable legal or ethical requirements are met, prior to contributing Data to PhenomeCentral, is the responsibility of the Data Depositor. PhenomeCentral does not verify that any such requirements are met and is assumes no legal responsibility that the contributed Data complies with any such requirements.   
+* **Level 1**: This level of matchmaking involves a Data Requester querying on a broad phenotype description or disease name using standardized terms (Human Phenotype Ontology (HPO), OMIM, Orphanet) and/or a candidate gene name.  Based on clinical judgment, if the Data Depositor considers that the Data is not identifiable by the User, either by itself or in combination with other data that the User could have access to about the Patient, the Patient’s consent for this activity is determined to not be required. However, in cases where the Data Depositor considers that the Data contains identifying information, either by itself or in combination with other data that the User could have access to about the Patient, the Data Depositor must obtain consent from the Patient prior to displaying and matching Data within PhenomeCentral. 
+* **Level 2**: This level of matchmaking involves a data request or querying on a unique or sensitive phenotype description and/or sequence level and related information, such as defined variants and/or genomic datasets.  It requires the Data Depositors to obtain proof of consent from the Patient, Patient’s parent or legal guardian, or Patient’s substitute decision maker. User may use an institutional consent form or the [[PhenomeCentral consent form&gt;&gt;attach:PhenoTips.PatientConsent@PhenomeCentral_Consent.pdf]] prior to contributing data to PhenomeCentral.  If the Data Depositor has documented prior consent for data to be shared in an open or registered access database whose declared purpose involves data sharing/display/matching for purposes consistent with matchmaking, no additional consent is required.
+
+Based on these categories, when a Data Depositor creates a new Patient record, he/she must verify and indicate what type of consent has been obtained prior to entering any Patient Data.
+
+The verification that consent and any other applicable legal or ethical requirements are met, prior to contributing Data to PhenomeCentral, is the responsibility of the Data Depositor. PhenomeCentral does not verify that any such requirements are met and is assumes no legal responsibility that the contributed Data complies with any such requirements.  
+ 
 The following certification must be made by the Data Depositor prior to contribution of Data:
-	I confirm that the data entered in this form corresponds to a real patient. (Required) 
+; I confirm that the data entered in this form corresponds to a real patient. (Required) 
+: The user can enter month and year of birth (no date), gender, phenotypes, and candidate gene names. This level of display and matching is consistent with clinical care, that is, with level 1 as outlined by the GA4GH, and therefore consent is generally not required, unless local requirements state otherwise. 
+; I confirm that consent has been obtained to share this patient's genetic data on registered access databases.
+: The user can now upload the patient’s VCF file (files with specific genetic variants)
+; I confirm that consent has been obtained to share this patient's medical and family history on registered access databases.
+: The user can now enter a pedigree, ethnicity, and free text for medical history.
+; I confirm that consent has been obtained to share this patient's medical images/photos on registered access databases.
+: The user now has the option to upload medical images/photos. 
 
-The user can enter month and year of birth (no date), gender, phenotypes, and candidate gene names. This level of display and matching is consistent with clinical care, that is, with level 1 as outlined by the GA4GH, and therefore consent is generally not required, unless local requirements state otherwise. 
+=== Selecting data visibility levels ===
 
-	I confirm that consent has been obtained to share this patient's genetic data on registered access databases.
-
-The user can now upload the patient’s VCF file (files with specific genetic variants)
-
-	I confirm that consent has been obtained to share this patient's medical and family history on registered access databases.
-
-The user can now enter a pedigree, ethnicity, and free text for medical history.
-
-	I confirm that consent has been obtained to share this patient's medical images/photos on registered access databases.
-
-The user now has the option to upload medical images/photos. 
-Selecting data visibility levels
 Each Patient record in PhenomeCentral can be set to one of three different visibility settings by the Data Depositor:
-Private: the record is visible only to the Data Depositor unless explicitly displayed for other Users or groups, and does not participate in any matchmaking activity. 
-Matchable: the record participates in matchmaking activities with enhanced Patients and User privacy. Similar patients are shown to the Data Depositor, and other Users with similar Patients can discover the existence of the record. The matched phenotypes and genomic variants are obfuscated (phenotypes are made more general and only gene-level information is provided). Contacting the Data Depositor of a matchable case is carried out with a customizable message template, allowing the user to quickly and easily choose what Patient information to include in the message and add a personal message. 
-Public: the record is visible to all Users on PhenomeCentral and participates in matchmaking activity. Data Depositors of similar patients are shown the other Data Depositor’s contact details and the matched phenotypes and genomic variants. The only exception to a public record is the VCF, which cannot be viewed or downloaded. However, the top 10 predicted causal variants as predicted by the Exomiser are displayed.
+* **Private**: the record is visible only to the Data Depositor unless explicitly displayed for other Users or groups, and does not participate in any matchmaking activity. 
+* **Matchable**: the record participates in matchmaking activities with enhanced Patients and User privacy. Similar patients are shown to the Data Depositor, and other Users with similar Patients can discover the existence of the record. The matched phenotypes and genomic variants are obfuscated (phenotypes are made more general and only gene-level information is provided). Contacting the Data Depositor of a matchable case is carried out with a customizable message template, allowing the user to quickly and easily choose what Patient information to include in the message and add a personal message.
+* **Public**: the record is visible to all Users on PhenomeCentral and participates in matchmaking activity. Data Depositors of similar patients are shown the other Data Depositor’s contact details and the matched phenotypes and genomic variants. The only exception to a public record is the VCF, which cannot be viewed or downloaded. However, the top 10 predicted causal variants as predicted by the Exomiser are displayed.
+
 The original Data Depositor having contributed Data is solely responsible for verifying that the selected visibility and display setting matches the Patients’ consents and responds to any legal and ethical requirements.
-Custodianship/Ownership
+
+=== Custodianship/Ownership ===
+
 Data Depositors remain custodians of the Data contributed to PhenomeCentral. PhenomeCentral acts uniquely as a portal and does not make any claims on any Data contributed by Data Depositors. 
-Other Agreements
+
+=== Other Agreements ===
+
 The relationship between PhenomeCentral and Users is governed by the terms and conditions contained in this policy as well as the [[PhenomeCentral Terms and Conditions of Use&gt;&gt;Terms_and_Conditions_of_Use]], as presented on the PhenomeCentral website.
 
-In the event of a match between Data Depositor Patient cases within PhenomeCentral and Data Requesters would like to request additional Data that is not displayed in PhenomeCentral, such request falls outside the scope of PhenomeCentral’s activities and is not governed by this Policy, or by the [[PhenomeCentral Terms and Conditions of Use&gt;&gt;Terms_and_Conditions_of_Use]]. Data Requesters will then need to comply with any local institutional data transfer policies and agreements that may apply. 
-	</content>
+In the event of a match between Data Depositor Patient cases within PhenomeCentral and Data Requesters would like to request additional Data that is not displayed in PhenomeCentral, such request falls outside the scope of PhenomeCentral’s activities and is not governed by this Policy, or by the [[PhenomeCentral Terms and Conditions of Use&gt;&gt;Terms_and_Conditions_of_Use]]. Data Requesters will then need to comply with any local institutional data transfer policies and agreements that may apply. </content>
 </xwikidoc>
