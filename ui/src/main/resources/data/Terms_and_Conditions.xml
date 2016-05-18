@@ -37,7 +37,9 @@
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>false</hidden>
-  <content>== Terms and Conditions ==
+  <content>{{velocity}}$response.sendRedirect($xwiki.getURL('data.Terms_and_Conditions_of_Use')){{/velocity}}
+
+== Terms and Conditions ==
 === Disclaimer ===
 PhenomeCentral provides data in good faith as a research tool, but without verifying the accuracy, clinical validity or utility of the data. PhenomeCentral makes no warranty, express or implied, nor assumes any legal liability or responsibility for any purpose for which the data are used. The user certifies that no attempt to identify individual patients will be undertaken.
  
