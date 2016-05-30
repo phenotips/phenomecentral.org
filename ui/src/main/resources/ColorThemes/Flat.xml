@@ -986,6 +986,19 @@
 #body #phenotips-globalTools .search input:focus {
   border: 1px solid $theme.linkColor;
 }
+
+#xwikicontent {
+  padding-bottom: 2em;
+}
+
+#footerglobal {
+  background: #333;
+  color: #fff;
+  margin: 2em 0 0;
+  padding: 25px 0;
+  width: 100%;
+}
+
 .errormessage, .warningmessage, .infomessage, .successmessage, .plainmessage {
     box-shadow:none !important;
 }

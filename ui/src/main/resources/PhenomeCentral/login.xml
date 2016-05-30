@@ -50,6 +50,12 @@ $xwiki.ssx.use('data.WebHome')##
 $xwiki.ssx.use('PhenomeCentral.logo')##
 $xwiki.ssx.use('PhenomeCentral.login')##
 {{html}}
+#foreach ($e in $services.uix.getExtensions('org.phenotips.loginForm'))
+  #set ($extension_disabled = ($e.getParameters().get('disabled') == 'true'))
+  #if (!$extension_disabled)
+     $services.rendering.render($e.execute(), 'xhtml/1.0')
+  #end
+#end
 &lt;div style="float: right"&gt;&lt;img src="$xwiki.getDocument($xwiki.getSpacePreference('colorTheme')).getAttachmentURL('phenomecentral_dark.png')" alt="PhenomeCentral" style="margin-top: 30px; margin-right: 10px" /&gt;&lt;/div&gt;
 &lt;div style="margin-right: 260px"&gt;
 &lt;form class="xform pc-login" action="$xwiki.getURL('PhenomeCentral.login', 'loginsubmit')" method="post"&gt;

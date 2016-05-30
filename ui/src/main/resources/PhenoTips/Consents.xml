@@ -205,7 +205,6 @@ phenomecentral.consent.matching=This patient is matchable through the Matchmaker
         <value>org.phenotips.patientSheet.field.measurements</value>
         <value>org.phenotips.patientSheet.field.charts</value>
         <value>org.phenotips.patientSheet.field.gene-variants</value>
-        <value>org.phenotips.patientSheet.field.rejected_genes</value>
         <value>org.phenotips.patientSheet.field.vcf</value>
         <value>org.phenotips.patientSheet.field.variantdisplay</value>
         <value>org.phenotips.patientSheet.field.phenotype</value>
@@ -360,7 +359,6 @@ phenomecentral.consent.matching=This patient is matchable through the Matchmaker
     <property>
       <fields>
         <value>org.phenotips.patientSheet.field.gene-variants</value>
-        <value>org.phenotips.patientSheet.field.rejected_genes</value>
         <value>org.phenotips.patientSheet.field.vcf</value>
         <value>org.phenotips.patientSheet.field.variantdisplay</value>
       </fields>
@@ -862,5 +860,8 @@ phenomecentral.consent.matching=This patient is matchable through the Matchmaker
         <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
       </scope>
     </class>
+    <property>
+      <scope>WIKI</scope>
+    </property>
   </object>
 </xwikidoc>

@@ -478,7 +478,7 @@ $xwiki.get('ssfx').use('uicomponents/widgets/validation/livevalidation.css', tru
 #request h2 {font-size: normal !important; text-transform: uppercase; font-size: 2em; font-family: sans-serif !important; margin-left: 3px; width: auto; float: left;}
 &lt;/style&gt;
 &lt;div id="request" class="xform"&gt;
-  &lt;a href="$xwiki.getURL('data.WebHome')" title="PhenomeCentral home page"&gt;&lt;img src="$xwiki.getDocument($xwiki.getSpacePreference('colorTheme')).getAttachmentURL('pc-logo.png')" alt="PhenomeCentral" style="margin-top: -15px; float: right"/&gt;&lt;/a&gt;
+  &lt;a href="$xwiki.getURL('data.WebHome')" title="PhenomeCentral home page"&gt;&lt;img src="$xwiki.getDocument($xwiki.getSpacePreference('colorTheme')).getAttachmentURL('phenomecentral_dark.png')" alt="PhenomeCentral" style="margin-top: -15px; float: right"&gt;&lt;/a&gt;
   &lt;h2 style="margin-top: 30px;"&gt;Request an account&lt;/h2&gt;
   &lt;div class="clearfloats"&gt;&lt;/div&gt;
 
