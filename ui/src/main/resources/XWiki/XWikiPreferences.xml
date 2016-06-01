@@ -1379,6 +1379,63 @@
   <object>
     <name>XWiki.XWikiPreferences</name>
     <number>0</number>
+    <className>PhenoTips.VisibilityConfigurationClass</className>
+    <guid>bf290b78-b101-452f-ab6e-7f8a9f04a310</guid>
+    <class>
+      <name>PhenoTips.VisibilityConfigurationClass</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <disabledLevels>
+        <cache>0</cache>
+        <customDisplay>{{velocity}}{{html}}
+#set ($allVisibilityOptions = $services.permissions.listAllVisibilityOptions())
+#set ($disabledVisibilityOptions = $value)
+&lt;ul id="all-visibility-levels"&gt;
+#foreach($visibility in $allVisibilityOptions)
+  &lt;li&gt;
+    &lt;label for="${prefix}${name}_${visibility.name}"&gt;
+      &lt;input id="${prefix}${name}_${visibility.name}" name="${prefix}${name}" type="checkbox" value="$!escapetool.xml($visibility.name)"#if ($value.contains($visibility.name)) checked="checked"#end /&gt;
+      &lt;span class="disable-if-selected"&gt;$visibility.label&lt;/span&gt;
+    &lt;/label&gt;
+    &lt;span class="xHint"&gt;${visibility.description}&lt;/span&gt;
+  &lt;/li&gt;
+#end
+&lt;/ul&gt;
+{{/html}}{{/velocity}}</customDisplay>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>1</multiSelect>
+        <name>disabledLevels</name>
+        <number>1</number>
+        <picker>0</picker>
+        <prettyName>Select below the visibility levels you wish to disable:</prettyName>
+        <relationalStorage>1</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <sort>none</sort>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <values/>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </disabledLevels>
+    </class>
+    <property>
+      <disabledLevels>
+        <value>hidden</value>
+        <value>open</value>
+      </disabledLevels>
+    </property>
+  </object>
+  <object>
+    <name>XWiki.XWikiPreferences</name>
+    <number>0</number>
     <className>XWiki.XWikiGlobalRights</className>
     <guid>369eb46f-6311-437b-a3a1-38755f324898</guid>
     <class>
