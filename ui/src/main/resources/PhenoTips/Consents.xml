@@ -38,7 +38,7 @@
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>false</hidden>
   <content>phenomecentral.consent.real=I confirm that the data entered in this form corresponds to a real patient. (required)
-phenomecentral.consent.genetic=I confirm that consent has been obtained to share this patient's genetic data on restricted access databases.
+phenomecentral.consent.genetic=I confirm that consent has been obtained to share this patient's genetic sequencing data (e.g., a VCF file) on restricted access databases.
 phenomecentral.consent.shareHistory=I confirm that consent has been obtained to share this patient's medical and family history on restricted access databases.
 phenomecentral.consent.shareImages=I confirm that consent has been obtained to share this patient's medical images/photos on restricted access databases.
 phenomecentral.consent.matching=This patient is matchable through the MatchmakerExchange and you may receive occasional match notifications (unless you set the visibility to Private).
@@ -358,7 +358,6 @@ phenomecentral.consent.matching=This patient is matchable through the Matchmaker
     </property>
     <property>
       <fields>
-        <value>org.phenotips.patientSheet.field.gene-variants</value>
         <value>org.phenotips.patientSheet.field.vcf</value>
         <value>org.phenotips.patientSheet.field.variantdisplay</value>
       </fields>
