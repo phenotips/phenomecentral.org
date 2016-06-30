@@ -163,9 +163,9 @@ When first creating a patient record, you will be presented with 5 checkboxes fo
 
 == PhenomeCentral exists thanks to ==
 {{velocity}}
-#macro (__display_pc_partner $id $title $mark, $url $img $text)
+#macro (__display_pc_partner $id $title $url $img $text)
 (% class="info-box" id="$id" %)(((
-=== ${title}^^${mark}^^ ===
+=== ${title} ===
 {{html wiki=false clean=false}}
 &lt;a href="$url" title="$title" rel="__blank"&gt;&lt;img src="$xwiki.getDocument('PhenoTips.PCHomeFlat').getAttachmentURL($img)" alt="$title"/&gt;&lt;/a&gt;
 $text
@@ -176,7 +176,7 @@ $text
 (% class="contents partners" id="partners"%)(((
 #__display_pc_partner(
   'hpo',
-  'The Human Phenotype Ontology', '',
+  'The Human Phenotype Ontology',
   'http://human-phenotype-ontology.github.io',
   'hpo.jpg',
   '&lt;p&gt;PhenomeCentral collects phenotype data using the &lt;a href="http://human-phenotype-ontology.github.io" title="The Human Phenotype Ontology" rel="__blank"&gt;Human Phenotype Ontology (HPO)&lt;/a&gt;, a standardized vocabulary of phenotypic abnormalities encountered in human disease.&lt;/p&gt;
@@ -184,7 +184,7 @@ $text
 )
 #__display_pc_partner(
   'exomiser',
-  'The Exomiser', '',
+  'The Exomiser',
   'http://www.sanger.ac.uk/science/tools/exomiser',
   'exomiser.png',
   '&lt;p&gt;The &lt;a href="http://www.sanger.ac.uk/science/tools/exomiser" rel="__blank"&gt;Exomiser&lt;/a&gt; software package annotates, filters, and prioritizes variants in a patient''s exome based on their phenotype (encoded using the &lt;abbr title="Human Phenotype Ontology"&gt;HPO&lt;/abbr&gt;).&lt;/p&gt;
@@ -192,7 +192,7 @@ $text
 )
 #__display_pc_partner(
   'mi',
-  'The Monarch Initiative', '',
+  'The Monarch Initiative',
   'http://monarchinitiative.org/',
   'monarch-logo.png',
   '&lt;p&gt;The &lt;a href="http://monarchinitiative.org" rel="__blank"&gt;Monarch Initiative&lt;/a&gt; builds and maintains a curated knowledge base that links genotype-phenotype associations across a large number of species (including humans).&lt;/p&gt;
@@ -200,8 +200,8 @@ $text
 )
 #__display_pc_partner(
   'pt',
-  'PhenoTips', 'TM',
-  'http://phenotips.org',
+  'PhenoTips™',
+  'http://phenotips.org/',
   'phenotips.png',
   '&lt;p&gt;PhenomeCentral was built on top of &lt;a href="http://phenotips.org" rel="__blank"&gt;PhenoTips&lt;/a&gt;, an open source software for collecting and analyzing phenotypic and genotypic information for patients with genetic disorders.&lt;/p&gt;
   &lt;p&gt;PhenomeCentral leverages the PhenoTips user interface for capturing standardized data and analyzing it real-time, as well as its secure collaboration and data sharing capabilities.&lt;/p&gt;'
