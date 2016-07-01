@@ -225,7 +225,7 @@ h1 {
     font-size: 1.3em;
     padding: 32px 1%;
     vertical-align: middle;
-    text-shadow: 0 1px 1px #FFF; 
+    text-shadow: 0 1px 1px #FFF;
 }
 .title-container h1 {
   display: block !important;

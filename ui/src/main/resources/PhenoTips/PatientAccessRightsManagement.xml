@@ -837,7 +837,7 @@
 
     _removeJournal : function (id) {
       // Remove hidden journal collaborator
-      var collab = this._collaboratorsList.down('input[name="collaborator"][value="' + id + '"]'); 
+      var collab = this._collaboratorsList.down('input[name="collaborator"][value="' + id + '"]');
       if (collab) {
         var row = collab.up('tr');
         if (row) {

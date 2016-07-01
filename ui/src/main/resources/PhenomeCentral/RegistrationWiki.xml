@@ -50,7 +50,7 @@ $xwiki.jsfx.use('uicomponents/widgets/validation/uniquenessvalidation.js')##
 #set($loginAction = 'loginsubmit')
 ##
 ##
-## Security measure: 
+## Security measure:
 ## If this document is changed such that it must have programming permission in order to run, change this to false.
 #set($sandbox = true)
 ##
