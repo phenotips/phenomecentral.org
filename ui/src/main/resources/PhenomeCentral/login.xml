@@ -46,6 +46,7 @@
   #end
   #break
 #end
+$!response.setStatus(401)##
 $xwiki.ssx.use('data.WebHome')##
 $xwiki.ssx.use('PhenomeCentral.logo')##
 $xwiki.ssx.use('PhenomeCentral.login')##
