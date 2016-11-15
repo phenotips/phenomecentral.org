@@ -115,7 +115,7 @@
 {{/velocity}}</content>
     </property>
     <property>
-      <extensionPointId>org.phenotips.patientSheet.section.medical-history</extensionPointId>
+      <extensionPointId>org.phenotips.patientSheet.section.patient-info</extensionPointId>
     </property>
     <property>
       <name>org.phenotips.patientSheet.field.global_age_of_onset</name>
@@ -123,7 +123,7 @@
     <property>
       <parameters>title=$services.localization.render('phenotips.UIXField.globalAgeOfOnset')
 enabled=true
-order=3
+order=10
 required=
 fields=global_age_of_onset</parameters>
     </property>

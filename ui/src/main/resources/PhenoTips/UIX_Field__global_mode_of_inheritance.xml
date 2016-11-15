@@ -115,7 +115,7 @@
 {{/velocity}}</content>
     </property>
     <property>
-      <extensionPointId>org.phenotips.patientSheet.section.family-info</extensionPointId>
+      <extensionPointId>org.phenotips.patientSheet.section.patient-info</extensionPointId>
     </property>
     <property>
       <name>org.phenotips.patientSheet.field.global_mode_of_inheritance</name>
@@ -124,7 +124,7 @@
       <parameters>title=$services.localization.render('phenotips.UIXField.globalModeOfInheritance')
 enabled=true
 required=
-order=15
+order=11
 fields=global_mode_of_inheritance</parameters>
     </property>
     <property>

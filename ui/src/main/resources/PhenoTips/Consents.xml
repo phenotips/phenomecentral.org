@@ -513,7 +513,6 @@ phenomecentral.consent.matching=This patient is matchable through the Matchmaker
         <value>org.phenotips.patientSheet.field.consanguinity</value>
         <value>org.phenotips.patientSheet.field.miscarriages</value>
         <value>org.phenotips.patientSheet.field.affectedRelatives</value>
-        <value>org.phenotips.patientSheet.field.global_mode_of_inheritance</value>
         <value>org.phenotips.patientSheet.field.pedigree</value>
         <value>org.phenotips.patientSheet.field.multipleGestation</value>
         <value>org.phenotips.patientSheet.field.gestation</value>
@@ -524,7 +523,6 @@ phenomecentral.consent.matching=This patient is matchable through the Matchmaker
         <value>org.phenotips.patientSheet.field.prenatal_development</value>
         <value>org.phenotips.patientSheet.field.medical_history</value>
         <value>org.phenotips.patientSheet.field.allergies</value>
-        <value>org.phenotips.patientSheet.field.global_age_of_onset</value>
         <value>org.phenotips.patientSheet.field.reports_history</value>
       </fields>
     </property>
