@@ -201,7 +201,7 @@
     #set ($value = $services.jodatime.getMutableDateTime($value.time))
     #set ($discard = $value.setZoneRetainFields($services.jodatime.UTCTimezone))
   #end
-  &lt;input type='text' id='${prefix}${name}' title="$!escapetool.xml($format)" name='${prefix}${name}' class='hidden fuzzy-date' value="$!services.jodatime.getDateTimeFormatterForPattern($definedFormat).print($value)" alt="$!services.jodatime.ISODateTimeFormatter.print($value)"/&gt;&lt;input type='hidden' name='${prefix}${name}_entered' id='${prefix}${name}_entered' value="$!{escapetool.xml($object.getProperty("${name}_entered").value)}"/&gt;
+  &lt;input type='text' id='${prefix}${name}' title="$!escapetool.xml($format)" name='${prefix}${name}' class='fuzzy-date' value="$!services.jodatime.getDateTimeFormatterForPattern($definedFormat).print($value)" alt="$!services.jodatime.ISODateTimeFormatter.print($value)"/&gt;&lt;input type='hidden' name='${prefix}${name}_entered' id='${prefix}${name}_entered' value="$!{escapetool.xml($object.getProperty("${name}_entered").value)}"/&gt;
 #else
 #set ($enteredValue = $object.getProperty("${name}_entered").value)
 #if ("$!enteredValue" != '' &amp;&amp; "$!enteredValue" != '{}')
@@ -229,7 +229,7 @@
 #end
 #end
 {{/html}}{{/velocity}}</customDisplay>
-        <dateFormat>yyyy-MM-dd</dateFormat>
+        <dateFormat>MMMM yyyy</dateFormat>
         <disabled>0</disabled>
         <emptyIsToday>0</emptyIsToday>
         <name>date_of_birth</name>
@@ -264,7 +264,7 @@
     #set ($value = $services.jodatime.getMutableDateTime($value.time))
     #set ($discard = $value.setZoneRetainFields($services.jodatime.UTCTimezone))
   #end
-  &lt;input type='text' id='${prefix}${name}' title="$!escapetool.xml($format)" name='${prefix}${name}' class='hidden fuzzy-date' value="$!services.jodatime.getDateTimeFormatterForPattern($definedFormat).print($value)" alt="$!services.jodatime.ISODateTimeFormatter.print($value)"/&gt;&lt;input type='hidden' name='${prefix}${name}_entered' id='${prefix}${name}_entered' value="$!{escapetool.xml($object.getProperty("${name}_entered").value)}"/&gt;
+  &lt;input type='text' id='${prefix}${name}' title="$!escapetool.xml($format)" name='${prefix}${name}' class='fuzzy-date' value="$!services.jodatime.getDateTimeFormatterForPattern($definedFormat).print($value)" alt="$!services.jodatime.ISODateTimeFormatter.print($value)"/&gt;&lt;input type='hidden' name='${prefix}${name}_entered' id='${prefix}${name}_entered' value="$!{escapetool.xml($object.getProperty("${name}_entered").value)}"/&gt;
 #else
 #set ($enteredValue = $object.getProperty("${name}_entered").value)
 #if ("$!enteredValue" != '' &amp;&amp; "$!enteredValue" != '{}')
@@ -292,7 +292,7 @@
 #end
 #end
 {{/html}}{{/velocity}}</customDisplay>
-        <dateFormat>yyyy-MM-dd</dateFormat>
+        <dateFormat>MMMM yyyy</dateFormat>
         <disabled>0</disabled>
         <emptyIsToday>0</emptyIsToday>
         <name>date_of_death</name>
@@ -403,7 +403,7 @@
 #end
 #end
 {{/html}}{{/velocity}}</customDisplay>
-        <dateFormat>yyyy-MM-dd</dateFormat>
+        <dateFormat>MMMM yyyy</dateFormat>
         <disabled>0</disabled>
         <emptyIsToday>1</emptyIsToday>
         <name>exam_date</name>
@@ -735,7 +735,7 @@
         <name>health_card</name>
         <number>11</number>
         <picker>0</picker>
-        <prettyName>Health card information</prettyName>
+        <prettyName>Provincial Health Card #</prettyName>
         <size>30</size>
         <unmodifiable>0</unmodifiable>
         <validationMessage/>
