@@ -150,9 +150,9 @@ Buske OJ*, Girdea M*, Dumitriu S, Gallinger B, Hartley T, Trang H, Misyura A, Fr
 
 &lt;div class="participants contents"&gt;
 &lt;h2&gt;Founding consortia&lt;/h2&gt;
-&lt;a class="consortium" href="http://care4rare.ca" title="CARE for RARE Canada" rel="__blank"&gt;&lt;img src="$xwiki.getDocument('PhenoTips.PCHome').getAttachmentURL('c4r.png')" alt="CARE for RARE"/&gt;&lt;/a&gt;
-&lt;a class="consortium" href="http://rd-connect.eu" rel="__blank"&gt;&lt;img src="$xwiki.getDocument('PhenoTips.PCHome').getAttachmentURL('rd-connect.png')" alt="RD-Connect"/&gt;&lt;/a&gt;
-&lt;a class="consortium nih" href="http://rarediseases.info.nih.gov/research/pages/27/undiagnosed-diseases-program" rel="__blank"&gt;&lt;img src="$xwiki.getDocument('PhenoTips.PCHome').getAttachmentURL('UDP_red_clearback.png')" alt="The NIH Undiagnosed Diseases Program"/&gt;&lt;/a&gt;
+&lt;a class="consortium" href="http://care4rare.ca" title="CARE for RARE Canada" rel="__blank"&gt;&lt;img src="$xwiki.getDocument('PhenoTips.PCHomeFlat').getAttachmentURL('c4r.png')" alt="CARE for RARE"/&gt;&lt;/a&gt;
+&lt;a class="consortium" href="http://rd-connect.eu" rel="__blank"&gt;&lt;img src="$xwiki.getDocument('PhenoTips.PCHomeFlat').getAttachmentURL('rd-connect.png')" alt="RD-Connect"/&gt;&lt;/a&gt;
+&lt;a class="consortium nih" href="http://rarediseases.info.nih.gov/research/pages/27/undiagnosed-diseases-program" rel="__blank"&gt;&lt;img src="$xwiki.getDocument('PhenoTips.PCHomeFlat').getAttachmentURL('UDP_red_clearback.png')" alt="The NIH Undiagnosed Diseases Program"/&gt;&lt;/a&gt;
 &lt;/div&gt;
 
 &lt;div class="info-box badge"&gt;
