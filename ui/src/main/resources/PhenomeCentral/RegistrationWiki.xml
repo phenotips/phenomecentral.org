@@ -274,7 +274,7 @@ $xwiki.get('ssfx').use('uicomponents/widgets/validation/livevalidation.css', tru
 ## The email address field, regex checked with an email pattern.
 #set($field =
   {'name' : 'register_email',
-    'label' : $services.localization.render('core.register.email'),
+    'label' : $services.localization.render('pc.register.email'),
     'params' : {
       'type' : 'text',
       'size' : '60'

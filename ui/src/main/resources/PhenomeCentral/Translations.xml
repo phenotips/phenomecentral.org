@@ -39,6 +39,7 @@
   <hidden>false</hidden>
   <content>admin.pendingusers=Pending Users
 phenotips.homepage.title=PhenomeCentral
+pc.register.email=Institutional email address
 phenotips.permissions.visibility.public.description=All registered users can view public cases. Select only if consent has been obtained from the patient/guardian/substitute decision maker to make data available to the greater scientific community (eg. for publication).</content>
   <object>
     <name>PhenomeCentral.Translations</name>
