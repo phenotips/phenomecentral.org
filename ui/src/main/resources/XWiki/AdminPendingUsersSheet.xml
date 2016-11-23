@@ -91,11 +91,7 @@
               &lt;th class="xwiki-livetable-display-header-text" scope="col"&gt;$services.localization.render('xe.admin.users.manage')&lt;/th&gt;
             &lt;/tr&gt;
           &lt;/thead&gt;
-          &lt;tbody id="userstable-display" class="xwiki-livetable-display-body"&gt;
-            &lt;tr&gt;
-              &lt;td colspan="8"&gt;&amp;nbsp;&lt;/td&gt;
-            &lt;/tr&gt;
-          &lt;/tbody&gt;
+          &lt;tbody id="userstable-display" class="xwiki-livetable-display-body"&gt;&lt;/tbody&gt;
         &lt;/table&gt;
       &lt;/td&gt;
     &lt;/tr&gt;
