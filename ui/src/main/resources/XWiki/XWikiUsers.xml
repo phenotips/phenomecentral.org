@@ -48,212 +48,303 @@
     <nameField/>
     <validationScript/>
     <accessibility>
+      <customDisplay/>
+      <defaultValue/>
       <disabled>0</disabled>
       <displayFormType>select</displayFormType>
       <displayType>yesno</displayType>
       <name>accessibility</name>
-      <number>16</number>
+      <number>15</number>
       <prettyName>Enable extra accessibility features</prettyName>
       <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
       <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
     </accessibility>
     <active>
+      <customDisplay/>
+      <defaultValue/>
       <disabled>0</disabled>
       <displayFormType>select</displayFormType>
       <displayType>active</displayType>
       <name>active</name>
-      <number>6</number>
+      <number>5</number>
       <prettyName>Active</prettyName>
       <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
       <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
     </active>
     <address>
+      <contenttype>FullyRenderedText</contenttype>
+      <customDisplay/>
       <disabled>0</disabled>
+      <editor>---</editor>
       <name>address</name>
-      <number>22</number>
+      <number>19</number>
+      <picker>0</picker>
       <prettyName>Address</prettyName>
       <rows>3</rows>
       <size>40</size>
       <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
       <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
     </address>
     <affiliation>
+      <customDisplay/>
       <disabled>0</disabled>
       <name>affiliation</name>
       <number>23</number>
+      <picker>0</picker>
       <prettyName>affiliation</prettyName>
       <size>30</size>
       <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
       <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
     </affiliation>
     <avatar>
+      <customDisplay/>
       <disabled>0</disabled>
       <name>avatar</name>
-      <number>20</number>
+      <number>17</number>
+      <picker>0</picker>
       <prettyName>Avatar</prettyName>
       <size>30</size>
       <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
       <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
     </avatar>
     <blog>
+      <customDisplay/>
       <disabled>0</disabled>
       <name>blog</name>
-      <number>9</number>
+      <number>8</number>
+      <picker>0</picker>
       <prettyName>Blog</prettyName>
       <size>60</size>
       <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
       <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
     </blog>
     <blogfeed>
+      <customDisplay/>
       <disabled>0</disabled>
       <name>blogfeed</name>
-      <number>10</number>
+      <number>9</number>
+      <picker>0</picker>
       <prettyName>Blog Feed</prettyName>
       <size>60</size>
       <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
       <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
     </blogfeed>
     <comment>
+      <contenttype>FullyRenderedText</contenttype>
+      <customDisplay/>
       <disabled>0</disabled>
+      <editor>---</editor>
       <name>comment</name>
-      <number>11</number>
+      <number>10</number>
+      <picker>0</picker>
       <prettyName>Comment</prettyName>
       <rows>5</rows>
       <size>40</size>
       <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
       <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
     </comment>
     <company>
+      <customDisplay/>
       <disabled>0</disabled>
       <name>company</name>
-      <number>8</number>
+      <number>7</number>
+      <picker>0</picker>
       <prettyName>Company</prettyName>
       <size>30</size>
       <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
       <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
     </company>
     <default_language>
+      <customDisplay/>
       <disabled>0</disabled>
       <name>default_language</name>
-      <number>7</number>
+      <number>6</number>
+      <picker>0</picker>
       <prettyName>Default Language</prettyName>
       <size>30</size>
       <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
       <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
     </default_language>
     <displayHiddenDocuments>
+      <customDisplay/>
+      <defaultValue/>
       <disabled>0</disabled>
       <displayFormType>select</displayFormType>
       <displayType>yesno</displayType>
       <name>displayHiddenDocuments</name>
-      <number>17</number>
+      <number>20</number>
       <prettyName>Display Hidden Documents</prettyName>
       <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
       <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
     </displayHiddenDocuments>
     <editor>
       <cache>0</cache>
+      <customDisplay/>
       <disabled>0</disabled>
       <displayType>select</displayType>
       <multiSelect>0</multiSelect>
       <name>editor</name>
-      <number>14</number>
+      <number>13</number>
+      <picker>0</picker>
       <prettyName>Default Editor</prettyName>
       <relationalStorage>0</relationalStorage>
       <separator> </separator>
       <separators> ,|</separators>
       <size>1</size>
+      <sort>none</sort>
       <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
       <values>---|Text|Wysiwyg</values>
       <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
     </editor>
     <email>
+      <customDisplay/>
       <disabled>0</disabled>
       <name>email</name>
-      <number>3</number>
+      <number>22</number>
+      <picker>0</picker>
       <prettyName>e-Mail</prettyName>
       <size>30</size>
       <unmodifiable>0</unmodifiable>
+      <validationMessage/>
       <validationRegExp>/^(([^@\s]+)@((?:[-a-zA-Z0-9]+\.)+[a-zA-Z]{2,}))?$/</validationRegExp>
       <classType>com.xpn.xwiki.objects.classes.EmailClass</classType>
     </email>
     <first_name>
+      <customDisplay/>
       <disabled>0</disabled>
       <name>first_name</name>
       <number>1</number>
+      <picker>0</picker>
       <prettyName>First Name</prettyName>
       <size>30</size>
       <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
       <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
     </first_name>
     <imaccount>
+      <customDisplay/>
       <disabled>0</disabled>
       <name>imaccount</name>
-      <number>13</number>
+      <number>12</number>
+      <picker>0</picker>
       <prettyName>imaccount</prettyName>
       <size>30</size>
       <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
       <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
     </imaccount>
     <imtype>
       <cache>0</cache>
+      <customDisplay/>
       <disabled>0</disabled>
       <displayType>select</displayType>
       <multiSelect>0</multiSelect>
       <name>imtype</name>
-      <number>12</number>
+      <number>11</number>
+      <picker>0</picker>
       <prettyName>IM Type</prettyName>
       <relationalStorage>0</relationalStorage>
       <separator> </separator>
       <separators> ,|</separators>
       <size>1</size>
+      <sort>none</sort>
       <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
       <values>---|AIM|Yahoo|Jabber|MSN|Skype|ICQ</values>
       <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
     </imtype>
     <last_name>
+      <customDisplay/>
       <disabled>0</disabled>
       <name>last_name</name>
       <number>2</number>
+      <picker>0</picker>
       <prettyName>Last Name</prettyName>
       <size>30</size>
       <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
       <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
     </last_name>
     <password>
+      <algorithm/>
+      <customDisplay/>
       <disabled>0</disabled>
       <name>password</name>
-      <number>4</number>
+      <number>3</number>
+      <picker>0</picker>
       <prettyName>Password</prettyName>
       <size>10</size>
+      <storageType>Hash</storageType>
       <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
       <classType>com.xpn.xwiki.objects.classes.PasswordClass</classType>
     </password>
     <phone>
+      <customDisplay/>
       <disabled>0</disabled>
       <name>phone</name>
-      <number>21</number>
+      <number>18</number>
+      <picker>0</picker>
       <prettyName>Phone</prettyName>
       <size>30</size>
       <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
       <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
     </phone>
     <referral>
+      <customDisplay/>
       <disabled>0</disabled>
       <name>referral</name>
       <number>24</number>
+      <picker>0</picker>
       <prettyName>referral</prettyName>
       <size>30</size>
       <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
       <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
     </referral>
     <skin>
+      <customDisplay/>
       <disabled>0</disabled>
       <name>skin</name>
-      <number>19</number>
+      <number>16</number>
+      <picker>0</picker>
       <prettyName>skin</prettyName>
       <size>30</size>
       <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
       <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
     </skin>
     <timezone>
@@ -278,35 +369,49 @@
 </customDisplay>
       <disabled>0</disabled>
       <name>timezone</name>
-      <number>18</number>
+      <number>21</number>
+      <picker>0</picker>
       <prettyName>Timezone</prettyName>
       <size>30</size>
       <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
       <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
     </timezone>
     <usertype>
       <cache>0</cache>
+      <customDisplay/>
       <disabled>0</disabled>
       <displayType>select</displayType>
       <multiSelect>0</multiSelect>
       <name>usertype</name>
-      <number>15</number>
+      <number>14</number>
+      <picker>0</picker>
       <prettyName>User type</prettyName>
       <relationalStorage>0</relationalStorage>
       <separator> </separator>
       <separators> ,|</separators>
       <size>1</size>
+      <sort>none</sort>
       <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
       <values>Simple|Advanced</values>
       <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
     </usertype>
     <validkey>
+      <algorithm/>
+      <customDisplay/>
       <disabled>0</disabled>
       <name>validkey</name>
-      <number>5</number>
+      <number>4</number>
+      <picker>0</picker>
       <prettyName>Validation Key</prettyName>
       <size>10</size>
+      <storageType>Hash</storageType>
       <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
       <classType>com.xpn.xwiki.objects.classes.PasswordClass</classType>
     </validkey>
   </class>
