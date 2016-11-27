@@ -106,7 +106,8 @@ When viewing or editing a patient record, the owner is displayed at the top of t
 
 
 ==== Establishing visibility ====
-PhenomeCentral supports three levels of data visibility:
+PhenomeCentral supports four major levels of data visibility:
+* {{icon name="hidden" /}} **hidden**: hidden from everyone except the owner and their explicit [[collaborators&gt;&gt;path:#HAddingcollaboratorstoyourcases]]. Not permitted to contribute to aggregated statistics
 * {{icon name="private" /}} **private**: hidden from everyone except the owner and their explicit [[collaborators&gt;&gt;path:#HAddingcollaboratorstoyourcases]], but patient data is allowed to contribute to aggregated statistics
 * {{icon name="matchable" /}} **matchable**: the record cannot be directly viewed or searched by registered users, but is available to the automated phenotype matching algorithm. This allows for registered users to be aware of the case if it is a match for other similar cases. See [[Discovering similar cases&gt;&gt;path:#HDiscoveringsimilarcasesinPhenomeCentral]]
 * {{icon name="public" /}} **public**: viewable and searchable by all registered users
@@ -140,7 +141,7 @@ Owners of **matchable** or **public** records can see the existing matchable and
 
 After creating a patient record, contributors can see the most similar cases found in the database displayed at the bottom of the page. The list is re-generated each time the user accesses the patient record and may change as data is modified for that record or for other records in the database.
 
-**Private cases do not participate in any way in the similarity matching process.** If your patient record is private, you will not be able to see similar cases, and your case will not be included in the list of matching similar cases for any other users. If you wish to benefit from the system's similarity feature, please consider giving your records at least the {{icon name="matchable" /}}**matchable** visibility level.
+**Private and hidden cases do not participate in any way in the similarity matching process.** If your patient record is private or hidden, you will not be able to see similar cases, and your case will not be included in the list of matching similar cases for any other users. If you wish to benefit from the system's similarity feature, please consider giving your records at least the {{icon name="matchable" /}}**matchable** visibility level.
 
 [[image:@pc-similarity.png]]
 
