@@ -139,7 +139,7 @@
     </property>
     <property>
       <parameters>title=$services.localization.render('phenotips.UIXField.diagnosisSuggestions')
-enabled=true
+enabled=false
 required=
 order=4
 fields=</parameters>
