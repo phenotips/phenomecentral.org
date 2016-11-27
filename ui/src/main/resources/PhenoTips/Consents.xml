@@ -170,49 +170,13 @@ phenomecentral.consent.matching=This patient is matchable through the Matchmaker
       </required>
     </class>
     <property>
-      <affectsFields>1</affectsFields>
+      <affectsFields>0</affectsFields>
     </property>
     <property>
       <description/>
     </property>
     <property>
-      <fields>
-        <value>org.phenotips.patientSheet.field.external_id</value>
-        <value>org.phenotips.patientSheet.field.date_of_birth</value>
-        <value>org.phenotips.patientSheet.field.date_of_death</value>
-        <value>org.phenotips.patientSheet.field.gender</value>
-        <value>org.phenotips.patientSheet.field.indication_for_referral</value>
-        <value>org.phenotips.patientSheet.field.family_study</value>
-        <value>org.phenotips.patientSheet.field.ethnicity</value>
-        <value>org.phenotips.patientSheet.field.family_history</value>
-        <value>org.phenotips.patientSheet.field.consanguinity</value>
-        <value>org.phenotips.patientSheet.field.miscarriages</value>
-        <value>org.phenotips.patientSheet.field.affectedRelatives</value>
-        <value>org.phenotips.patientSheet.field.global_mode_of_inheritance</value>
-        <value>org.phenotips.patientSheet.field.pedigree</value>
-        <value>org.phenotips.patientSheet.field.multipleGestation</value>
-        <value>org.phenotips.patientSheet.field.gestation</value>
-        <value>org.phenotips.patientSheet.assistedReproduction</value>
-        <value>org.phenotips.patientSheet.parentalAge</value>
-        <value>org.phenotips.patientSheet.field.apgar</value>
-        <value>org.phenotips.patientSheet.field.prenatal_phenotype</value>
-        <value>org.phenotips.patientSheet.field.prenatal_development</value>
-        <value>org.phenotips.patientSheet.field.medical_history</value>
-        <value>org.phenotips.patientSheet.field.allergies</value>
-        <value>org.phenotips.patientSheet.field.global_age_of_onset</value>
-        <value>org.phenotips.patientSheet.field.reports_history</value>
-        <value>org.phenotips.patientSheet.field.required-measurements</value>
-        <value>org.phenotips.patientSheet.field.measurements</value>
-        <value>org.phenotips.patientSheet.field.charts</value>
-        <value>org.phenotips.patientSheet.field.gene-variants</value>
-        <value>org.phenotips.patientSheet.field.vcf</value>
-        <value>org.phenotips.patientSheet.field.variantdisplay</value>
-        <value>org.phenotips.patientSheet.field.phenotype</value>
-        <value>org.phenotips.patientSheet.field.omim_id</value>
-        <value>org.phenotips.patientSheet.field.diagnosis_notes</value>
-        <value>org.phenotips.patientSheet.field.omim_suggestions</value>
-        <value>org.phenotips.patientSheet.field.solved</value>
-      </fields>
+      <fields/>
     </property>
     <property>
       <id>real</id>
