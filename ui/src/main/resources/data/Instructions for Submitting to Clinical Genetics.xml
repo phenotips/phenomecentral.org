@@ -247,7 +247,7 @@ There are a variety of types of questions about your patient’s medical/clinica
   float: right;
 }
 
-#mainContentArea {
+#body #mainContentArea {
   max-width: 800px;
   margin: auto;
 }</code>
