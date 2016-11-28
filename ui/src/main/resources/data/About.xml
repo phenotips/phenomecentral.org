@@ -158,9 +158,16 @@ Selecting the case **Contact** opens a popup through which the case owner can be
 
 === Discovering similar cases in partner MME databases ===
 
-PhenomeCentral is a founding member of the [[Matchmaker Exchange (MME)&gt;&gt;http://www.matchmakerexchange.org/||rel="__blank"]], a collaborative effort to address the common challenge of exome and genome sequencing in both the research and clinical settings. As part of the MME, PhenomeCentral can query other member databases (currently [[GeneMatcher&gt;&gt;https://genematcher.org/]] and [[DECIPHER&gt;&gt;https://decipher.sanger.ac.uk/]]) for similar patients. It is not necessary for PhenomeCentral users to create accounts on these databases to discover matching patient profiles.
+PhenomeCentral is a founding member of the [[Matchmaker Exchange (MME)&gt;&gt;http://www.matchmakerexchange.org/||rel="__blank"]], a collaborative effort to address the common challenge of exome and genome sequencing in both the research and clinical settings. As part of the MME, PhenomeCentral can query other member databases for similar patients. Currently, PhenomeCentral is connected to:
+* [[DECIPHER&gt;&gt;https://decipher.sanger.ac.uk/||rel="__blank"]]
+* [[GeneMatcher&gt;&gt;https://genematcher.org/||rel="__blank"]]
+* [[Monarch Initiative (model organisms)&gt;&gt;http://monarchinitiative.org/||rel="__blank"]]
+* [[Broad Institute //matchbox//&gt;&gt;https://seqr.broadinstitute.org/||rel="__blank"]]
+* [[MyGene2&gt;&gt;https://www.mygene2.org/||rel="__blank"]]
 
-When first creating a patient record, you will be presented with 5 checkboxes for confirming patient consent. The 5th box must be selected in order to have your patient match with any new DECIPHER or GeneMatcher patients. After creating a patient record and selecting "Save and View Summary," the data is compared against all other patient records in PhenomeCentral only. If you scroll to the bottom of the summary page, you will see a section for "Remote Databases". By selecting "Refresh", you can choose to have the data compared against DECIPHER and/or GeneMatcher patients.
+It is not necessary for PhenomeCentral users to create accounts on these databases to discover matching patient profiles.
+
+When first creating a patient record, you will be presented with 5 checkboxes for confirming patient consent. The 5th box must be selected in order to have your patient match with any patients over the MME. After creating a patient record and selecting **Save and View Summary**, the data is compared against all other patient records in PhenomeCentral only. If you scroll to the bottom of the summary page, you will see a section for **Matches in partner [[MME&gt;&gt;http://www.matchmakerexchange.org/||title="Matchmaker Exchange" rel="__blank"]] databases**. By selecting **Find matches**, you can choose to have the data compared against patients deposited in each of the databases connected to PhenomeCentral through the MME.
 
 == PhenomeCentral exists thanks to ==
 {{velocity}}
