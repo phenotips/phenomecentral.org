@@ -4,6 +4,25 @@ set -e
 
 if [ "$1" = 1 ]
 then
+  # Only install exomiser on initial installation
+  mkdir -p /var/lib/exomiser/
+
+  # Fetch exomiser distribution
+  wget --no-clobber --directory-prefix=/var/lib/exomiser/ https://github.com/exomiser/Exomiser/releases/download/7.2.2/exomiser-cli-7.2.2-distribution.zip
+  unzip -qq -d /var/lib/exomiser/ /var/lib/exomiser/exomiser-cli-7.2.2-distribution.zip
+
+  # Fetch separate exomiser data distribution
+  wget --no-clobber --directory-prefix=/var/lib/exomiser/ ftp://ftp.sanger.ac.uk/pub/resources/software/exomiser/downloads/exomiser/exomiser-cli-7.2.1-data.zip
+  unzip -qq -d /var/lib/exomiser/ /var/lib/exomiser/exomiser-cli-7.2.1-data.zip
+
+  # Replace distribution partial data with full data
+  rm -rf /var/lib/exomiser/exomiser-cli-7.2.2/data/
+  mv -t /var/lib/exomiser/exomiser-cli-7.2.2/ /var/lib/exomiser/exomiser-cli-7.2.1/data/
+  rm -rf /var/lib/exomiser/exomiser-cli-7.2.1/
+fi
+
+if [ "$1" = 1 ]
+then
   # Initial installation, extract the original configuration
   unzip -qq -d /var/lib/phenotips/data/ /var/lib/phenotips/next/database-zip*.zip
   unzip -qq -d /var/lib/phenotips/data/solr/ /var/lib/phenotips/next/solr-config*.jar
