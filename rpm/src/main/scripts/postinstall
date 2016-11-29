@@ -21,8 +21,8 @@ then
   rm -rf /var/lib/exomiser/exomiser-cli-7.2.1/
 fi
 
-# Refresh cron spooling to update exomiser cronjob
-touch /var/spool/cron
+# Ensure exomiser cron script is updated and spooled
+touch /etc/cron.d/exomiser
 
 if [ "$1" = 1 ]
 then
