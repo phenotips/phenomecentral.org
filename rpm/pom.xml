@@ -192,7 +192,7 @@ activeinstalls.ipFetchURL=https://phenotips.org/get/Stats/Id
             <require>curl</require>
           </requires>
           <mappings>
-            <!-- Copy the main PhenoTips webapp -->
+            <!-- Copy the main PhenomeCentral webapp -->
             <mapping>
               <directory>/var/lib/phenotips/webapp</directory>
               <sources>
@@ -201,7 +201,7 @@ activeinstalls.ipFetchURL=https://phenotips.org/get/Stats/Id
                 </source>
               </sources>
             </mapping>
-            <!-- Copy the custom PhenoTips/XWiki configuration files into the webapp -->
+            <!-- Copy the custom PhenomeCentral/PhenoTips/XWiki configuration files into the webapp -->
             <mapping>
               <directory>/var/lib/phenotips/webapp/WEB-INF</directory>
               <configuration>noreplace</configuration>
@@ -234,6 +234,22 @@ activeinstalls.ipFetchURL=https://phenotips.org/get/Stats/Id
                 <source>
                   <location>${project.build.outputDirectory}/context.xml</location>
                   <destination>ROOT.xml</destination>
+                </source>
+              </sources>
+            </mapping>
+            <!-- Copy the exomiser scripts -->
+            <mapping>
+              <directory>/var/lib/exomiser/scripts</directory>
+              <directoryIncluded>false</directoryIncluded>
+              <sources>
+                <source>
+                  <location>src/main/resources/exomiser_cron.sh</location>
+                </source>
+                <source>
+                  <location>src/main/resources/exomiser_cron.py</location>
+                </source>
+                <source>
+                  <location>src/main/resources/exomiser_settings.txt</location>
                 </source>
               </sources>
             </mapping>
