@@ -186,7 +186,7 @@ activeinstalls.ipFetchURL=https://phenotips.org/get/Stats/Id
           <name>phenomecentral</name>
           <summary>The PhenomeCentral server packaged for Tomcat with an embedded HSQLDB database for data storage</summary>
           <description>PhenomeCentral is a repository for clinicians and scientists working in the rare disorder community. PhenomeCentral encourages global scientific collaboration while respecting the privacy of patients profiled in this centralized database. Once users enter their patients' data, they are connected to other patient profiles within PhenomeCentral that share similar phenotypes and genotypes.</description>
-          <packager>Computational Biology Lab, University of Toronto (devs@phenotips.org)</packager>
+          <packager>Centre for Computational Medicine, Hospital for Sick Children (support@phenomecentral.org)</packager>
           <license>AGPL 3.0</license>
           <group>Applications/Science</group>
           <icon>src/main/resources/phenomecentral.png</icon>
