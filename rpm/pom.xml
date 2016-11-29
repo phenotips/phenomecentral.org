@@ -263,6 +263,17 @@ activeinstalls.ipFetchURL=https://phenotips.org/get/Stats/Id
                 </source>
               </sources>
             </mapping>
+            <!-- Copy the exomiser configuration -->
+            <mapping>
+              <directory>/var/lib/exomiser/scripts</directory>
+              <configuration>noreplace</configuration>
+              <directoryIncluded>false</directoryIncluded>
+              <sources>
+                <source>
+                  <location>src/main/resources/exomiser.credentials</location>
+                </source>
+              </sources>
+            </mapping>
           </mappings>
           <preinstallScriptlet>
             <scriptFile>src/main/scripts/preinstall</scriptFile>

@@ -1,1 +1,1 @@
-python ~/cron/exomiser_cron.py --since=`date --date="1 hour ago" +%Y-%m-%d` /var/lib/phenotips /var/lib/exomiser/exomiser-cli-7.2.2/exomiser-cli-7.2.2.jar /var/lib/exomiser/exomiser.credentials &> ~/cron/exomiser_cron_logs/`date +%Y-%m-%d.%H%M%S`.log
+mkdir -p /var/log/exomiser/ && python /var/lib/exomiser/scripts/exomiser_cron.py --since=`date --date="1 hour ago" +%Y-%m-%d` /var/lib/phenotips /var/lib/exomiser/exomiser-cli-7.2.2/exomiser-cli-7.2.2.jar /var/lib/exomiser/scripts/exomiser.credentials &> /var/log/exomiser/`date +%Y-%m-%d.%H%M%S`.log
