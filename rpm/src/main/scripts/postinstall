@@ -21,6 +21,9 @@ then
   rm -rf /var/lib/exomiser/exomiser-cli-7.2.1/
 fi
 
+# Refresh cron spooling to update exomiser cronjob
+touch /var/spool/cron
+
 if [ "$1" = 1 ]
 then
   # Initial installation, extract the original configuration
