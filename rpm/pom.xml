@@ -46,13 +46,6 @@
       <type>war</type>
     </dependency>
 
-    <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>database-zip</artifactId>
-      <version>${project.version}</version>
-      <type>zip</type>
-    </dependency>
-
     <!-- Dependency on our nexus distribution of the Sanger's Exomiser jar
          Unclear if this makes sense, since the Exomiser has a zip distribution and
          not much is gained by having just the jar fetched automatically.
@@ -200,6 +193,7 @@ activeinstalls.ipFetchURL=https://phenotips.org/get/Stats/Id
             <require>unzip</require>
             <require>bc</require>
             <require>curl</require>
+            <require>mariadb-server</require>
           </requires>
           <mappings>
             <!-- Copy the main PhenomeCentral webapp -->
@@ -226,15 +220,6 @@ activeinstalls.ipFetchURL=https://phenotips.org/get/Stats/Id
                   </includes>
                 </source>
               </sources>
-            </mapping>
-            <!-- Copy the data dependencies into the "next" directory for optional unpacking when first installing this package -->
-            <mapping>
-              <directory>/var/lib/phenotips/next</directory>
-              <dependency>
-                <includes>
-                  <include>${project.groupId}:database-zip</include>
-                </includes>
-              </dependency>
             </mapping>
             <!-- Copy the webapp descriptor -->
             <mapping>
