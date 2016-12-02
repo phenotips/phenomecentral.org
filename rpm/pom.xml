@@ -182,7 +182,7 @@ activeinstalls.ipFetchURL=https://phenotips.org/get/Stats/Id
           <packager>Centre for Computational Medicine, Hospital for Sick Children (support@phenomecentral.org)</packager>
           <license>AGPL 3.0</license>
           <group>Applications/Science</group>
-          <icon>src/main/resources/phenomecentral.png</icon>
+          <icon>src/main/resources/phenomecentral.gif</icon>
           <defaultDirmode>750</defaultDirmode>
           <defaultFilemode>644</defaultFilemode>
           <defaultUsername>tomcat</defaultUsername>
