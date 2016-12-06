@@ -48,7 +48,7 @@ $response.setContentType("application/json")
 #set ($off = $offset - 1)
 #set ($limit = $mathtool.toInteger($request.get('limit')))
 
-#set ($query = $services.query.xwql('from doc.object(XWiki.XWikiUsers) as u where u.active = 0 order by doc.name'))
+#set ($query = $services.query.xwql('from doc.object(XWiki.XWikiUsers) as u where u.active = 0 order by doc.creationDate desc'))
 #set ($countUsers = $query.count())
 #set ($users = $xwiki.wrapDocs($query.setLimit($limit).setOffset($off).execute()))
 
