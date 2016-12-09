@@ -814,6 +814,16 @@
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
+      <artifactId>matching-notification-api</artifactId>
+      <version>${patientNetwork.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
+      <artifactId>matching-notification-resources</artifactId>
+      <version>${patientNetwork.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
       <artifactId>remote-matching-core-server</artifactId>
       <version>${remoteMatching.version}</version>
     </dependency>
@@ -956,6 +966,12 @@ activeinstalls.ipFetchURL=https://phenotips.org/get/Stats/Id
               <artifactId>phenotips-base-war</artifactId>
               <type>war</type>
               <targetPath>/</targetPath>
+            </overlay>
+             <overlay>
+              <groupId>org.phenotips</groupId>
+              <artifactId>matching-notification-resources</artifactId>
+              <type>jar</type>
+              <targetPath></targetPath>
             </overlay>
           </overlays>
         </configuration>
