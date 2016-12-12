@@ -29,7 +29,7 @@
   <artifactId>phenomecentral-rpm</artifactId>
   <packaging>rpm</packaging>
   <name>PhenomeCentral - RPM Distribution</name>
-  <description>Distribution containing PhenomeCentral deployed under Tomcat, with HSQLDB for storage, as a RedHat (.rpm) package.</description>
+  <description>Distribution containing PhenomeCentral deployed under Tomcat, with mariadb for storage, as a RedHat (.rpm) package.</description>
 
   <properties>
     <pcwar.path>${project.build.directory}/pcwar</pcwar.path>
@@ -177,7 +177,7 @@ activeinstalls.ipFetchURL=https://phenotips.org/get/Stats/Id
         <extensions>true</extensions>
         <configuration>
           <name>phenomecentral</name>
-          <summary>The PhenomeCentral server packaged for Tomcat with an embedded HSQLDB database for data storage</summary>
+          <summary>The PhenomeCentral server packaged for Tomcat and mariadb</summary>
           <description>PhenomeCentral is a repository for clinicians and scientists working in the rare disorder community. PhenomeCentral encourages global scientific collaboration while respecting the privacy of patients profiled in this centralized database. Once users enter their patients' data, they are connected to other patient profiles within PhenomeCentral that share similar phenotypes and genotypes.</description>
           <packager>Centre for Computational Medicine, Hospital for Sick Children (support@phenomecentral.org)</packager>
           <license>AGPL 3.0</license>
