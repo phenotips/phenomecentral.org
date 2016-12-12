@@ -190,7 +190,7 @@ activeinstalls.ipFetchURL=https://phenotips.org/get/Stats/Id
             <require>tomcat</require>
             <require>unzip</require>
             <require>bc</require>
-            <require>curl</require>
+            <require>wget</require>
             <require>mariadb-server</require>
           </requires>
           <mappings>
