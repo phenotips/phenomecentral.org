@@ -45,6 +45,14 @@
       <version>${project.version}</version>
       <type>war</type>
     </dependency>
+
+    <dependency>
+      <groupId>org.phenotips</groupId>
+      <artifactId>solr-configuration</artifactId>
+      <version>${phenotips.version}</version>
+      <type>jar</type>
+      <optional>true</optional>
+    </dependency>
   </dependencies>
 
   <build>
@@ -210,6 +218,15 @@ activeinstalls.ipFetchURL=https://phenotips.org/get/Stats/Id
                   </includes>
                 </source>
               </sources>
+            </mapping>
+            <!-- Copy the data dependencies into the "next" directory for optional unpacking when first installing this package -->
+            <mapping>
+              <directory>/var/lib/phenotips/next</directory>
+              <dependency>
+                <includes>
+                  <include>${project.groupId}:solr-configuration</include>
+                </includes>
+              </dependency>
             </mapping>
             <!-- Copy the webapp descriptor -->
             <mapping>
