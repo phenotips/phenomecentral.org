@@ -45,18 +45,8 @@
       <version>${project.version}</version>
       <type>war</type>
     </dependency>
-
-    <!-- Dependency on our nexus distribution of the Sanger's Exomiser jar
-         Unclear if this makes sense, since the Exomiser has a zip distribution and
-         not much is gained by having just the jar fetched automatically.
-    <dependency>
-      <groupId>uk.ac.sanger</groupId>
-      <artifactId>exomizer-cli</artifactId>
-      <version>exomiser-cli-7.2.2</version>
-      <type>zip</type>
-    </dependency>
-  -->
   </dependencies>
+
   <build>
     <plugins>
       <!-- Unpack the war -->
