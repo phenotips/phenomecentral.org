@@ -224,7 +224,7 @@ activeinstalls.ipFetchURL=https://phenotips.org/get/Stats/Id
               <directory>/var/lib/phenotips/next</directory>
               <dependency>
                 <includes>
-                  <include>${project.groupId}:solr-configuration</include>
+                  <include>org.phenotips:solr-configuration</include>
                 </includes>
               </dependency>
             </mapping>
