@@ -3,4 +3,5 @@
 if [ "$1" = "0" ]
 then
   rm -rf /var/lib/phenotips/
+  rm -rf /var/lib/exomiser/
 fi
