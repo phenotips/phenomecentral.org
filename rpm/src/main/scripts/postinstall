@@ -8,17 +8,27 @@ then
   mkdir -p /var/lib/exomiser/
 
   # Fetch exomiser distribution
-  wget --no-clobber -q --timeout=15 --tries=2 --directory-prefix=/var/lib/exomiser/ https://github.com/exomiser/Exomiser/releases/download/7.2.2/exomiser-cli-7.2.2-distribution.zip && unzip -qq -n -d /var/lib/exomiser/ /var/lib/exomiser/exomiser-cli-7.2.2-distribution.zip || echo "Failed to download the Exomiser. You must download it manually from https://github.com/exomiser/Exomiser/releases/download/7.2.2/exomiser-cli-7.2.2-distribution.zip and unzip into /var/lib/exomiser/"
+  wget --no-clobber -q --timeout=15 --tries=2 --directory-prefix=/var/lib/exomiser/ https://github.com/exomiser/Exomiser/releases/download/7.2.2/exomiser-cli-7.2.2-distribution.zip || true
 
   # Fetch separate exomiser data distribution
-  wget --no-clobber -q --timeout=15 --tries=2  --directory-prefix=/var/lib/exomiser/ ftp://ftp.sanger.ac.uk/pub/resources/software/exomiser/downloads/exomiser/exomiser-cli-7.2.1-data.zip && unzip -qq -n -d /var/lib/exomiser/ /var/lib/exomiser/exomiser-cli-7.2.1-data.zip || echo "Failed to download the Exomiser data. You must download it manually from ftp://ftp.sanger.ac.uk/pub/resources/software/exomiser/downloads/exomiser/exomiser-cli-7.2.1-data.zip and unzip into /var/lib/exomiser/"
+  wget --no-clobber -q --timeout=15 --tries=2  --directory-prefix=/var/lib/exomiser/ ftp://ftp.sanger.ac.uk/pub/resources/software/exomiser/downloads/exomiser/exomiser-cli-7.2.1-data.zip || true
+
+  if [[ -f /var/lib/exomiser/exomiser-cli-7.2.2-distribution.zip ]]
+  then
+    unzip -qq -n -d /var/lib/exomiser/ /var/lib/exomiser/exomiser-cli-7.2.2-distribution.zip
+  else
+    echo "Failed to download the Exomiser. You must download it manually from https://github.com/exomiser/Exomiser/releases/download/7.2.2/exomiser-cli-7.2.2-distribution.zip and unzip into /var/lib/exomiser/"
+  fi
 
   # Replace distribution partial data with full data
-  if [[ -d /var/lib/exomiser/exomiser-cli-7.2.1/ ]]
+  if [[ -f /var/lib/exomiser/exomiser-cli-7.2.1-data.zip && -d /var/lib/exomiser/exomiser-cli-7.2.2/ ]]
   then
     rm -rf /var/lib/exomiser/exomiser-cli-7.2.2/data/
+    unzip -qq -n -d /var/lib/exomiser/ /var/lib/exomiser/exomiser-cli-7.2.1-data.zip
     mv -t /var/lib/exomiser/exomiser-cli-7.2.2/ /var/lib/exomiser/exomiser-cli-7.2.1/data/ || true
     rm -rf /var/lib/exomiser/exomiser-cli-7.2.1/
+  else
+    echo "Failed to download the Exomiser data. You must download it manually from ftp://ftp.sanger.ac.uk/pub/resources/software/exomiser/downloads/exomiser/exomiser-cli-7.2.1-data.zip and unzip into /var/lib/exomiser/"
   fi
 fi
 
