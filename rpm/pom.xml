@@ -188,7 +188,7 @@ activeinstalls.ipFetchURL=https://phenotips.org/get/Stats/Id
           <defaultUsername>tomcat</defaultUsername>
           <defaultGroupname>tomcat</defaultGroupname>
           <requires>
-            <require>java &gt;= 0:1.7.0</require>
+            <require>java &gt;= 0:1.8.0</require>
             <require>tomcat</require>
             <require>unzip</require>
             <require>bc</require>
