@@ -8,10 +8,10 @@ then
   mkdir -p /var/lib/exomiser/
 
   # Fetch exomiser distribution
-  wget --no-clobber -q --timeout=15 --tries=2 --directory-prefix=/var/lib/exomiser/ https://github.com/exomiser/Exomiser/releases/download/7.2.2/exomiser-cli-7.2.2-distribution.zip && unzip -qq -d /var/lib/exomiser/ /var/lib/exomiser/exomiser-cli-7.2.2-distribution.zip || echo "Failed to download the Exomiser. You must download it manually from https://github.com/exomiser/Exomiser/releases/download/7.2.2/exomiser-cli-7.2.2-distribution.zip and unzip into /var/lib/exomiser/"
+  wget --no-clobber -q --timeout=15 --tries=2 --directory-prefix=/var/lib/exomiser/ https://github.com/exomiser/Exomiser/releases/download/7.2.2/exomiser-cli-7.2.2-distribution.zip && unzip -qq -n -d /var/lib/exomiser/ /var/lib/exomiser/exomiser-cli-7.2.2-distribution.zip || echo "Failed to download the Exomiser. You must download it manually from https://github.com/exomiser/Exomiser/releases/download/7.2.2/exomiser-cli-7.2.2-distribution.zip and unzip into /var/lib/exomiser/"
 
   # Fetch separate exomiser data distribution
-  wget --no-clobber -q --timeout=15 --tries=2  --directory-prefix=/var/lib/exomiser/ ftp://ftp.sanger.ac.uk/pub/resources/software/exomiser/downloads/exomiser/exomiser-cli-7.2.1-data.zip && unzip -qq -d /var/lib/exomiser/ /var/lib/exomiser/exomiser-cli-7.2.1-data.zip || echo "Failed to download the Exomiser data. You must download it manually from ftp://ftp.sanger.ac.uk/pub/resources/software/exomiser/downloads/exomiser/exomiser-cli-7.2.1-data.zip and unzip into /var/lib/exomiser/"
+  wget --no-clobber -q --timeout=15 --tries=2  --directory-prefix=/var/lib/exomiser/ ftp://ftp.sanger.ac.uk/pub/resources/software/exomiser/downloads/exomiser/exomiser-cli-7.2.1-data.zip && unzip -qq -n -d /var/lib/exomiser/ /var/lib/exomiser/exomiser-cli-7.2.1-data.zip || echo "Failed to download the Exomiser data. You must download it manually from ftp://ftp.sanger.ac.uk/pub/resources/software/exomiser/downloads/exomiser/exomiser-cli-7.2.1-data.zip and unzip into /var/lib/exomiser/"
 
   # Replace distribution partial data with full data
   rm -rf /var/lib/exomiser/exomiser-cli-7.2.2/data/
