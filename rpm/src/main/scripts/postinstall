@@ -84,6 +84,11 @@ else
   echo -e -n '\nJAVA_OPTS="-Xmx3g"' >> /etc/tomcat/tomcat.conf
 fi
 
+# Start mariadb
+if [[ -a /usr/lib/systemd/system/mariadb.service ]]
+then
+  /bin/systemctl start mariadb.service
+fi
 # Start Tomcat
 if [[ -a /usr/lib/systemd/system/tomcat.service ]]
 then
