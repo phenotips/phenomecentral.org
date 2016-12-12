@@ -238,6 +238,9 @@ activeinstalls.ipFetchURL=https://phenotips.org/get/Stats/Id
               <directoryIncluded>false</directoryIncluded>
               <sources>
                 <source>
+                  <location>src/main/resources/exomiser_cron.sh</location>
+                </source>
+                <source>
                   <location>src/main/resources/exomiser_cron.py</location>
                 </source>
                 <source>
