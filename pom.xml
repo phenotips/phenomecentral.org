@@ -29,7 +29,7 @@
 
   <groupId>org.phenomecentral</groupId>
   <artifactId>phenomecentral-parent</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0-rc-5</version>
   <packaging>pom</packaging>
   <name>PhenomeCentral - Parent POM</name>
   <description>PhenomeCentral is a repository for secure data sharing targeted to clinicians and scientists working in the rare disorder community.</description>
@@ -48,7 +48,7 @@
     <connection>scm:git:git://github.com/phenotips/phenomecentral.org.git</connection>
     <developerConnection>scm:git:git@github.com:phenotips/phenomecentral.org.git</developerConnection>
     <url>https://github.com/phenotips/phenomecentral.org.git/tree/master/</url>
-    <tag>HEAD</tag>
+    <tag>phenomecentral-1.0-rc-5</tag>
   </scm>
 
   <organization>
