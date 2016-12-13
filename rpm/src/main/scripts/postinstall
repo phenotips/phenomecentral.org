@@ -1,0 +1,96 @@
+#!/bin/sh
+
+set -e
+
+if [ "$1" = 1 ]
+then
+  # Only install exomiser on initial installation
+  mkdir -p /var/lib/exomiser/
+
+  # Fetch exomiser distribution
+  wget --no-clobber -q --timeout=15 --tries=2 --directory-prefix=/var/lib/exomiser/ https://github.com/exomiser/Exomiser/releases/download/7.2.2/exomiser-cli-7.2.2-distribution.zip || true
+
+  # Fetch separate exomiser data distribution
+  wget --no-clobber -q --timeout=15 --tries=2  --directory-prefix=/var/lib/exomiser/ ftp://ftp.sanger.ac.uk/pub/resources/software/exomiser/downloads/exomiser/exomiser-cli-7.2.1-data.zip || true
+
+  if [[ -f /var/lib/exomiser/exomiser-cli-7.2.2-distribution.zip ]]
+  then
+    unzip -qq -n -d /var/lib/exomiser/ /var/lib/exomiser/exomiser-cli-7.2.2-distribution.zip
+  else
+    echo "Failed to download the Exomiser. You must download it manually from https://github.com/exomiser/Exomiser/releases/download/7.2.2/exomiser-cli-7.2.2-distribution.zip and unzip into /var/lib/exomiser/"
+  fi
+
+  # Replace distribution partial data with full data
+  if [[ -f /var/lib/exomiser/exomiser-cli-7.2.1-data.zip && -d /var/lib/exomiser/exomiser-cli-7.2.2/ ]]
+  then
+    rm -rf /var/lib/exomiser/exomiser-cli-7.2.2/data/
+    unzip -qq -n -d /var/lib/exomiser/ /var/lib/exomiser/exomiser-cli-7.2.1-data.zip
+    mv -t /var/lib/exomiser/exomiser-cli-7.2.2/ /var/lib/exomiser/exomiser-cli-7.2.1/data/ || true
+    rm -rf /var/lib/exomiser/exomiser-cli-7.2.1/
+  else
+    echo "Failed to download the Exomiser data. You must download it manually from ftp://ftp.sanger.ac.uk/pub/resources/software/exomiser/downloads/exomiser/exomiser-cli-7.2.1-data.zip and unzip into /var/lib/exomiser/"
+  fi
+fi
+
+# Ensure exomiser cron script is updated and spooled
+touch /etc/cron.d/exomiser
+
+if [ "$1" = 1 ]
+then
+  # Initial installation, extract the original configuration
+  unzip -qq -d /var/lib/phenotips/solr/ /var/lib/phenotips/next/solr-config*.jar
+else
+  # Upgrade, update all Solr core configurations and only update specific Solr indexes
+  unzip -q -d /var/lib/phenotips/next/solr /var/lib/phenotips/next/solr-config*.jar
+  mv -t /var/lib/phenotips/solr/ /var/lib/phenotips/next/solr/solr.xml
+  rm -rf /var/lib/phenotips/solr/hpo/ /var/lib/phenotips/solr/omim/ /var/lib/phenotips/solr/ethnicity/ /var/lib/phenotips/solr/hgnc/ /var/lib/phenotips/solr/chebi/
+  mv -t /var/lib/phenotips/solr/ /var/lib/phenotips/next/solr/hpo/ /var/lib/phenotips/next/solr/omim/ /var/lib/phenotips/next/solr/ethnicity /var/lib/phenotips/next/solr/hgnc /var/lib/phenotips/next/solr/chebi
+  if [[ -d /var/lib/phenotips/solr/patients/ ]]
+  then
+    rm -rf /var/lib/phenotips/solr/patients/conf/
+    mv -t /var/lib/phenotips/solr/patients/ /var/lib/phenotips/next/solr/patients/conf/
+  else
+    mv -t /var/lib/phenotips/solr/ /var/lib/phenotips/next/solr/patients/
+  fi
+  # Deprecated core, remove
+  rm -rf /var/lib/phenotips/solr/xwiki/
+fi
+
+# Cleanup
+rm -rf /var/lib/phenotips/next/
+
+# Reset proper rights
+chown -R tomcat:tomcat /var/lib/phenotips/
+
+# Increase the amount of heap memory allocated for Tomcat, if needed
+if `cat /etc/tomcat/tomcat.conf | grep -E '^\s*JAVA_OPTS.*-Xmx' >/dev/null 2>&1`
+then
+  # There is a value for Xmx, check if it is large enough
+  CURRENT=`cat /etc/tomcat/tomcat.conf | grep -E '^\s*JAVA_OPTS.*-Xmx' | sed -r -e 's/^\s*JAVA_OPTS.*-Xmx([^" ]+).*/\1/'`
+  echo $CURRENT | grep -i g >/dev/null 2>&1 && CURRENT=`echo ${CURRENT}\*1024*1024*1024 | sed -e 's/[gG]//' | bc`
+  echo $CURRENT | grep -i m >/dev/null 2>&1 && CURRENT=`echo ${CURRENT}\*1024*1024 | sed -e 's/[mM]//' | bc`
+  echo $CURRENT | grep -i k >/dev/null 2>&1 && CURRENT=`echo ${CURRENT}\*1024 | sed -e 's/[kK]//' | bc`
+  if [ "`echo "$CURRENT > 3221225471" | bc`" = "0" ]
+  then
+    # Not large enough, update the value in place
+    sed -i -r -e 's/^(\s*JAVA_OPTS.*-Xmx)([^" ]+)(.*)/\13g\3/' /etc/tomcat/tomcat.conf
+  fi
+elif `cat /etc/tomcat/tomcat.conf | grep -E '^\s*JAVA_OPTS=' >/dev/null 2>&1`
+then
+  # No Xmx configured, but there is a JAVA_OPTS setting, update it
+  sed -i -r -e 's/^(\s*JAVA_OPTS=")(.*)/\1-Xmx3g \2/' /etc/tomcat/tomcat.conf
+else
+  # No JAVA_OPTS setting, add one with both Xmx and MaxPermSize
+  echo -e -n '\nJAVA_OPTS="-Xmx3g"' >> /etc/tomcat/tomcat.conf
+fi
+
+# Start mariadb
+if [[ -a /usr/lib/systemd/system/mariadb.service ]]
+then
+  /bin/systemctl start mariadb.service
+fi
+# Start Tomcat
+if [[ -a /usr/lib/systemd/system/tomcat.service ]]
+then
+  /bin/systemctl start tomcat.service
+fi

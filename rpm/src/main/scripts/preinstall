@@ -1,0 +1,9 @@
+#!/bin/sh
+
+set -e
+
+# Stop Tomcat
+if [[ -a /usr/lib/systemd/system/tomcat.service ]]
+then
+  /bin/systemctl stop tomcat.service
+fi
