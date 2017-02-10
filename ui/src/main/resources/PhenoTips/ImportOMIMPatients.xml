@@ -48,7 +48,7 @@
   #if (!$line.startsWith('#'))
     #set ($externalId = $parts[0].substring(1).concat(' PROTOTYPE PATIENT'))
     #set ($omimNumber = $parts[0].substring(5))
-    #set ($p = $services.patients.getPatientByExternalId($externalId))
+    #set ($p = $services.patients.getByName($externalId))
     #if (!$p)
       #set ($p = $services.patients.createNewPatient())
     #end
@@ -108,7 +108,7 @@
   #set ($parts = $line.split('\t'))
   #if (!$line.startsWith('#'))
     #set ($externalId = $parts[0].substring(1).concat(' PROTOTYPE PATIENT'))
-    #set ($p = $services.patients.getPatientByExternalId($externalId))
+    #set ($p = $services.patients.getByName($externalId))
     #if ($p)
       #set ($omimNumber = $parts[0].substring(5))
       #set ($d = $xwiki.getDocument($p.document))
