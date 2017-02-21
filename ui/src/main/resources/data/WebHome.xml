@@ -84,8 +84,8 @@ $xwiki.ssfx.use('uicomponents/container/columns.css', {'forceSkinAction' : true,
         <customDisplay>{{velocity}}
 #if ($xcontext.action == 'edit' || $xcontext.action == 'admin')
 {{html wiki=false clean=false}}
-&lt;select name="$prefix$name" id="$prefix$iname"&gt;
-#foreach ($val in ['MM/dd/yyyy', 'dd/MM/yyyy', 'yyyy-MM-dd', 'MM/yyyy', 'MMMM yyyy'])
+&lt;select name="$prefix$name" id="$prefix$name"&gt;
+#foreach ($val in ['MM/dd/yyyy', 'dd/MM/yyyy', 'yyyy-MM-dd', 'MM/yyyy', 'MMMM yyyy', 'yyyy'])
   &lt;option #if ($val == $value) selected="selected"#end value="$val"&gt;$val $services.localization.render('phenotips.DBConfigurationClass.dateExample',[$xwiki.formatDate($util.date, $val)])&lt;/option&gt;
 #end
 &lt;/select&gt;
@@ -96,7 +96,7 @@ $!value
 {{/velocity}}</customDisplay>
         <disabled>0</disabled>
         <name>dateOfBirthFormat</name>
-        <number>5</number>
+        <number>2</number>
         <picker>0</picker>
         <prettyName>Date of birth format</prettyName>
         <size>30</size>
@@ -112,7 +112,7 @@ $!value
         <displayFormType>checkbox</displayFormType>
         <displayType/>
         <name>enableImperialUnitSystem</name>
-        <number>6</number>
+        <number>3</number>
         <prettyName>Enable imperial unit system for entering measurements</prettyName>
         <unmodifiable>0</unmodifiable>
         <validationMessage/>
@@ -121,13 +121,14 @@ $!value
       </enableImperialUnitSystem>
       <livetableColumns>
         <cache>0</cache>
-        <customDisplay>//{{translation key="phenotips.DBConfigurationClass.metaInfo" /}}//
+        <customDisplay>**{{translation key="phenotips.DBConfigurationClass.metaInfo" /}}**
 
 {{velocity output=false}}
+$xwiki.ssx.use('PhenoTips.DBConfigurationClass')##
 #set ($docFields = ['doc.name', 'doc.creator', 'doc.author', 'doc.creationDate', 'doc.date'])
 #macro(__xclass__displayLivetableColOption $option $value)
   &lt;li&gt;
-    &lt;label for="${prefix}${name}_${sectionId}"&gt;
+    &lt;label&gt;
     &lt;input type="checkbox" name="${prefix}${name}" id="${prefix}${name}_${option}" value="$option"#if ($value.contains($option)) checked="checked"#end/&gt;
     $services.localization.render("patient.livetable.${option}")
     &lt;/label&gt;
@@ -136,21 +137,19 @@ $!value
 {{/velocity}}
 
 {{velocity}}{{html wiki=false clean=false}}
-&lt;ul style="list-style-type: none; margin: 0 0 0 16px"&gt;
+&lt;ul class="custom-display-list"&gt;
 #foreach ($option in $docFields)
   #__xclass__displayLivetableColOption($option $value)
 #end
 &lt;/ul&gt;
 {{/html}}{{/velocity}}
 
-//{{translation key="phenotips.DBConfigurationClass.patientInfo" /}}//
-
 {{include reference="PhenoTips.DBConfigurationClassDisplayer" /}}</customDisplay>
         <disabled>0</disabled>
         <displayType>input</displayType>
         <multiSelect>1</multiSelect>
         <name>livetableColumns</name>
-        <number>8</number>
+        <number>5</number>
         <picker>0</picker>
         <prettyName>Livetable columns</prettyName>
         <relationalStorage>1</relationalStorage>
@@ -168,7 +167,7 @@ $!value
         <customDisplay/>
         <disabled>0</disabled>
         <name>livetableRows</name>
-        <number>10</number>
+        <number>8</number>
         <numberType>integer</numberType>
         <prettyName>Number of rows to display by default</prettyName>
         <size>30</size>
@@ -181,9 +180,13 @@ $!value
         <customDisplay>{{velocity}}
 #if ($type == 'edit')
 {{html clean="false"}}
-&lt;select name="${prefix}${name}"&gt;
+&lt;select name="${prefix}${name}" id="${prefix}${name}"&gt;
 #foreach($column in $object.getProperty('livetableColumns').value)
-  &lt;option value="$escapetool.xml($column)"#if ($column == $value) selected="selected"#{end}&gt;$services.localization.render("patient.livetable.${column}")&lt;/option&gt;
+  #set ($fieldClass = $stringtool.substringAfter($column, '/'))
+  #if ($fieldClass == '')
+    #set ($fieldClass = 'PhenoTips.PatientClass')
+  #end
+  &lt;option value="$escapetool.xml($column)"#if ($column == $value) selected="selected"#{end}&gt;#if ($services.localization.get("patient.livetable.${stringtool.substringBefore($column, '/')}"))$services.localization.render("patient.livetable.${stringtool.substringBefore($column, '/')}")#else$xwiki.getClass($fieldClass).get($stringtool.substringBefore($column, '/')).translatedPrettyName#end&lt;/option&gt;
 #end
 &lt;/select&gt;
 {{/html}}
@@ -193,7 +196,7 @@ $!value
 {{/velocity}}</customDisplay>
         <disabled>0</disabled>
         <name>livetableSortColumn</name>
-        <number>9</number>
+        <number>7</number>
         <picker>0</picker>
         <prettyName>Column to sort by default</prettyName>
         <size>30</size>
@@ -213,7 +216,7 @@ $!value
         <displayType>radio</displayType>
         <multiSelect>0</multiSelect>
         <name>measurementUnitSystem</name>
-        <number>7</number>
+        <number>4</number>
         <picker>0</picker>
         <prettyName>Default unit system for entering measurements, when "Imperial unit system" is enabled</prettyName>
         <relationalStorage>0</relationalStorage>
@@ -230,13 +233,19 @@ $!value
       <phenotypeMapping>
         <cache>0</cache>
         <classname>PhenoTips.PhenotypeMappingClass</classname>
-        <customDisplay/>
+        <customDisplay>{{velocity}}
+{{html clean="false"}}
+#foreach ($option in $field.getMapValues().keySet())
+  &lt;label class="xwiki-form-listclass" for="xwiki-form-${escapetool.xml("${prefix}${name}")}-${foreach.index}"&gt;&lt;input type="radio" name="${prefix}${name}" id="xwiki-form-${escapetool.xml("${prefix}${name}")}-${foreach.index}" value="${escapetool.xml($option)}"#if ($value == $option) checked="checked"#end/&gt; $escapetool.xml($xwiki.getDocument($option).plainTitle)&lt;/label&gt;
+#end
+{{/html}}
+{{/velocity}}</customDisplay>
         <disabled>0</disabled>
         <displayType>radio</displayType>
         <idField>doc.fullName</idField>
         <multiSelect>0</multiSelect>
         <name>phenotypeMapping</name>
-        <number>4</number>
+        <number>1</number>
         <picker>0</picker>
         <prettyName>Phenotype configuration document</prettyName>
         <relationalStorage>0</relationalStorage>
@@ -265,6 +274,7 @@ $!value
         <value>doc.creator</value>
         <value>doc.author</value>
         <value>doc.creationDate</value>
+        <value>reference/PhenoTips.FamilyReferenceClass</value>
       </livetableColumns>
     </property>
     <property>
@@ -1551,7 +1561,7 @@ $!value
 #end
 
 (% class="mappingPreviewContainer side" %)(((
-(% class="hint side" %)(((Preview)))
+(% class="hint side" %)((({{translation key="phenotips.patientSheet.mapping.configuration.preview" /}})))
 (% id="mappingPreview"%)((()))
 )))
 $xwiki.ssx.use('PhenoTips.YesNoNAPicker', {'colorTheme' : "$!{themeDocFullName}"})##
@@ -2317,22 +2327,54 @@ $xwiki.ssfx.use('icons/font-awesome/css/font-awesome.min.css')##
 $xwiki.ssx.use('PhenoTips.FontAwesomeIcons')##
 &lt;div id="phenotips-globalTools" class="layoutsubsection actionmenu"&gt;
   &lt;div class="rightmenu"&gt;
-    &lt;div class="topmenuentry search"&gt;
+    &lt;div class="menu menu-horizontal"&gt;
+    &lt;ul&gt;
+      #set ($createEntries = [])
+      #foreach ($e in $services.uix.getExtensions('phenotips.globalTools.create.entries', {'sortByParameter' : 'order'}))
+        #set ($entryText = $services.rendering.render($e.execute(), 'xhtml/1.0').replaceAll('^&lt;p&gt;|&lt;/p&gt;$', ''))
+        #if ("$!entryText" != '')
+          #set ($discard = $createEntries.add($entryText))
+        #end
+      #end
+
+      #if ($createEntries.size() &gt; 1)
+        &lt;li&gt;&lt;span class="xDropdown"&gt;&lt;span class="fa fa-plus-circle"&gt; &lt;/span&gt;$services.localization.render('phenotips.globalTools.create')&lt;/span&gt;
+          &lt;ul&gt;
+            #foreach ($e in $createEntries)
+              &lt;li&gt;${e}&lt;/li&gt;
+            #end
+          &lt;/ul&gt;
+        &lt;/li&gt;
+      #elseif ($createEntries.size() == 1)
+      &lt;li&gt;&lt;span class="fa fa-plus-circle"&gt; &lt;/span&gt;${createEntries.get(0)}&lt;/li&gt;
+      #end
+      #set ($browseEntries = [])
+      #foreach ($e in $services.uix.getExtensions('phenotips.globalTools.browse.entries', {'sortByParameter' : 'order'}))
+        #set ($entryText = $services.rendering.render($e.execute(), 'xhtml/1.0').replaceAll('^&lt;p&gt;|&lt;/p&gt;$', ''))
+        #if ("$!entryText" != '')
+          #set ($discard = $browseEntries.add($entryText))
+        #end
+      #end
+      #if ($browseEntries.size() &gt; 1)
+        &lt;li&gt;&lt;span class="xDropdown"&gt;&lt;span class="fa fa-folder-open"&gt; &lt;/span&gt;$services.localization.render('phenotips.globalTools.browse')&lt;/span&gt;
+          &lt;ul&gt;
+            #foreach ($e in $browseEntries)
+              &lt;li&gt;${e}&lt;/li&gt;
+            #end
+          &lt;/ul&gt;
+        &lt;/li&gt;
+      #elseif ($browseEntries.size() == 1)
+        &lt;li&gt;&lt;span class="fa fa-folder-open"&gt; &lt;/span&gt;${browseEntries.get(0)}&lt;/li&gt;
+      #end
+      &lt;li&gt;&lt;div class="search"&gt;
       #if ($displayQuickSearch &amp;&amp; ($xwiki.exists('Main.Search') || $xwiki.exists('Main.WebSearch')))
         &lt;div class="globalsearch"&gt;&lt;input type="hidden" name="space" value="data"/&gt;
           &lt;label for="headerglobalsearchinput"&gt;&lt;span class="fa fa-search"&gt; &lt;/span&gt;&lt;/label&gt;&lt;input class="globalsearchinput" id="headerglobalsearchinput" type="text" name="text" placeholder="$services.localization.render('phenotips.globalHeader.search.placeholder')" size="20"/&gt;
         &lt;/div&gt;
       #end
+      &lt;/div&gt;&lt;/li&gt;
+    &lt;/ul&gt;
     &lt;/div&gt;
-    &lt;div class="topmenuentry all"&gt;&lt;label for="browse-all-patients"&gt;&lt;span class="fa fa-folder-open"&gt; &lt;/span&gt;&lt;a id="browse-all-patients" href="$xwiki.getURL('data.AllData')"&gt;$services.localization.render('phenotips.globalHeader.allData')&lt;/a&gt;&lt;/label&gt;&lt;/div&gt;
-    #if ($hasCreatePage)
-      &lt;div class="topmenuentry add"&gt;
-{{/html}}
-
-{{include reference="PhenoTips.CreatePatientRecordForm" /}}
-
-{{html clean=false}}&lt;/div&gt;
-    #end
   &lt;/div&gt;
   &lt;div class="breadcrumbs leftmenu"&gt;
     &lt;a href="$!xwiki.getURL($services.model.resolveDocument('', 'default', $doc.documentReference.extractReference('WIKI')))" title="Home" rel="home"&gt;&lt;span class="fa fa-home fa-lg"&gt;&lt;/span&gt;&lt;/a&gt; &amp;raquo;
@@ -2530,6 +2572,89 @@ $xwiki.ssx.use('PhenoTips.FontAwesomeIcons')##
   <object>
     <name>data.WebHome</name>
     <number>0</number>
+    <className>XWiki.XWikiRights</className>
+    <guid>ae386edc-2864-4bcb-97e3-d74fe2e85f24</guid>
+    <class>
+      <name>XWiki.XWikiRights</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <allow>
+        <defaultValue>1</defaultValue>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType>allow</displayType>
+        <name>allow</name>
+        <number>4</number>
+        <prettyName>Allow/Deny</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </allow>
+      <groups>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>input</displayType>
+        <multiSelect>1</multiSelect>
+        <name>groups</name>
+        <number>1</number>
+        <picker>1</picker>
+        <prettyName>Groups</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <size>5</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.GroupsClass</classType>
+      </groups>
+      <levels>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>1</multiSelect>
+        <name>levels</name>
+        <number>2</number>
+        <prettyName>Levels</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <size>3</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.LevelsClass</classType>
+      </levels>
+      <users>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>input</displayType>
+        <multiSelect>1</multiSelect>
+        <name>users</name>
+        <number>3</number>
+        <picker>1</picker>
+        <prettyName>Users</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <size>5</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.UsersClass</classType>
+      </users>
+    </class>
+    <property>
+      <allow>1</allow>
+    </property>
+    <property>
+      <groups>XWiki.XWikiAdminGroup,</groups>
+    </property>
+    <property>
+      <levels>edit,comment,delete</levels>
+    </property>
+    <property>
+      <users/>
+    </property>
+  </object>
+  <object>
+    <name>data.WebHome</name>
+    <number>1</number>
     <className>XWiki.XWikiRights</className>
     <guid>bb4594cf-2e35-489f-9417-816181a2aa3f</guid>
     <class>

@@ -37,7 +37,7 @@
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>true</hidden>
-  <content>{{velocity}}
+  <content>{{velocity wiki="false"}}
 #set ($_service = $services.permissions)
 #set ($patient = $services.patients.get("$!{request.patient}"))
 #if ("$!{request.xaction}" == 'meta')
@@ -144,6 +144,7 @@
       #set ($discard = $response.setStatus(400))## unable to do the update
       $services.localization.render('phenotips.patientAccessRightsManagement.updateError')
     #end
+    $_service.fireRightsUpdateEvent($patient)
   #end## Patient exists and user/level parameters match
 #end
 {{/velocity}}</content>
@@ -346,8 +347,7 @@
   #set ($currentValue = "$!visibilityObject.getProperty('visibility').value")
 #else
   #set ($visibilityObject = $targetDoc.newObject($className))
-  $!visibilityObject.set('visibility', 'private')
-  $!doc.save('Added default visibility', true)
+  $!visibilityObject.set('visibility', 'private')##
 #end
 #set ($prefix = "${className}_${visibilityObject.number}_")
 #if ($currentValue == '')
@@ -357,19 +357,20 @@
 
 {{html clean=false}}
 &lt;form id="welcome_${targetDocName}" method="post" action="${targetDoc.getURL('save')}" class="xform half"&gt;
-&lt;fieldset&gt;&lt;dl&gt;
+&lt;fieldset&gt;&lt;dl id="default-visibility-selection"&gt;
 &lt;dt&gt;&lt;label for="${fullPrefix}private"&gt;$services.localization.render("phenotips.patientAccessRightsManagement.defaultVisibilityOption")&lt;/label&gt;
 &lt;span class="xHint"&gt;$services.localization.render("phenotips.patientAccessRightsManagement.defaultVisibilityHint")&lt;/span&gt;&lt;/dt&gt;
-#foreach ($visibility in $services.permissions.listVisibilityOptions())
+#foreach ($visibility in $services.permissions.listAllVisibilityOptions())
   &lt;dd&gt;
     &lt;label for="${fullPrefix}${visibility.name}"&gt;
-      &lt;input id="${fullPrefix}${visibility.name}" name="${prefix}visibility" type="radio" value="$!escapetool.xml($visibility.name)"#if ($currentValue == $visibility.name) checked="checked"#end /&gt; $visibility.label&lt;/label&gt;
+      &lt;input id="${fullPrefix}${visibility.name}" name="${prefix}visibility" type="radio" value="$!escapetool.xml($visibility.name)"#if ($currentValue == $visibility.name) checked="checked"#end /&gt; &lt;span&gt;$visibility.label&lt;/span&gt;&lt;/label&gt;
     &lt;span class="xHint"&gt;${visibility.description}&lt;/span&gt;
   &lt;/dd&gt;
 #end
 &lt;/dl&gt;
 &lt;input type="hidden" id="${targetDocName}_redirect" name="xredirect" value="$escapetool.xml($doc.getURL($xcontext.action, $request.queryString))" /&gt;
 &lt;input type="hidden" name="form_token" value="$!{escapetool.xml($services.csrf.token)}" /&gt;
+&lt;input type="hidden" name="objectPolicy" value="updateOrCreate"/&gt;
 &lt;/fieldset&gt;
 &lt;div class="bottombuttons"&gt;&lt;p class="admin-buttons"&gt;
 &lt;span class="buttonwrapper"&gt;&lt;input class="button" type="submit" name="action_saveandcontinue" value="$services.localization.render('phenotips.patientAccessRightsManagement.defaultVisibilitySave')" /&gt;&lt;/span&gt;
@@ -390,7 +391,7 @@
       <displayInSection>access</displayInSection>
     </property>
     <property>
-      <heading>Default patient visibility</heading>
+      <heading>$services.localization.render('phenotips.accessRights.configuration.defaultVisibility.title')</heading>
     </property>
     <property>
       <iconAttachment/>
@@ -760,10 +761,28 @@
                  }
               });
             }
-            var collaborators = _this._element.down('.collaborators');
+            var collabAccessRightsStr = _this._element.down('#collaborator-access-rights-info');
             var collaboratorsCount = formData.collaborator ? (formData.collaborator.size &amp;&amp; formData.collaborator.size() || 1) : 0;
-            if (collaborators) {
-              collaborators.replaceChild(document.createTextNode(collaboratorsCount + ' collaborator' + (collaboratorsCount != 1 ? 's' : '')), collaborators.lastChild);
+            if (collabAccessRightsStr) {
+              var collaboratorText;
+              var beginHtml = '&lt;span class="access-rights-info"&gt;&lt;span class="fa fa-group "&gt;&lt;/span&gt;&lt;span class="collaborators"&gt;';
+              var endHtml = '&lt;/span&gt;';
+              if (collaboratorsCount == 0) {
+                collaboratorText = "$services.localization.render('phenotips.patientAccessRightsManagement.collaboratorsSummary.noCollaborators', ['" + beginHtml + "', '" + endHtml + "'])";
+              } else {
+                --collaboratorsCount;
+                var topCollaborator = $$('#manage-collaborators tr').map(function(item) {return item.down('select').selectedIndex + ':' + item.down('td:nth-child(2)').innerText}).max();
+                topCollaborator = topCollaborator.substring(topCollaborator.indexOf(':') + 1);
+                if (collaboratorsCount == 0) {
+                  collaboratorText = "$services.localization.render('phenotips.patientAccessRightsManagement.collaboratorsSummary.oneCollaborator', ['" + beginHtml + "', '" + topCollaborator + "', '" + endHtml + "'])";
+                } else if (collaboratorsCount == 1) {
+                  collaboratorText = "$services.localization.render('phenotips.patientAccessRightsManagement.collaboratorsSummary.oneOtherCollaborator', ['" + beginHtml + "', '" + topCollaborator + "', '" + endHtml + "'])";
+                } else {
+                  collaboratorText = "$services.localization.render('phenotips.patientAccessRightsManagement.collaboratorsSummary.xOtherCollaborators', ['" + beginHtml + "', '" + topCollaborator + "', '" + collaboratorsCount + "', '" + endHtml + "'])";
+                }
+              }
+              collabAccessRightsStr.innerHTML = collaboratorText;
+              _this._updateDisplayedCollaborators(formData.collaborator, collabAccessRightsStr);
             }
             _this._dialog.closeDialog();
           },
@@ -824,6 +843,16 @@
         checkboxes[i].checked = false;
       }
       collaborators.each(this._addCollaborator.bind(this));
+    },
+
+    /* Updates the list of collaborators that is displayed on hover */
+    _updateDisplayedCollaborators : function (collaborators, collabAccessRights) {
+      var collaboratorStr = '';
+      if (collaborators) {
+        collaborators = [].concat(collaborators); /* collaborators may be an array or a string */
+        collaboratorStr = $$('#manage-collaborators tr td:nth-child(2)').map(function(item) {return item.innerText}).join(', ');
+      }
+      collabAccessRights.setAttribute("title", collaboratorStr);
     },
 
     _isJournalCollaborator : function (id) {
@@ -1176,6 +1205,47 @@ $xwiki.ssx.use($serviceDocName)
   #set ($visibility =  $patientAccess.visibility)
   #set ($collaborators = $patientAccess.collaborators)
   #set ($collaboratorsCount = $collaborators.size())
+  #set ($collaboratorString = '')
+  #set ($collaboratorTooltipStr = '')
+  #if ($collaboratorsCount == 0)
+    #set ($collaboratorString = $services.localization.render("phenotips.patientAccessRightsManagement.collaboratorsSummary.noCollaborators", ["(% class='access-rights-info' %){{html wiki='true' clean='false'}}{{icon name='group'/}}&lt;span class='collaborators'&gt;", "&lt;/span&gt;{{/html}}(%%)"]))
+  #elseif ($collaboratorsCount == 1)
+    #set ($firstCollaborator = $collaborators.iterator().next())
+    #set ($firstCollaboratorReference = $firstCollaborator.user)
+    #if ($firstCollaborator.isUser())
+      #set ($collaboratorName = $xwiki.getUserName("$firstCollaboratorReference", false))
+    #else
+      #set ($collaboratorName = $xwiki.getDocument($firstCollaboratorReference).plainTitle)
+    #end
+    #set ($collaboratorString = $services.localization.render("phenotips.patientAccessRightsManagement.collaboratorsSummary.oneCollaborator", ["(% class='access-rights-info' %){{html wiki='true' clean='false'}}{{icon name='group'/}}&lt;span class='collaborators'&gt;", $collaboratorName, "&lt;/span&gt;{{/html}}(%%)"]))
+    #set ($collaboratorTooltipStr = $collaboratorName)
+  #else
+    #set ($topCollaborator = $collaborators.iterator().next())
+    #set ($topCollaboratorReference = $topCollaborator.user)
+    #foreach ($collaborator in $collaborators)
+      #if ($patientAccess.getAccessLevel($topCollaborator.user).compareTo($patientAccess.getAccessLevel($collaborator.user)) &lt; 0)
+        #set ($topCollaborator = $collaborator)
+      #end
+      #if ($collaborator.isUser())
+        #set ($collaboratorTooltipStr = $collaboratorTooltipStr + $xwiki.getUserName("$collaborator.user", false) + ", ")
+      #else
+        #set ($collaboratorTooltipStr = $collaboratorTooltipStr + $xwiki.getDocument($collaborator.user).plainTitle + ", ")
+      #end
+    #end
+    #set ($collabStrLen = $collaboratorTooltipStr.length() - 2)
+    #set ($collaboratorTooltipStr = $collaboratorTooltipStr.substring(0, $collabStrLen))
+    #if ($topCollaborator.isUser())
+      #set ($topCollaboratorName = $xwiki.getUserName("$topCollaborator.user", false))
+    #else
+      #set ($topCollaboratorName = $xwiki.getDocument($topCollaborator.user).plainTitle)
+    #end
+    #set ($collaboratorsCount = $collaboratorsCount - 1)
+    #if ($collaboratorsCount == 1)
+      #set ($collaboratorString = $services.localization.render("phenotips.patientAccessRightsManagement.collaboratorsSummary.oneOtherCollaborator", ["(% class='access-rights-info' %){{html wiki='true' clean='false'}}{{icon name='group'/}}&lt;span class='collaborators'&gt;", $topCollaboratorName, "&lt;/span&gt;{{/html}}(%%)"]))
+    #else
+      #set ($collaboratorString = $services.localization.render("phenotips.patientAccessRightsManagement.collaboratorsSummary.xOtherCollaborators", ["(% class='access-rights-info' %){{html wiki='true' clean='false'}}{{icon name='group'/}}&lt;span class='collaborators'&gt;", $topCollaboratorName, $collaboratorsCount, "&lt;/span&gt;{{/html}}(%%)"]))
+    #end
+  #end
   #set ($owner = $patientAccess.getOwner())
   #set ($ownerReference = $owner.user)
   #if (!$ownerReference)
@@ -1201,7 +1271,7 @@ $xwiki.ssx.use($serviceDocName)
   #end
   #set ($canManage = $patientAccess.hasAccessLevel('manage'))
   #if ("$!{ownerReference}" != '')
-    #set ($ownerElement = "{{html wiki='true' clean='false'}}&lt;a class='owner' href=""${xwiki.getURL($ownerReference)}""&gt;{{icon name='user'/}}$ownerName&lt;/a&gt;{{/html}}")
+    #set ($ownerElement = "{{html wiki='true' clean='false'}}&lt;a class='owner' href=""${xwiki.getURL($ownerReference)}""&gt;{{icon name='user'/}}$services.rendering.escape($ownerName, $doc.syntax)&lt;/a&gt;{{/html}}")
   #else
     #set ($ownerElement = "{{html wiki='true' clean='false'}}&lt;span class='owner'&gt;{{icon name='user'/}}$ownerName&lt;/span&gt;{{/html}}")
   #end
@@ -1209,7 +1279,7 @@ $xwiki.ssx.use($serviceDocName)
     $services.localization.render("phenotips.patientAccessRightsManagement.caseOwnerandVisibility",["(% class='access-rights-info' %)$ownerElement(%%)","(% class='access-rights-info visibility' title='$!{visibility.description}' %){{icon name='$visibility'/}}${visibility.label}(%%)"])##
     ##if ($canManage),#else and#end it is (% class="access-rights-info visibility" title="$!{visibility.description}" %){{icon name="$visibility"/}}${visibility.label}(%%)##
     #if ($canManage) ##
-      $services.localization.render("phenotips.patientAccessRightsManagement.collaboratorsSummary",["(% class='access-rights-info' %){{html wiki='true' clean='false'}}{{icon name='group'/}}&lt;span class='collaborators'&gt;",$collaboratorsCount, "&lt;/span&gt;{{/html}}(%%)"])##
+      {{html wiki='true' clean='false'}}&lt;span id="collaborator-access-rights-info" title="$collaboratorTooltipStr"&gt;$collaboratorString&lt;/span&gt;{{/html}}##
       (% class="buttonwrapper tool edit" %)[[ {{icon name="wrench" title="$services.localization.render('phenotips.patientAccessRightsManagement.modifyButtonTitle')" /}} $services.localization.render("phenotips.patientAccessRightsManagement.modifyButton")&gt;&gt;path:#||class="button"]]##
       (% class="hidden" %)((({{html wiki="true" clean="false"}}
         &lt;input type="hidden" name="serviceURL" value="$serviceDoc.getURL('get', 'outputSyntax=plain')"/&gt;
@@ -1264,7 +1334,7 @@ $xwiki.ssx.use($serviceDocName)
             &lt;option value="" selected="selected" class="hidden"&gt;$services.localization.render('phenotips.patientAccessRightsManagement.newOwnerGroup')&lt;/option&gt;
             &lt;optgroup label="$services.localization.render('phenotips.patientAccessRightsManagement.newOwnerGroup')"&gt;
             #foreach ($g in $groups.entrySet())
-              &lt;option value="${g.key}"#if ("$!{ownerReference}" == "$g.key") selected="selected"#end&gt;${g.value}&lt;/option&gt;
+              &lt;option value="${escapetool.xml($services.rendering.escape($services.model.serialize($g.key), $doc.syntax))}"#if ("$!{ownerReference}" == "$g.key") selected="selected"#end&gt;${escapetool.xml($services.rendering.escape($g.value, $doc.syntax))}&lt;/option&gt;
             #end
             &lt;/optgroup&gt;
           &lt;/select&gt;
@@ -1284,7 +1354,7 @@ $xwiki.ssx.use($serviceDocName)
       <name>org.phenotips.patientSheet.accessLevels</name>
     </property>
     <property>
-      <parameters/>
+      <parameters>order=10</parameters>
     </property>
     <property>
       <scope>wiki</scope>

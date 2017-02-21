@@ -1247,6 +1247,27 @@
         <displayType>select</displayType>
         <multiSelect>0</multiSelect>
         <name>dateDisplayFormat</name>
+        <number>5</number>
+        <picker>0</picker>
+        <prettyName>Date display format</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators> ,|</separators>
+        <size>1</size>
+        <sort>none</sort>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <values>MDY=mmm dd, yyyy|DMY=dd-mm-yyyy|MY=mm-yyyy|Y=yyyy|MMY=mmm yyyy</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </dateDisplayFormat>
+      <dateInputFormat>
+        <cache>0</cache>
+        <customDisplay/>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>dateInputFormat</name>
         <number>4</number>
         <picker>0</picker>
         <prettyName>Date input format</prettyName>
@@ -1258,19 +1279,19 @@
         <unmodifiable>0</unmodifiable>
         <validationMessage/>
         <validationRegExp/>
-        <values>MDY=mmm dd, yyyy|DMY=dd-mm-yyyy</values>
+        <values>YMD=yyyy-mm-dd|DMY=dd-mm-yyyy|MY=mm-yyyy|Y=yyyy</values>
         <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
-      </dateDisplayFormat>
-      <dateInputFormat>
+      </dateInputFormat>
+      <lineStyle>
         <cache>0</cache>
         <customDisplay/>
         <disabled>0</disabled>
         <displayType>select</displayType>
         <multiSelect>0</multiSelect>
-        <name>dateInputFormat</name>
+        <name>lineStyle</name>
         <number>3</number>
         <picker>0</picker>
-        <prettyName>Date input format</prettyName>
+        <prettyName>Pedigree line thickness</prettyName>
         <relationalStorage>0</relationalStorage>
         <separator> </separator>
         <separators> ,|</separators>
@@ -1279,29 +1300,72 @@
         <unmodifiable>0</unmodifiable>
         <validationMessage/>
         <validationRegExp/>
-        <values>YMD=yyyy-mm-dd|DMY=dd-mm-yyyy</values>
+        <values>thin=Thin|regular=Regular|bold=Bold</values>
         <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
-      </dateInputFormat>
+      </lineStyle>
       <nonStandardAdoptedOutGraphic>
-        <disabled>0</disabled>
+        <customDisplay/>
         <defaultValue>0</defaultValue>
-        <displayFormType>select</displayFormType>
+        <disabled>0</disabled>
+        <displayFormType>checkbox</displayFormType>
+        <displayType/>
         <name>nonStandardAdoptedOutGraphic</name>
         <number>1</number>
-        <prettyName>Brackets-out adopted-out symbol</prettyName>
+        <prettyName>Use brackets-out symbol for adopted-out nodes</prettyName>
         <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
         <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
       </nonStandardAdoptedOutGraphic>
-      <propagateFatherLastName>
+      <pedigreePreviewSize>
+        <cache>0</cache>
+        <customDisplay/>
         <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>pedigreePreviewSize</name>
+        <number>6</number>
+        <picker>0</picker>
+        <prettyName>Pedigree preview size</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators> ,|</separators>
+        <size>1</size>
+        <sort>none</sort>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <values>small=Small|medium=Medium|large=Large</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </pedigreePreviewSize>
+      <propagateFatherLastName>
+        <customDisplay/>
         <defaultValue>1</defaultValue>
-        <displayFormType>select</displayFormType>
+        <disabled>0</disabled>
+        <displayFormType>checkbox</displayFormType>
+        <displayType/>
         <name>propagateFatherLastName</name>
         <number>2</number>
-        <prettyName>Propagate father's last name</prettyName>
+        <prettyName>Propagate father's last name to descendants</prettyName>
         <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
         <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
       </propagateFatherLastName>
+      <uiGradientNodes>
+        <customDisplay/>
+        <defaultValue>0</defaultValue>
+        <disabled>0</disabled>
+        <displayFormType>checkbox</displayFormType>
+        <displayType/>
+        <name>uiGradientNodes</name>
+        <number>3</number>
+        <prettyName>Apply color gradient to pedigree nodes</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </uiGradientNodes>
     </class>
     <property>
       <dateDisplayFormat>MDY</dateDisplayFormat>
@@ -1310,7 +1374,13 @@
       <dateInputFormat>YMD</dateInputFormat>
     </property>
     <property>
+      <lineStyle>regular</lineStyle>
+    </property>
+    <property>
       <nonStandardAdoptedOutGraphic>0</nonStandardAdoptedOutGraphic>
+    </property>
+    <property>
+      <pedigreePreviewSize>small</pedigreePreviewSize>
     </property>
     <property>
       <propagateFatherLastName>1</propagateFatherLastName>
@@ -1330,16 +1400,29 @@
       <defaultWeb/>
       <nameField/>
       <validationScript/>
+      <AllowNoConsentsFromOldClients>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <name>AllowNoConsentsFromOldClients</name>
+        <number>2</number>
+        <prettyName>Accept data from old clients that cannot push consent information</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </AllowNoConsentsFromOldClients>
       <AllowPushesFromNonListedServers>
+        <defaultValue>0</defaultValue>
         <disabled>0</disabled>
         <displayFormType>select</displayFormType>
         <name>AllowPushesFromNonListedServers</name>
         <number>1</number>
-        <prettyName>AllowPushesFromNonListedServers</prettyName>
+        <prettyName>Allow pushes from servers not listed below</prettyName>
         <unmodifiable>0</unmodifiable>
         <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
       </AllowPushesFromNonListedServers>
     </class>
+    <property>
+      <AllowNoConsentsFromOldClients>0</AllowNoConsentsFromOldClients>
+    </property>
     <property>
       <AllowPushesFromNonListedServers>1</AllowPushesFromNonListedServers>
     </property>
@@ -1510,7 +1593,7 @@
       <groups>XWiki.XWikiAdminGroup</groups>
     </property>
     <property>
-      <levels>admin,edit,undelete,delete,programming</levels>
+      <levels>admin,comment,edit,undelete,delete,programming</levels>
     </property>
     <property>
       <users/>
@@ -1593,7 +1676,7 @@
       <groups>XWiki.XWikiAllGroup</groups>
     </property>
     <property>
-      <levels>view,comment</levels>
+      <levels>view</levels>
     </property>
     <property>
       <users/>

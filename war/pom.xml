@@ -49,14 +49,12 @@
     <dependency>
       <groupId>antlr</groupId>
       <artifactId>antlr</artifactId>
-      <version>2.7.6</version>
     </dependency>
 
     <!-- The new version of HTMLCleaner is required for PDFs to work properly -->
     <dependency>
       <groupId>net.sourceforge.htmlcleaner</groupId>
       <artifactId>htmlcleaner</artifactId>
-      <version>2.16</version>
     </dependency>
 
     <!-- The Big Old Core -->
@@ -572,6 +570,16 @@
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
+      <artifactId>gene-panels-api</artifactId>
+      <version>${phenotips.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
+      <artifactId>gene-panels-rest</artifactId>
+      <version>${phenotips.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
       <artifactId>vocabularies-api</artifactId>
       <version>${phenotips.version}</version>
     </dependency>
@@ -642,12 +650,27 @@
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
+      <artifactId>phenotips-crypto-api</artifactId>
+      <version>${phenotips.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
+      <artifactId>phenotips-crypto-xproperty</artifactId>
+      <version>${phenotips.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
       <artifactId>patient-access-rules-api</artifactId>
       <version>${phenotips.version}</version>
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>patient-access-rules-migrations</artifactId>
+      <version>${phenotips.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
+      <artifactId>patient-access-rules-rest</artifactId>
       <version>${phenotips.version}</version>
     </dependency>
     <dependency>
@@ -785,6 +808,21 @@
       <artifactId>pingback-client-api</artifactId>
       <version>1.0</version>
     </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
+      <artifactId>family-studies-api</artifactId>
+      <version>${phenotips.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
+      <artifactId>family-studies-migrations</artifactId>
+      <version>${phenotips.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
+      <artifactId>family-studies-rest</artifactId>
+      <version>${phenotips.version}</version>
+    </dependency>
 
     <!-- PhenomeCentral specific -->
     <dependency>
@@ -868,7 +906,7 @@
                 <xwikiDbDialect>org.hibernate.dialect.HSQLDialect</xwikiDbDialect>
                 <xwikiDbHbmXwiki>xwiki.hbm.xml</xwikiDbHbmXwiki>
                 <xwikiDbHbmFeeds>feeds.hbm.xml</xwikiDbHbmFeeds>
-                <xwikiDbHbmCommonExtraMappings>instance.hbm.xml</xwikiDbHbmCommonExtraMappings>
+                <xwikiDbHbmCommonExtraMappings>instance.hbm.xml,mailsender.hbm.xml</xwikiDbHbmCommonExtraMappings>
                 <xwikiCfgPlugins>\
   com.xpn.xwiki.monitor.api.MonitorPlugin,\
   com.xpn.xwiki.plugin.skinx.JsSkinExtensionPlugin,\
@@ -891,7 +929,7 @@
                 <xwikiCfgVirtual>0</xwikiCfgVirtual>
                 <xwikiCfgVirtualUsepath>0</xwikiCfgVirtualUsepath>
                 <xwikiCfgEditCommentMandatory>0</xwikiCfgEditCommentMandatory>
-                <xwikiCfgDefaultSkin>colibri</xwikiCfgDefaultSkin>
+                <xwikiCfgDefaultSkin>phenotips</xwikiCfgDefaultSkin>
                 <xwikiCfgDefaultBaseSkin>colibri</xwikiCfgDefaultBaseSkin>
                 <xwikiCfgEncoding>UTF-8</xwikiCfgEncoding>
                 <xwikiCfgAdditionalProperties>
