@@ -37,7 +37,7 @@
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>false</hidden>
-  <content>phenomecentral.consent.real=I confirm that the data entered in this form corresponds to a real patient. (required)
+  <content>phenomecentral.consent.real=I confirm that the data entered in this form corresponds to a real patient.
 phenomecentral.consent.genetic=I confirm that consent has been obtained to share this patient's genetic sequencing data (e.g., a VCF file) on restricted access databases.
 phenomecentral.consent.shareHistory=I confirm that consent has been obtained to share this patient's medical and family history on restricted access databases.
 phenomecentral.consent.shareImages=I confirm that consent has been obtained to share this patient's medical images/photos on restricted access databases.
