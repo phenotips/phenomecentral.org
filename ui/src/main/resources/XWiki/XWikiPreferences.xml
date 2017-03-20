@@ -3131,7 +3131,7 @@ The ${wikiname} Team
       <version>#set($TaC=$xwiki.getDocument('data.Terms_and_Conditions_of_Use'))#if ($TaC)&lt;a href="$TaC.getURL()"&gt;Terms and Conditions&lt;/a&gt;#else &amp;nbsp; #end</version>
     </property>
     <property>
-      <webcopyright>&lt;a href="http://phenomecentral.org"&gt;PhenomeCentral&lt;/a&gt; version $!{services.distribution.distributionExtension.id.version}</webcopyright>
+      <webcopyright>#template('version.vm')</webcopyright>
     </property>
     <property>
       <xwiki.title.mandatory>0</xwiki.title.mandatory>

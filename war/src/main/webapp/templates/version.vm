@@ -1,0 +1,1 @@
+$services.localization.render('phenomecentral.version', ['<a href="https://phenomecentral.org/">', '</a>', $!{services.distribution.distributionExtension.id.version}, '<a href="https://phenotips.org">', '</a>', $!{services.extension.core.getCoreExtension('org.phenotips:patient-data-api').id.version}])
