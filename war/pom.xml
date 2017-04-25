@@ -945,6 +945,21 @@
       <artifactId>remote-matching-core-api</artifactId>
       <version>${remoteMatching.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
+      <artifactId>variant-store</artifactId>
+      <version>${variantStore.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
+      <artifactId>variant-store-integration-api</artifactId>
+      <version>${variantStore.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
+      <artifactId>mendelian-search-application-api</artifactId>
+      <version>${mendelianSearch.version}</version>
+    </dependency>
 
     <!-- Add dependencies on the XAR distributions so that we transitively include all JAR dependencies in the generated WAR -->
     <dependency>

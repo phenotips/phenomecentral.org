@@ -130,6 +130,8 @@
     <!-- Downstream project versions -->
     <patientNetwork.version>1.2-SNAPSHOT</patientNetwork.version>
     <remoteMatching.version>1.2-SNAPSHOT</remoteMatching.version>
+    <variantStore.version>1.0-SNAPSHOT</variantStore.version>
+    <mendelianSearch.version>1.0-SNAPSHOT</mendelianSearch.version> 
 
     <!-- There is no Java code, speedup the build by skipping checks -->
     <checkstyle.skip>true</checkstyle.skip>
