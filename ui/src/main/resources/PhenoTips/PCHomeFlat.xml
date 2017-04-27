@@ -657,8 +657,8 @@ h2 {
   visibility: hidden;
 }
 .bibtex pre {
-	font-family: monospace;
-	white-space: pre-wrap;
+  font-family: monospace;
+  white-space: pre-wrap;
 }
 .bibtex-link:after {
   border-color: transparent transparent #333;
