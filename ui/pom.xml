@@ -53,5 +53,19 @@
       <version>${remoteMatching.version}</version>
       <type>xar</type>
     </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
+      <artifactId>variant-store-integration-ui</artifactId>
+      <version>${variantStore.version}</version>
+      <type>xar</type>
+    </dependency>
+  <!-- Mendelian Search Application not needed for VS/PT integration testing
+    <dependency>
+      <groupId>org.phenotips</groupId>
+      <artifactId>mendelian-search-application-ui</artifactId>
+      <version>${mendelianSearch.version}</version>
+      <type>xar</type>
+    </dependency>
+  -->
   </dependencies>
 </project>
