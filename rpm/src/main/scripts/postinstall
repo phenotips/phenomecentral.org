@@ -43,8 +43,8 @@ else
   # Upgrade, update all Solr core configurations and only update specific Solr indexes
   unzip -q -d /var/lib/phenotips/next/solr /var/lib/phenotips/next/solr-config*.jar
   mv -t /var/lib/phenotips/solr/ /var/lib/phenotips/next/solr/solr.xml
-  rm -rf /var/lib/phenotips/solr/hpo/ /var/lib/phenotips/solr/omim/ /var/lib/phenotips/solr/ethnicity/ /var/lib/phenotips/solr/hgnc/ /var/lib/phenotips/solr/chebi/
-  mv -t /var/lib/phenotips/solr/ /var/lib/phenotips/next/solr/hpo/ /var/lib/phenotips/next/solr/omim/ /var/lib/phenotips/next/solr/ethnicity /var/lib/phenotips/next/solr/hgnc /var/lib/phenotips/next/solr/chebi
+  rm -rf /var/lib/phenotips/solr/hpo/ /var/lib/phenotips/solr/omim/ /var/lib/phenotips/solr/ethnicity/ /var/lib/phenotips/solr/hgnc/ /var/lib/phenotips/solr/chebi/  /var/lib/phenotips/solr/ordo/
+  mv -t /var/lib/phenotips/solr/ /var/lib/phenotips/next/solr/hpo/ /var/lib/phenotips/next/solr/omim/ /var/lib/phenotips/next/solr/ethnicity /var/lib/phenotips/next/solr/hgnc /var/lib/phenotips/next/solr/ordo
   if [[ -d /var/lib/phenotips/solr/patients/ ]]
   then
     rm -rf /var/lib/phenotips/solr/patients/conf/
@@ -80,7 +80,7 @@ then
   # No Xmx configured, but there is a JAVA_OPTS setting, update it
   sed -i -r -e 's/^(\s*JAVA_OPTS=")(.*)/\1-Xmx3g \2/' /etc/tomcat/tomcat.conf
 else
-  # No JAVA_OPTS setting, add one with both Xmx and MaxPermSize
+  # No JAVA_OPTS setting, add one with Xmx set
   echo -e -n '\nJAVA_OPTS="-Xmx3g"' >> /etc/tomcat/tomcat.conf
 fi
 
