@@ -16,4 +16,4 @@
 # along with this program.  If not, see http://www.gnu.org/licenses/
 # ---------------------------------------------------------------------------
 
-mkdir -p /var/log/exomiser/ && python /var/lib/exomiser/scripts/exomiser_cron.py --since=`date --date="1 hour ago" +%Y-%m-%d` /var/lib/phenotips /var/lib/exomiser/exomiser-cli-7.2.2/exomiser-cli-7.2.2.jar /var/lib/exomiser/scripts/exomiser.credentials &> /var/log/exomiser/`date +%Y-%m-%d.%H%M%S`.log
+mkdir -p /var/log/exomiser/ && python /var/lib/exomiser/scripts/exomiser_cron.py --since=`date --date="1 hour ago" +%Y-%m-%d` /var/lib/phenotips /var/lib/exomiser/exomiser-cli-7.2.3/exomiser-cli-7.2.3.jar /var/lib/exomiser/scripts/exomiser.credentials &> /var/log/exomiser/`date +%Y-%m-%d.%H%M%S`.log
