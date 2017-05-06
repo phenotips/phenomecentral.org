@@ -1030,7 +1030,7 @@ activeinstalls.ipFetchURL=https://phenotips.org/get/Stats/Id
               <groupId>org.phenotips</groupId>
               <artifactId>matching-notification-resources</artifactId>
               <type>jar</type>
-              <targetPath></targetPath>
+              <targetPath />
             </overlay>
           </overlays>
         </configuration>
