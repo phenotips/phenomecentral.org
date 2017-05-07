@@ -150,6 +150,7 @@ xwiki.authentication.loginsubmitpage=/loginsubmit/PhenomeCentral/login
 xwiki.store.attachment.hint=file
 xwiki.store.attachment.versioning.hint=file
 xwiki.store.attachment.recyclebin.hint=file
+xwiki.store.cache.capacity=15000
                 </xwikiCfgAdditionalProperties>
                 <xwikiPropertiesEnvironmentPermanentDirectory>/var/lib/phenotips/</xwikiPropertiesEnvironmentPermanentDirectory>
                 <xwikiPropertiesAdditionalProperties>
