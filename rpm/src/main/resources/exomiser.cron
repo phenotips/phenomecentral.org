@@ -1,1 +1,1 @@
-*/15 * * * *   tomcat   bash /var/lib/exomiser/scripts/exomiser_cron.sh
+*/15 * * * *   root   bash /var/lib/exomiser/scripts/exomiser_cron.sh
