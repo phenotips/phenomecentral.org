@@ -265,6 +265,8 @@ activeinstalls.ipFetchURL=https://phenotips.org/get/Stats/Id
                   <destination>exomiser</destination>
                 </source>
               </sources>
+              <username>root</username>
+              <groupname>root</groupname>
             </mapping>
             <!-- Copy the exomiser configuration -->
             <mapping>
