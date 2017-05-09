@@ -20,6 +20,7 @@ import glob
 import hashlib
 import json
 import logging
+import contextlib
 
 from gzip import open as _gzip_open
 from contextlib import closing
@@ -29,6 +30,7 @@ except ImportError:
     from urllib.parse import urlencode
 
 from string import Template
+from multiprocessing import Pool
 
 CACHED_DATA_FIELDS = ['phenotypes', 'inheritance', 'vcf_hash', 'min_qual', 'min_freq']
 MODES_OF_INHERITANCE = {
@@ -331,41 +333,53 @@ def run_exomiser(record_id, new_data, settings):
         variant_store_service(record_id, settings, 'remove')
         variant_store_service(record_id, settings, 'upload')
 
-def script(settings, start_time=None):
+def evaluate_changed_record(record_id, settings):
+    logging.info('Starting exomiser job: {0}'.format(record_id))
     try:
-        with Lock(settings):
-            changed_records = fetch_changed_records(settings, since=start_time)
-            for record_id in changed_records:
-                logging.info('Processing patient: {0!r}'.format(record_id))
-                vcf_filepath = get_record_vcf(record_id, settings)
+        with Lock(record_id, settings):
+            logging.info('Processing patient: {0!r}'.format(record_id))
+            vcf_filepath = get_record_vcf(record_id, settings)
 
-                # If the record doesn't have a VCF file (anymore), clean up record
-                if not vcf_filepath:
-                    delete_exomiser(record_id, settings)
-                    variant_store_service(record_id, settings, 'remove')
-                    continue
+            # If the record doesn't have a VCF file (anymore), clean up record
+            if not vcf_filepath:
+                delete_exomiser(record_id, settings)
+                return
 
-                # If the record has a VCF file, compare to see if it changed
-                new_data = get_record_data(record_id, vcf_filepath, settings)
-                old_data = get_cached_data(record_id, settings)
+            # If the record has a VCF file, compare to see if it changed
+            new_data = get_record_data(record_id, vcf_filepath, settings)
+            old_data = get_cached_data(record_id, settings)
 
-                if not old_data:
-                    logging.info("Processing {0} for first time".format(record_id))
-                    changed = True
-                else:
-                    changed = False
-                    for field in CACHED_DATA_FIELDS:
-                        if new_data[field] != old_data.get(field):
-                            changed = True
+            if not old_data:
+                logging.info("Processing {0} for first time".format(record_id))
+                changed = True
+            else:
+                changed = False
+                for field in CACHED_DATA_FIELDS:
+                    if new_data[field] != old_data.get(field):
+                        changed = True
 
-                if not changed:
-                    logging.info("{0} hasn't changed".format(record_id))
-                    continue
+            if not changed:
+                logging.info("{0} hasn't changed".format(record_id))
+                return
 
-                # Patient record has changed, (re-)run Exomiser
-                run_exomiser(record_id, new_data, settings)
+            # Patient record has changed, (re-)run Exomiser
+            run_exomiser(record_id, new_data, settings)
     except RecordLockedException:
-        logging.error('The exomiser instance is already running')
+        logging.error('Skipping locked record: {0}'.format(record_id))
+
+def script(settings, start_time=None, pool_processes=5):
+    changed_records = fetch_changed_records(settings, since=start_time)
+    exomiser_results = []
+    with contextlib.closing(Pool(processes=pool_processes)) as pool:
+        for record_id in changed_records:
+            logging.info('Adding exomiser job to threadpool: {0}'.format(record_id))
+            result = pool.apply_async(evaluate_changed_record, (record_id, settings))
+            exomiser_results.append(result)
+
+    # All jobs are dispatched, so wait for all to finish before returning
+    for i, result in enumerate(exomiser_results):
+        logging.info('Waiting on result {0}'.format(i))
+        result.wait()
 
 def parse_args(args):
     from optparse import OptionParser
