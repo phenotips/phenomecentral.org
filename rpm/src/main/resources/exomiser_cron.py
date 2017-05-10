@@ -350,10 +350,10 @@ def evaluate_changed_record(record_id, settings):
     except RecordLockedException:
         logging.error('Skipping locked record: {0}'.format(record_id))
 
-def script(settings, start_time=None):
+def script(settings, start_time=None, pool_processes=10):
     changed_records = fetch_changed_records(settings, since=start_time)
     exomiser_results = []
-    with contextlib.closing(Pool(processes=10)) as pool:
+    with contextlib.closing(Pool(processes=pool_processes)) as pool:
         for record_id in changed_records:
             logging.info('Adding exomiser job to threadpool: {}'.format(record_id))
             result = pool.apply_async(evaluate_changed_record, (record_id, settings))
