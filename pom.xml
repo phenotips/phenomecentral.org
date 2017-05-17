@@ -131,9 +131,7 @@
     <patientNetwork.version>1.2-SNAPSHOT</patientNetwork.version>
     <remoteMatching.version>1.2-SNAPSHOT</remoteMatching.version>
     <variantStore.version>1.0-SNAPSHOT</variantStore.version>
-  <!-- Mendelian Search Application not needed for VS/PT integration testing
     <mendelianSearch.version>1.0-SNAPSHOT</mendelianSearch.version> 
-  -->
 
     <!-- There is no Java code, speedup the build by skipping Clirr and Checkstyle checks -->
     <checkstyle.skip>true</checkstyle.skip>
