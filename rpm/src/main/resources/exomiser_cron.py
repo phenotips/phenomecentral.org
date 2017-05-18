@@ -317,7 +317,7 @@ def run_exomiser(record_id, new_data, settings):
         clear_cache(record_id, settings)
 
 def evaluate_changed_record(record_id, settings):
-    logging.info('Starting exomiser job: {}'.format(record_id))
+    logging.info('Starting exomiser job: {0}'.format(record_id))
     try:
         with Lock(record_id, settings):
             logging.info('Processing patient: {0!r}'.format(record_id))
@@ -350,12 +350,12 @@ def evaluate_changed_record(record_id, settings):
     except RecordLockedException:
         logging.error('Skipping locked record: {0}'.format(record_id))
 
-def script(settings, start_time=None, pool_processes=10):
+def script(settings, start_time=None, pool_processes=5):
     changed_records = fetch_changed_records(settings, since=start_time)
     exomiser_results = []
     with contextlib.closing(Pool(processes=pool_processes)) as pool:
         for record_id in changed_records:
-            logging.info('Adding exomiser job to threadpool: {}'.format(record_id))
+            logging.info('Adding exomiser job to threadpool: {0}'.format(record_id))
             result = pool.apply_async(evaluate_changed_record, (record_id, settings))
             exomiser_results.append(result)
 
