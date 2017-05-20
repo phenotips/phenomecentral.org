@@ -42,6 +42,7 @@
 $xwiki.ssx.use('data.WebHome')##
 $xwiki.jsfx.use('uicomponents/widgets/validation/uniquenessvalidation.js')##
 #set($documentName = 'PhenomeCentral.RegistrationWiki')
+#set($configurationClassName = 'XWiki.Registration')
 ##---
 ## These are defined in other places around XWiki, changing them here will result in undefined behavior.
 #set($redirectParam = 'xredirect')
@@ -976,7 +977,7 @@ $xwiki.get('ssfx').use('uicomponents/widgets/validation/livevalidation.css', tru
  *###
 #macro(loadConfig, $configDocumentName)
   #set($configDocument = $xwiki.getDocument($configDocumentName))
-  #if(!$configDocument || !$configDocument.getObject($documentName))
+  #if(!$configDocument || !$configDocument.getObject($configurationClassName))
     ## No config document, load defaults.
     #set($heading = "$services.localization.render('core.register.title')")
     #set($welcomeMessage = "$services.localization.render('core.register.welcome')")
@@ -987,7 +988,7 @@ $xwiki.get('ssfx').use('uicomponents/widgets/validation/livevalidation.css', tru
     #set($userFullName = "$request.get('register_first_name') $request.get('register_last_name')")
     #set($registrationSuccessMessage = '{{info}}$services.localization.render("core.register.successful", ["[[${userFullName}&gt;&gt;${userSpace}${userName}]]", ${userName}]){{/info}}')
   #else
-    #set($configObject = $configDocument.getObject($documentName))
+    #set($configObject = $configDocument.getObject($configurationClassName))
     #if ($xcontext.action == 'register')
       #set ($heading = "(% id='document-title'%)((( = #evaluate($configObject.getProperty('heading').getValue()) = )))(%%)")
     #else
