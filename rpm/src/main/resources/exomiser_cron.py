@@ -23,7 +23,11 @@ import logging
 
 from gzip import open as _gzip_open
 from contextlib import closing
-from urllib import urlencode
+try:
+    from urllib import urlencode
+except ImportError:
+    from urllib.parse import urlencode
+
 from string import Template
 
 CACHED_DATA_FIELDS = ['phenotypes', 'inheritance', 'vcf_hash', 'min_qual', 'min_freq']
@@ -58,6 +62,7 @@ class Settings:
         'export_id_url': '/bin/get/PhenomeCentral/ExportIDs',
         'export_patient_url': '/bin/get/PhenoTips/ExportPatient',
         'export_vcf_url': '/bin/get/PhenomeCentral/ExportVCF',
+        'vs_service_url': '/bin/PhenoTips/VariantStoreUploadService'
         }
     _settings = {}
     def __init__(self, **kwargs):
@@ -151,6 +156,15 @@ def clear_cache(record_id, settings):
     retcode = subprocess.call(['curl', '-s', '-S', '-u', settings['credentials'], url], stdout=subprocess.PIPE)
     if retcode != 0:
         logging.error('Attempt to clear cache for {0} failed'.format(record_id))
+
+def variant_store_service(record_id, settings, action):
+    logging.info('Calling {0} variant store script service for patient record {1}'.format(action, record_id))
+    url = '{0}{1}?outputSyntax=plain&xpage=plain&action={2}&individualId={3}'.format(settings['host'], settings['vs_service_url'], action, record_id)
+    if action == 'upload':
+      url = url + '&path=' + settings.get_exomiser_out_filename(record_id)
+    retcode = subprocess.call(['curl', '-X', 'POST', '-u', settings['credentials'], url], stdout=subprocess.PIPE)
+    if retcode != 0:
+        logging.error('Attempt to call {0} variant store script service for patient record {1} failed'.format(action, record_id))
 
 def fetch_changed_records(settings, since=None):
     fields = {}
@@ -314,6 +328,8 @@ def run_exomiser(record_id, new_data, settings):
         # Cache updated data and clear patient cache.
         cache_data(record_id, new_data, settings)
         clear_cache(record_id, settings)
+        variant_store_service(record_id, settings, 'remove')
+        variant_store_service(record_id, settings, 'upload')
 
 def script(settings, start_time=None):
     try:
