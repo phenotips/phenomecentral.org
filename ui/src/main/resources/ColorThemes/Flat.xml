@@ -980,11 +980,17 @@
 
 #body #phenotips-globalTools .search input {
   border: 1px solid $theme.textColor;
+  width: 10em;
 }
 
 #body #phenotips-globalTools .search input:hover,
 #body #phenotips-globalTools .search input:focus {
   border: 1px solid $theme.linkColor;
+}
+        
+.suggestItems.searchSuggest.horizontalLayout::before,
+.suggestItems.searchSuggest.horizontalLayout::after {
+    left: 95% !important;
 }
 
 #xwikicontent {
