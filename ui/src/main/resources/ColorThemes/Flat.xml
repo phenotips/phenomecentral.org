@@ -990,7 +990,7 @@
         
 .suggestItems.searchSuggest.horizontalLayout::before,
 .suggestItems.searchSuggest.horizontalLayout::after {
-    left: 95% !important;
+  left: 95% !important;
 }
 
 #xwikicontent {
