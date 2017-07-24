@@ -342,6 +342,7 @@ def script(settings, start_time=None):
                 # If the record doesn't have a VCF file (anymore), clean up record
                 if not vcf_filepath:
                     delete_exomiser(record_id, settings)
+                    variant_store_service(record_id, settings, 'remove')
                     continue
 
                 # If the record has a VCF file, compare to see if it changed
