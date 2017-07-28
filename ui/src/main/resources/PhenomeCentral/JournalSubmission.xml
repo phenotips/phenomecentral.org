@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see http://www.gnu.org/licenses/
+-->
+
+<xwikidoc version="1.1">
+  <web>PhenomeCentral</web>
+  <name>JournalSubmission</name>
+  <language/>
+  <defaultLanguage/>
+  <translation>0</translation>
+  <creator>xwiki:XWiki.Admin</creator>
+  <creationDate>1501183763000</creationDate>
+  <author>xwiki:XWiki.Admin</author>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <date>1501228870000</date>
+  <contentUpdateDate>1501205163000</contentUpdateDate>
+  <version>1.1</version>
+  <title/>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>xwiki/2.1</syntaxId>
+  <hidden>false</hidden>
+  <content/>
+  <object>
+    <name>PhenomeCentral.JournalSubmission</name>
+    <number>0</number>
+    <className>XWiki.JavaScriptExtension</className>
+    <guid>722e8cea-9034-4922-a627-937b7b7aa25f</guid>
+    <class>
+      <name>XWiki.JavaScriptExtension</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <cache>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>cache</name>
+        <number>5</number>
+        <prettyName>Caching policy</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>long|short|default|forbid</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </cache>
+      <code>
+        <disabled>0</disabled>
+        <name>code</name>
+        <number>2</number>
+        <prettyName>Code</prettyName>
+        <rows>20</rows>
+        <size>50</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </code>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+      <parse>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType>yesno</displayType>
+        <name>parse</name>
+        <number>4</number>
+        <prettyName>Parse content</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </parse>
+      <use>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>use</name>
+        <number>3</number>
+        <prettyName>Use this extension</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>currentPage|onDemand|always</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </use>
+    </class>
+    <property>
+      <cache>long</cache>
+    </property>
+    <property>
+      <code>var PhenomeCentral = (function (PhenomeCentral) {
+  var widgets = PhenomeCentral.widgets = PhenomeCentral.widgets || {};
+  widgets.JournalSubmission = Class.create({
+    JOURNALS : [
+      #set ($isFirst = true)
+      // TODO: query the DB for journals instead of hard-coding the list
+      #foreach ($jId in ["ClinicalGenetics"])
+        #set ($jDoc = $xwiki.getDocument("XWiki.$jId"))
+        #if (!$jDoc.isNew())
+          #if (!$isFirst)
+          ,
+          #end
+          {
+            "id" : "$services.model.serialize($jDoc.documentReference, 'default')",
+            "name" : "$xwiki.getUserName("XWiki.$jId", false)",
+            "type"        : "user",
+            "accessLevel" : "manage"
+          }
+          #set ($isFirst = false)
+        #end
+      #end
+    ],
+
+    initialize : function (permissionsManager) {
+      if (!permissionsManager || this.JOURNALS.length == 0) {
+        return
+      }
+      this._permissionsManager = permissionsManager;
+      this._journalsManager = permissionsManager._generateSection(
+        'manage-journals',
+        'Journals',
+        'If this case is being submitted to one of the following journals, please check the appropriate box. You give the journal permission to access this record, and to make this record public if the case is published.'
+      );
+      permissionsManager._collaboratorsManager.insert({
+        after: this._journalsManager
+      });
+      this._initJournalsManager();
+      this._permissionsManager._container.observe('phenotips:permissions-manager:updated', this._updateJournals.bind(this));
+    },
+
+    _initJournalsManager : function() {
+      var _this = this;
+      var table = new Element('table', {id : 'journals'});
+      this._journalsManager.insert(table);
+
+      this.JOURNALS.each(function (j) {
+        var input = new Element ('input', {'type' : 'checkbox', 'name' : 'journal', 'value' : j.id});
+        var label = new Element('label').insert(input).insert(j.name);
+        var row = new Element('tr')
+               .insert(new Element('td').insert(label));
+        table.insert(row);
+
+        input.observe('change', function(event) {
+          if (event.target) {
+            if (event.target.checked === false) {
+              // Remove journal collaborator
+              console.log('Removing journal: ' + j.id);
+              _this._removeJournal(j.id);
+            } else {
+              console.log('Adding journal: ' + j.id);
+              _this._addJournal(j);
+            }
+          }
+        });
+      });
+    },
+
+    _addJournal : function (j, highlight) {
+      var row = this._permissionsManager._generateCollaborator(j, highlight);
+      row.addClassName('journal');
+      // Ensure checkbox is checked
+      var checkbox = this._journalsManager.down('input[type="checkbox"][value="' + j.id + '"]');
+      if (checkbox) {
+        console.log('Found checkbox... checking');
+        checkbox.checked = true;
+     }
+     this._permissionsManager._collaboratorsList.insert(row);
+   },
+
+    _removeJournal : function (id) {
+      // Remove hidden journal collaborator
+      this._permissionsManager._removeCollaborator(id);
+    },
+
+    _updateJournals : function () {
+      // Clear journal selection
+      var checkboxes = this._journalsManager.select('input[type="checkbox"][name="journal"]');
+      for (var i = 0; i &lt; checkboxes.length; i++) {
+        checkboxes[i].checked = false;
+      }
+      // Collaborator journals are already added, just add the correct class name and check the checkbox
+      var _this = this;
+      this._permissionsManager._collaboratorsList.select('tr input[type="hidden"][name="collaborator"').each(function(c) {
+         _this._journalsManager.select('input[type="checkbox"][name="journal"][value$="' + c.value + '"]').each(function (cb) {
+            console.log('Found checkbox for ' + c.value + '... checking');
+            cb.checked = true;
+            var cRow = c.up('tr');
+            cRow.addClassName('journal');
+         });
+      });
+    }
+  });
+  return PhenomeCentral;
+}(PhenomeCentral || {}));
+
+document.observe("phenotips:permissions-manager:loaded", function(event) {
+  new PhenomeCentral.widgets.JournalSubmission(event &amp;&amp; event.memo &amp;&amp; event.memo.permissionsManager);
+});</code>
+    </property>
+    <property>
+      <name/>
+    </property>
+    <property>
+      <parse>1</parse>
+    </property>
+    <property>
+      <use>always</use>
+    </property>
+  </object>
+  <object>
+    <name>PhenomeCentral.JournalSubmission</name>
+    <number>0</number>
+    <className>XWiki.StyleSheetExtension</className>
+    <guid>c744330f-6f2d-4626-8a19-6495b42f9b13</guid>
+    <class>
+      <name>XWiki.StyleSheetExtension</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <cache>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>cache</name>
+        <number>5</number>
+        <prettyName>Caching policy</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>long|short|default|forbid</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </cache>
+      <code>
+        <disabled>0</disabled>
+        <name>code</name>
+        <number>2</number>
+        <prettyName>Code</prettyName>
+        <rows>20</rows>
+        <size>50</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </code>
+      <contentType>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>contentType</name>
+        <number>6</number>
+        <prettyName>Content Type</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>CSS|LESS</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </contentType>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+      <parse>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType>yesno</displayType>
+        <name>parse</name>
+        <number>4</number>
+        <prettyName>Parse content</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </parse>
+      <use>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>use</name>
+        <number>3</number>
+        <prettyName>Use this extension</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators>|, </separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>currentPage|onDemand|always</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </use>
+    </class>
+    <property>
+      <cache>long</cache>
+    </property>
+    <property>
+      <code>#collaborators .journal {
+  display: none;
+}</code>
+    </property>
+    <property>
+      <contentType>CSS</contentType>
+    </property>
+    <property>
+      <name/>
+    </property>
+    <property>
+      <parse/>
+    </property>
+    <property>
+      <use>always</use>
+    </property>
+  </object>
+</xwikidoc>
