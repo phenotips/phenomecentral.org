@@ -2984,6 +2984,7 @@
 #set ($host = ${request.getRequestURL()})
 #set ($host = ${host.substring(0, ${host.indexOf('/', ${mathtool.add(${host.indexOf('//')}, 2)})})})
 Subject: Your account on ${wikiname} has been activated
+Content-Type: text/plain; charset="UTF-8"
 
 Hello ${xwiki.getUserName("$xwikiname", false)},
 
@@ -3117,6 +3118,7 @@ $xwiki.ssx.use($xwiki.getSpacePreference('colorTheme'))</meta>
 #set ($host = ${request.getRequestURL()})
 #set ($host = ${host.substring(0, ${host.indexOf('/', ${mathtool.add(${host.indexOf('//')}, 2)})})})
 Subject: Your account request on ${wikiname}
+Content-Type: text/plain; charset="UTF-8"
 
 Hello ${xwiki.getUserName("XWiki.$xwikiname", false)},
 
