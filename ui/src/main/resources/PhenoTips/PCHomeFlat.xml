@@ -117,7 +117,7 @@ $text
   'PhenoTips', '&lt;sup style="font-size: .5em"&gt;TM&lt;/sup&gt;',
   'http://phenotips.org',
   'phenotips.png',
-  '&lt;p&gt;PhenomeCentral was built on top of &lt;a href="http://phenotips.org" rel="__blank"&gt;PhenoTips&lt;/a&gt;, an open source software for collecting and analyzing phenotypic and genotypic information for patients with genetic disorders.&lt;/p&gt;
+  '&lt;p&gt;PhenomeCentral was built on top of &lt;a href="http://phenotips.org" rel="__blank"&gt;PhenoTips&lt;/a&gt;, an open source software for collecting and analyzing phenotypic and genotypic information of patients with genetic disorders.&lt;/p&gt;
   &lt;p&gt;PhenomeCentral leverages the PhenoTips user interface for capturing standardized data and analyzing it real-time, as well as its secure collaboration and data sharing capabilities.&lt;/p&gt;'
 )
 &lt;/div&gt;
