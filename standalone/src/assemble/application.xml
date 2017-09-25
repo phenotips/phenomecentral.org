@@ -66,6 +66,14 @@
       </unpackOptions>
       <useProjectArtifact>false</useProjectArtifact>
     </dependencySet>
+    <dependencySet>
+      <includes>
+        <include>org.phenotips:clinical-text-analysis-extension-ctakes-service</include>
+      </includes>
+      <outputDirectory>webapps/ctakes</outputDirectory>
+      <unpack>true</unpack>
+      <useProjectArtifact>false</useProjectArtifact>
+    </dependencySet>
   </dependencySets>
   <fileSets>
     <!-- Copy shell scripts and set execute permissions -->

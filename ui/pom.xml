@@ -33,24 +33,28 @@
       <groupId>org.phenotips</groupId>
       <artifactId>phenotips-ui</artifactId>
       <version>${phenotips.version}</version>
+      <scope>runtime</scope>
       <type>xar</type>
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>patient-network-ui</artifactId>
       <version>${patientNetwork.version}</version>
+      <scope>runtime</scope>
       <type>xar</type>
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>matching-notification-ui</artifactId>
       <version>${patientNetwork.version}</version>
+      <scope>runtime</scope>
       <type>xar</type>
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>remote-matching-ui</artifactId>
       <version>${remoteMatching.version}</version>
+      <scope>runtime</scope>
       <type>xar</type>
     </dependency>
   </dependencies>

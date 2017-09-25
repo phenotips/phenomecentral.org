@@ -119,7 +119,7 @@
     <property>
       <parameters>priority=50
 column=1
-title=$services.localization.render('phenotips.homepage.groups.title') (% style="float: right;" %)[[$services.localization.render('phenotips.homepage.groups.moreGroups')&gt;&gt;Groups.WebHome]]
+title={{translation key="phenotips.homepage.groups.title"/}} [[{{translation key="phenotips.homepage.groups.moreGroups"/}}&gt;&gt;Groups.WebHome||class="extra"]]
 enabled=false</parameters>
     </property>
     <property>
