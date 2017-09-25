@@ -193,6 +193,10 @@ activeinstalls.ipFetchURL=https://phenotips.org/get/Stats/Id
             <require>wget</require>
             <require>mariadb-server</require>
           </requires>
+          <defineStatements>
+            <!-- On some systems the exomiser python script automatically gets compiled, which leads to build failures due to the unpackaged .pyc and .pyo files. Disable this behavior here: -->
+            <defineStatement>_unpackaged_files_terminate_build 0</defineStatement>
+          </defineStatements>
           <mappings>
             <!-- Copy the main PhenomeCentral webapp -->
             <mapping>
