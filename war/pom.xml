@@ -34,6 +34,10 @@
 
     <!-- The default UI associated to this WAR -->
     <xwiki.extension.distribution.ui>org.phenomecentral:phenomecentral-ui</xwiki.extension.distribution.ui>
+    <!-- war package has no Java code, speedup by skipping java checks -->
+    <checkstyle.skip>true</checkstyle.skip>
+    <clirr.skip>true</clirr.skip>
+    <dependencyCheck.skip>true</dependencyCheck.skip>
   </properties>
   <dependencies>
     <!-- Extend the base war -->
@@ -680,6 +684,11 @@
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
+      <artifactId>entity-access-rules-api</artifactId>
+      <version>${phenotips.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
       <artifactId>patient-access-rules-api</artifactId>
       <version>${phenotips.version}</version>
     </dependency>
@@ -690,7 +699,7 @@
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
-      <artifactId>patient-access-rules-rest</artifactId>
+      <artifactId>entity-access-rules-rest</artifactId>
       <version>${phenotips.version}</version>
     </dependency>
     <dependency>
@@ -711,6 +720,16 @@
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>phenotips-studies-api</artifactId>
+      <version>${phenotips.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
+      <artifactId>phenotips-consents-api</artifactId>
+      <version>${phenotips.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
+      <artifactId>phenotips-consents-rest</artifactId>
       <version>${phenotips.version}</version>
     </dependency>
     <dependency>
@@ -815,6 +834,11 @@
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
+      <artifactId>phenotype-suggest-service-api</artifactId>
+      <version>${phenotips.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
       <artifactId>phenotips-proxy-authentication</artifactId>
       <version>${phenotips.version}</version>
     </dependency>
@@ -845,6 +869,8 @@
     </dependency>
 
     <!-- PhenomeCentral specific -->
+
+    <!-- Patient Network components-->
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>patient-similarity-data-api</artifactId>
@@ -882,9 +908,16 @@
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
+      <artifactId>matching-notification-migrations</artifactId>
+      <version>${patientNetwork.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
       <artifactId>matching-notification-resources</artifactId>
       <version>${patientNetwork.version}</version>
     </dependency>
+
+    <!-- Remote Matching components-->
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>remote-matching-core-server</artifactId>
@@ -893,6 +926,21 @@
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>remote-matching-core-client</artifactId>
+      <version>${remoteMatching.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
+      <artifactId>remote-matching-core-common</artifactId>
+      <version>${remoteMatching.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
+      <artifactId>remote-matching-core-hibernate</artifactId>
+      <version>${remoteMatching.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
+      <artifactId>remote-matching-core-api</artifactId>
       <version>${remoteMatching.version}</version>
     </dependency>
 
