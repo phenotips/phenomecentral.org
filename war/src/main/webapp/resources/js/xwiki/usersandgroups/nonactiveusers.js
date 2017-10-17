@@ -439,7 +439,8 @@ function displayUsersAndGroups(row, i, table, idx, form_token)
 function approveUserOrGroup(rowNumber, table, docname, uorg, form_token)
 {
   return function () {
-    var url = "$xwiki.getURL('XWiki.ManualAccountValidation', 'get', 'outputSyntax=plain')&xwikiname=" + docname;
+    var url =
+      "$xwiki.getURL('XWiki.ManualAccountValidation', 'get', 'outputSyntax=plain')&action=accept&xwikiname=" + docname;
     if (confirm("Are you use you want to approve this user __name__?".replace("__name__", docname))) {
       new Ajax.Request(url, {
         method: "get",
@@ -464,20 +465,19 @@ function editUserOrGroup(userinlineurl, usersaveurl, userredirecturl)
 function deleteUserOrGroup(i, table, docname, uorg, form_token)
 {
   return function() {
+    var url =
+      "$xwiki.getURL('XWiki.ManualAccountValidation', 'get', 'outputSyntax=plain')&action=reject&xwikiname=" + docname;
     var message = "$escapetool.javascript($services.localization.render('rightsmanager.confirmdeletegroup'))";
     if (uorg == "user") {
       message = "$escapetool.javascript($services.localization.render('rightsmanager.confirmdeleteuser'))";
     }
     if (confirm(message.replace('__name__', docname))) {
-      new Ajax.Request('', {
+      new Ajax.Request(url, {
         method: 'get',
-        parameters: {
-          xpage: 'deleteuorg',
-          docname: docname,
-          form_token: form_token
-        },
         onSuccess: function(transport) {
-          table.deleteRow(i);
+          if (transport.responseText == "true") {
+            table.deleteRow(i)
+          }
         }
       });
     }
