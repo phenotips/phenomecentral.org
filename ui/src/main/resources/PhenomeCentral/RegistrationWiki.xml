@@ -535,7 +535,7 @@ $xwiki.get('ssfx').use('uicomponents/widgets/validation/livevalidation.css', tru
     &lt;/dd&gt;
     &lt;dt&gt;
       &lt;label for="confirmation_clinician"&gt;&lt;input id="confirmation_clinician" type="checkbox" name="confirmation_clinician" style="margin-right: 16px;" mlb_binding_key="9"&gt;
-      I confirm that I am a doctor, clinical geneticist or scientist working with patients affected by rare disorders.
+      I confirm that I am a health care professional or scientist working with patients affected by rare disorders.
       &lt;span class="xRequired"&gt;(Required)&lt;/span&gt;
       &lt;/label&gt;
     &lt;/dt&gt;
