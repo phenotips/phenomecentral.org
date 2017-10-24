@@ -1334,7 +1334,9 @@
       </granted>
     </class>
     <property>
-      <granted/>
+      <granted>
+        <value>matching</value>
+      </granted>
     </property>
   </object>
   <object>
