@@ -1417,7 +1417,7 @@
       </AllowPushesFromNonListedServers>
     </class>
     <property>
-      <AllowNoConsentsFromOldClients>0</AllowNoConsentsFromOldClients>
+      <AllowNoConsentsFromOldClients>1</AllowNoConsentsFromOldClients>
     </property>
     <property>
       <AllowPushesFromNonListedServers>1</AllowPushesFromNonListedServers>
@@ -2952,7 +2952,7 @@
       <accessibility>0</accessibility>
     </property>
     <property>
-      <admin_email/>
+      <admin_email>noreply@phenomecentral.ccm.sickkids.ca</admin_email>
     </property>
     <property>
       <auth_active_check>1</auth_active_check>
