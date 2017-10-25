@@ -97,8 +97,8 @@ class Settings:
     def get_settings_filename(self, record_id):
         return os.path.join(self.get_job_dir(), record_id + '.settings')
 
-    def get_lock_filename(self, record_id):
-        return os.path.join(self._settings['out_dir'], record_id + '.lock')
+    def get_lock_filename(self):
+        return os.path.join(self._settings['out_dir'], 'exomiser.lock')
 
     def get_job_dir(self):
         job_dir = os.path.join(self._settings['out_dir'], 'job_' + self._settings['date'])
@@ -109,8 +109,8 @@ class Settings:
         return os.path.join(self._settings['record_dir'], record_id, self._settings['attach_subdir'], filename, filename)
 
 class Lock(object):
-    def __init__(self, record_id, settings):
-        self._filename = settings.get_lock_filename(record_id)
+    def __init__(self, settings):
+        self._filename = settings.get_lock_filename()
 
     def __enter__(self):
         # Race condition still technically possible here
@@ -316,10 +316,10 @@ def run_exomiser(record_id, new_data, settings):
         clear_cache(record_id, settings)
 
 def script(settings, start_time=None):
-    changed_records = fetch_changed_records(settings, since=start_time)
-    for record_id in changed_records:
-        try:
-            with Lock(record_id, settings):
+    try:
+        with Lock(settings):
+            changed_records = fetch_changed_records(settings, since=start_time)
+            for record_id in changed_records:
                 logging.info('Processing patient: {0!r}'.format(record_id))
                 vcf_filepath = get_record_vcf(record_id, settings)
 
@@ -347,8 +347,8 @@ def script(settings, start_time=None):
 
                 # Patient record has changed, (re-)run Exomiser
                 run_exomiser(record_id, new_data, settings)
-        except RecordLockedException:
-            logging.error('Skipping locked record: {0}'.format(record_id))
+    except RecordLockedException:
+        logging.error('The exomiser instance is already running')
 
 def parse_args(args):
     from optparse import OptionParser
