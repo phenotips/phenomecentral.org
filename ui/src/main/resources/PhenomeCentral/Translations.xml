@@ -41,7 +41,8 @@
 phenotips.homepage.title=PhenomeCentral
 phenomecentral.version={0}PhenomeCentral{1} version {2} based on {3}PhenoTips{4} version {5}
 pc.register.email=Institutional email address
-phenotips.permissions.visibility.public.description=All registered users can view public cases. Select only if consent has been obtained from the patient/guardian/substitute decision maker to make data available to the greater scientific community (eg. for publication).</content>
+phenotips.permissions.visibility.public.description=All registered users can view public cases. Select only if consent has been obtained from the patient/guardian/substitute decision maker to make data available to the greater scientific community (eg. for publication).
+PhenoTips.PatientConsent_change_consents_btn=I agree</content>
   <object>
     <name>PhenomeCentral.Translations</name>
     <number>0</number>
