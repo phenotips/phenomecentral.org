@@ -3130,7 +3130,7 @@ The ${wikiname} Team
 ##${host}${xwiki.getURL('XWiki.AccountValidation', 'view', "validkey=${validkey}&amp;xwikiname=${xwikiname}")}</validation_email_content>
     </property>
     <property>
-      <version>#set($TaC=$xwiki.getDocument('data.Terms_and_Conditions_of_Use'))#if ($TaC)&lt;a href="$TaC.getURL()"&gt;Terms and Conditions&lt;/a&gt;#else &amp;nbsp; #end</version>
+      <version>#includeTopic('PhenomeCentral.FooterLinks')</version>
     </property>
     <property>
       <webcopyright>#template('version.vm')</webcopyright>
