@@ -416,7 +416,7 @@
       <displayType>select</displayType>
       <multiSelect>0</multiSelect>
       <name>iconTheme</name>
-      <number>73</number>
+      <number>72</number>
       <prettyName>Icon theme</prettyName>
       <relationalStorage>0</relationalStorage>
       <separator> </separator>
@@ -717,7 +717,7 @@
       <prettyName>Width of the left panel column</prettyName>
       <relationalStorage>0</relationalStorage>
       <separator> </separator>
-      <separators> ,|</separators>
+      <separators>|, </separators>
       <size>1</size>
       <unmodifiable>0</unmodifiable>
       <values>---|Small|Medium|Large</values>
@@ -770,17 +770,13 @@
       <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
     </multilingual>
     <obfuscateEmailAddresses>
-      <customDisplay/>
-      <defaultValue>0</defaultValue>
       <disabled>0</disabled>
       <displayFormType>select</displayFormType>
-      <displayType/>
+      <displayType>yesno</displayType>
       <name>obfuscateEmailAddresses</name>
-      <number>72</number>
+      <number>73</number>
       <prettyName>Obfuscate Email Addresses</prettyName>
       <unmodifiable>0</unmodifiable>
-      <validationMessage/>
-      <validationRegExp/>
       <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
     </obfuscateEmailAddresses>
     <parent>
@@ -878,7 +874,7 @@
       <prettyName>Width of the right panel column</prettyName>
       <relationalStorage>0</relationalStorage>
       <separator> </separator>
-      <separators> ,|</separators>
+      <separators>|, </separators>
       <size>1</size>
       <unmodifiable>0</unmodifiable>
       <values>---|Small|Medium|Large</values>
@@ -1483,12 +1479,13 @@
   &lt;li&gt;
     &lt;label for="${prefix}${name}_${visibility.name}"&gt;
       &lt;input id="${prefix}${name}_${visibility.name}" name="${prefix}${name}" type="checkbox" value="$!escapetool.xml($visibility.name)"#if ($value.contains($visibility.name)) checked="checked"#end /&gt;
-      &lt;span class="disable-if-selected"&gt;$visibility.label&lt;/span&gt;
+      &lt;span class="disable-if-selected"&gt;$!escapetool.xml($visibility.label)&lt;/span&gt;
     &lt;/label&gt;
-    &lt;span class="xHint"&gt;${visibility.description}&lt;/span&gt;
+    &lt;span class="xHint"&gt;$!escapetool.xml($visibility.description)&lt;/span&gt;
   &lt;/li&gt;
 #end
 &lt;/ul&gt;
+&lt;input type='hidden' name="${prefix}${name}" value=''/&gt;
 {{/html}}{{/velocity}}</customDisplay>
         <disabled>0</disabled>
         <displayType>select</displayType>
@@ -2145,7 +2142,7 @@
         <displayType>select</displayType>
         <multiSelect>0</multiSelect>
         <name>iconTheme</name>
-        <number>73</number>
+        <number>72</number>
         <prettyName>Icon theme</prettyName>
         <relationalStorage>0</relationalStorage>
         <separator> </separator>
@@ -2446,7 +2443,7 @@
         <prettyName>Width of the left panel column</prettyName>
         <relationalStorage>0</relationalStorage>
         <separator> </separator>
-        <separators> ,|</separators>
+        <separators>|, </separators>
         <size>1</size>
         <unmodifiable>0</unmodifiable>
         <values>---|Small|Medium|Large</values>
@@ -2499,17 +2496,13 @@
         <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
       </multilingual>
       <obfuscateEmailAddresses>
-        <customDisplay/>
-        <defaultValue>0</defaultValue>
         <disabled>0</disabled>
         <displayFormType>select</displayFormType>
-        <displayType/>
+        <displayType>yesno</displayType>
         <name>obfuscateEmailAddresses</name>
-        <number>72</number>
+        <number>73</number>
         <prettyName>Obfuscate Email Addresses</prettyName>
         <unmodifiable>0</unmodifiable>
-        <validationMessage/>
-        <validationRegExp/>
         <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
       </obfuscateEmailAddresses>
       <parent>
@@ -2607,7 +2600,7 @@
         <prettyName>Width of the right panel column</prettyName>
         <relationalStorage>0</relationalStorage>
         <separator> </separator>
-        <separators> ,|</separators>
+        <separators>|, </separators>
         <size>1</size>
         <unmodifiable>0</unmodifiable>
         <values>---|Small|Medium|Large</values>
@@ -3018,13 +3011,67 @@ Your account on ${wikiname} has been successfully activated. You can now login a
       <editor>Text</editor>
     </property>
     <property>
+      <guest_comment_requires_captcha/>
+    </property>
+    <property>
       <iconTheme>IconThemes.FontAwesome</iconTheme>
     </property>
     <property>
       <invitation_email_content/>
     </property>
     <property>
+      <javamail_extra_props/>
+    </property>
+    <property>
       <languages/>
+    </property>
+    <property>
+      <ldap/>
+    </property>
+    <property>
+      <ldap_UID_attr/>
+    </property>
+    <property>
+      <ldap_base_DN/>
+    </property>
+    <property>
+      <ldap_bind_DN/>
+    </property>
+    <property>
+      <ldap_bind_pass/>
+    </property>
+    <property>
+      <ldap_exclude_group/>
+    </property>
+    <property>
+      <ldap_fields_mapping/>
+    </property>
+    <property>
+      <ldap_group_mapping/>
+    </property>
+    <property>
+      <ldap_groupcache_expiration/>
+    </property>
+    <property>
+      <ldap_mode_group_sync>always</ldap_mode_group_sync>
+    </property>
+    <property>
+      <ldap_port/>
+    </property>
+    <property>
+      <ldap_server/>
+    </property>
+    <property>
+      <ldap_trylocal/>
+    </property>
+    <property>
+      <ldap_update_user/>
+    </property>
+    <property>
+      <ldap_user_group/>
+    </property>
+    <property>
+      <ldap_validate_password/>
     </property>
     <property>
       <leftPanels/>
@@ -3049,6 +3096,9 @@ $xwiki.ssx.use($xwiki.getSpacePreference('colorTheme'))</meta>
     </property>
     <property>
       <multilingual>0</multilingual>
+    </property>
+    <property>
+      <parent/>
     </property>
     <property>
       <plugins/>
@@ -3103,6 +3153,12 @@ $xwiki.ssx.use($xwiki.getSpacePreference('colorTheme'))</meta>
     </property>
     <property>
       <stylesheets>style.css</stylesheets>
+    </property>
+    <property>
+      <tags/>
+    </property>
+    <property>
+      <timezone/>
     </property>
     <property>
       <title>#if ($doc.name != 'WebHome')$tdoc.getRenderedTitle("plain/1.0") | #{end}$!xwiki.getDocument("$!{doc.space}.WebHome").getRenderedTitle("plain/1.0")</title>
