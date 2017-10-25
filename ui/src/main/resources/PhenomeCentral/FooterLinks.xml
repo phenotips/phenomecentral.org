@@ -37,11 +37,20 @@
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>false</hidden>
-  <content>{{velocity}}{{html}}
-#set($TaC=$xwiki.getDocument('data.Terms_and_Conditions_of_Use'))#if (!$TaC.isNew())&lt;a href="$TaC.getURL()"&gt;Terms and Conditions&lt;/a&gt;#else &amp;nbsp; #end
-#set($CF=$xwiki.getDocument('data.Consent_forms'))
-#if (!$TaC.isNew() &amp;&amp; !$CF.isNew()) • #end
-#if (!$CF.isNew())&lt;a href="$CF.getURL()"&gt;Consent forms&lt;/a&gt;#else &amp;nbsp; #end
-{{/html}}{{/velocity}}
-</content>
+  <content>{{velocity}}
+#set ($footerLinksDocs = [
+  'data.Terms_and_Conditions_of_Use',
+  'data.Data_policies',
+  'data.Consent_forms'
+])
+#set ($hasLinks = false)
+#foreach ($dn in $footerLinksDocs)
+  #set ($d = $xwiki.getDocument($dn))
+  #if (!$d.isNew())
+    #if ($hasLinks) • #end [[$d.plainTitle&gt;&gt;$dn]]##
+    #set ($hasLinks = true)
+  #end
+#end
+#if (!$hasLinks) #end
+{{/velocity}}</content>
 </xwikidoc>
