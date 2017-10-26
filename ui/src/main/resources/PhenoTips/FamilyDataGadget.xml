@@ -188,7 +188,7 @@
     <property>
       <parameters>priority=70
 column=1
-enabled=true</parameters>
+enabled=false</parameters>
     </property>
     <property>
       <scope>wiki</scope>

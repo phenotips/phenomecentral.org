@@ -119,8 +119,8 @@
       <name>org.phenotips.homepage.dashboard.myGroups</name>
     </property>
     <property>
-      <parameters>priority=20
-column=1
+      <parameters>priority=10
+column=2
 title={{translation key="phenotips.homepage.myGroups.title"/}} [[{{translation key="phenotips.homepage.groups.moreGroups"/}}&gt;&gt;Groups.WebHome||class="extra"]]
 enabled=true</parameters>
     </property>
