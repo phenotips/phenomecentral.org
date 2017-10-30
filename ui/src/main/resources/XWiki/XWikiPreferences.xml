@@ -3186,7 +3186,7 @@ The ${wikiname} Team
 ##${host}${xwiki.getURL('XWiki.AccountValidation', 'view', "validkey=${validkey}&amp;xwikiname=${xwikiname}")}</validation_email_content>
     </property>
     <property>
-      <version>#includeTopic('PhenomeCentral.FooterLinks')</version>
+      <version>#includeInContext('PhenomeCentral.FooterLinks')</version>
     </property>
     <property>
       <webcopyright>#template('version.vm')</webcopyright>
