@@ -142,7 +142,7 @@
     ],
 
     initialize : function (permissionsManager) {
-      if (!permissionsManager || this.JOURNALS.length == 0) {
+      if (!permissionsManager || permissionsManager.entityType != 'patients' || this.JOURNALS.length == 0) {
         return
       }
       this._permissionsManager = permissionsManager;
