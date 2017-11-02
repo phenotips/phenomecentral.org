@@ -33,6 +33,7 @@
 
   <properties>
     <pcwar.path>${project.build.directory}/pcwar</pcwar.path>
+    <ctwar.path>${project.build.directory}/ctwar</ctwar.path>
     <data.path>${project.build.directory}/phenotips</data.path>
     <db.path>${data.path}/data</db.path>
     <xwiki.properties.environment.permanentDirectory>/var/lib/phenotips/data</xwiki.properties.environment.permanentDirectory>

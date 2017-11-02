@@ -155,7 +155,7 @@ $xwiki.ssx.use('XWiki.DateTimePicker')##
 #set ($config = $xwiki.getDocument('data.WebHome').getObject('PhenoTips.DBConfigurationClass'))
 #set ($patientClassName = 'PhenoTips.PatientClass')
 #if ($config)
-#set ($columns = ['doc.name', 'external_id', 'doc.creator', 'doc.creationDate'])
+#set ($columns = ['external_id', 'doc.creator', 'doc.creationDate'])
 #set ($columnsProperties = {})
 #foreach ($column in $columns)
   #if ($foreach.index &lt;= 1)
