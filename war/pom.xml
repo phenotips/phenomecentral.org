@@ -34,10 +34,6 @@
 
     <!-- The default UI associated to this WAR -->
     <xwiki.extension.distribution.ui>org.phenomecentral:phenomecentral-ui</xwiki.extension.distribution.ui>
-    <!-- war package has no Java code, speedup by skipping java checks -->
-    <checkstyle.skip>true</checkstyle.skip>
-    <clirr.skip>true</clirr.skip>
-    <dependencyCheck.skip>true</dependencyCheck.skip>
   </properties>
   <dependencies>
     <!-- Extend the base war -->
@@ -561,15 +557,16 @@
       <artifactId>xwiki-platform-resource-servlet</artifactId>
       <version>${xwiki.version}</version>
     </dependency>
+    <!-- Add support for HTTPS certificates signed by Let's Encrypt, such as the one used by nexus.phenotips.org -->
+    <dependency>
+      <groupId>org.xwiki.contrib</groupId>
+      <artifactId>letsencrypt</artifactId>
+      <version>1.1</version>
+    </dependency>
     <!-- PhenoTips components -->
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>component-registry</artifactId>
-      <version>${phenotips.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.phenotips</groupId>
-      <artifactId>solr-access-service-api</artifactId>
       <version>${phenotips.version}</version>
     </dependency>
     <dependency>
@@ -845,12 +842,12 @@
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>pingback-common</artifactId>
-      <version>1.2</version>
+      <version>1.3</version>
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>pingback-client-api</artifactId>
-      <version>1.2</version>
+      <version>1.3</version>
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
