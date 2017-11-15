@@ -155,7 +155,7 @@ $xwiki.ssx.use('XWiki.DateTimePicker')##
 #set ($config = $xwiki.getDocument('data.WebHome').getObject('PhenoTips.DBConfigurationClass'))
 #set ($patientClassName = 'PhenoTips.PatientClass')
 #if ($config)
-#set ($columns = ['external_id', 'doc.creator', 'doc.creationDate'])
+#set ($columns = ['external_id', 'owner', 'doc.creationDate'])
 #set ($columnsProperties = {})
 #foreach ($column in $columns)
   #if ($foreach.index &lt;= 1)
@@ -177,6 +177,7 @@ $xwiki.ssx.use('XWiki.DateTimePicker')##
   'rowCount'          : 25,
   'maxPages'          : 10,
   'selectedColumn'    : $config.getProperty('livetableSortColumn').value,
+  'topFilters'        : "&lt;input type='hidden' name='owner/class' value='PhenoTips.OwnerClass'/&gt;",
   'defaultOrder'      : 'asc',
   'resultPage'        : 'PhenoTips.LiveTableResults'
 })
