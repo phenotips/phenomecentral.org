@@ -913,6 +913,11 @@
       <artifactId>matching-notification-resources</artifactId>
       <version>${patientNetwork.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
+      <artifactId>matching-notification-rest</artifactId>
+      <version>${patientNetwork.version}</version>
+    </dependency>
 
     <!-- Remote Matching components-->
     <dependency>
