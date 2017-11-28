@@ -122,22 +122,17 @@
   var widgets = PhenomeCentral.widgets = PhenomeCentral.widgets || {};
   widgets.JournalSubmission = Class.create({
     JOURNALS : [
-      #set ($isFirst = true)
-      // TODO: query the DB for journals instead of hard-coding the list
-      #foreach ($jId in ["ClinicalGenetics"])
-        #set ($jDoc = $xwiki.getDocument("XWiki.$jId"))
-        #if (!$jDoc.isNew())
-          #if (!$isFirst)
-          ,
-          #end
-          {
-            "id" : "$services.model.serialize($jDoc.documentReference, 'default')",
-            "name" : "$xwiki.getUserName("XWiki.$jId", false)",
-            "type"        : "user",
-            "accessLevel" : "manage"
-          }
-          #set ($isFirst = false)
+      #foreach ($jId in $services.query.xwql('from doc.object(PhenomeCentral.Journal) as j order by doc.fullName').execute())
+        #set ($jDoc = $xwiki.getDocument($jId))
+        #if (!$foreach.first)
+        ,
         #end
+        {
+          "id" : "$services.model.serialize($jDoc.documentReference, 'default')",
+          "name" : "$!xwiki.getUserName($jId, false)",
+          "type" : "user",
+          "accessLevel" : "manage"
+        }
       #end
     ],
 
