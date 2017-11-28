@@ -471,7 +471,6 @@ phenomecentral.consent.matching=This patient is matchable through the Matchmaker
     <property>
       <fields>
         <value>org.phenotips.patientSheet.field.indication_for_referral</value>
-        <value>org.phenotips.patientSheet.field.family_study</value>
         <value>org.phenotips.patientSheet.field.ethnicity</value>
         <value>org.phenotips.patientSheet.field.family_history</value>
         <value>org.phenotips.patientSheet.field.consanguinity</value>
