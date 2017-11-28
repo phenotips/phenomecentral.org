@@ -131,7 +131,7 @@
           "id" : "$services.model.serialize($jDoc.documentReference, 'default')",
           "name" : "$!xwiki.getUserName($jId, false)",
           "type" : "user",
-          "accessLevel" : "manage"
+          "level" : "manage"
         }
       #end
     ],
