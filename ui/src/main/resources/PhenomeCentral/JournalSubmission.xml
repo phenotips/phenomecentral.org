@@ -169,10 +169,10 @@
           if (event.target) {
             if (event.target.checked === false) {
               // Remove journal collaborator
-              console.log('Removing journal: ' + j.id);
+              console &amp;&amp; console.log('Removing journal: ' + j.id);
               _this._removeJournal(j.id);
             } else {
-              console.log('Adding journal: ' + j.id);
+              console &amp;&amp; console.log('Adding journal: ' + j.id);
               _this._addJournal(j);
             }
           }
@@ -186,7 +186,7 @@
       // Ensure checkbox is checked
       var checkbox = this._journalsManager.down('input[type="checkbox"][value="' + j.id + '"]');
       if (checkbox) {
-        console.log('Found checkbox... checking');
+        console &amp;&amp; console.log('Found checkbox... checking');
         checkbox.checked = true;
      }
      this._permissionsManager._collaboratorsList.insert(row);
@@ -207,7 +207,7 @@
       var _this = this;
       this._permissionsManager._collaboratorsList.select('tr input[type="hidden"][name="collaborator"').each(function(c) {
          _this._journalsManager.select('input[type="checkbox"][name="journal"][value$="' + c.value + '"]').each(function (cb) {
-            console.log('Found checkbox for ' + c.value + '... checking');
+            console &amp;&amp; console.log('Found checkbox for ' + c.value + '... checking');
             cb.checked = true;
             var cRow = c.up('tr');
             cRow.addClassName('journal');
@@ -339,7 +339,7 @@ document.observe("phenotips:permissions-manager:loaded", function(event) {
       <name/>
     </property>
     <property>
-      <parse/>
+      <parse>0</parse>
     </property>
     <property>
       <use>always</use>
