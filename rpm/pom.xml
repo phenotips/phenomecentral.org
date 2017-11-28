@@ -33,6 +33,7 @@
 
   <properties>
     <pcwar.path>${project.build.directory}/pcwar</pcwar.path>
+    <ctwar.path>${project.build.directory}/ctwar</ctwar.path>
     <data.path>${project.build.directory}/phenotips</data.path>
     <db.path>${data.path}/data</db.path>
     <xwiki.properties.environment.permanentDirectory>/var/lib/phenotips/data</xwiki.properties.environment.permanentDirectory>
@@ -52,6 +53,19 @@
       <version>${phenotips.version}</version>
       <type>jar</type>
       <optional>true</optional>
+    </dependency>
+
+    <dependency>
+      <groupId>org.phenotips</groupId>
+      <artifactId>clinical-text-analysis-extension-ctakes-service</artifactId>
+      <version>${textAnalysis.version}</version>
+      <type>war</type>
+      <exclusions>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
   </dependencies>
 
@@ -79,6 +93,24 @@
               </artifactItems>
               <excludes>**\/xwiki.cfg,**/xwiki.properties,**/hibernate.cfg.xml</excludes>
               <outputDirectory>${pcwar.path}</outputDirectory>
+            </configuration>
+          </execution>
+          <execution>
+            <id>unzip-ctakes</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>org.phenotips</groupId>
+                  <artifactId>clinical-text-analysis-extension-ctakes-service</artifactId>
+                  <version>${textAnalysis.version}</version>
+                  <type>war</type>
+                </artifactItem>
+              </artifactItems>
+              <outputDirectory>${ctwar.path}</outputDirectory>
             </configuration>
           </execution>
         </executions>
@@ -208,6 +240,15 @@ activeinstalls.ipFetchURL=https://phenotips.org/get/Stats/Id
                 </source>
               </sources>
             </mapping>
+            <!-- Copy the CTAKES webapp -->
+            <mapping>
+              <directory>/var/lib/phenotips/webapps/ctakes</directory>
+              <sources>
+                <source>
+                  <location>${ctwar.path}</location>
+                </source>
+              </sources>
+            </mapping>
             <!-- Copy the custom PhenomeCentral/PhenoTips/XWiki configuration files into the webapp -->
             <mapping>
               <directory>/var/lib/phenotips/webapp/WEB-INF</directory>
@@ -241,6 +282,10 @@ activeinstalls.ipFetchURL=https://phenotips.org/get/Stats/Id
                 <source>
                   <location>${project.build.outputDirectory}/context.xml</location>
                   <destination>ROOT.xml</destination>
+                </source>
+                <source>
+                  <location>${project.build.outputDirectory}/ctakes.xml</location>
+                  <destination>ctakes.xml</destination>
                 </source>
               </sources>
             </mapping>

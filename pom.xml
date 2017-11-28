@@ -23,7 +23,7 @@
   <parent>
     <groupId>org.phenotips</groupId>
     <artifactId>phenotips-parent</artifactId>
-    <version>1.3</version>
+    <version>1.4-SNAPSHOT</version>
     <relativePath />
   </parent>
 
@@ -131,9 +131,10 @@
     <patientNetwork.version>1.2-SNAPSHOT</patientNetwork.version>
     <remoteMatching.version>1.2-SNAPSHOT</remoteMatching.version>
 
-    <!-- There is no Java code, speedup the build by skipping Clirr and Checkstyle checks -->
+    <!-- There is no Java code, speedup the build by skipping checks -->
     <checkstyle.skip>true</checkstyle.skip>
     <clirr.skip>true</clirr.skip>
+    <dependencyCheck.skip>true</dependencyCheck.skip>
   </properties>
 
   <modules>

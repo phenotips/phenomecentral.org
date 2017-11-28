@@ -557,15 +557,16 @@
       <artifactId>xwiki-platform-resource-servlet</artifactId>
       <version>${xwiki.version}</version>
     </dependency>
+    <!-- Add support for HTTPS certificates signed by Let's Encrypt, such as the one used by nexus.phenotips.org -->
+    <dependency>
+      <groupId>org.xwiki.contrib</groupId>
+      <artifactId>letsencrypt</artifactId>
+      <version>1.1</version>
+    </dependency>
     <!-- PhenoTips components -->
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>component-registry</artifactId>
-      <version>${phenotips.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.phenotips</groupId>
-      <artifactId>solr-access-service-api</artifactId>
       <version>${phenotips.version}</version>
     </dependency>
     <dependency>
@@ -680,6 +681,11 @@
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
+      <artifactId>entity-access-rules-api</artifactId>
+      <version>${phenotips.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
       <artifactId>patient-access-rules-api</artifactId>
       <version>${phenotips.version}</version>
     </dependency>
@@ -690,7 +696,7 @@
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
-      <artifactId>patient-access-rules-rest</artifactId>
+      <artifactId>entity-access-rules-rest</artifactId>
       <version>${phenotips.version}</version>
     </dependency>
     <dependency>
@@ -711,6 +717,16 @@
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>phenotips-studies-api</artifactId>
+      <version>${phenotips.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
+      <artifactId>phenotips-consents-api</artifactId>
+      <version>${phenotips.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
+      <artifactId>phenotips-consents-rest</artifactId>
       <version>${phenotips.version}</version>
     </dependency>
     <dependency>
@@ -815,18 +831,23 @@
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
+      <artifactId>phenotype-suggest-service-api</artifactId>
+      <version>${phenotips.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
       <artifactId>phenotips-proxy-authentication</artifactId>
       <version>${phenotips.version}</version>
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>pingback-common</artifactId>
-      <version>1.2</version>
+      <version>1.3</version>
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>pingback-client-api</artifactId>
-      <version>1.2</version>
+      <version>1.3</version>
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
@@ -845,6 +866,8 @@
     </dependency>
 
     <!-- PhenomeCentral specific -->
+
+    <!-- Patient Network components-->
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>patient-similarity-data-api</artifactId>
@@ -882,9 +905,16 @@
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
+      <artifactId>matching-notification-migrations</artifactId>
+      <version>${patientNetwork.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
       <artifactId>matching-notification-resources</artifactId>
       <version>${patientNetwork.version}</version>
     </dependency>
+
+    <!-- Remote Matching components-->
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>matching-notification-migrations</artifactId>
@@ -898,6 +928,21 @@
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>remote-matching-core-client</artifactId>
+      <version>${remoteMatching.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
+      <artifactId>remote-matching-core-common</artifactId>
+      <version>${remoteMatching.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
+      <artifactId>remote-matching-core-hibernate</artifactId>
+      <version>${remoteMatching.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
+      <artifactId>remote-matching-core-api</artifactId>
       <version>${remoteMatching.version}</version>
     </dependency>
 
