@@ -932,6 +932,11 @@
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
+      <artifactId>remote-matching-core-rest</artifactId>
+      <version>${remoteMatching.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
       <artifactId>remote-matching-core-common</artifactId>
       <version>${remoteMatching.version}</version>
     </dependency>
