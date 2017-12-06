@@ -15,7 +15,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="logo_v2.svg"
+   sodipodi:docname="phenomecentral_logos.svg"
    inkscape:export-filename="/Users/buske/Desktop/phenomecentral.png"
    inkscape:export-xdpi="300"
    inkscape:export-ydpi="300">
@@ -28,9 +28,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.32"
-     inkscape:cx="-27.651618"
-     inkscape:cy="326.56895"
+     inkscape:zoom="0.5"
+     inkscape:cx="95.378027"
+     inkscape:cy="381.31009"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -249,9 +249,9 @@
        id="text4463"
        y="366.09366"
        x="1095.8505"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:52.22753525px;line-height:125%;font-family:Quicksand;-inkscape-font-specification:Quicksand;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:131.02499962px;line-height:125%;font-family:Montserrat;-inkscape-font-specification:'Montserrat, Bold';letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;text-anchor:start;text-align:start;writing-mode:lr;"
        xml:space="preserve"><tspan
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:131.01982117px;font-family:Montserrat;-inkscape-font-specification:'Montserrat Bold';letter-spacing:-2.32924128px;fill:#ffffff;fill-opacity:1"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:131.02499962px;font-family:Montserrat;-inkscape-font-specification:'Montserrat, Bold';letter-spacing:-2.32924128px;fill:#ffffff;fill-opacity:1;text-anchor:start;text-align:start;writing-mode:lr;line-height:125%;"
          y="366.09366"
          x="1095.8505"
          id="tspan4465"
@@ -262,11 +262,11 @@
        id="text4471"
        y="238.60609"
        x="1105.7521"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:134.87985229px;line-height:125%;font-family:Quicksand;-inkscape-font-specification:Quicksand;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:98.34124565px;line-height:125%;font-family:Montserrat;-inkscape-font-specification:'Montserrat, Bold';letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;text-anchor:start;text-align:start;writing-mode:lr;"
        xml:space="preserve"
        inkscape:export-xdpi="29.796469"
        inkscape:export-ydpi="29.796469"><tspan
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:98.34098053px;font-family:Montserrat;-inkscape-font-specification:'Montserrat Bold';letter-spacing:-1.7482841px;fill:#ffffff;fill-opacity:1"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:98.34124565px;font-family:Montserrat;-inkscape-font-specification:'Montserrat, Bold';letter-spacing:-1.7482841px;fill:#ffffff;fill-opacity:1;text-anchor:start;text-align:start;writing-mode:lr;line-height:125%;"
          y="238.60609"
          x="1105.7521"
          id="tspan4473"
@@ -443,7 +443,7 @@
        inkscape:export-filename="/Users/buske/Desktop/phenomecentral_dark.png" />
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:52.22753525px;line-height:125%;font-family:Quicksand;-inkscape-font-specification:Quicksand;letter-spacing:0px;word-spacing:0px;fill:#333333;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:131.02499962px;line-height:125%;font-family:Montserrat;-inkscape-font-specification:'Montserrat, Bold';letter-spacing:0px;word-spacing:0px;fill:#333333;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;text-anchor:start;text-align:start;writing-mode:lr;"
        x="1095.8505"
        y="41.266491"
        id="text4514"
@@ -455,12 +455,12 @@
          id="tspan4516"
          x="1095.8505"
          y="41.266491"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:131.01982117px;font-family:Montserrat;-inkscape-font-specification:'Montserrat Bold';letter-spacing:-2.32924128px;fill:#333333;fill-opacity:1">CENTRAL</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:131.02499962px;font-family:Montserrat;-inkscape-font-specification:'Montserrat, Bold';letter-spacing:-2.32924128px;fill:#333333;fill-opacity:1;text-anchor:start;text-align:start;writing-mode:lr;line-height:125%;">CENTRAL</tspan></text>
     <text
        inkscape:export-ydpi="29.796469"
        inkscape:export-xdpi="29.796469"
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:134.87985229px;line-height:125%;font-family:Quicksand;-inkscape-font-specification:Quicksand;letter-spacing:0px;word-spacing:0px;fill:#333333;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:98.34124565px;line-height:125%;font-family:Montserrat;-inkscape-font-specification:'Montserrat, Bold';letter-spacing:0px;word-spacing:0px;fill:#333333;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;text-anchor:start;text-align:start;writing-mode:lr;"
        x="1105.7521"
        y="-86.221054"
        id="text4518"
@@ -470,7 +470,7 @@
          id="tspan4520"
          x="1105.7521"
          y="-86.221054"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:98.34098053px;font-family:Montserrat;-inkscape-font-specification:'Montserrat Bold';letter-spacing:-1.7482841px;fill:#333333;fill-opacity:1">PHENOME</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:98.34124565px;font-family:Montserrat;-inkscape-font-specification:'Montserrat, Bold';letter-spacing:-1.7482841px;fill:#333333;fill-opacity:1;text-anchor:start;text-align:start;writing-mode:lr;line-height:125%;">PHENOME</tspan></text>
     <g
        id="g4192"
        transform="translate(-1.3281111,0)"
@@ -498,7 +498,7 @@
            inkscape:export-filename="/Users/buske/Desktop/twitter_logo.png" />
         <text
            xml:space="preserve"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13.97662067px;line-height:125%;font-family:Quicksand;-inkscape-font-specification:Quicksand;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:32.5px;line-height:125%;font-family:Montserrat;-inkscape-font-specification:'Montserrat, Normal';letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;text-anchor:start;text-align:start;writing-mode:lr;"
            x="968.31378"
            y="494.79315"
            id="text4528"
@@ -510,7 +510,7 @@
              id="tspan4530"
              x="968.31378"
              y="494.79315"
-             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:32.5px;font-family:Montserrat;-inkscape-font-specification:Montserrat;letter-spacing:-0.62332869px;fill:#ffffff;fill-opacity:1">P</tspan></text>
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:32.5px;font-family:Montserrat;-inkscape-font-specification:'Montserrat, Normal';letter-spacing:-0.62332869px;fill:#ffffff;fill-opacity:1;text-anchor:start;text-align:start;writing-mode:lr;line-height:125%;">P</tspan></text>
         <circle
            inkscape:export-ydpi="392.28201"
            inkscape:export-xdpi="392.28201"
@@ -528,9 +528,9 @@
            id="text4524"
            y="495.20465"
            x="997.15753"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13.97662067px;line-height:125%;font-family:Quicksand;-inkscape-font-specification:Quicksand;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:32.5px;line-height:125%;font-family:Montserrat;-inkscape-font-specification:'Montserrat, Normal';letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;text-anchor:start;text-align:start;writing-mode:lr;"
            xml:space="preserve"><tspan
-             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:32.5px;font-family:Montserrat;-inkscape-font-specification:Montserrat;letter-spacing:-0.62332869px;fill:#ffffff;fill-opacity:1"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:32.5px;font-family:Montserrat;-inkscape-font-specification:'Montserrat, Normal';letter-spacing:-0.62332869px;fill:#ffffff;fill-opacity:1;text-anchor:start;text-align:start;writing-mode:lr;line-height:125%;"
              y="495.20465"
              x="997.15753"
              id="tspan4526"
