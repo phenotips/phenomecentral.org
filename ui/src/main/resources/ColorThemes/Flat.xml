@@ -1016,7 +1016,7 @@
     color: $theme.linkColor;
 }
 
-.space-data #mainContentArea, .space-data #mainEditArea {
+.space-data #mainContentArea, .space-data #mainEditArea, .space-Families #mainContentArea, .space-Families #mainEditArea {
     background-color: $theme.pageContentBackgroundColor;
     border: 1px $theme.borderColor;
     box-shadow: none;
