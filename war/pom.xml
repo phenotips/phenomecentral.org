@@ -852,6 +852,11 @@
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
+      <artifactId>patient-similarity-data-rest</artifactId>
+      <version>${patientNetwork.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
       <artifactId>patient-similarity-data-impl</artifactId>
       <version>${patientNetwork.version}</version>
     </dependency>
@@ -887,12 +892,25 @@
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
+      <artifactId>matching-notification-rest</artifactId>
+      <version>${patientNetwork.version}</version>
+    </dependency>
+
+    <!-- Remote Matching components-->
+
+    <dependency>
+      <groupId>org.phenotips</groupId>
       <artifactId>remote-matching-core-server</artifactId>
       <version>${remoteMatching.version}</version>
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>remote-matching-core-client</artifactId>
+      <version>${remoteMatching.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.phenotips</groupId>
+      <artifactId>remote-matching-core-rest</artifactId>
       <version>${remoteMatching.version}</version>
     </dependency>
 
