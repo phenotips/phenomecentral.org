@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see http://www.gnu.org/licenses/
+-->
+
+<xwikidoc version="1.1">
+  <web>PhenomeCentral</web>
+  <name>MMEStats</name>
+  <language/>
+  <defaultLanguage/>
+  <translation>0</translation>
+  <creator>xwiki:XWiki.Admin</creator>
+  <creationDate>1508887388000</creationDate>
+  <parent>data.WebHome</parent>
+  <author>xwiki:XWiki.Admin</author>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <date>1508936556000</date>
+  <contentUpdateDate>1508936556000</contentUpdateDate>
+  <version>1.1</version>
+  <title>Cases shared over the MME (matchable + MME consent)</title>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>xwiki/2.1</syntaxId>
+  <hidden>false</hidden>
+  <content>{{velocity}}
+#set ($patients = $services.query.xwql('select distinct doc from Document doc, doc.object(PhenoTips.PatientClass) obj where obj.identifier &gt;= 0 and doc.space = ''data'' order by doc.fullName').execute())
+#set ($nUsers = $services.query.xwql('from doc.object(XWiki.XWikiUsers) as u').count())
+##
+#set ($nTotal = 0)
+#set ($nMme = 0)
+#set ($mmeGenes = [])
+#set ($mmeVariants = [])
+#set ($mmePhenotypes = [])
+#set ($mmePrenatalPhenotypes = [])
+#set ($mmeOwners = {})
+#set ($uniqueGenes = {})
+#set ($uniqueVariants = {})
+#set ($uniquePhenotypeSets = {})
+#set ($uniquePhenotypes = {})
+#set ($uniquePrenatalPhenotypes = {})
+#set ($uniquePrenatalPhenotypeSets = {})
+#set ($exome_count = 0)
+#set ($unsolved_count = 0)
+##
+#foreach ($id in $patients)
+  #set ($nTotal = $nTotal + 1)
+  #set ($doc = $xwiki.getDocument($id))
+  ##
+  ## Check if case is shared with MME
+  #set ($consent = $doc.getObject('PhenoTips.PatientConsent'))
+  #set ($granted = $consent.getProperty('granted').value)
+  #set ($visibility = $doc.getObject('PhenoTips.VisibilityClass'))
+  #set ($visLevel = $!visibility.getProperty('visibility').value)
+  #if ($granted.contains('matching') &amp;&amp; $visLevel != "private")
+    #set ($nMme = $nMme + 1)
+    ##
+    #set ($owner = $doc.getObject('PhenoTips.OwnerClass'))
+    #set($discard = $mmeOwners.put($owner.getProperty('owner').value, 1))
+    ##
+    ## Add genes
+    #set ($genes = [])
+    #foreach ($gene in $doc.getObjects('PhenoTips.GeneClass'))
+      #set ($geneid = $gene.getValue('gene'))
+      #set ($status = $gene.getValue('status'))
+      #if ($status == 'candidate' || $status == 'solved')
+        #set($discard = $genes.add($geneid))
+        #set($discard = $uniqueGenes.put($geneid, 1))
+        #set($discard = $mmeGenes.add($geneid))
+      #end
+    #end
+    #set ($discard = $sorttool.sort($genes))
+    #set ($geneString = $stringtool.join($genes, ','))
+    ##
+    ## Add variants
+    #foreach ($var in $doc.getObjects('PhenoTips.GeneVariantClass'))
+      #set ($geneid = $var.getValue('gene'))
+      #set ($varid = $var.getValue('cdna').toLowerCase())
+      #if ($genes.contains($geneid))
+        #set($discard = $uniqueVariants.put($varid, 1))
+        #set($discard = $mmeVariants.add($varid))
+      #end
+    #end
+    ##
+    ## Add phenotypes
+    #set ($patient = $doc.getObject('PhenoTips.PatientClass'))
+    #set ($phenotypes = $!patient.getProperty('phenotype').value)
+    #foreach ($phenotype in $phenotypes)
+      #set ($discard = $uniquePhenotypes.put($phenotype, 1))
+      #set ($discard = $mmePhenotypes.add($phenotype))
+    #end
+    #set ($discard = $sorttool.sort($phenotypes))
+    #set ($phenotypeString = $stringtool.join($phenotypes, ','))
+    #set($discard = $uniquePhenotypeSets.put($phenotypeString, 1))
+    ## Add prenatal phenotypes
+    #set ($prphenotypes = $!patient.getProperty('prenatal_phenotype').value)
+    #foreach ($pphenotype in $prphenotypes)
+      #set ($discard = $uniquePrenatalPhenotypes.put($pphenotype, 1))
+      #set ($discard = $mmePrenatalPhenotypes.add($pphenotype))
+    #end
+    #set ($discard = $sorttool.sort($prphenotypes))
+    #set ($phenotypeString = $stringtool.join($prphenotypes, ','))
+    #set($discard = $uniquePrenatalPhenotypeSets.put($phenotypeString, 1))
+  #end
+  ##
+  ## Count patients with exome data
+  #if ($doc.getObject('PhenoTips.VCF') &amp;&amp; $doc.getObject('PhenoTips.VCF').getProperty('filename') &amp;&amp; !$doc.getObject('PhenoTips.VCF').getProperty('filename').value.isEmpty())
+    #set ($exome_count = $exome_count + 1)
+  #end
+  ##
+  ## Count unsolved cases
+  #set ($pClass = $doc.getObject('PhenoTips.PatientClass'))
+  #if ($pClass &amp;&amp; $pClass.getProperty('solved').value == 0 &amp;&amp; $pClass.getProperty('unaffected').value == 0 &amp;&amp; $pClass.getProperty('phenotype').value.size() &gt; 0)
+    #set ($geneClass = $doc.getObjects('PhenoTips.GeneClass'))
+    #set ($notSolved = true)
+    #foreach ($gene in $geneClass)
+      #if ($gene.getProperty('status').value == 'solved')
+        #set ($notSolved = false)
+      #end
+    #end
+    #if ($notSolved)
+      #set ($unsolved_count = $unsolved_count + 1)
+    #end
+  #end
+##if ($foreach.count &gt; 20)
+##  #break
+##end
+#end
+== Summary ==
+Total cases in PhenomeCentral: $nTotal
+Total users in PhenomeCentral: $nUsers
+Cases shared with MME: $nMme
+Unique owners of MME patients: $mmeOwners.size()
+
+* Total genes (candidate/solved): $mmeGenes.size()
+* Unique genes: $uniqueGenes.size()
+* Total variants (genes candidate/solved): $mmeVariants.size()
+* Unique variants (genes candidate/solved): $uniqueVariants.size()
+* Total HPO annotations: $mmePhenotypes.size()
+* Total HPO Prenatal annotations: $mmePrenatalPhenotypes.size()
+* Unique combinations of HPO terms: $uniquePhenotypeSets.size()
+* Unique Prenatal combinations of HPO terms: $uniquePrenatalPhenotypeSets.size()
+* Unique HPO terms: $uniquePhenotypes.size()
+* Unique HPO Prenatal terms: $uniquePrenatalPhenotypes.size()
+* Total documents with exome data: $exome_count
+* Total unsolved cases: $unsolved_count
+{{/velocity}}</content>
+  <object>
+    <name>PhenomeCentral.MMEStats</name>
+    <number>0</number>
+    <className>XWiki.XWikiRights</className>
+    <guid>fa28769c-a92f-4378-81e5-c77c4077ddcd</guid>
+    <class>
+      <name>XWiki.XWikiRights</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <allow>
+        <defaultValue>1</defaultValue>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType>allow</displayType>
+        <name>allow</name>
+        <number>4</number>
+        <prettyName>Allow/Deny</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </allow>
+      <groups>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>input</displayType>
+        <multiSelect>1</multiSelect>
+        <name>groups</name>
+        <number>1</number>
+        <picker>1</picker>
+        <prettyName>Groups</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <size>5</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.GroupsClass</classType>
+      </groups>
+      <levels>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>1</multiSelect>
+        <name>levels</name>
+        <number>2</number>
+        <prettyName>Levels</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <size>3</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.LevelsClass</classType>
+      </levels>
+      <users>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>input</displayType>
+        <multiSelect>1</multiSelect>
+        <name>users</name>
+        <number>3</number>
+        <picker>1</picker>
+        <prettyName>Users</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <size>5</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.UsersClass</classType>
+      </users>
+    </class>
+    <property>
+      <allow>1</allow>
+    </property>
+    <property>
+      <groups>XWiki.XWikiAdminGroup</groups>
+    </property>
+    <property>
+      <levels>view,edit,delete,comment</levels>
+    </property>
+  </object>
+</xwikidoc>
