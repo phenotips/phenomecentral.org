@@ -251,7 +251,7 @@
 {{velocity}}{{html clean=false}}
 #__displayPropertyAsDate()
 {{/html}}{{/velocity}}</customDisplay>
-        <dateFormat>MMMM yyyy</dateFormat>
+        <dateFormat>yyyy-MM-dd</dateFormat>
         <disabled>0</disabled>
         <emptyIsToday>0</emptyIsToday>
         <name>date_of_birth</name>
@@ -283,7 +283,7 @@
 {{velocity}}{{html clean=false}}
 #__displayPropertyAsDate()
 {{/html}}{{/velocity}}</customDisplay>
-        <dateFormat>MMMM yyyy</dateFormat>
+        <dateFormat>yyyy-MM-dd</dateFormat>
         <disabled>0</disabled>
         <emptyIsToday>0</emptyIsToday>
         <name>date_of_death</name>
@@ -380,7 +380,7 @@
 #end
 #end
 {{/html}}{{/velocity}}</customDisplay>
-        <dateFormat>MMMM yyyy</dateFormat>
+        <dateFormat>yyyy-MM-dd</dateFormat>
         <disabled>0</disabled>
         <emptyIsToday>1</emptyIsToday>
         <name>exam_date</name>
@@ -658,7 +658,7 @@
         <name>global_age_of_onset</name>
         <number>8</number>
         <picker>0</picker>
-        <prettyName>Global age of onset</prettyName>
+        <prettyName>Age of onset</prettyName>
         <relationalStorage>0</relationalStorage>
         <separator> </separator>
         <separators/>
@@ -710,7 +710,7 @@
         <name>global_mode_of_inheritance</name>
         <number>9</number>
         <picker>0</picker>
-        <prettyName>Global mode of inheritance</prettyName>
+        <prettyName>Mode of inheritance</prettyName>
         <relationalStorage>1</relationalStorage>
         <separator> </separator>
         <separators/>
@@ -832,7 +832,7 @@
         <customDisplay>{{include reference="PhenoTips.PatientSheetMacros" /}}
 
 {{velocity filter="indent"}}{{html wiki=true clean=false}}
-#set ($suggest_script = "/rest/vocabularies/ethnicity/suggest?")
+#set ($suggest_script = $xwiki.getURL('PhenoTips.EthnicitySearch', 'get', 'outputSyntax=plain') + '&amp;json=true&amp;')
 #__displayPropertyAsSelect($suggest_script)
 {{/html}}{{/velocity}}</customDisplay>
         <disabled>0</disabled>
@@ -1006,7 +1006,7 @@
         <customDisplay>{{include reference="PhenoTips.PatientSheetMacros" /}}
 
 {{velocity filter="indent"}}{{html wiki=true clean=false}}
-#set ($suggest_script = "/rest/vocabularies/ethnicity/suggest?")
+#set ($suggest_script = $xwiki.getURL('PhenoTips.EthnicitySearch', 'get', 'outputSyntax=plain') + '&amp;json=true&amp;')
 #__displayPropertyAsSelect($suggest_script)
 {{/html}}{{/velocity}}</customDisplay>
         <disabled>0</disabled>
@@ -1202,17 +1202,32 @@
         <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
       </solved__notes>
       <solved__pubmed_id>
-        <customDisplay/>
+        <cache>0</cache>
+        <classname/>
+        <customDisplay>{{include reference="PhenoTips.PatientSheetMacros" /}}
+
+{{velocity filter="indent"}}{{html wiki=true clean=false}}
+#__displayPropertyAsSelect('')
+{{/html}}{{/velocity}}</customDisplay>
         <disabled>0</disabled>
+        <displayType>select</displayType>
+        <idField/>
+        <multiSelect>1</multiSelect>
         <name>solved__pubmed_id</name>
         <number>42</number>
         <picker>0</picker>
         <prettyName>Pubmed ID</prettyName>
-        <size>30</size>
+        <relationalStorage>1</relationalStorage>
+        <separator></separator>
+        <separators/>
+        <size>1</size>
+        <sort>none</sort>
+        <sql/>
         <unmodifiable>0</unmodifiable>
         <validationMessage/>
         <validationRegExp/>
-        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+        <valueField/>
+        <classType>com.xpn.xwiki.objects.classes.DBListClass</classType>
       </solved__pubmed_id>
       <twinNumber>
         <cache>0</cache>
