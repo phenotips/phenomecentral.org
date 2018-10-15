@@ -153,8 +153,8 @@ $xwiki.ssx.use('XWiki.DateTimePicker')##
   'translationPrefix' : 'patient.livetable.',
   'rowCount'          : 25,
   'maxPages'          : 10,
-  'selectedColumn'    : $config.getProperty('livetableSortColumn').value,
-  'defaultOrder'      : 'asc',
+  'selectedColumn'    : 'doc.creationDate',
+  'defaultOrder'      : 'desc',
   'resultPage'        : 'PhenoTips.LiveTableResults'
 })
 #set ($filterFrom = ", BaseObject ownerObj, StringProperty ownerProp, LongProperty iid")

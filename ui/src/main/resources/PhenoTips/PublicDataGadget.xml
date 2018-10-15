@@ -139,11 +139,11 @@ $xwiki.ssx.use('XWiki.DateTimePicker')##
 #set ($columnsProperties = {})
 #foreach ($column in $columns)
   #if ($foreach.index &lt;= 1)
-     #set ($link = 'view')
-     #set ($isFilterable = true)
+    #set ($link = 'view')
+    #set ($isFilterable = true)
   #else
-     #set ($link = 'field')
-     #set ($isFilterable = false)
+    #set ($link = 'field')
+    #set ($isFilterable = false)
   #end
   #set ($discard = $columnsProperties.put($column, { 'type' : 'text', 'link' : $link, 'size' : 7, 'filterable' : $isFilterable, 'sortable': true }))
 #end
