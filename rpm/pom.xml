@@ -23,7 +23,7 @@
   <parent>
     <groupId>org.phenomecentral</groupId>
     <artifactId>phenomecentral-parent</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.2-SNAPSHOT</version>
   </parent>
 
   <artifactId>phenomecentral-rpm</artifactId>
@@ -33,6 +33,7 @@
 
   <properties>
     <pcwar.path>${project.build.directory}/pcwar</pcwar.path>
+    <ctwar.path>${project.build.directory}/ctwar</ctwar.path>
     <data.path>${project.build.directory}/phenotips</data.path>
     <db.path>${data.path}/data</db.path>
     <xwiki.properties.environment.permanentDirectory>/var/lib/phenotips/data</xwiki.properties.environment.permanentDirectory>
@@ -150,6 +151,7 @@ xwiki.authentication.loginsubmitpage=/loginsubmit/PhenomeCentral/login
 xwiki.store.attachment.hint=file
 xwiki.store.attachment.versioning.hint=file
 xwiki.store.attachment.recyclebin.hint=file
+xwiki.store.cache.capacity=15000
                 </xwikiCfgAdditionalProperties>
                 <xwikiPropertiesEnvironmentPermanentDirectory>/var/lib/phenotips/</xwikiPropertiesEnvironmentPermanentDirectory>
                 <xwikiPropertiesAdditionalProperties>
@@ -193,6 +195,10 @@ activeinstalls.ipFetchURL=https://phenotips.org/get/Stats/Id
             <require>wget</require>
             <require>mariadb-server</require>
           </requires>
+          <defineStatements>
+            <!-- On some systems the exomiser python script automatically gets compiled, which leads to build failures due to the unpackaged .pyc and .pyo files. Disable this behavior here: -->
+            <defineStatement>_unpackaged_files_terminate_build 0</defineStatement>
+          </defineStatements>
           <mappings>
             <!-- Copy the main PhenomeCentral webapp -->
             <mapping>

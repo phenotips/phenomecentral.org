@@ -23,7 +23,7 @@
   <parent>
     <groupId>org.phenomecentral</groupId>
     <artifactId>phenomecentral-parent</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.2-SNAPSHOT</version>
   </parent>
   <artifactId>phenomecentral-ui</artifactId>
   <name>PhenomeCentral - Site content</name>
@@ -33,24 +33,28 @@
       <groupId>org.phenotips</groupId>
       <artifactId>phenotips-ui</artifactId>
       <version>${phenotips.version}</version>
+      <scope>runtime</scope>
       <type>xar</type>
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>patient-network-ui</artifactId>
       <version>${patientNetwork.version}</version>
+      <scope>runtime</scope>
       <type>xar</type>
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>matching-notification-ui</artifactId>
       <version>${patientNetwork.version}</version>
+      <scope>runtime</scope>
       <type>xar</type>
     </dependency>
     <dependency>
       <groupId>org.phenotips</groupId>
       <artifactId>remote-matching-ui</artifactId>
       <version>${remoteMatching.version}</version>
+      <scope>runtime</scope>
       <type>xar</type>
     </dependency>
   </dependencies>

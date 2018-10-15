@@ -66,7 +66,8 @@ class Settings:
         for key in kwargs:
             settings[key] = kwargs[key]
 
-        assert os.path.isdir(settings['out_dir'])
+        if not os.path.isdir(settings['out_dir']):
+            make_directory(settings['out_dir'])
         assert os.path.isdir(settings['record_dir'])
         assert os.path.isfile(settings['exomiser_jar'])
         assert os.path.isfile(settings['exomiser_template'])

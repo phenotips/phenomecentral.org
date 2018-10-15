@@ -1,2 +1,0 @@
-org.xwiki.url.internal.container.ContextAndActionURLNormalizer
-org.phenotips.data.internal.R71491PhenomeCentralConsentsMigration
