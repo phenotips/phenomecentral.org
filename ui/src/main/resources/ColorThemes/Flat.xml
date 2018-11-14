@@ -739,13 +739,13 @@
       <buttonPrimaryTextColor>#FFFFFF</buttonPrimaryTextColor>
     </property>
     <property>
-      <buttonSecondaryBackgroundColor>#FFFFFF</buttonSecondaryBackgroundColor>
+      <buttonSecondaryBackgroundColor>#EEEEEE</buttonSecondaryBackgroundColor>
     </property>
     <property>
-      <buttonSecondaryGradientColor>#FFFFFF</buttonSecondaryGradientColor>
+      <buttonSecondaryGradientColor>#EEEEEE</buttonSecondaryGradientColor>
     </property>
     <property>
-      <buttonSecondaryTextColor>#404040</buttonSecondaryTextColor>
+      <buttonSecondaryTextColor>#000000</buttonSecondaryTextColor>
     </property>
     <property>
       <fieldGradientColor/>
