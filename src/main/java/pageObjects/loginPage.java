@@ -3,6 +3,7 @@ package pageObjects;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+// Represents the page http://localhost:8083/PhenomeCentral/login
 public class loginPage extends basePage {
     public loginPage(WebDriver aDriver) { super(aDriver); }
 
@@ -26,6 +27,10 @@ public class loginPage extends basePage {
 
     public homePage loginAsUser() {
         return loginAs(USER_USERNAME, USER_PASS);
+    }
+
+    public homePage loginAsUserTwo() {
+        return loginAs(USER_USERNAME2, USER_PASS2);
     }
 
 }

@@ -3,7 +3,9 @@ package pageObjects;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-public class createPatientPage extends basePage {
+// Represents the page reached when "Create... -> New patient" is clicked on the navbar
+//    http://localhost:8083/edit/data/Pxxxxxxx (new patient ID)
+public class createPatientPage extends commonInfoSelectors {
 
     public createPatientPage(WebDriver aDriver) { super(aDriver); }
 
@@ -26,7 +28,7 @@ public class createPatientPage extends basePage {
     private final By maleGenderBtn = By.id("PhenoTips.PatientClass_0_gender");
     private final By congenitalOnsentBtn = By.id("PhenoTips.PatientClass_0_global_age_of_onset_HP:0003577");
 
-    private final By familyHistoryPedigreeSection = By.id("HFamilyhistoryandpedigree");
+//    private final By familyHistoryPedigreeSection = By.id("HFamilyhistoryandpedigree");
 
     private final By updateBtn = By.cssSelector("#patient-consent-update > a:nth-child(1)");
     private final By saveAndViewSummaryBtn = By.cssSelector("span.buttonwrapper:nth-child(3) > input:nth-child(1)");

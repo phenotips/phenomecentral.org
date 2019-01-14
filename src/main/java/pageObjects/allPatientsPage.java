@@ -3,6 +3,7 @@ package pageObjects;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+// Represents the http://localhost:8083/AllData page, where Browse -> Browse patients is clicked on
 public class allPatientsPage extends basePage {
 
     public allPatientsPage(WebDriver aDriver) { super(aDriver); }
