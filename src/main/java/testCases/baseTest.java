@@ -4,11 +4,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterSuite;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
-import pageObjects.basePage;
 
-public abstract class baseTest {
+/**
+ * An abstract test. All tests should inherit this class.
+ * We should put any high level methods using @after- annotations here
+ * We can also put any high level @BeforeSuite methods here too to setup/check main conditions.
+ */
+public abstract class baseTest
+{
     protected WebDriver theDriver = new FirefoxDriver();
 
 //    @BeforeTest
@@ -33,8 +36,14 @@ public abstract class baseTest {
 //        }
 //    }
 
+    /**
+     * Cleans up the tests. Pauses a bit first so that we can see the state of the class at the end.
+     * We need to explicitly quit the web driver before it goes out of scope in order for the window to close
+     * and the Firefox instance to quit
+     */
     @AfterClass
-    public void testCleanup() {
+    public void testCleanup()
+    {
         // Pause a bit before closing.
         try {
             Thread.sleep(1500);
@@ -50,7 +59,8 @@ public abstract class baseTest {
     }
 
     @AfterSuite
-    public void cleanup() {
+    public void cleanup()
+    {
         // Pause a bit before closing.
         try {
             Thread.sleep(1500);
@@ -64,5 +74,4 @@ public abstract class baseTest {
             theDriver.quit();
         }
     }
-
 }
