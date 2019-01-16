@@ -1,4 +1,4 @@
-package pageObjects;
+package PageObjects;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotInteractableException;
@@ -14,7 +14,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public abstract class BasePage
 {
     /**
-     * Public selectors, the loginPageTest touches these.
+     * Public selectors, the LoginPageTest touches these.
      * Ideally, tests should not touch selectors.
      */
     public final By adminLink = By.id("tmAdminSpace");
@@ -146,12 +146,12 @@ public abstract class BasePage
     /**
      * Logs out by clicking on the Log Out link on the navigation bar.
      * @requires: A user to already by logged in.
-     * @return a new loginPage object.
+     * @return a new LoginPage object.
      */
-    public loginPage logOut()
+    public LoginPage logOut()
     {
         clickOnElement(logOutLink);
-        return new loginPage(superDriver);
+        return new LoginPage(superDriver);
     }
 
     /**
@@ -161,7 +161,7 @@ public abstract class BasePage
      * @requires: A user to already by logged in.
      * @return new instance of the browse patients page
      */
-    public allPatientsPage navigateToAllPatientsPage()
+    public AllPatientsPage navigateToAllPatientsPage()
     {
         // TODO: Investigate why an error is being thrown (why link is not clickable at times)
         clickOnElement(browseMenuDrp);
@@ -172,7 +172,7 @@ public abstract class BasePage
             superDriver.navigate().to(ALL_PAITIENTS_URL);
         }
 
-        return new allPatientsPage(superDriver);
+        return new AllPatientsPage(superDriver);
     }
 
     /**

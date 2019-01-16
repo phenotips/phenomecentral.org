@@ -10,7 +10,7 @@ This is WIP stuff for e-2-e testing of PC. This can be used as a proof-of-concep
 - Clone this repository
 - cd into directory and verify the pom.xml
 - Import the project on intelliJ as a Maven project.
-- Navigate to src/main/java/testCases and run either `createPatientTest` or `loginPageTest`. The run button is located on the class declaration line right beside the line number.
+- Navigate to src/main/java/TestCases and run either `createPatientTest` or `loginPageTest`. The run button is located on the class declaration line right beside the line number.
 	- Alternatively, right click on `multipleClasses.xml` and then run to run both test classes
 
 ## Limitations

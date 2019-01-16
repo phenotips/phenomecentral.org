@@ -1,15 +1,22 @@
-package testCases;
+package TestCases;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import pageObjects.homePage;
+import PageObjects.HomePage;
 
-public class loginPageTest extends baseTest
+/**
+ * Test the login functionality.
+ *
+ * Each test can be run separately.
+ */
+public class LoginPageTest extends BaseTest
 {
-    homePage currentPage = new homePage(theDriver);
+    HomePage currentPage = new HomePage(theDriver);
 
-    // Login as Admin, assert that both Administrator Settings link and About link are visible
+    /**
+     * Login as Admin, assert that both Administrator Settings link and About link are visible
+      */
     @Test
     public void loginAdminTest()
     {
@@ -23,7 +30,9 @@ public class loginPageTest extends baseTest
         currentPage.logOut();
     }
 
-    // Login as User, assert that Admin Settings link is not visible
+    /**
+     * Login as User, assert that Admin Settings link is not visible
+      */
     @Test
     public void loginUserTest()
     {

@@ -1,4 +1,4 @@
-package testCases;
+package TestCases;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -10,14 +10,14 @@ import org.testng.annotations.AfterSuite;
  * We should put any high level methods using @after- annotations here
  * We can also put any high level @BeforeSuite methods here too to setup/check main conditions.
  */
-public abstract class baseTest
+public abstract class BaseTest
 {
     protected WebDriver theDriver = new FirefoxDriver();
 
 //    @BeforeTest
 //    public void testSetup() {
 //        theDriver = new FirefoxDriver();
-//        currentPage = new homePage(theDriver);
+//        currentPage = new HomePage(theDriver);
 //    }
 //
 //    @AfterTest

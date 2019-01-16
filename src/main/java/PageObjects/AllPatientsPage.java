@@ -1,4 +1,4 @@
-package pageObjects;
+package PageObjects;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -6,7 +6,7 @@ import org.openqa.selenium.WebDriver;
 /**
  * Represents the http://localhost:8083/AllData page, where "Browse... -> Browse patients" is clicked on
  */
-public class allPatientsPage extends BasePage
+public class AllPatientsPage extends BasePage
 {
     private final By importJSONLink = By.id("phenotips_json_import");
 
@@ -20,7 +20,7 @@ public class allPatientsPage extends BasePage
     private final By firstPatientRowLink = By.cssSelector(
         "#patients-display > tr:nth-child(1) > td:nth-child(1) > a:nth-child(1)");
 
-    public allPatientsPage(WebDriver aDriver)
+    public AllPatientsPage(WebDriver aDriver)
     {
         super(aDriver);
     }
@@ -31,7 +31,7 @@ public class allPatientsPage extends BasePage
      * @param theJSON a long string which represents the JSON. Ensure that backslashes are escaped.
      * @return the same object, we stay on the same page.
      */
-    public allPatientsPage importJSONPatient(String theJSON)
+    public AllPatientsPage importJSONPatient(String theJSON)
     {
         clickOnElement(importJSONLink);
         clickAndTypeOnElement(JSONBox, theJSON);
@@ -46,7 +46,7 @@ public class allPatientsPage extends BasePage
      * for some reason to sort descending.
      * @return same object as it is the same page.
      */
-    public allPatientsPage sortPatientsDateDesc()
+    public AllPatientsPage sortPatientsDateDesc()
     {
         clickOnElement(sortCreationDate);
         clickOnElement(sortCreationDate);
@@ -58,9 +58,9 @@ public class allPatientsPage extends BasePage
      * Click on the first patient in the table to view its full profile.
      * @return the patient's full info page which is called the ViewPatientPage
      */
-    public viewPatientPage viewFirstPatientInTable()
+    public ViewPatientPage viewFirstPatientInTable()
     {
         clickOnElement(firstPatientRowLink);
-        return new viewPatientPage(superDriver);
+        return new ViewPatientPage(superDriver);
     }
 }

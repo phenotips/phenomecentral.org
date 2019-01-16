@@ -1,4 +1,4 @@
-package pageObjects;
+package PageObjects;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -7,7 +7,7 @@ import org.openqa.selenium.WebDriver;
  * Represents the page reached when "Create... -> New patient" is clicked on the navbar
  * Ex. http://localhost:8083/edit/data/Pxxxxxxx (new patient ID)
 */
-public class createPatientPage extends CommonInfoSelectors
+public class CreatePatientPage extends CommonInfoSelectors
 {
     private final By patientIDDiv = By.id("document-title");
 
@@ -45,7 +45,7 @@ public class createPatientPage extends CommonInfoSelectors
 
     private final By saveAndViewSummaryBtn = By.cssSelector("span.buttonwrapper:nth-child(3) > input:nth-child(1)");
 
-    public createPatientPage(WebDriver aDriver)
+    public CreatePatientPage(WebDriver aDriver)
     {
         super(aDriver);
     }
@@ -55,7 +55,7 @@ public class createPatientPage extends CommonInfoSelectors
      * @param n which is an integer between 1-5 representing the specified checkbox.
      * @return the same object as we are on the same page
      */
-    public createPatientPage toggleNthConsentBox(int n)
+    public CreatePatientPage toggleNthConsentBox(int n)
     {
         switch (n) {
             case 1:
@@ -85,7 +85,7 @@ public class createPatientPage extends CommonInfoSelectors
      * 5 seconds for it to update the consent.
      * @return same object as we stay on the same page
      */
-    public createPatientPage updateConsent()
+    public CreatePatientPage updateConsent()
     {
         clickOnElement(updateBtn);
         unconditionalWaitNs(5);
@@ -96,9 +96,20 @@ public class createPatientPage extends CommonInfoSelectors
      * Hits the "Save and View Summary" button on the bottom left.
      * @return navigating to the view page containing patient's full details so a new object of that type
      */
-    public viewPatientPage saveAndViewSummary()
+    public ViewPatientPage saveAndViewSummary()
     {
         clickOnElement(saveAndViewSummaryBtn);
-        return new viewPatientPage(superDriver);
+        return new ViewPatientPage(superDriver);
     }
+
+    public CreatePatientPage setIdentifer(String identifer)
+    {
+        clickOnElement(identifierBox);
+        superDriver.findElement(identifierBox).clear();
+        clickAndTypeOnElement(identifierBox, identifer);
+        unconditionalWaitNs(1);
+        return this;
+    }
+
+
 }

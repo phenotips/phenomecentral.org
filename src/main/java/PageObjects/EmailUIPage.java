@@ -1,4 +1,4 @@
-package pageObjects;
+package PageObjects;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -22,8 +22,8 @@ public class EmailUIPage extends BasePage
      * @return stay on the same page so return the same object.
      */
     public EmailUIPage deleteAllEmails() {
+        unconditionalWaitNs(5);
         clickOnElement(deleteAllEmailsLink);
-        unconditionalWaitNs(2);
         return this;
     }
 

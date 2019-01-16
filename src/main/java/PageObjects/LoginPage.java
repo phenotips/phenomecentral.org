@@ -1,4 +1,4 @@
-package pageObjects;
+package PageObjects;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -7,7 +7,7 @@ import org.openqa.selenium.WebDriver;
  * Represents the page http://localhost:8083/PhenomeCentral/login
  * This is the user login page
   */
-public class loginPage extends BasePage
+public class LoginPage extends BasePage
 {
     private final By userNameField = By.id("j_username");
 
@@ -15,7 +15,7 @@ public class loginPage extends BasePage
 
     private final By loginButton = By.cssSelector("input.button");
 
-    public loginPage(WebDriver aDriver)
+    public LoginPage(WebDriver aDriver)
     {
         super(aDriver);
     }
@@ -26,21 +26,21 @@ public class loginPage extends BasePage
      * @param password non-empty and case sensitive password
      * @return a homepage object as we navigate there on successful login.
      */
-    public homePage loginAs(String username, String password)
+    public HomePage loginAs(String username, String password)
     {
         clickAndTypeOnElement(userNameField, username);
         clickAndTypeOnElement(passField, password);
 
         clickOnElement(loginButton);
 
-        return new homePage(superDriver);
+        return new HomePage(superDriver);
     }
 
     /**
      * Logs in with the default admin credentials
      * @return a homepage object as we navigate there upon sucessful login
      */
-    public homePage loginAsAdmin()
+    public HomePage loginAsAdmin()
     {
         return loginAs(ADMIN_USERNAME, ADMIN_PASS);
     }
@@ -49,7 +49,7 @@ public class loginPage extends BasePage
      * Logs in with a regular user's credentials.
      * @return a homepage object as we navigate there upon sucessful login
      */
-    public homePage loginAsUser()
+    public HomePage loginAsUser()
     {
         return loginAs(USER_USERNAME, USER_PASS);
     }
@@ -58,7 +58,7 @@ public class loginPage extends BasePage
      * Logs in with the second user's credentials.
      * @return a homepage object as we navigate there upon sucessful login
      */
-    public homePage loginAsUserTwo()
+    public HomePage loginAsUserTwo()
     {
         return loginAs(USER_USERNAME2, USER_PASS2);
     }

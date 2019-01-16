@@ -5,11 +5,11 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 
-// This is a self-contained test that does not depend on anything in pageObjects
+// This is a self-contained test that does not depend on anything in PageObjects
 // Implement using JUnit or TestNG for annotations
 // Seperate into PageObjects and Testcases
 
-public class dummyTest
+public class DummyTest
 {
     final String url = "http://localhost:8083/";
 
