@@ -34,7 +34,7 @@ public abstract class CommonInfoSelectors extends BasePage implements CommonInfo
 
     private final By similarCasesSection = By.id("HSimilarcases"); // Similar cases
 
-    private Map<SECTIONS, By> sectionMap = new HashMap<SECTIONS, By>();
+    protected Map<SECTIONS, By> sectionMap = new HashMap<SECTIONS, By>();
 
     /**
      * CTOR. Initializes the map from an enum value to a specific element for the section
@@ -72,4 +72,6 @@ public abstract class CommonInfoSelectors extends BasePage implements CommonInfo
         }
         return true;
     }
+
+
 }

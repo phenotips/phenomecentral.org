@@ -2,8 +2,10 @@ package PageObjects;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotInteractableException;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -28,6 +30,8 @@ public abstract class BasePage
 
     protected final String ALL_PAITIENTS_URL = "http://localhost:8083/AllData";
 
+    // protected final String NEW_PAITIENTS_URL = "http://localhost:8083/AllData";
+
     protected final String EMAIL_UI_URL = "http://localhost:8085";
 
     /**
@@ -48,6 +52,13 @@ public abstract class BasePage
     /**
      * Private selectors from the navigation toolbar
      */
+
+    private final By createMenuDrp = By.cssSelector(
+        "#phenotips-globalTools > div > div > ul > li:nth-child(1) > span"
+    );
+
+    private final By newPatientLink = By.id("create-patient-record");
+
     private final By browseMenuDrp = By.cssSelector(
         "#phenotips-globalTools > div > div > ul > li:nth-child(2) > span");
 
@@ -194,5 +205,50 @@ public abstract class BasePage
     public EmailUIPage navigateToEmailInboxPage() {
         superDriver.navigate().to(EMAIL_UI_URL);
         return new EmailUIPage(superDriver);
+    }
+
+    /**
+     * Navigates to the create patient page by "Create... -> New patient"
+     * @return a new object of the CreatePatientPage where the creation of a new patient is performed.
+     */
+    public CreatePatientPage navigateToCreateANewPatientPage() {
+        clickOnElement(createMenuDrp);
+        unconditionalWaitNs(1);
+
+        try {
+            clickOnElement(newPatientLink);
+        } catch (ElementNotInteractableException e) {
+            System.err.println("Might throw an error, New Patients Link not clickable!");
+            forceClickOnElement(newPatientLink);
+        }
+        return new CreatePatientPage(superDriver);
+    }
+
+    /**
+     * Forces a scroll via JS so that the indicated element is in Selenium's viewport.
+     * Without this, sometimes a "ElementClickInterceptedException" exception is thrown as
+     * the element to click is out of window or otherwise blocked by some other element.
+     *
+     * Not sure why Selenium doesn't do this automatically for Firefox
+     * @param elementSelector a By selector to indicate which element you want to scroll into view.
+     */
+    public void forceScrollToElement(By elementSelector) {
+        waitForElementToBePresent(elementSelector);
+
+        WebElement webElement = superDriver.findElement(elementSelector);
+        ((JavascriptExecutor)superDriver).executeScript("arguments[0].scrollIntoView();", webElement);
+    }
+
+    /**
+     * Waits for an elements presence then forcefully clicks using JS on it.
+     * Sometimes, selectors have properties of hidden even thought they might not necessarialy be so.
+     * @param elementSelector a By selector indiciating the element to click on.
+     */
+    public void forceClickOnElement(By elementSelector)
+    {
+        waitForElementToBePresent(elementSelector);
+
+        WebElement webElement = superDriver.findElement(elementSelector);
+        ((JavascriptExecutor)superDriver).executeScript("arguments[0].click();", webElement);
     }
 }
