@@ -65,7 +65,7 @@ public abstract class BasePage
     private final By viewAllPatientsLink = By.cssSelector(
         "#phenotips-globalTools > div > div > ul > li:nth-child(2) > ul > li:nth-child(1) > span > a");
 
-    private final By logOutLink = By.id("tmLogout");
+    protected final By logOutLink = By.id("tmLogout"); // Used to check when modals close
 
     /**
      * Declaration of the webdriver and the waiting objects. Will be initialized
@@ -97,6 +97,16 @@ public abstract class BasePage
     public void waitForElementToBePresent(By elementSelector)
     {
         pause.until(ExpectedConditions.presenceOfElementLocated(elementSelector));
+    }
+
+    /**
+     * Explicitly wait for the specified element to be clickable. Useful for when a modal blocks the
+     * access of the rest of the page (i.e. waiting for the modal to close).
+     * @param elementSelector specifies the element to wait for clickable. Must not be {@code null}
+     */
+    public void waitForElementToBeClickable(By elementSelector)
+    {
+        pause.until(ExpectedConditions.elementToBeClickable(elementSelector));
     }
 
     /**

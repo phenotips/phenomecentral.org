@@ -22,11 +22,17 @@ public class HomePage extends BasePage
      * Requires a user to not be signed in; The start state of the page should
      * be the splash page where PC is being introduced.
      * Ex. "Enter cases, find matches, and connect with other rare disease specialists. Find out more..."
+     * Requires: User should be logged out when this is called.
      * @return a new login page object as we navigate there
      */
     public LoginPage navigateToLoginPage()
     {
         superDriver.navigate().to(HOMEPAGE_URL);
+        if (isElementPresent(logOutLink)) {
+            logOut();
+            unconditionalWaitNs(5); // Give a pause, logging out took too long last time.
+            System.out.println("Trying to get to login page. Logging out (again).");
+        }
         clickOnElement(loginLink);
         return new LoginPage(superDriver);
     }

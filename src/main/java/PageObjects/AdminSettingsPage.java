@@ -11,6 +11,8 @@ public class AdminSettingsPage extends BasePage
 {
     private final By matchingNotificationMenu = By.id("vertical-menu-Matching Notification");
 
+    private final By refreshMatchesMenu = By.id("vertical-menu-Refresh matches");
+
     public AdminSettingsPage(WebDriver aDriver)
     {
         super(aDriver);
@@ -25,5 +27,16 @@ public class AdminSettingsPage extends BasePage
     {
         clickOnElement(matchingNotificationMenu);
         return new AdminMatchNotificationPage(superDriver);
+    }
+
+    /**
+     * Navigates to the "Refresh matches" page. On the left accordion menu:
+     * PhenoTips -> Refresh matches
+     * @return a AdminRefreshMatches page object as we navigate there.
+     */
+    public AdminRefreshMatchesPage navigateToRefreshMatchesPage()
+    {
+        clickOnElement(refreshMatchesMenu);
+        return new AdminRefreshMatchesPage(superDriver);
     }
 }

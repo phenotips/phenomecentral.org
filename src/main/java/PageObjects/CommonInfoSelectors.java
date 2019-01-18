@@ -1,10 +1,14 @@
 package PageObjects;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 
 import TestCases.CommonInfoEnums;
 
@@ -13,6 +17,25 @@ import TestCases.CommonInfoEnums;
  */
 public abstract class CommonInfoSelectors extends BasePage implements CommonInfoEnums
 {
+    private final By modifyPermissionsBtn = By.cssSelector("span[title=\"Modify visibility and collaborations\"]");
+
+    private final By privateRadioBtn = By.cssSelector("input[type=radio][name=visibility][value=private]");
+
+    private final By matchableRadioBtn = By.cssSelector("input[type=radio][name=visibility][value=matchable]");
+
+    private final By publicRadioBtn = By.cssSelector("input[type=radio][name=visibility][value=public]");
+
+    private final By newCollaboratorBox = By.id("new-collaborator-input");
+
+    private final By firstCollaboratorResult = By.cssSelector("div.suggestItem > div.user > div.user-name");
+
+    private final By updateConfirmBtn = By.cssSelector("input.button[value=Update]");
+
+    private final By privilageLevelDrps = By.cssSelector("select[name=accessLevel]");
+
+    private final By deleteCollaboratorBtn = By.cssSelector("span[title=\"Remove this collaborator\"]");
+
+    // Selectors for the sections below
     private final By patientInfoSection = By.id("HPatientinformation"); // "Patient information"
 
     private final By familyHistorySection = By.id("HFamilyhistoryandpedigree"); // "Family history and pedigree"
@@ -71,6 +94,74 @@ public abstract class CommonInfoSelectors extends BasePage implements CommonInfo
             }
         }
         return true;
+    }
+
+    /**
+     * Sets the global visibility of the patient. Opens the access rights dialogue modal ("Modify Permissions")
+     * Defaults to private on invalid input.
+     * @param theVisibility is string, one of "private", "matchable", "public". Must be exact.
+     */
+    public void setGlobalVisibility(String theVisibility) {
+        clickOnElement(modifyPermissionsBtn);
+        waitForElementToBePresent(privateRadioBtn);
+        switch (theVisibility) {
+            case "private": clickOnElement(privateRadioBtn); break;
+            case "matchable": clickOnElement(matchableRadioBtn); break;
+            case "public": clickOnElement(publicRadioBtn); break;
+            default: clickOnElement(privateRadioBtn); break;
+        }
+        clickOnElement(updateConfirmBtn);
+        waitForElementToBeClickable(logOutLink); // TODO: Make function to wait until clickable
+        unconditionalWaitNs(2);
+    }
+
+    /**
+     * Adds a collaborator to the patient via the "Modify Permissions" modal. Searches for name
+     * and clicks on first result, therefore, assumes that there is at least one result.
+     * Sets the privilage to the one specified.
+     * @param collaboratorName is the exact name of the collaborator to add.
+     * @param privilageLevel is one of three levels of privilages specified by the PRIVIALGE enum.
+     */
+    public void addCollaboratorToPatient(String collaboratorName, PRIVILAGE privilageLevel) {
+        clickOnElement(modifyPermissionsBtn);
+        clickAndTypeOnElement(newCollaboratorBox, collaboratorName);
+        unconditionalWaitNs(1); // wait for results to reload
+        clickOnElement(firstCollaboratorResult);
+        superDriver.findElement(newCollaboratorBox).sendKeys(Keys.ENTER); // Looks like we'll have to press enter
+        //forceClickOnElement(firstCollaboratorResult); // ?? click twice
+
+        List<WebElement> loPrivilageDropdowns = superDriver.findElements(privilageLevelDrps);
+        Select bottomMostPDrop = new Select(loPrivilageDropdowns.get(loPrivilageDropdowns.size() - 1));
+
+        switch (privilageLevel) {
+            case CanView:
+                bottomMostPDrop.selectByVisibleText("Can view the record"); break;
+            case CanViewAndModify:
+                bottomMostPDrop.selectByVisibleText("Can view and modify the record"); break;
+            case CanViewAndModifyAndManageRights:
+                bottomMostPDrop.selectByVisibleText("Can view and modify the record and manage access rights"); break;
+        }
+
+        forceClickOnElement(updateConfirmBtn);
+        waitForElementToBeClickable(logOutLink);
+        unconditionalWaitNs(2);
+    }
+
+    /**
+     * Deletes the Nth collaborator from the permissions modal.
+     * @param n is the Nth collaborator (n >= 1) Must supply valid Nth collaborator otherwise
+     * array out of bounds exception will be thrown.
+     */
+    public void removeNthCollaborator(int n) {
+        clickOnElement(modifyPermissionsBtn);
+        waitForElementToBePresent(newCollaboratorBox);
+
+        List<WebElement> loDeleteCollaboratorBtns = superDriver.findElements(deleteCollaboratorBtn);
+        loDeleteCollaboratorBtns.get(n-1).click();
+
+        forceClickOnElement(updateConfirmBtn);
+        waitForElementToBeClickable(logOutLink);
+        unconditionalWaitNs(2);
     }
 
 

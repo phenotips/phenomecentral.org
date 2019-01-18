@@ -1,7 +1,10 @@
 package PageObjects;
 
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 /**
  * Represents the http://localhost:8083/AllData page, where "Browse... -> Browse patients" is clicked on
@@ -19,6 +22,12 @@ public class AllPatientsPage extends BasePage
 
     private final By firstPatientRowLink = By.cssSelector(
         "#patients-display > tr:nth-child(1) > td:nth-child(1) > a:nth-child(1)");
+
+    private final By deleteBtns = By.cssSelector("tbody[id=patients-display] > tr > td.actions > a.fa-remove");
+
+    private final By deleteYesConfirmBtn = By.cssSelector("input[value=Yes]");
+
+    private final By patientIDFilterBox = By.cssSelector("input[title=\"Filter for the Identifier column\"]");
 
     public AllPatientsPage(WebDriver aDriver)
     {
@@ -62,5 +71,35 @@ public class AllPatientsPage extends BasePage
     {
         clickOnElement(firstPatientRowLink);
         return new ViewPatientPage(superDriver);
+    }
+
+    /**
+     * Deletes all the patients in the table if there are any, only for the first page
+     * @return stay on the same page, so return the same object.
+     */
+    public AllPatientsPage deleteAllPatients() {
+        // We need to somehow wait for rows to load, maybe empty table so we can't search for elements of the table
+        unconditionalWaitNs(3);
+        List<WebElement> loDeleteBtns = superDriver.findElements(deleteBtns);
+
+        for (WebElement theElement : loDeleteBtns) { // Use the original number of rows a counter
+            // theElement.click(); // Table pagintes upwards
+            clickOnElement(deleteBtns);
+            clickOnElement(deleteYesConfirmBtn);
+            unconditionalWaitNs(3);
+        }
+
+        return this;
+    }
+
+    /**
+     * Filters by the patient ID by sending keys to the "type to filter" box under the identifier column
+     * @param patientID the patient ID to enter, should be in Pxxxxxxx format.
+     * @return stay on the same page so return the same object.
+     */
+    public AllPatientsPage filterByPatientID(String patientID) {
+        clickAndTypeOnElement(patientIDFilterBox, patientID);
+        unconditionalWaitNs(2);
+        return this;
     }
 }

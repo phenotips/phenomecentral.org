@@ -17,7 +17,7 @@ public abstract class BaseTest
 //    @BeforeTest
 //    public void testSetup() {
 //        theDriver = new FirefoxDriver();
-//        currentPage = new HomePage(theDriver);
+//        aHomePage = new HomePage(theDriver);
 //    }
 //
 //    @AfterTest
