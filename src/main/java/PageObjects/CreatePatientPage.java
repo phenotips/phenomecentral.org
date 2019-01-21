@@ -9,6 +9,7 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.pagefactory.ByChained;
 import org.openqa.selenium.support.ui.Select;
 
 /**
@@ -43,12 +44,23 @@ public class CreatePatientPage extends CommonInfoSelectors
     private final By dobYearDrp =
         By.cssSelector("#date-of-birth-block > div > div:nth-child(2) > div > div > span > select.year");
 
+    private final By doDeathMonthDrp =
+        By.cssSelector("#date-of-death-block > div > div:nth-child(2) > div > div > span > select.month");
+
+    private final By doDeathYearDrp =
+        By.cssSelector("#date-of-death-block > div > div:nth-child(2) > div > div > span > select.year");
+
     private final By maleGenderBtn = By.id("xwiki-form-gender-0-0");
     private final By femaleGenderBtn = By.id("xwiki-form-gender-0-1");
     private final By otherGenderBtn = By.id("xwiki-form-gender-0-2");
     private final By unknownGenderBtn = By.id("xwiki-form-gender-0-3");
 
     private final By congenitalOnsentBtn = By.id("PhenoTips.PatientClass_0_global_age_of_onset_HP:0003577");
+
+    private final By ageOfOnsetBtns = By.cssSelector("div.global_age_of_onset > div > div  > ul > li.term-entry");
+    private final By modeOfInheritanceChkboxes = By.cssSelector("div.global_mode_of_inheritance > div > div > ul > li.term-entry");
+
+    private final By indicationForReferralBox = By.id("PhenoTips.PatientClass_0_indication_for_referral");
 
     private final By updateBtn = By.cssSelector("#patient-consent-update > a:nth-child(1)");
 
@@ -140,7 +152,27 @@ public class CreatePatientPage extends CommonInfoSelectors
     }
 
     /**
-     * Sets the date of birth of the patient under Patient Information.
+     * Sets the Life Status dropdown of the patient.
+     * @param status is either "Alive" or "Deceased". Must be exact string otherwise defaults to "Alive".
+     * @return stay on the same page so return same object.
+     */
+    public CreatePatientPage setLifeStatus(String status)
+    {
+        waitForElementToBePresent(lifeStatusDrp);
+        Select statusDrp = new Select(superDriver.findElement(lifeStatusDrp));
+
+        try {
+            statusDrp.selectByVisibleText(status);
+        } catch (NoSuchElementException e) {
+            System.out.println("No such life status. Defaulting to Alive.");
+            statusDrp.selectByVisibleText("Alive");
+        }
+
+        return this;
+    }
+
+    /**
+     * Sets the Date of Birth of the patient under Patient Information.
      * Will safely handle invalid strings by defaulting to 01/2019.
      * @param month the Month as a String (01 - 12). Must exactly match the dropdown.
      * @param year the year as a String (1500s - 2019). Must exactly match the dropdown.
@@ -161,6 +193,34 @@ public class CreatePatientPage extends CommonInfoSelectors
             System.out.println("Invalid DOB passed. Default set to 01/2019");
             monthDrp.selectByVisibleText("01");
             yearDrp.selectByVisibleText("2019");
+        }
+
+        return this;
+    }
+
+    /**
+     * Sets the Date of Death of the patient under Patient Information.
+     * Will safely handle invalid strings by defaulting to 01/2018.
+     * Requires: Life Status set to "Deceased" so that Date of Death dropdowns are visible.
+     * @param month the Month as a String (01 - 12). Must exactly match the dropdown.
+     * @param year the year as a String (1500s - 2019). Must exactly match the dropdown.
+     * @return stay on the same page so return same object.
+     */
+    public CreatePatientPage setDateOfDeath(String month, String year) {
+        Select monthDrp;
+        Select yearDrp;
+
+        waitForElementToBePresent(doDeathMonthDrp);
+        monthDrp = new Select(superDriver.findElement(doDeathMonthDrp));
+        yearDrp = new Select(superDriver.findElement(doDeathYearDrp));
+
+        try {
+            monthDrp.selectByVisibleText(month);
+            yearDrp.selectByVisibleText(year);
+        } catch (NoSuchElementException e) {
+            System.out.println("Invalid date of death passed. Default set to 01/2018");
+            monthDrp.selectByVisibleText("01");
+            yearDrp.selectByVisibleText("2018");
         }
 
         return this;
@@ -196,7 +256,7 @@ public class CreatePatientPage extends CommonInfoSelectors
             case "Male": clickOnElement(maleGenderBtn); break;
             case "Female": clickOnElement(femaleGenderBtn); break;
             case "Other": clickOnElement(otherGenderBtn); break;
-            case "Unkown": clickOnElement(unknownGenderBtn); break;
+            case "Unknown": clickOnElement(unknownGenderBtn); break;
             default: System.out.println("Invalid gender selected! Default to Unknown"); break;
         }
         return this;
@@ -271,5 +331,46 @@ public class CreatePatientPage extends CommonInfoSelectors
         return this;
     }
 
+    /**
+     * Traverses through all the options for the age of onset buttons, clicks on each one.
+     * @return a List of Strings which represent the Age of Onset radio button labels in a
+     * 'pre-order' traversal.
+     * TODO: Compare and Assert to an actual predefined array of values
+     * TODO: Use byChained class properly to do a pre-order traversal of the trees
+     */
+    public List<String> cycleThroughAgeOfOnset() {
+        List <String> loLabels =
+            preOrderTraverseAndClick(ageOfOnsetBtns, By.cssSelector("ul > li.term-entry > input"),
+                By.cssSelector("ul > li.term-entry > label"));
+
+        clickOnElement(congenitalOnsentBtn);
+
+        return loLabels;
+    }
+
+
+    /**
+     * Traverses through all the options for the mode of inheritance checkboxes.
+     * @return a List of Strings which represent the Mode Of Inheritance checkbox labels in a
+     * 'pre-order' traversal.
+     */
+    public List<String> cycleThroughModeOfInheritance() {
+
+        return preOrderTraverseAndClick(modeOfInheritanceChkboxes,
+            By.cssSelector("ul > li.term-entry > input"),
+            By.cssSelector("ul > li.term-entry > label"));
+    }
+
+    /**
+     * Sets the "Indication for Referral box" in the Patient Information section.
+     * Currently, it does not clear the contents of the box, just concatenates to whatever is there.
+     * @param neededText is the String to enter into the input box.
+     * @return stay on the same page so return the same object.
+     */
+    public CreatePatientPage setIndicationForReferral(String neededText)
+    {
+        clickAndTypeOnElement(indicationForReferralBox, neededText);
+        return this;
+    }
 
 }

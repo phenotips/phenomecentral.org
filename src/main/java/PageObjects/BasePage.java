@@ -1,11 +1,16 @@
 package PageObjects;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.pagefactory.ByChained;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -260,5 +265,53 @@ public abstract class BasePage
 
         WebElement webElement = superDriver.findElement(elementSelector);
         ((JavascriptExecutor)superDriver).executeScript("arguments[0].click();", webElement);
+    }
+
+    /**
+     * Provides a pre-order traversal of a tree structure, clicking on each node and building a
+     * List of Strings representing the text that Selenium can find at each node.
+     * @param rootPath is the By selector of where the root nodes of the tree structure is
+     * @param childrenPath within each root structure found, children under {$code rootPath} are searched for
+     *          using this path.
+     * @param childrenLabelLocation is the path to where the label text is located for the children.
+     * @return a (might be empty) list of Strings representing the visits of the traversal.
+     *          In case of unequal lengths of the lists (i.e. it found more buttons than labels), it returns
+     *          a List containing one String of the error message. TODO: Figure out if returning null is better.
+     */
+    public List<String> preOrderTraverseAndClick(By rootPath, By childrenPath, By childrenLabelLocation)
+    {
+        waitForElementToBePresent(rootPath); // Must wait before any driver does a find
+
+        List <String> loLabels = new ArrayList<>();
+
+        // Finds all children, pre-order, no recursion needed?
+        List<WebElement> loButtons = superDriver
+            .findElements(new ByChained(rootPath, childrenPath));
+
+        List<WebElement> loButtonsLabels = superDriver
+            .findElements(new ByChained(rootPath, childrenLabelLocation));
+
+        Iterator<WebElement> buttonIter = loButtons.iterator();
+        Iterator<WebElement> labelsIter = loButtonsLabels.iterator();
+
+        // Check that list of buttons size (clickable area) == size of list of labels (text strings)
+        if (loButtons.size() != loButtonsLabels.size()) {
+            loLabels.add("Unequal array sizes for buttons and labels in preOrderTraverseAndClick: " +
+                "Found Buttons: " + loButtons.size() + " but found Labels: " + loLabels.size());
+            return loLabels;
+        }
+
+        forceScrollToElement(rootPath);
+
+        while (buttonIter.hasNext() && labelsIter.hasNext()) {
+            WebElement theButton = buttonIter.next();
+            WebElement theLabel = labelsIter.next();
+
+            theButton.click();
+            loLabels.add(theLabel.getText());
+
+        }
+
+        return loLabels;
     }
 }

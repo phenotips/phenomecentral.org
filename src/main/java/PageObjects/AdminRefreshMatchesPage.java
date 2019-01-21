@@ -35,6 +35,9 @@ public class AdminRefreshMatchesPage extends BasePage
         waitForElementToBePresent(findMatchesText); // Must wait for this to appear before passing to loop.
         waitForSucessMessage();
 
+        superDriver.navigate().refresh();
+        waitForElementToBePresent(selectLocalServerForMatchBox);
+
         return this;
     }
 

@@ -182,7 +182,9 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
         String ID2 = aViewPatientPage.getPatientID();
 
         Assert.assertEquals(ID1, ID2);
-        aViewPatientPage.setGlobalVisibility("private"); // Set patient back to private to allow for other tests.
+
+        aViewPatientPage.logOut().loginAsUserTwo();
+        aViewPatientPage.setGlobalVisibility("matchable"); // Set patient back to private to allow for other tests.
         aHomePage.logOut();
     }
 
