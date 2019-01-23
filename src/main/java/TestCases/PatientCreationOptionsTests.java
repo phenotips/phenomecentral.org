@@ -75,7 +75,11 @@ public class PatientCreationOptionsTests extends BaseTest implements CommonInfoE
         Assert.assertEquals(loModeOfInheritanceLabels, checkInheritanceLabels);
 
         aCreationPage.cycleThroughModeOfInheritance();
-        aCreationPage.setIndicationForReferral("Now cycle through the other sections...");
+        aCreationPage.setIndicationForReferral("Now cycle through the other sections...")
+            .expandSection(SECTIONS.FamilyHistorySection);
+
+        aCreationPage.navigateToPedigreeEditor("")
+            .closeEditor("save");
 
     }
 }

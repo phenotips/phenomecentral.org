@@ -314,4 +314,24 @@ public abstract class BasePage
 
         return loLabels;
     }
+
+    /**
+     * Extracts the text strings for the elements that can be found via the labelsSelector. That selector
+     * should represent at least one element on the page containing a text value.
+     * @param labelsSelector is the selector for zero or more elements existing on the page containing text to extract.
+     * @return a possibly empty list of Strings representing the text from each instance of the selector.
+     */
+    public List<String> getLabelsFromList(By labelsSelector)
+    {
+        waitForElementToBePresent(labelsSelector);
+
+        List<String> loTextStrings = new ArrayList<>();
+        List<WebElement> loFoundLabels = superDriver.findElements(labelsSelector);
+
+        for (WebElement e : loFoundLabels) {
+            loTextStrings.add(e.getText());
+        }
+
+        return loTextStrings;
+    }
 }
