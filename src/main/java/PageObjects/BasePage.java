@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
@@ -142,6 +143,29 @@ public abstract class BasePage
     }
 
     /**
+     * Overloaded this function to allow for a located WebElement (instead of a selector) to be passed to it.
+     * This function catches the ElementNotInteractableException that can happen during a click which is due to the element
+     * being outside of Selenium's viewport. Strangely, sometimes we have to issue an explicit scroll using JS as Selenium
+     * fails to do so automatically in its built in .click() method. TODO: Figure out why... Dependency version mismatch?
+     * @param aWebElement the element to click on. It will scroll to this element if outside of viewport.
+     */
+    public void clickOnElement(WebElement aWebElement)
+    {
+        try {
+            aWebElement.click();
+        } catch (ElementNotInteractableException e) {
+            ((JavascriptExecutor)superDriver).executeScript("arguments[0].scrollIntoView();", aWebElement);
+            try {
+                aWebElement.click();
+            } catch (ElementNotInteractableException f) {
+                ((JavascriptExecutor)superDriver).executeScript("arguments[0].click();", aWebElement);
+                System.out.println("Force click on element: " + aWebElement);
+            }
+
+        }
+    }
+
+    /**
      * Similar to {@link BasePage#clickOnElement(By)}. Just sends a specified input string to the element.
      * This usually should be a text box.
      * @Throws Some kind of Element-not-interactable exception (implicit) when element cannot accept keyboard string
@@ -275,8 +299,8 @@ public abstract class BasePage
      *          using this path.
      * @param childrenLabelLocation is the path to where the label text is located for the children.
      * @return a (might be empty) list of Strings representing the visits of the traversal.
-     *          In case of unequal lengths of the lists (i.e. it found more buttons than labels), it returns
-     *          a List containing one String of the error message. TODO: Figure out if returning null is better.
+     *          In case of unequal lengths of the lists (i.e. it found more buttons than labels), it
+     *          prints error message to stdout then returns NULL
      */
     public List<String> preOrderTraverseAndClick(By rootPath, By childrenPath, By childrenLabelLocation)
     {
@@ -296,9 +320,9 @@ public abstract class BasePage
 
         // Check that list of buttons size (clickable area) == size of list of labels (text strings)
         if (loButtons.size() != loButtonsLabels.size()) {
-            loLabels.add("Unequal array sizes for buttons and labels in preOrderTraverseAndClick: " +
+            System.out.println("Unequal array sizes for buttons and labels in preOrderTraverseAndClick: " +
                 "Found Buttons: " + loButtons.size() + " but found Labels: " + loLabels.size());
-            return loLabels;
+            return null;
         }
 
         forceScrollToElement(rootPath);
@@ -307,7 +331,10 @@ public abstract class BasePage
             WebElement theButton = buttonIter.next();
             WebElement theLabel = labelsIter.next();
 
-            theButton.click();
+            // Might need to force a scroll to a checklist item again
+            clickOnElement(theButton);
+            System.out.println("DEBUG: Clicking on: " + theLabel.getText());
+
             loLabels.add(theLabel.getText());
 
         }

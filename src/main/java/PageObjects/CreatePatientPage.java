@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -69,9 +71,21 @@ public class CreatePatientPage extends CommonInfoSelectors
     private final By assignFamilyRadioBtn = By.id("pedigreeInputAssignFamily");
     private final By familySearchInputBox = By.id("family-search-input");
     private final By firstFamilySuggestion = By.cssSelector("span.suggestValue");
+    private final By paternalEthnicityBox = By.id("PhenoTips.PatientClass_0_paternal_ethnicity_2");
+    private final By maternalEthnicityBox = By.id("PhenoTips.PatientClass_0_maternal_ethnicity_2");
+    private final By addEthnicityBtns = By.cssSelector("div.family-info a[title=add]");
+    private final By healthConditionsFoundInFamily = By.id("PhenoTips.PatientClass_0_family_history");
 
     private final By phenotypeSearchBox = By.id("quick-phenotype-search");
     private final By firstPhenotypeSuggestion = By.cssSelector("li.xitem > div");
+    private final By addPhenotypeDetailsBtns = By.cssSelector("button.add");
+    private final By editPhenotypeDetailsBtns = By.cssSelector("button.edit");
+    private final By expandCaretBtns = By.cssSelector(
+        "div.phenotype-details.focused span.collapse-button, div.phenotype-details.focused span.expand-tool");
+    private final By phenotypeDetailsLabels = By.cssSelector("div.phenotype-details.focused label");
+    private final By phenotypesSelectedLabels = By.cssSelector("div.summary-item > label.yes");
+//    private final By phenotypesSelectedDivs = By.cssSelector("div.summary-item");
+
     private final By addGeneBtn = By.cssSelector("a[title*='Add gene']");
 
     private final By geneNameBoxes = By.cssSelector(
@@ -339,8 +353,6 @@ public class CreatePatientPage extends CommonInfoSelectors
      * Traverses through all the options for the age of onset buttons, clicks on each one.
      * @return a List of Strings which represent the Age of Onset radio button labels in a
      * 'pre-order' traversal.
-     * TODO: Compare and Assert to an actual predefined array of values
-     * TODO: Use byChained class properly to do a pre-order traversal of the trees
      */
     public List<String> cycleThroughAgeOfOnset() {
         List <String> loLabels =
@@ -405,5 +417,158 @@ public class CreatePatientPage extends CommonInfoSelectors
         return new PedigreeEditorPage(superDriver);
     }
 
+    /**
+     * Traverses through the options for the health conditions found in family yes/no boxes.
+     * @return a List of Strings which represent the health conditions found under "Family history and pedigree"
+     */
+    public List<String> cycleThroughFamilialHealthConditions() {
+
+        return preOrderTraverseAndClick(By.cssSelector("div.family-info > div.fieldset"),
+            By.cssSelector("div.displayed-value > span.yes-no-picker > label.yes"),
+            By.cssSelector("div.displayed-value > label.yes-no-picker-label"));
+    }
+
+    /**
+     * Sets the ethnicity of the patient in the "Family History and Pedigree" section. Defaults to Maternal ethnicity
+     * in case of invalid maternity passed. Will select the first option in the suggestions.
+     * @param maternity pass either "Paternal" or "Maternal"
+     * @param ethnicity is the ethncity to set. Requires this to be as close as possible to an exact match to suggestions dropdown.
+     * @return Stay on the same page so return the same object.
+     */
+    public CreatePatientPage setEthnicity(String maternity, String ethnicity) {
+        if (maternity.equals("Paternal")) {
+            clickAndTypeOnElement(paternalEthnicityBox, ethnicity);
+            clickOnElement(firstFamilySuggestion);
+        }
+        else {
+            clickAndTypeOnElement(maternalEthnicityBox, ethnicity);
+            clickOnElement(firstFamilySuggestion);
+        }
+        return this;
+    }
+
+    /**
+     * Inputs a note into the Health Conditions within the "Family History and pedigree" section.
+     * @param note to type into the box. Any string. Will concatenate to what is there already.
+     * @return Stay on the same page so return the same object.
+     */
+    public CreatePatientPage setHealthConditionsFoundInFamily(String note) {
+        clickAndTypeOnElement(healthConditionsFoundInFamily, note);
+        return this;
+    }
+
+    /**
+     * Traverses through the options for the health conditions found in
+     * Prenatal and perinatal history yes/no boxes.
+     * Requires: The "Prenatal and perinatal history" section to be expanded and that
+     *              none of the yes/no options are already selected/expanded (i.e. should be at the state of a new patient)
+     *               Otherwise, traversal result might be off due to presence of additional (appearing) selectors.
+     * @return a List of Strings which represent the health conditions found under the yes/no boxes of
+     *          "Prenatal and perinatal history"
+     */
+    public List<String> cycleThroughPrenatalHistory() {
+
+        // TODO: Those selectors are used once, okay to leave them without variable?
+        By expandToolSpan = By.cssSelector("span[class=expand-tool]");
+
+        List<String> loLabels = new ArrayList<>();
+
+        List<String> loUncategorizedLabels = preOrderTraverseAndClick(By.cssSelector("div.prenatal-info"),
+            By.cssSelector("div.fieldset > div.displayed-value > span.yes-no-picker > label.yes"),
+            By.cssSelector("div.fieldset > div.displayed-value > label.yes-no-picker-label"));
+
+//      Expand all dropdowns, lets them load first
+        preOrderTraverseAndClick(
+            By.cssSelector("div.prenatal-info > div > div > div"), expandToolSpan, expandToolSpan);
+
+        List<String> loCategorizedLabels = preOrderTraverseAndClick(
+            By.cssSelector("div.prenatal-info div[class=dropdown] div[class=entry-data], div.prenatal-info div[class*=term-entry]"),
+            By.cssSelector("span.yes-no-picker > label.yes"),
+            By.cssSelector("label.yes-no-picker-label, span.yes-no-picker-label > span.value"));
+
+        loLabels.addAll(loUncategorizedLabels);
+        loLabels.addAll(loCategorizedLabels);
+
+        return loLabels;
+    }
+
+    /**
+     * Gets all the labels for the labels within the Edit Phenotype Details box. This does not do a tree
+     * traversal due to the dropdowns having issues hiding/showing for now.
+     * Requires: A phenotype to already be present and "Add Details" to already be pressed so that the details box appears.
+     * @return A list of strings representing the labels found in the Edit Phenotype Details Box. This should not be
+     *          empty.
+     */
+    public List<String> cycleThroughPhenotypeDetailsLabels()
+    {
+        waitForElementToBePresent(phenotypeDetailsLabels);
+
+        List<WebElement> loExpandCarets = superDriver.findElements(expandCaretBtns);
+        List<String> loLabels = new ArrayList<>();
+
+        //Expand all first
+        for (WebElement aCaret : loExpandCarets) {
+            if (aCaret.getText().equals("►")) {
+                clickOnElement(aCaret);
+            }
+        }
+
+        superDriver.findElements(phenotypeDetailsLabels).forEach(x -> loLabels.add(x.getText()));
+
+        return loLabels;
+    }
+
+    /**
+     * Adds phenotype details to the nth detail-less phenotype (done it this way due to the simplicity of implementation)
+     * in the list of phenotypes already present. Makes the grey phenotype details box appear.
+     * @param n is the nth phenotype WITHOUT any details added yet.
+     * @return Stay on the same page so return same object.
+     */
+    public CreatePatientPage addDetailsToNthPhenotype(int n) {
+        waitForElementToBePresent(addPhenotypeDetailsBtns);
+        List<WebElement> loPhenotypeAddBtnsPresent = superDriver.findElements(addPhenotypeDetailsBtns);
+
+        loPhenotypeAddBtnsPresent.get(n - 1).click();
+
+        waitForElementToBePresent(phenotypeDetailsLabels);
+        return this;
+    }
+
+    /**
+     * Traverses through the options for phenotypes in the Clinical Symptoms and Physical Findings Section
+     * Requires: The "Clinical Symptoms and Physical Findings" section to be expanded and that
+     *              none of the yes/no options are already selected/expanded (i.e. should be at the state of a new patient)
+     *               Otherwise, traversal result might be off due to presence of additional (appearing) selectors.
+     * @return a List of Strings which represent the health conditions found under the yes/no boxes of
+     *          "Clinical Symptoms and Physical Findings"
+     */
+    public List<String> cycleThroughAllPhenotypes() {
+
+        By expandAllBtn = By.cssSelector("span.expand-all");
+
+        clickOnElement(expandAllBtn);
+
+        // TODO: Those selectors are used once, okay to leave them without variable?
+        By expandToolSpan = By.cssSelector("span[class=expand-tool]");
+
+        List<String> loLabels = new ArrayList<>();
+
+        forceScrollToElement(By.cssSelector("div.phenotype > div > div > div"));
+
+//      Expand all dropdowns, lets them load first
+        preOrderTraverseAndClick(
+            By.cssSelector("div.phenotype > div > div > div"), expandToolSpan, expandToolSpan);
+
+        List<String> loCategorizedLabels = preOrderTraverseAndClick(
+            By.cssSelector("div.phenotype div[class=dropdown] div[class=entry-data], div.prenatal-info div[class*=term-entry]"),
+            By.cssSelector("span.yes-no-picker > label.na"),
+            By.cssSelector("label.yes-no-picker-label, span.yes-no-picker-label > span.value"));
+
+        loLabels.addAll(loCategorizedLabels);
+
+    //    unconditionalWaitNs(25);
+
+        return loLabels;
+    }
 
 }
