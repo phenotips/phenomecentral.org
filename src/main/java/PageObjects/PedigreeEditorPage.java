@@ -47,7 +47,7 @@ public class PedigreeEditorPage extends BasePage
     // CSS breaking from long text strings?
     private final By createSiblingNode = By.cssSelector(
         //"rect[transform=\"matrix(0.7071,0.7071,-0.7071,0.7071,444.0081,62.5496)\"]");
-    "rect[transform=\"matrix(0.7071,0.7071,-0.7071,0.7071,277.7713,-105.7192)\"]");
+    "rect[transform^=\"matrix(0.7071,0.7071,-0.7071,0.7071\"]");
 //    private final By createChildNode = By.xpath(
 //        "//a[contains(@title, 'Click to draw a child or drag to an existing person without parents (valid choices will be highlighted in green)'"
 //    );
@@ -76,6 +76,8 @@ public class PedigreeEditorPage extends BasePage
     private final By linkPatientBox = By.cssSelector("input.suggest-patients");
     private final By linkPatientFirstSuggestion = By.cssSelector("span.suggestValue"); // First suggestion
     private final By createNewPatientBtn = By.cssSelector("span.patient-create-button");
+    private final By confirmNewPatientBtn = By.cssSelector("input[value=Confirm]");
+    private final By patientIDInModal = By.cssSelector("div.patient-link-container > a.patient-link-url");
 
 
     private final By maleGenderBtn = By.cssSelector("input[value=M]");
@@ -200,6 +202,23 @@ public class PedigreeEditorPage extends BasePage
     }
 
     /**
+     * Adds the passed phenotypes to the patient. Will select the first suggestion for each phenotype.
+     * Requires the patient information modal to be open.
+     * @param loPhenotypesToAdd A List containing Strings of the phenotypes to add. Each should be as close as possible
+     *          to the desired phenotype.
+     * @return Stay on the same page so return the same object.
+     */
+    public PedigreeEditorPage addPhenotypes(List<String> loPhenotypesToAdd)
+    {
+        switchToTab("Clinical");
+        for (String phenotype: loPhenotypesToAdd) {
+            clickAndTypeOnElement(phenotypeBox, phenotype);
+            clickOnElement(linkPatientFirstSuggestion);
+        }
+        return this;
+    }
+
+    /**
      * Retrieves a list of entered genes from the "Clinical" tab of the specified status.
      * @param status is the gene status so it is one of "Candidate", "Confirmed Causal", "Carrier"
      * @return a List of Strings, possibly empty, representing the text label for each entered gene.
@@ -217,22 +236,69 @@ public class PedigreeEditorPage extends BasePage
     }
 
     /**
-     * Opens the edit patient modal for the first patient it can find on the editor.
+     * Adds a list of Candidate Genes via the Patient Information modal. Will select the first suggestion that
+     * pops up. Requires the Patient Info modal to be present.
+     * @param loCandidateGenesToAdd A list of Strings, can be empty, of Candidate genes to add. Each should be as close
+     *          as possible to the exact gene name.
+     * @return Stay on the same page so return the same object.
+     */
+    public PedigreeEditorPage addCandidateGenes(List<String> loCandidateGenesToAdd)
+    {
+        switchToTab("Clinical");
+        for (String candidateGene: loCandidateGenesToAdd) {
+            clickAndTypeOnElement(candidateGeneBox, candidateGene);
+            clickOnElement(linkPatientFirstSuggestion);
+        }
+        return this;
+    }
+
+    /**
+     * Adds a gene of geneStatus to the patient with its information modal open. Will select the first gene suggestion.
+     * Requires that the Patient Information modal be present.
+     * @param geneName Name of the gene to add. Should be an exact String to the gene name.
+     * @param geneStatus Status of the gene, one of: "Candidate", "Confirmed Causal", and "Carrier"
+     * @return Stay on the same page so return the same object.
+     */
+    public PedigreeEditorPage addGene(String geneName, String geneStatus)
+    {
+        switchToTab("Clinical");
+        switch(geneStatus) {
+            case "Candidate": clickAndTypeOnElement(candidateGeneBox, geneName); break;
+            case "Confirmed Causal": clickAndTypeOnElement(causalGeneBox, geneName); break;
+            case "Carrier": clickAndTypeOnElement(carrierGeneBox, geneName); break;
+            default: clickAndTypeOnElement(candidateGeneBox, geneName); break;
+        }
+        clickOnElement(linkPatientFirstSuggestion);
+
+        return this;
+    }
+
+    /**
+     * Opens the edit patient modal for the Nth patient it can find on the editor.
      * @return stay on the same page so return same object.
      * TODO: Figure out how to traverse and search the possible nodes for a patient,
      *      The js might might make this interesting...
      *      Ideas: Differentiate via width and height. rect.pedigree-hoverbox[width=180, height=243] for
      *      people, rect.pedigree-hoverbox[width=52, height=92] for relationship node.
      */
-    public PedigreeEditorPage openEditModal()
+    public PedigreeEditorPage openNthEditModal(int n)
     {
-        unconditionalWaitNs(5); // Figure out how to wait for animation to finish
         waitForElementToBePresent(hoverBox);
+        unconditionalWaitNs(3); // Figure out how to wait for animation to finish
+
+        System.out.println("Wait for hover box is done - 3 secs. Now find and click.");
+
+        List<WebElement> loHoverBoxes = superDriver.findElements(hoverBox);
+
+        System.out.println("Found hoverboxes: " + loHoverBoxes.size());
+
         Actions action = new Actions(superDriver);
-        action.click(superDriver.findElement(hoverBox)).build().perform();
+        action.moveToElement(loHoverBoxes.get(n - 1))
+            .click(loHoverBoxes.get(n - 1))
+            .build().perform();
 
         //forceClickOnElement(hoverBox);
-        waitForElementToBePresent(personalTab);
+        waitForElementToBeClickable(personalTab);
         return this;
     }
 
@@ -246,9 +312,13 @@ public class PedigreeEditorPage extends BasePage
      */
     public PedigreeEditorPage linkPatient(String patientID)
     {
+        switchToTab("Personal");
+
         if (patientID.equals("New")) {
             clickOnElement(createNewPatientBtn);
+            clickOnElement(confirmNewPatientBtn);
             waitForElementToBeClickable(personalTab);
+            unconditionalWaitNs(5);
         }
         else {
             clickAndTypeOnElement(linkPatientBox, patientID);
@@ -256,6 +326,18 @@ public class PedigreeEditorPage extends BasePage
         }
 
         return this;
+    }
+
+    /**
+     * Retrieves the patient ID of the currently open patient modal.
+     * Requires that the patient to already be linked, otherwise will cause an exception where element is not found.
+     * TODO: Improve this so that it returns some other string when no patient is linked.
+     * @return a String in the form of Pxxxxxxxx
+     */
+    public String getPatientIDFromModal()
+    {
+        waitForElementToBePresent(patientIDInModal);
+        return superDriver.findElement(patientIDInModal).getText();
     }
 
     /**
@@ -394,13 +476,14 @@ public class PedigreeEditorPage extends BasePage
         Actions builder = new Actions(superDriver);
         List<WebElement> loHoverBoxes = superDriver.findElements(hoverBox);
 
-        builder.moveToElement(loHoverBoxes.get(NthHoverBox - 1)).perform();
-        waitForElementToBeClickable(createSiblingNode);
+        builder.moveToElement(loHoverBoxes.get(NthHoverBox - 1)).click().perform();
+        waitForElementToBePresent(createSiblingNode);
 
         List<WebElement> loChildCreateNodes = superDriver.findElements(createSiblingNode);
         List<WebElement> loMaleNodes = superDriver.findElements(createMaleNode);
 
-        loChildCreateNodes.get(1).click();
+        System.out.println("DEBUG Create Nodes found: " + loChildCreateNodes.size());
+        loChildCreateNodes.get(2*NthHoverBox - 1).click();
         loMaleNodes.get(1).click();
 
         return this;

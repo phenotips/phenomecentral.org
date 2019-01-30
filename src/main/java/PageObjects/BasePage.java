@@ -344,9 +344,10 @@ public abstract class BasePage
 
     /**
      * Extracts the text strings for the elements that can be found via the labelsSelector. That selector
-     * should represent at least one element on the page containing a text value.
+     * can represent zero or more instances of that element on the page containing a text value.
      * @param labelsSelector is the selector for zero or more elements existing on the page containing text to extract.
-     * @return a possibly empty list of Strings representing the text from each instance of the selector.
+     * @return a, possibly empty, list of Strings representing the text from each instance of the selector. A String
+     *          will be the empty String ("") if an element had no text on it.
      */
     public List<String> getLabelsFromList(By labelsSelector)
     {

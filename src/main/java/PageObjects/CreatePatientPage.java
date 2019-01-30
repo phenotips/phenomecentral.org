@@ -134,6 +134,20 @@ public class CreatePatientPage extends CommonInfoSelectors
     }
 
     /**
+     * Helper method to toggle the first four consent boxes. These boxes are unchecked when first creating
+     * a patient (Real patient, Genetic Sequencing data consent, Medical/Family History consent, Medical Images/Photos consent)
+     * @return Stay on the same page, so return the same object.
+     */
+    public CreatePatientPage toggleFirstFourConsentBoxes()
+    {
+        toggleNthConsentBox(1);
+        toggleNthConsentBox(2);
+        toggleNthConsentBox(3);
+        toggleNthConsentBox(4);
+        return this;
+    }
+
+    /**
      * Clicks on the "Update" button under the "Consents granted" section and then waits
      * 5 seconds for it to update the consent.
      * @return same object as we stay on the same page
@@ -305,6 +319,21 @@ public class CreatePatientPage extends CommonInfoSelectors
     public CreatePatientPage addPhenotype(String thePhenotype) {
         clickAndTypeOnElement(phenotypeSearchBox, thePhenotype);
         clickOnElement(firstPhenotypeSuggestion);
+        return this;
+    }
+
+    /**
+     * Helper method to add a list of Phenotypes to the patient.
+     * Requires the "Clinical symptoms and physical findings" section is expanded and there is at
+     * least one suggested search result.
+     * @param phenotypes is a List of Strings specifying the phenotypes. You should be as exact as possible.
+     * @return Stay on the same page so return the same object.
+     */
+    public CreatePatientPage addPhenotypes(List<String> phenotypes)
+    {
+        for (String aPhenotype : phenotypes) {
+            addPhenotype(aPhenotype);
+        }
         return this;
     }
 
@@ -569,6 +598,20 @@ public class CreatePatientPage extends CommonInfoSelectors
     //    unconditionalWaitNs(25);
 
         return loLabels;
+    }
+
+    /**
+     * Retrieves the phenotypes already present in the Patient Information Form
+     * Requires: The "Clinical symptoms and physical findings" section to be expanded
+     * @return A (potentially empty) list of Strings representing the names of the phenotypes found.
+     */
+    public List<String> getPresentPhenotypes()
+    {
+        List<String> loPhenotypesFound = new ArrayList<>();
+        waitForElementToBePresent(phenotypeSearchBox);
+        superDriver.findElements(phenotypesSelectedLabels).forEach(x -> loPhenotypesFound.add(x.getText()));
+
+        return loPhenotypesFound;
     }
 
 }

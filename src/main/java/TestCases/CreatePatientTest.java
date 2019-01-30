@@ -1,5 +1,9 @@
 package TestCases;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -51,28 +55,21 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
     @Test(priority = 1, groups={"CreatePatientTest.createTwoPatients"})
     public void createPatientManually()
     {
+        List<String> loPhenotypesToAdd = new ArrayList<String>(Arrays.asList(
+            "Blindness", "Visual impairment", "Small earlobe", "Small hand", "Absence seizures",
+            "Diapleptic Seizures", "Typical absence seizures", "Seizures", "Small placenta"));
+
         aHomePage.navigateToLoginPage()
             .loginAsUser()
             .navigateToCreateANewPatientPage()
-            .toggleNthConsentBox(1)
-            .toggleNthConsentBox(2)
-            .toggleNthConsentBox(3)
-            .toggleNthConsentBox(4)
+            .toggleFirstFourConsentBoxes()
             .updateConsent()
             .setIdentifer(patientUniqueIdentifier)
             .setDOB("02", "2012")
             .setGender("Male")
             .setOnset("Congenital onset ")
             .expandSection(SECTIONS.ClinicalSymptomsSection)
-            .addPhenotype("Blindness")
-            .addPhenotype("Visual impairment")
-            .addPhenotype("Small earlobe")
-            .addPhenotype("Small hand")
-            .addPhenotype("Absence seizures")
-            .addPhenotype("Diapleptic Seizures")
-            .addPhenotype("Typical absence seizures")
-            .addPhenotype("Seizures")
-            .addPhenotype("Small placenta")
+            .addPhenotypes(loPhenotypesToAdd)
             .expandSection(SECTIONS.ClinicalSymptomsSection)
             .expandSection(SECTIONS.GenotypeInfoSection)
             .addGene("PLS1", "Candidate", "Sequencing")
@@ -101,10 +98,7 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
             .sortPatientsDateDesc()
             .viewFirstPatientInTable()
             .editThisPatient()
-            .toggleNthConsentBox(1)
-            .toggleNthConsentBox(2)
-            .toggleNthConsentBox(3)
-            .toggleNthConsentBox(4)
+            .toggleFirstFourConsentBoxes()
             .updateConsent()
             .setIdentifer(patientUniqueIdentifier + " Match")
             .saveAndViewSummary();
