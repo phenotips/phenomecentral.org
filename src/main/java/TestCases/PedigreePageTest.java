@@ -94,13 +94,12 @@ public class PedigreePageTest extends BaseTest implements CommonInfoEnums
             .editThisPatient()
             .expandSection(SECTIONS.FamilyHistorySection)
             .navigateToPedigreeEditor("");
-        aPedigreeEditorPage.openNthEditModal(1)
-            .createChild("male");
+        aPedigreeEditorPage.createChild("male");
 
         Assert.assertEquals(aPedigreeEditorPage.getNumberOfTotalPatientsInTree(), 3);
         Assert.assertEquals(aPedigreeEditorPage.getNumberOfPartnerLinks(), 1);
 
-        aPedigreeEditorPage.openNthEditModal(3).createSibling(3);
+        aPedigreeEditorPage.createSibling(3);
 
         Assert.assertEquals(aPedigreeEditorPage.getNumberOfTotalPatientsInTree(), 4);
         Assert.assertEquals(aPedigreeEditorPage.getNumberOfPartnerLinks(), 1);
@@ -119,6 +118,7 @@ public class PedigreePageTest extends BaseTest implements CommonInfoEnums
             .navigateToCreateANewPatientPage()
             .toggleFirstFourConsentBoxes()
             .updateConsent()
+            .setGender("Female")
             .expandSection(SECTIONS.FamilyHistorySection)
             .navigateToPedigreeEditor("");
 
@@ -130,7 +130,7 @@ public class PedigreePageTest extends BaseTest implements CommonInfoEnums
             .closeEditor("Save")
             .expandSection(SECTIONS.ClinicalSymptomsSection);
 
-        List<String> foundPhenotypesOnPatientForm = aCreatePatientPage.getPresentPhenotypes();
+        List<String> foundPhenotypesOnPatientForm = aCreatePatientPage.getAllPhenotypes();
 
         System.out.println("Before: " + foundPhenotypesOnPatientForm);
         System.out.println("Before loAdding: " + loPhenotypesToAdd);
@@ -175,9 +175,9 @@ public class PedigreePageTest extends BaseTest implements CommonInfoEnums
         String createdPatient = aPedigreeEditorPage.getPatientIDFromModal();
 
         aPedigreeEditorPage.addPhenotypes(loPhenotypesToAdd)
-            .addGene("Candidate", "LIN7C")
-            .addGene("Confirmed Causal", "TAOK3")
-            .addGene("Carrier", "YKT6")
+            .addGene( "LIN7C", "Candidate")
+            .addGene("TAOK3", "Confirmed Causal")
+            .addGene("YKT6", "Carrier")
             .closeEditor("Save")
             .saveAndViewSummary()
             .navigateToAllPatientsPage()
@@ -188,7 +188,7 @@ public class PedigreePageTest extends BaseTest implements CommonInfoEnums
             .updateConsent()
             .expandSection(SECTIONS.ClinicalSymptomsSection);
 
-        List<String> foundPhenotypesFromPatientPage = aCreatePatientPage.getPresentPhenotypes();
+        List<String> foundPhenotypesFromPatientPage = aCreatePatientPage.getAllPhenotypes();
 
         System.out.println("Before: " + foundPhenotypesFromPatientPage);
         System.out.println("Before loAdding: " + loPhenotypesToAdd);
@@ -206,7 +206,7 @@ public class PedigreePageTest extends BaseTest implements CommonInfoEnums
         List<String> checkGeneNames = new ArrayList<>(Arrays.asList("LIN7C", "TAOK3", "YKT6"));
 
         List<String> foundGeneStatusesOnPatientForm = aViewPatientPage.getGeneStatus();
-        List<String> checkGeneStatuses = new ArrayList<>(Arrays.asList("Candidate", "Confirmed Causal", "Carrier"));
+        List<String> checkGeneStatuses = new ArrayList<>(Arrays.asList("Candidate", "Confirmed causal", "Carrier"));
 
         List<String> foundGeneStrategiesOnPatientForm = aViewPatientPage.getGeneStrategies();
         List<String> checkGeneStrategies = new ArrayList<>(Arrays.asList("", "", ""));

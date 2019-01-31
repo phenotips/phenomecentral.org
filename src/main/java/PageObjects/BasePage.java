@@ -106,6 +106,18 @@ public abstract class BasePage
     }
 
     /**
+     * Explicitly wait for the passed element to disappear, upto the timeout specified in {@code pause}
+     * Checks immediately and then keeps polling at the default interval. Will return immediately if it
+     * cannot find element on that immediate first try.
+     * @Throws TimeOutException (implicit) from selenium if it fails to locate element within timeout
+     * @param elementSelector specifies the element selector on the page. Must not be {@code null}
+     */
+    public void waitForElementToBeGone(By elementSelector)
+    {
+        pause.until(ExpectedConditions.invisibilityOfElementLocated(elementSelector));
+    }
+
+    /**
      * Explicitly wait for the specified element to be clickable. Useful for when a modal blocks the
      * access of the rest of the page (i.e. waiting for the modal to close).
      * @param elementSelector specifies the element to wait for clickable. Must not be {@code null}
@@ -113,6 +125,21 @@ public abstract class BasePage
     public void waitForElementToBeClickable(By elementSelector)
     {
         pause.until(ExpectedConditions.elementToBeClickable(elementSelector));
+    }
+
+    /**
+     * Determines if the passed element is clickable or not.
+     * @param elementSelector is the element to check for clickability
+     * @return a boolean stating whether it was clickable or not. true for clickable, and false for unclickable.
+     */
+    public boolean isElementClickable(By elementSelector)
+    {
+        try {
+            waitForElementToBeClickable(elementSelector);
+        } catch (TimeoutException e) {
+            return false; // Could not find element, took too long
+        }
+        return true;
     }
 
     /**
@@ -139,7 +166,8 @@ public abstract class BasePage
     public void clickOnElement(By elementSelector)
     {
         waitForElementToBePresent(elementSelector);
-        superDriver.findElement(elementSelector).click();
+//        superDriver.findElement(elementSelector).click();
+        clickOnElement(superDriver.findElement(elementSelector));
     }
 
     /**

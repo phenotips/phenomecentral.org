@@ -8,6 +8,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import PageObjects.AdminRefreshMatchesPage;
+import PageObjects.CreatePatientPage;
 import PageObjects.EmailUIPage;
 import net.bytebuddy.utility.RandomString;
 import PageObjects.HomePage;
@@ -24,8 +25,10 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
 {
     final private HomePage aHomePage = new HomePage(theDriver);
 
+    // At some point we need to restart the view patients page.
     final private ViewPatientPage aViewPatientPage = new ViewPatientPage(theDriver);
-        // At some point we need to restart the view patients page.
+    final private CreatePatientPage aCreatePatientPage = new CreatePatientPage(theDriver);
+
 
     final private SECTIONS[] checkForTheseSections = {
         SECTIONS.PatientInfoSection,
@@ -216,6 +219,70 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
             .loginAsAdmin()
             .navigateToAllPatientsPage()
             .deleteAllPatients();
+    }
+
+    @Test(priority = 7)
+    public void addMeasurements()
+    {
+        CommonPatientMeasurement measurements = new CommonPatientMeasurement(
+            1, 2, 3,4, 5,
+            6,7,8,9,10,
+            11,12,13,14,15,
+            16,17,18);
+
+        aHomePage.navigateToLoginPage()
+            .loginAsUser()
+            .navigateToCreateANewPatientPage()
+            .toggleFirstFourConsentBoxes()
+            .updateConsent()
+            .expandSection(SECTIONS.MeasurementSection)
+            .addMeasurement(measurements)
+            .changeMeasurementDate("11", "March", "2015")
+            .saveAndViewSummary()
+            .editThisPatient()
+            .expandSection(SECTIONS.MeasurementSection);
+
+        CommonPatientMeasurement foundMeasurementOnPatientForm = aCreatePatientPage.getPatientMeasurement();
+        System.out.println(foundMeasurementOnPatientForm);
+        Assert.assertEquals(foundMeasurementOnPatientForm, measurements);
+
+        aCreatePatientPage
+            .saveAndViewSummary()
+            .logOut();
+    }
+
+    @Test(priority = 8)
+    public void checkPhenotypesDueToMeasurements()
+    {
+        final List<String> automaticallyAddedPhenotypesToCheck = new ArrayList<>(
+            Arrays.asList("Decreased body weight", "Short stature", "Microcephaly",
+                "Obesity", "Long philtrum", "Long palpebral fissure",
+                "Hypertelorism", "Macrotia", "Small hand", "Short foot"));
+
+        final List<String> manuallyAddedPhenotypesToCheck = new ArrayList<>(Arrays.asList("Blue irides"));
+
+        aHomePage.navigateToLoginPage()
+            .loginAsUser()
+            .navigateToAllPatientsPage()
+            .sortPatientsDateDesc()
+            .viewFirstPatientInTable()
+            .editThisPatient()
+            .setDOB("10", "1992")
+            .expandSection(SECTIONS.ClinicalSymptomsSection)
+            .addPhenotype("Blue irides");
+
+        List<String> automaticallyAddedPhenotypesFound = aCreatePatientPage.getPhenotypesLightning();
+        System.out.println(automaticallyAddedPhenotypesFound);
+
+        List<String> manuallyAddedPhenotypesFound = aCreatePatientPage.getPhenotypesNonLightning();
+        System.out.println(manuallyAddedPhenotypesFound);
+
+        Assert.assertEquals(automaticallyAddedPhenotypesFound, automaticallyAddedPhenotypesToCheck);
+        Assert.assertEquals(manuallyAddedPhenotypesFound, manuallyAddedPhenotypesToCheck);
+
+        aCreatePatientPage
+//            .saveAndViewSummary()
+            .logOut();
     }
 
 

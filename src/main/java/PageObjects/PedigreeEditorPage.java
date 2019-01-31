@@ -293,11 +293,25 @@ public class PedigreeEditorPage extends BasePage
         System.out.println("Found hoverboxes: " + loHoverBoxes.size());
 
         Actions action = new Actions(superDriver);
-        action.moveToElement(loHoverBoxes.get(n - 1))
+        action.moveToElement(loHoverBoxes.get(n - 1)) // Wiggles the mouse a little bit
+            .moveToElement(loHoverBoxes.get(n - 1), 10, 10)
+            .pause(1000)
             .click(loHoverBoxes.get(n - 1))
-            .build().perform();
+            .build()
+            .perform();
 
         //forceClickOnElement(hoverBox);
+        if (!isElementClickable(personalTab)) {
+            loHoverBoxes = superDriver.findElements(hoverBox); // Search again, maybe coordiantes changed.
+            System.out.println("Clicking " + n + "th hover box again...");
+            System.out.println("Found hoverboxes, Second Try: " + loHoverBoxes.size());
+            action.moveToElement(loHoverBoxes.get(n - 1), 10, 10)
+                .moveToElement(loHoverBoxes.get(n - 1))
+                .pause(1000)
+                .click(loHoverBoxes.get(n - 1))
+                .build()
+                .perform();
+        }
         waitForElementToBeClickable(personalTab);
         return this;
     }
@@ -372,7 +386,8 @@ public class PedigreeEditorPage extends BasePage
         waitForElementToBePresent(hoverBox);
 
         Actions builder = new Actions(superDriver);
-        builder.moveToElement(superDriver.findElement(hoverBox)).perform();
+//        builder.moveToElement(superDriver.findElement(hoverBox)).perform();
+        openNthEditModal(1);
         waitForElementToBeClickable(createChildNode);
 
         List<WebElement> loChildCreateNodes = superDriver.findElements(createChildNode);
@@ -476,14 +491,17 @@ public class PedigreeEditorPage extends BasePage
         Actions builder = new Actions(superDriver);
         List<WebElement> loHoverBoxes = superDriver.findElements(hoverBox);
 
-        builder.moveToElement(loHoverBoxes.get(NthHoverBox - 1)).click().perform();
+//        builder.moveToElement(loHoverBoxes.get(NthHoverBox - 1)).click().perform();
+        openNthEditModal(NthHoverBox);
         waitForElementToBePresent(createSiblingNode);
 
         List<WebElement> loChildCreateNodes = superDriver.findElements(createSiblingNode);
         List<WebElement> loMaleNodes = superDriver.findElements(createMaleNode);
 
         System.out.println("DEBUG Create Nodes found: " + loChildCreateNodes.size());
-        loChildCreateNodes.get(2*NthHoverBox - 1).click();
+//        loChildCreateNodes.get(2*NthHoverBox - 1).click();
+
+        clickOnElement(loChildCreateNodes.get(2*NthHoverBox - 1));
         loMaleNodes.get(1).click();
 
         return this;

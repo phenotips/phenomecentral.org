@@ -14,6 +14,8 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.pagefactory.ByChained;
 import org.openqa.selenium.support.ui.Select;
 
+import TestCases.CommonPatientMeasurement;
+
 /**
  * Represents the page reached when "Create... -> New patient" is clicked on the navbar
  * Ex. http://localhost:8083/edit/data/Pxxxxxxx (new patient ID)
@@ -76,6 +78,32 @@ public class CreatePatientPage extends CommonInfoSelectors
     private final By addEthnicityBtns = By.cssSelector("div.family-info a[title=add]");
     private final By healthConditionsFoundInFamily = By.id("PhenoTips.PatientClass_0_family_history");
 
+    private final By addMeasurementBtn = By.cssSelector("div.measurement-info a.add-data-button");
+    private final By measurementYearDrp = By.cssSelector("div.calendar_date_select select.year");
+    private final By measurementMonthDrp = By.cssSelector("div.calendar_date_select select.month");
+    private final By todayCalendarLink = By.linkText("Today");
+    private final By MondayOfTheThirdWeek = By.cssSelector(
+        "#body > div.calendar_date_select > div.cds_part.cds_body > table > tbody > tr.row_2 > td:nth-child(2) > div");
+    private final By measurementDateBoxes = By.id("PhenoTips.MeasurementsClass_0_date");
+    private final By weightBox = By.id("PhenoTips.MeasurementsClass_0_weight");
+    private final By heightBox = By.id("PhenoTips.MeasurementsClass_0_height");
+    private final By armSpanBox = By.id("PhenoTips.MeasurementsClass_0_armspan");
+    private final By sittingHeightBox = By.id("PhenoTips.MeasurementsClass_0_sitting");
+    private final By headCircumferenceBox = By.id("PhenoTips.MeasurementsClass_0_hc");
+    private final By philtrumLengthBox = By.id("PhenoTips.MeasurementsClass_0_philtrum");
+    private final By leftEarLengthBox = By.id("PhenoTips.MeasurementsClass_0_ear");
+    private final By rightEarLengthBox = By.id("PhenoTips.MeasurementsClass_0_ear_right");
+    private final By outherCanthalDistanceBox = By.id("PhenoTips.MeasurementsClass_0_ocd");
+    private final By innterCanthalDistanceBox = By.id("PhenoTips.MeasurementsClass_0_icd");
+    private final By palpebralFissureLengthBox = By.id("PhenoTips.MeasurementsClass_0_pfl");
+    private final By interpupilaryDistanceBox = By.id("PhenoTips.MeasurementsClass_0_ipd");
+    private final By leftHandLengthBox = By.id("PhenoTips.MeasurementsClass_0_hand");
+    private final By leftPalmLengthBox = By.id("PhenoTips.MeasurementsClass_0_palm");
+    private final By leftFootLengthBox = By.id("PhenoTips.MeasurementsClass_0_foot");
+    private final By rightHandLengthBox = By.id("PhenoTips.MeasurementsClass_0_hand_right");
+    private final By rightPalmLengthBox = By.id("PhenoTips.MeasurementsClass_0_palm_right");
+    private final By rightFootLengthBox = By.id("PhenoTips.MeasurementsClass_0_foot_right");
+
     private final By phenotypeSearchBox = By.id("quick-phenotype-search");
     private final By firstPhenotypeSuggestion = By.cssSelector("li.xitem > div");
     private final By addPhenotypeDetailsBtns = By.cssSelector("button.add");
@@ -84,6 +112,10 @@ public class CreatePatientPage extends CommonInfoSelectors
         "div.phenotype-details.focused span.collapse-button, div.phenotype-details.focused span.expand-tool");
     private final By phenotypeDetailsLabels = By.cssSelector("div.phenotype-details.focused label");
     private final By phenotypesSelectedLabels = By.cssSelector("div.summary-item > label.yes");
+    // Different selectors for when the thunderbolt symbol is present or not. Lightning appears when auto added
+    //   by measurement information.
+    private final By phenotypesAutoSelectedByMeasurementLabels = By.xpath("//div[@class='summary-item' and span[@class='fa fa-bolt']]/label[@class='yes']");
+    private final By phenotypesManuallySelectedLabels = By.xpath("//div[@class='summary-item' and not(span[@class='fa fa-bolt'])]/label[@class='yes']");
 //    private final By phenotypesSelectedDivs = By.cssSelector("div.summary-item");
 
     private final By addGeneBtn = By.cssSelector("a[title*='Add gene']");
@@ -601,17 +633,161 @@ public class CreatePatientPage extends CommonInfoSelectors
     }
 
     /**
-     * Retrieves the phenotypes already present in the Patient Information Form
+     * Retrieves the phenotypes specified by the passed selector. This is a helper method that is used to
+     * differentiate between different phenotypes such as ones automatically added via measurements data vs. manual input
      * Requires: The "Clinical symptoms and physical findings" section to be expanded
-     * @return A (potentially empty) list of Strings representing the names of the phenotypes found.
+     * @param phenotypeLabelsSelector The By selector of the phenotype label.
+     *      There are three so far: - phenotypesSelectedLabels (all),
+     *                              - phenotypesAutoSelectedByMeasurementLabels (lightning bolt/auto ones),
+     *                              - phenotypesManuallySelectedLabels (non-lightning bolt/manual ones)
+     * @return A List of Strings representing the names of the phenotypes found. Can potentially be empty.
      */
-    public List<String> getPresentPhenotypes()
+    private List<String> getPresentPhenotypes(By phenotypeLabelsSelector)
     {
         List<String> loPhenotypesFound = new ArrayList<>();
         waitForElementToBePresent(phenotypeSearchBox);
-        superDriver.findElements(phenotypesSelectedLabels).forEach(x -> loPhenotypesFound.add(x.getText()));
+        superDriver.findElements(phenotypeLabelsSelector).forEach(x -> loPhenotypesFound.add(x.getText()));
 
         return loPhenotypesFound;
     }
+
+    /**
+     * Retrieves all of the phenotypes already present (entered) in the Patient Information Form
+     * Requires: The "Clinical symptoms and physical findings" section to be expanded
+     * @return A (potentially empty) list of Strings representing the names of the phenotypes found.
+     */
+    public List<String> getAllPhenotypes()
+    {
+        return getPresentPhenotypes(phenotypesSelectedLabels);
+    }
+
+    /**
+     * Retrieves a list of phenotypes entered automatically due to measurement data. These are the phenotypes
+     * with the lightning symbol beside them.
+     * Requires: The "Clinical symptoms and physical findings" section to be expanded
+     * @return A, possibly empty, list of Strings representing phenotypes that have a lightning symbol beside them
+     *          due to them being automatically added from data contained on a measurements entry.
+     */
+    public List<String> getPhenotypesLightning()
+    {
+        return getPresentPhenotypes(phenotypesAutoSelectedByMeasurementLabels);
+    }
+
+    /**
+     * Retrieves a list of phenotypes that were manually entered. These are the ones that are not prefixed with a
+     * lightning symbol.
+     * Requires: The "Clinical symptoms and physical findings" section to be expanded
+     * @return A List of Strings, possibly empty, of the phenotypes that were manually entered (do not have a lightning
+     *          symbol in front of them).
+     */
+    public List<String> getPhenotypesNonLightning()
+    {
+        return getPresentPhenotypes(phenotypesManuallySelectedLabels);
+    }
+
+    /**
+     * Adds a new entry of measurement data to the patient under the "Measurements" section.
+     * TODO: Check that it truncates floats within the measurements object to something that can be input to the box.
+     * Requires: The "Measurements" section to already be expanded.
+     * @param aMeasurement is a measurement object (instantiated struct) containing all the measurement fields to enter.
+     * @return Stay on the same page so return the same object.
+     */
+    public CreatePatientPage addMeasurement(CommonPatientMeasurement aMeasurement)
+    {
+        clickOnElement(addMeasurementBtn);
+        clickAndTypeOnElement(weightBox, String.valueOf(aMeasurement.weight));
+        clickAndTypeOnElement(heightBox, String.valueOf(aMeasurement.height));
+        clickAndTypeOnElement(armSpanBox, String.valueOf(aMeasurement.armSpan));
+        clickAndTypeOnElement(sittingHeightBox, String.valueOf(aMeasurement.sittingHeight));
+        clickAndTypeOnElement(headCircumferenceBox, String.valueOf(aMeasurement.headCircumference));
+        clickAndTypeOnElement(philtrumLengthBox, String.valueOf(aMeasurement.philtrumLength));
+        clickAndTypeOnElement(leftEarLengthBox, String.valueOf(aMeasurement.leftEarLength));
+        clickAndTypeOnElement(rightEarLengthBox, String.valueOf(aMeasurement.rightEarLength));
+        clickAndTypeOnElement(outherCanthalDistanceBox, String.valueOf(aMeasurement.outerCanthalDistance));
+        clickAndTypeOnElement(innterCanthalDistanceBox, String.valueOf(aMeasurement.inntercanthalDistance));
+        clickAndTypeOnElement(palpebralFissureLengthBox, String.valueOf(aMeasurement.palpebralFissureLength));
+        clickAndTypeOnElement(interpupilaryDistanceBox, String.valueOf(aMeasurement.interpupilaryDistance));
+        clickAndTypeOnElement(leftHandLengthBox, String.valueOf(aMeasurement.leftHandLength));
+        clickAndTypeOnElement(leftPalmLengthBox, String.valueOf(aMeasurement.leftPalmLength));
+        clickAndTypeOnElement(leftFootLengthBox, String.valueOf(aMeasurement.leftFootLength));
+        clickAndTypeOnElement(rightHandLengthBox, String.valueOf(aMeasurement.rightHandLength));
+        clickAndTypeOnElement(rightPalmLengthBox, String.valueOf(aMeasurement.rightPalmLength));
+        clickAndTypeOnElement(rightFootLengthBox, String.valueOf(aMeasurement.rightFootLength));
+
+        return this;
+    }
+
+    /**
+     * Changes the date of the first measurement to the specified month and year. Defaults to January 2018
+     * upon invalid input.
+     * Requires: The measurement section to be open and at least one measurement entry to be present.
+     * @param month is the month as a String "January" to "December". Must be exact.
+     * @param year is the year as a String "1920" to current year (ex. "2019"). Must be exact.
+     * @return Stay on the same page so return the same object.
+     */
+    public CreatePatientPage changeMeasurementDate(String day, String month, String year)
+    {
+        By calendarDayBtn = By.xpath("//div[contains(text(), '" + day + "')]");
+
+        clickOnElement(measurementDateBoxes);
+
+        waitForElementToBePresent(measurementMonthDrp);
+        Select monthDrp = new Select(superDriver.findElement(measurementMonthDrp));
+        Select yearDrp = new Select(superDriver.findElement(measurementYearDrp));
+
+        try {
+            monthDrp.selectByVisibleText(month);
+            yearDrp.selectByVisibleText(year);
+        } catch (NoSuchElementException e) {
+            System.out.println("Invalid dropdown month or year passed. Defaulting to January 2018");
+            monthDrp.selectByVisibleText("January");
+            yearDrp.selectByVisibleText("2018");
+        }
+
+        clickOnElement(calendarDayBtn);
+        waitForElementToBeGone(measurementMonthDrp);
+
+        return this;
+    }
+
+    /**
+     * Retrieves the first measurement entry for the patient that has measurement data entered.
+     * Requires: The "Measurement" section to be open and there be at least one measurmenet entry already there.
+     * @return A Measurement object constructed with the measurement data gathered from the patient.
+     */
+    public CommonPatientMeasurement getPatientMeasurement()
+    {
+        waitForElementToBePresent(weightBox);
+
+        float weight = Float.parseFloat(superDriver.findElement(weightBox).getAttribute("value"));
+        float armSpan = Float.parseFloat(superDriver.findElement(armSpanBox).getAttribute("value"));
+        float headCircumference = Float.parseFloat(superDriver.findElement(headCircumferenceBox).getAttribute("value"));
+        float outerCanthalDistance = Float.parseFloat(superDriver.findElement(outherCanthalDistanceBox).getAttribute("value"));
+        float leftHandLength = Float.parseFloat(superDriver.findElement(leftHandLengthBox).getAttribute("value"));
+        float rightHandLength = Float.parseFloat(superDriver.findElement(rightHandLengthBox).getAttribute("value"));
+
+        float height = Float.parseFloat(superDriver.findElement(heightBox).getAttribute("value"));
+        float sittingHeight = Float.parseFloat(superDriver.findElement(sittingHeightBox).getAttribute("value"));
+        float philtrumLength = Float.parseFloat(superDriver.findElement(philtrumLengthBox).getAttribute("value"));
+        float inntercanthalDistance = Float.parseFloat(superDriver.findElement(innterCanthalDistanceBox).getAttribute("value"));
+        float leftPalmLength = Float.parseFloat(superDriver.findElement(leftPalmLengthBox).getAttribute("value"));
+        float rightPalmLength = Float.parseFloat(superDriver.findElement(rightPalmLengthBox).getAttribute("value"));
+
+        float leftEarLength = Float.parseFloat(superDriver.findElement(leftEarLengthBox).getAttribute("value"));
+        float palpebralFissureLength = Float.parseFloat(superDriver.findElement(palpebralFissureLengthBox).getAttribute("value"));
+        float leftFootLength = Float.parseFloat(superDriver.findElement(leftFootLengthBox).getAttribute("value"));
+        float rightFootLength = Float.parseFloat(superDriver.findElement(rightFootLengthBox).getAttribute("value"));
+
+        float rightEarLength = Float.parseFloat(superDriver.findElement(rightEarLengthBox).getAttribute("value"));
+        float interpupilaryDistance = Float.parseFloat(superDriver.findElement(interpupilaryDistanceBox).getAttribute("value"));
+
+        return new CommonPatientMeasurement(
+            weight, armSpan, headCircumference, outerCanthalDistance, leftHandLength, rightHandLength,
+            height, sittingHeight, philtrumLength, inntercanthalDistance, leftPalmLength, rightPalmLength,
+            leftEarLength, palpebralFissureLength, leftFootLength, rightFootLength,
+            rightEarLength, interpupilaryDistance);
+    }
+
+
 
 }
