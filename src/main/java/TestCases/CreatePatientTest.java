@@ -285,5 +285,57 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
             .logOut();
     }
 
+    // Checks that the diagnosis section has the appropriate fields from what was entered on the patient form
+    @Test(priority = 9)
+    public void checkDiagnosisSection()
+    {
+        final List<String> clinicalDiagnosisCheck = new ArrayList<>(
+            Arrays.asList("1164 Allergic bronchopulmonary aspergillosis", "52530 Pseudo-von Willebrand disease"));
+
+        final List<String> finalDiagnosisCheck = new ArrayList<>(
+            Arrays.asList("#607154 ALLERGIC RHINITIS", "#304340 PETTIGREW SYNDROME"));
+
+        final String additionalCommentCheck = "Comment in Additional Comments";
+
+        final String resolutionNoteCheck = "Resolved";
+
+        // This array will be sorted as PMIDs do not load in deterministic order.
+        List<String> pubMedIDsCheck = new ArrayList<>(
+            Arrays.asList("PMID: 30700955", "PMID: 30699054", "PMID: 30699052"));
+
+        aHomePage.navigateToLoginPage()
+            .loginAsUser()
+            .navigateToAllPatientsPage()
+            .sortPatientsDateDesc()
+            .viewFirstPatientInTable()
+            .editThisPatient()
+            .expandSection(SECTIONS.DiagnosisSection)
+            .cycleThroughDiagnosisBoxes()
+            .addClinicalDiagnosis("Pseudo-von Willebrand disease")
+            .addFinalDiagnosis("PETTIGREW SYNDROME")
+            .toggleNthFinalDiagnosisCheckbox(2)
+            .toggleNthClinicalDiagnosisCheckbox(2)
+            .addPubMedID("30700955")
+            .saveAndViewSummary();
+
+        System.out.println("Clinical Diagnosis Found: " + aViewPatientPage.getClinicalDiagnosisNames());
+        System.out.println("Final Diagnosis Found: " + aViewPatientPage.getFinalDiagnosisNames());
+        System.out.println("Additional Comments Found: " + aViewPatientPage.getAdditionalComments());
+        System.out.println("PubMed IDs Found: " + aViewPatientPage.getExistingPubMedIDs());
+        System.out.println("Resolution Notes Found: " + aViewPatientPage.getResolutionNotes());
+
+        // Sort the PubMed IDs as they do not load/display in a deterministic order
+        List<String> sortedPubMedIDsFound = aViewPatientPage.getExistingPubMedIDs();
+        sortedPubMedIDsFound.sort(String::compareTo);
+        pubMedIDsCheck.sort(String::compareTo);
+
+        Assert.assertEquals(aViewPatientPage.getClinicalDiagnosisNames(), clinicalDiagnosisCheck);
+        Assert.assertEquals(aViewPatientPage.getFinalDiagnosisNames(), finalDiagnosisCheck);
+        Assert.assertEquals(aViewPatientPage.getAdditionalComments(), additionalCommentCheck);
+        Assert.assertEquals(sortedPubMedIDsFound, pubMedIDsCheck);
+        Assert.assertEquals(aViewPatientPage.getResolutionNotes(), resolutionNoteCheck);
+
+    }
+
 
 }

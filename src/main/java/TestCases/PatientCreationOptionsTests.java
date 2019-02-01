@@ -33,6 +33,7 @@ public class PatientCreationOptionsTests extends BaseTest implements CommonInfoE
             "Sporadic", "Autosomal dominant inheritance", "Sex-limited autosomal dominant",
             "Male-limited autosomal dominant", "Autosomal dominant somatic cell mutation",
             "Autosomal dominant contiguous gene syndrome", "Autosomal recessive inheritance",
+            "Sex-limited autosomal recessive inheritance",
             "Gonosomal inheritance", "X-linked inheritance", "X-linked dominant inheritance",
             "X-linked recessive inheritance", "Y-linked inheritance", "Multifactorial inheritance",
             "Digenic inheritance", "Oligogenic inheritance", "Polygenic inheritance",
@@ -146,7 +147,7 @@ public class PatientCreationOptionsTests extends BaseTest implements CommonInfoE
         List<String> loPrenatalYesNoBoxes = aCreationPage.cycleThroughPrenatalHistory();
         Assert.assertEquals(loPrenatalYesNoBoxes, checkPrenatalConditionsLabels);
 
-        aCreationPage.logOut();
+        aCreationPage.cycleThroughPrenatalOptions().logOut();
     }
 
     @Test(priority = 4)
@@ -196,6 +197,59 @@ public class PatientCreationOptionsTests extends BaseTest implements CommonInfoE
 //        Assert.assertEquals(loPhenotypeDetailsOptions, checkPhenotypeDetailsLabels);
 
         aCreationPage.logOut();
+    }
+
+    // Clicks on all input boxes within the Diagnosis section and tries to provide input.
+    // Asserts that the PubMedIDs and Resolution Notes are hidden upon toggling "Case Solved"
+    @Test(priority = 6)
+    public void cycleThroughDiagnosis()
+    {
+        aHomePage.navigateToLoginPage()
+            .loginAsUser()
+            .navigateToAllPatientsPage()
+            .sortPatientsDateDesc()
+            .viewFirstPatientInTable()
+            .editThisPatient()
+            .expandSection(SECTIONS.DiagnosisSection);
+
+        System.out.println("Case Solved should be False: " + aCreationPage.isCaseSolved());
+        Assert.assertFalse(aCreationPage.isCaseSolved());
+        Assert.assertFalse(aCreationPage.isPubMedAndResolutionBoxesClickable());
+
+        aCreationPage.cycleThroughDiagnosisBoxes();
+        System.out.println("Case Solved should be True: " + aCreationPage.isCaseSolved());
+        Assert.assertTrue(aCreationPage.isCaseSolved());
+        Assert.assertTrue(aCreationPage.isPubMedAndResolutionBoxesClickable());
+
+        aCreationPage.toggleCaseSolved();
+        System.out.println("Case Solved should be False: " + aCreationPage.isCaseSolved());
+        Assert.assertFalse(aCreationPage.isCaseSolved());
+        Assert.assertFalse(aCreationPage.isPubMedAndResolutionBoxesClickable());
+
+        aCreationPage.logOut();
+    }
+
+    // Checks that the red error message when inputting an invalid PubMed ID shows up.
+    @Test(priority = 7)
+    public void checkDiagnosisErrorMessages()
+    {
+        aHomePage.navigateToLoginPage()
+            .loginAsUser()
+            .navigateToAllPatientsPage()
+            .sortPatientsDateDesc()
+            .viewFirstPatientInTable()
+            .editThisPatient()
+            .expandSection(SECTIONS.DiagnosisSection);
+
+        aCreationPage.toggleCaseSolved()
+            .addPubMedID("This is an invalid ID");
+
+        Assert.assertFalse(aCreationPage.isNthPubMDBoxValid(1));
+
+        aCreationPage.removeNthPubMedID(1)
+            .addPubMedID("30699054");
+
+        Assert.assertTrue(aCreationPage.isNthPubMDBoxValid(1));
     }
 
 

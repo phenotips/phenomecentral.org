@@ -1,17 +1,13 @@
 package PageObjects;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.ElementNotInteractableException;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.pagefactory.ByChained;
 import org.openqa.selenium.support.ui.Select;
 
 import TestCases.CommonPatientMeasurement;
@@ -78,6 +74,19 @@ public class CreatePatientPage extends CommonInfoSelectors
     private final By addEthnicityBtns = By.cssSelector("div.family-info a[title=add]");
     private final By healthConditionsFoundInFamily = By.id("PhenoTips.PatientClass_0_family_history");
 
+    private final By termBirthCheckbox = By.id("PhenoTips.PatientClass_0_gestation_term");
+    private final By gestationWeeksBox = By.cssSelector("input[type=text][name=\"PhenoTips.PatientClass_0_gestation\"]");
+    private final By maternalAgeBox = By.id("PhenoTips.ParentalInformationClass_0_maternal_age");
+    private final By paternalAgeBox = By.id("PhenoTips.ParentalInformationClass_0_paternal_age");
+    private final By APGARScore1MinDrp = By.id("PhenoTips.PatientClass_0_apgar1");
+    private final By APGARScore5MinDrp = By.id("PhenoTips.PatientClass_0_apgar5");
+    private final By otherPregnancyPhenotypeBox = By.xpath("//*[@id='HPregnancy-history']/parent::*/div[@class='prenatal_phenotype-other custom-entries']/input[@type='text']");
+    private final By otherDevelopmentPhenotypeBox = By.xpath("//*[@id='HPrenatal-development']/parent::*/div[@class='prenatal_phenotype-other custom-entries']/input[@type='text']");
+    private final By otherDeliveryPhenotypeBox = By.xpath("//*[@id='HDelivery']/parent::*/div[@class='prenatal_phenotype-other custom-entries']/input[@type='text']");
+    private final By otherGrowthPhenotypeBox = By.xpath("//*[@id='HNeonatal-growth-parameters']/parent::*/div[@class='prenatal_phenotype-other custom-entries']/input[@type='text']");
+    private final By otherComplicationsPhenotypeBox = By.xpath("//*[@id='HPerinatal-complications']/parent::*/div[@class='prenatal_phenotype-other custom-entries']/input[@type='text']");
+    private final By prenatalNotesBox = By.id("PhenoTips.PatientClass_0_prenatal_development");
+
     private final By addMeasurementBtn = By.cssSelector("div.measurement-info a.add-data-button");
     private final By measurementYearDrp = By.cssSelector("div.calendar_date_select select.year");
     private final By measurementMonthDrp = By.cssSelector("div.calendar_date_select select.month");
@@ -125,7 +134,20 @@ public class CreatePatientPage extends CommonInfoSelectors
     private final By geneStatusDrps = By.cssSelector("td.Status > select");
     private final By geneStrategySequencingCheckboxes = By.cssSelector(
         "td.Strategy > label > input[value=sequencing]");
-    private final By firstGeneSuggestion = By.cssSelector("div.suggestItem > div > span.suggestValue");
+    private final By firstGeneSuggestion = By.cssSelector("div.suggestItem > div > span.suggestValue"); // First suggestion result for prenatal phenotypes too
+
+    private final By clinicalDiagnosisBox = By.id("PhenoTips.PatientClass_0_clinical_diagnosis");
+    private final By clinicalDiagnosisCheckboxes = By.cssSelector("input[id*='PhenoTips.PatientClass_0_clinical_diagnosis_ORDO:']");
+    private final By finalDiagnosisBox = By.id("PhenoTips.PatientClass_0_omim_id");
+    private final By finalDiagnosisCheckboxes = By.cssSelector("input[id*='PhenoTips.PatientClass_0_omim_id_']");
+    private final By additionalCommentsBox = By.id("PhenoTips.PatientClass_0_diagnosis_notes");
+    private final By caseSolvedCheckbox = By.id("PhenoTips.PatientClass_0_solved");
+    private final By pubMDIDBoxes = By.cssSelector("[id*='PhenoTips.PatientClass_0_solved__pubmed_id_']");
+    private final By addPubMDLink = By.cssSelector("div.diagnosis-info a[title=add]");
+    private final By deletePubMDBtns = By.cssSelector("div.diagnosis-info a[title='delete']");
+    private final By pubMDArticle = By.cssSelector("div.article-info");
+    private final By pubMDIDCheckStatus = By.cssSelector("div.solved__pubmed_id > div.solved__pubmed_id > div > ol > li > div");
+    private final By resolutionNotesBox = By.id("PhenoTips.PatientClass_0_solved__notes");
 
 
     private final By saveAndViewSummaryBtn = By.cssSelector("span.buttonwrapper:nth-child(3) > input:nth-child(1)");
@@ -554,6 +576,56 @@ public class CreatePatientPage extends CommonInfoSelectors
     }
 
     /**
+     * Traverses through the rest of the boxes in prenatal options by entering in some text to each box.
+     * Traverses through the dropdowns too.
+     * Requires that the "Prenatal and perinatal history" section be expanded
+     * @return Stay on the same page so return the same object.
+     */
+    public CreatePatientPage cycleThroughPrenatalOptions()
+    {
+        waitForElementToBePresent(APGARScore1MinDrp);
+
+        clickOnElement(termBirthCheckbox);
+        clickOnElement(termBirthCheckbox);
+        clickAndTypeOnElement(gestationWeeksBox, "12");
+        clickAndTypeOnElement(maternalAgeBox, "26");
+        clickAndTypeOnElement(paternalAgeBox, "30");
+
+        forceScrollToElement(APGARScore1MinDrp);
+        Select APGARScore1Min = new Select(superDriver.findElement(APGARScore1MinDrp));
+        Select APGARScore5Min = new Select(superDriver.findElement(APGARScore5MinDrp));
+        List<String> loAPGARScores = new ArrayList<>(Arrays.asList(
+            "Unknown", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"));
+
+        for (String score : loAPGARScores) {
+            APGARScore1Min.selectByVisibleText(score);
+            APGARScore5Min.selectByVisibleText(score);
+        }
+
+        APGARScore1Min.selectByVisibleText("Unknown");
+        APGARScore5Min.selectByVisibleText("Unknown");
+
+        clickAndTypeOnElement(otherPregnancyPhenotypeBox, "Tall chin");
+        clickOnElement(firstGeneSuggestion);
+
+        clickAndTypeOnElement(otherDevelopmentPhenotypeBox, "Tall chin");
+        clickOnElement(firstGeneSuggestion);
+
+        clickAndTypeOnElement(otherDeliveryPhenotypeBox, "Tall chin");
+        clickOnElement(firstGeneSuggestion);
+
+        clickAndTypeOnElement(otherGrowthPhenotypeBox, "Tall chin");
+        clickOnElement(firstGeneSuggestion);
+
+        clickAndTypeOnElement(otherComplicationsPhenotypeBox, "Tall chin");
+        clickOnElement(firstGeneSuggestion);
+
+        clickAndTypeOnElement(prenatalNotesBox, "Notes for prenatal. Moving on...");
+
+        return this;
+    }
+
+    /**
      * Gets all the labels for the labels within the Edit Phenotype Details box. This does not do a tree
      * traversal due to the dropdowns having issues hiding/showing for now.
      * Requires: A phenotype to already be present and "Add Details" to already be pressed so that the details box appears.
@@ -788,6 +860,213 @@ public class CreatePatientPage extends CommonInfoSelectors
             rightEarLength, interpupilaryDistance);
     }
 
+    /**
+     * Adds a clinical diagnosis in the "Diagnosis" section to the patient. Selects the first result from
+     * the suggestion dropdown.
+     * Requires: Diagnosis section to be expanded and the ORDO name to be as exact as possible to the suggestions list.
+     * @param ORDO the name of the diagnosis, either the ID number or the name of the diagnosis.
+     * @return Stay on the same page so return the same object.
+     */
+    public CreatePatientPage addClinicalDiagnosis(String ORDO)
+    {
+        clickAndTypeOnElement(clinicalDiagnosisBox, ORDO);
+        clickOnElement(firstGeneSuggestion);
+        return this;
+    }
+
+    /**
+     * Adds a final diagnosis in the "Diagnosis" section to the patient. Selects the first result in the
+     * suggestions dropdown.
+     * Requires the "Diagnosis" section to be expanded.
+     * @param OMIM is the name of the diagnosis or the OMIM number, as a String. Should be as exact as possible.
+     * @return Stay on the same page so return the same object.
+     */
+    public CreatePatientPage addFinalDiagnosis(String OMIM)
+    {
+        clickAndTypeOnElement(finalDiagnosisBox, OMIM);
+        clickOnElement(firstGeneSuggestion);
+        return this;
+    }
+
+    /**
+     * Toggles the "Case Solved" checkbox in the "Diagnosis" section.
+     * Requires the "Diagnosis" section to be expanded.
+     * @return Stay on the same page so return the same object.
+     */
+    public CreatePatientPage toggleCaseSolved()
+    {
+        clickOnElement(caseSolvedCheckbox);
+        return this;
+    }
+
+    /**
+     * Determines if the "Case Solved" checkbox under "Diagnosis" section is enabled or not.
+     * Requires the "Diagnosis" section to be expanded.
+     * @return A boolean, true for checked and false for unchecked.
+     */
+    public boolean isCaseSolved()
+    {
+        waitForElementToBePresent(caseSolvedCheckbox);
+        return superDriver.findElement(caseSolvedCheckbox).isSelected();
+    }
+
+    /**
+     * Adds a PubMed ID to the bottom-most PubMed ID box there is. If there is a pubmed article on the page,
+     * will add a new row by clicking on the add pubMed ID link.
+     * Requires the "Diagnosis" section to be expanded and the "Case Solved" checkbox to be enabled.
+     * @param ID is the pubMed ID (8 digit number) to add to the patient
+     * @return Stay on the same page so return the same object.
+     */
+    public CreatePatientPage addPubMedID(String ID)
+    {
+        clickOnElement(additionalCommentsBox); // Needed to defocus PubMed ID boxes.
+
+        if (isElementPresent(pubMDArticle))
+        {
+            clickOnElement(addPubMDLink);
+        }
+
+        List<WebElement> loPubMDIDBoxes = superDriver.findElements(pubMDIDBoxes);
+        clickOnElement(loPubMDIDBoxes.get(loPubMDIDBoxes.size() - 1));
+        loPubMDIDBoxes.get(loPubMDIDBoxes.size() - 1).sendKeys(ID);
+
+        clickOnElement(additionalCommentsBox);
+
+        return this;
+    }
+
+    /**
+     * Removes the Nth PubMed entry from the Diagnosis section.
+     * Requires that there be at least n PubMed entries and the "Diagnosis" section to be expanded.
+     * This should not be called if there are no existing PubMed entries.
+     * @param n is int >= 1.
+     * @return Stay on the same page so return the same object.
+     */
+    public CreatePatientPage removeNthPubMedID(int n)
+    {
+        waitForElementToBePresent(deletePubMDBtns);
+        List<WebElement> loDeletePubMDBtns = superDriver.findElements(deletePubMDBtns);
+
+        clickOnElement(loDeletePubMDBtns.get(n - 1));
+
+        return this;
+    }
+
+    /**
+     * Adds a note to the Resolution Notes box under "Diagnosis" section. Concatenates to what is
+     * already present in that box.
+     * Requires: Diagnosis section to already be expanded.
+     * @param note is a String representing the note you need to enter.
+     * @return Stay on the same page so return the same object.
+     */
+    public CreatePatientPage addResolutionNotes(String note)
+    {
+        clickAndTypeOnElement(resolutionNotesBox, note);
+        return this;
+    }
+
+    /**
+     * Adds a note to the Additional Comments box under "Diagnosis" section. Concatenates to what is
+     * already present in that box.
+     * @param comment is the comment to add, as an arbitrary String
+     * @return Stay on the same page so return the same object.
+     */
+    public CreatePatientPage addAdditionalComments(String comment)
+    {
+        clickAndTypeOnElement(additionalCommentsBox, comment);
+        return this;
+    }
+
+    /**
+     * Determines if the nth PubMed ID box has valid input. Locates the red error message that is given
+     * in the case of invalid input.
+     * Requires the "Diagnosis" section to be expanded and that there be at least n PubMed IDs already entered.
+     * @param n is the Nth PubMed ID box.
+     * @return A boolean indicating validity, true for valid (summary of article shown) and false for invalid
+     *          (the error message is displayed).
+     */
+    public boolean isNthPubMDBoxValid(int n)
+    {
+        final String invalidPubMedIDError = "Invalid Pubmed ID";
+
+        clickOnElement(additionalCommentsBox); // Needed so that pubMed boxes goes out of focus and does validation
+        waitForElementToBePresent(pubMDIDCheckStatus);
+
+        String statusText = superDriver.findElements(pubMDIDCheckStatus).get(n - 1).getText();
+
+        if (statusText.equals(invalidPubMedIDError)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Tries to modify each input box within the "Diagnosis" section. Adds something to each box.
+     * @return Stay on the same page so return the same object.
+     */
+    public CreatePatientPage cycleThroughDiagnosisBoxes()
+    {
+        addClinicalDiagnosis("Allergic bronchopulmonary aspergillosis");
+        addClinicalDiagnosis("Essential iris atrophy");
+        toggleNthClinicalDiagnosisCheckbox(1);
+        toggleNthClinicalDiagnosisCheckbox(1);
+        toggleNthClinicalDiagnosisCheckbox(2);
+        toggleNthClinicalDiagnosisCheckbox(2);
+        addFinalDiagnosis("ALLERGIC RHINITIS");
+        addFinalDiagnosis("KOOLEN-DE VRIES SYNDROME");
+        toggleNthFinalDiagnosisCheckbox(1);
+        toggleNthFinalDiagnosisCheckbox(1);
+        toggleNthFinalDiagnosisCheckbox(2);
+        toggleNthFinalDiagnosisCheckbox(2);
+        addAdditionalComments("Comment in Additional Comments");
+        toggleCaseSolved();
+        addPubMedID("30699054");
+        addPubMedID("30699052");
+        addResolutionNotes("Resolved");
+
+        return this;
+    }
+
+    /**
+     * Toggles the Nth Clinical Diagnosis checkbox within the list of added clinical diagnosis.
+     * Requires the "Diagnosis" section to be expanded and there at least be n ORDOs already listed.
+     * @param n is int >= 1, indicating the Nth clinical diagnosis checkbox to toggle.
+     * @return Stay on the same page so return the same object.
+     */
+    public CreatePatientPage toggleNthClinicalDiagnosisCheckbox(int n)
+    {
+        waitForElementToBePresent(clinicalDiagnosisCheckboxes);
+        clickOnElement(superDriver.findElements(clinicalDiagnosisCheckboxes).get(n - 1));
+
+        return this;
+    }
+
+    /**
+     * Toggles the Nth Final Diagnosis checkbox within the list of Final Diagnosis already added.
+     * Requires the "Diagnosis" section to be expanded and there at least be n OMIMs listed already.
+     * @param n is integer >= 1, indicating the Nth Final Diagnosis checkbox to toggle.
+     * @return Stay on the same page so return the same object.
+     */
+    public CreatePatientPage toggleNthFinalDiagnosisCheckbox(int n)
+    {
+        waitForElementToBePresent(finalDiagnosisCheckboxes);
+        clickOnElement(superDriver.findElements(finalDiagnosisCheckboxes).get(n - 1));
+
+        return this;
+    }
+
+    /**
+     * Checks for the visibility (i.e. clickability) of the pubMed ID boxes and Resolution Notes box.
+     * Visibility is not enough as the elements are always loaded but with odd hidden property that is still
+     * considered visible.
+     * Requires the "Diagnosis" section to be expanded.
+     * @return bool indicating the presence of those two boxes. True for present, and false if not present.
+     */
+    public boolean isPubMedAndResolutionBoxesClickable()
+    {
+        return (isElementClickable(pubMDIDBoxes) && (isElementClickable(resolutionNotesBox)));
+    }
 
 
 }

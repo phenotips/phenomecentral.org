@@ -26,6 +26,12 @@ public class ViewPatientPage extends CommonInfoSelectors
 
     private final By geneComments = By.cssSelector("#extradata-list-PhenoTips\\2e GeneClass_PhenoTips\\2e GeneVariantClass td.Comments");
 
+    private final By clinicalDiagnosisNames = By.cssSelector("div.diagnosis-info div.clinical_diagnosis div.vocabulary-term-list > p");
+    private final By finalDiagnosisNames = By.cssSelector("div.diagnosis-info div.omim_id div.vocabulary-term-list > p");
+    private final By additionalCommentsText = By.cssSelector("div.diagnosis_notes > div.displayed-value > p");
+    private final By pubMedIDsPresent = By.cssSelector("div.article-ids > span.p-id:nth-child(1)");
+    private final By resolutionNotesText = By.cssSelector("div.solved__notes > div > p");
+
     public ViewPatientPage(WebDriver aDriver)
     {
         super(aDriver);
@@ -93,4 +99,61 @@ public class ViewPatientPage extends CommonInfoSelectors
     {
         return getLabelsFromList(geneComments);
     }
+
+    /**
+     * Retrieves all the ORDO names of Clinical Diagnosis, in order, that have been entered within the
+     * "Diagnosis" section. Each String is ORDO number followed by name. Ex. "427 Familial hypoaldosteronism".
+     * @return A possibly empty, list of Strings representing the ORDO names that were found under
+     *          Clinical Diagnosis.
+     */
+    public List<String> getClinicalDiagnosisNames() { return getLabelsFromList(clinicalDiagnosisNames); }
+
+    /**
+     * Retrieves all the OMIM names of Final Diagnosis, in order, that have been entered within the
+     * "Diagnosis" section. Each String has OMIM number and name. Ex. "#151623 LI-FRAUMENI SYNDROME"
+     * @return A possibly empty, list of Strings representing the OMIM names that were found under
+     *          Final Diagnosis.
+     */
+    public List<String> getFinalDiagnosisNames() { return getLabelsFromList(finalDiagnosisNames); }
+
+    /**
+     * Retrieves the additional comment under the Diagnosis section.
+     * @return A String containing the comment under Additional Comments. If there is no Additional Comments
+     *          section, will return an empty String ("").
+     */
+    public String getAdditionalComments()
+    {
+        if (isElementPresent(additionalCommentsText)) {
+            return superDriver.findElement(additionalCommentsText).getText();
+        }
+        else {
+            return "";
+        }
+    }
+
+    /**
+     * Retrieves a List of PubMed IDs that have been entered in the "This case is published in:" area under the
+     * "Diagnosis" section. These strings will be in the form of "PMID: 30700910".
+     * @return A, possibly empty, list of Strings containing the PMIDs of entered cases.
+     */
+    public List<String> getExistingPubMedIDs()
+    {
+        return getLabelsFromList(pubMedIDsPresent);
+    }
+
+    /**
+     * Retrieves the comment under the "Resolution Notes:" area under the "Diagnosis" section.
+     * If there is no note and the element is not visible, will return empty String ("").
+     * @return A String representing the contents of what was entered and saved in the "Resolution Notes" box.
+     */
+    public String getResolutionNotes()
+    {
+        if (isElementPresent(resolutionNotesText)) {
+            return superDriver.findElement(resolutionNotesText).getText();
+        }
+        else {
+            return "";
+        }
+    }
+
 }
