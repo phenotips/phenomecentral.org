@@ -55,7 +55,8 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
     private String createdPatient2;
 
     // Create a patient manually as User 1.
-    @Test(priority = 1, groups={"CreatePatientTest.createTwoPatients"})
+//    @Test(priority = 1, groups={"CreatePatientTest.createTwoPatients"})
+    @Test(priority = 1)
     public void createPatientManually()
     {
         List<String> loPhenotypesToAdd = new ArrayList<String>(Arrays.asList(
@@ -91,7 +92,8 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
 
     // Creates an identitcal patient as User 2 via JSON import. Asserts that the section titles are visible.
     // Updates consent, and changes modifies the identifier so that it is unique and matchable.
-    @Test(priority = 2, groups={"CreatePatientTest.createTwoPatients"})
+//    @Test(priority = 2, groups={"CreatePatientTest.createTwoPatients"})
+    @Test(priority = 2)
     public void importSecondJSONPatient()
     {
         aHomePage.navigateToLoginPage()
@@ -114,7 +116,8 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
     }
 
     // Refresh the matches and assert that two new matches are found.
-    @Test(priority = 3, dependsOnMethods = {"createPatientManually", "importSecondJSONPatient"})
+//    @Test(priority = 3, dependsOnMethods = {"createPatientManually", "importSecondJSONPatient"})
+    @Test(priority = 3)
     public void refreshMatchesForTwoPatients()
     {
         AdminRefreshMatchesPage aRefreshMatchesPage= new AdminRefreshMatchesPage(theDriver);
@@ -134,7 +137,8 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
     // Sends the email notification of an identical (100%) match to the two newly created
     // patients, checks that the inbox has emails.
     // TODO: Maybe we should delete patient afterwards, otherwise might get other matches in first row.
-    @Test(priority = 4, dependsOnMethods = {"createPatientManually", "importSecondJSONPatient"})
+//    @Test(priority = 4, dependsOnMethods = {"createPatientManually", "importSecondJSONPatient"})
+    @Test(priority = 4)
     public void verifyEmailNotifications()
     {
         EmailUIPage emailPage = new EmailUIPage(theDriver);
@@ -157,7 +161,8 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
     }
 
     // Adjusts Patient created by User 1 to public, ensures User 2 can now see it.
-    @Test(priority = 5, dependsOnMethods = {"createPatientManually", "importSecondJSONPatient"})
+//    @Test(priority = 5, dependsOnMethods = {"createPatientManually", "importSecondJSONPatient"})
+    @Test(priority = 5)
     public void publicVisiblityTest()
     {
         aHomePage.navigateToLoginPage()
@@ -185,7 +190,8 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
         aHomePage.logOut();
     }
 
-    @Test(priority = 6, dependsOnMethods = {"createPatientManually", "importSecondJSONPatient"})
+//    @Test(priority = 6, dependsOnMethods = {"createPatientManually", "importSecondJSONPatient"})
+    @Test(priority = 6)
     public void collaboratorVisibilityTest()
     {
         aHomePage

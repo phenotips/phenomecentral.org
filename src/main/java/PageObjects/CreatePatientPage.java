@@ -18,6 +18,10 @@ import TestCases.CommonPatientMeasurement;
 */
 public class CreatePatientPage extends CommonInfoSelectors
 {
+    /*******************************************
+     * "Patient Information" Section - Selectors
+     *******************************************/
+
     private final By patientIDDiv = By.id("document-title");
 
     private final By realPatientConsentBox = By.id("real-consent-checkbox");
@@ -64,6 +68,10 @@ public class CreatePatientPage extends CommonInfoSelectors
 
     private final By updateBtn = By.cssSelector("#patient-consent-update > a:nth-child(1)");
 
+    /*******************************************************
+     * "Family history and pedigree" Section - Selectors
+     *******************************************************/
+
     private final By editPedigreeBox = By.cssSelector("div.pedigree-wrapper > div");
     private final By editPedigreeOKBtn = By.cssSelector("input.button[name=ok]");
     private final By assignFamilyRadioBtn = By.id("pedigreeInputAssignFamily");
@@ -73,6 +81,10 @@ public class CreatePatientPage extends CommonInfoSelectors
     private final By maternalEthnicityBox = By.id("PhenoTips.PatientClass_0_maternal_ethnicity_2");
     private final By addEthnicityBtns = By.cssSelector("div.family-info a[title=add]");
     private final By healthConditionsFoundInFamily = By.id("PhenoTips.PatientClass_0_family_history");
+
+    /*******************************************************
+     * "Prenatal and perinatal history" Section - Selectors
+     *******************************************************/
 
     private final By termBirthCheckbox = By.id("PhenoTips.PatientClass_0_gestation_term");
     private final By gestationWeeksBox = By.cssSelector("input[type=text][name=\"PhenoTips.PatientClass_0_gestation\"]");
@@ -86,6 +98,10 @@ public class CreatePatientPage extends CommonInfoSelectors
     private final By otherGrowthPhenotypeBox = By.xpath("//*[@id='HNeonatal-growth-parameters']/parent::*/div[@class='prenatal_phenotype-other custom-entries']/input[@type='text']");
     private final By otherComplicationsPhenotypeBox = By.xpath("//*[@id='HPerinatal-complications']/parent::*/div[@class='prenatal_phenotype-other custom-entries']/input[@type='text']");
     private final By prenatalNotesBox = By.id("PhenoTips.PatientClass_0_prenatal_development");
+
+    /*******************************************************
+     * "Measurements" Section - Selectors
+     *******************************************************/
 
     private final By addMeasurementBtn = By.cssSelector("div.measurement-info a.add-data-button");
     private final By measurementYearDrp = By.cssSelector("div.calendar_date_select select.year");
@@ -113,6 +129,10 @@ public class CreatePatientPage extends CommonInfoSelectors
     private final By rightPalmLengthBox = By.id("PhenoTips.MeasurementsClass_0_palm_right");
     private final By rightFootLengthBox = By.id("PhenoTips.MeasurementsClass_0_foot_right");
 
+    /******************************************************************************
+     * "Clinical symptoms and physical findings" (Phenotypes) Section - Selectors
+     ******************************************************************************/
+
     private final By phenotypeSearchBox = By.id("quick-phenotype-search");
     private final By firstPhenotypeSuggestion = By.cssSelector("li.xitem > div");
     private final By addPhenotypeDetailsBtns = By.cssSelector("button.add");
@@ -127,6 +147,10 @@ public class CreatePatientPage extends CommonInfoSelectors
     private final By phenotypesManuallySelectedLabels = By.xpath("//div[@class='summary-item' and not(span[@class='fa fa-bolt'])]/label[@class='yes']");
 //    private final By phenotypesSelectedDivs = By.cssSelector("div.summary-item");
 
+    /*******************************************************
+     * "Genotype information" Section - Selectors
+     *******************************************************/
+
     private final By addGeneBtn = By.cssSelector("a[title*='Add gene']");
 
     private final By geneNameBoxes = By.cssSelector(
@@ -135,6 +159,10 @@ public class CreatePatientPage extends CommonInfoSelectors
     private final By geneStrategySequencingCheckboxes = By.cssSelector(
         "td.Strategy > label > input[value=sequencing]");
     private final By firstGeneSuggestion = By.cssSelector("div.suggestItem > div > span.suggestValue"); // First suggestion result for prenatal phenotypes too
+
+    /*******************************************************
+     * "Diagnosis" Section - Selectors
+     *******************************************************/
 
     private final By clinicalDiagnosisBox = By.id("PhenoTips.PatientClass_0_clinical_diagnosis");
     private final By clinicalDiagnosisCheckboxes = By.cssSelector("input[id*='PhenoTips.PatientClass_0_clinical_diagnosis_ORDO:']");
@@ -156,6 +184,25 @@ public class CreatePatientPage extends CommonInfoSelectors
     {
         super(aDriver);
     }
+
+    /****************************
+     * Common Methods
+     ****************************/
+
+    /**
+     * Hits the "Save and View Summary" button on the bottom left.
+     * @return navigating to the view page containing patient's full details so a new object of that type
+     */
+    public ViewPatientPage saveAndViewSummary()
+    {
+        clickOnElement(saveAndViewSummaryBtn);
+        return new ViewPatientPage(superDriver);
+    }
+
+
+    /****************************
+     * Consent Methods
+     ****************************/
 
     /**
      * Toggles the nth consent checkbox in the "Consents granted" section
@@ -213,15 +260,10 @@ public class CreatePatientPage extends CommonInfoSelectors
         return this;
     }
 
-    /**
-     * Hits the "Save and View Summary" button on the bottom left.
-     * @return navigating to the view page containing patient's full details so a new object of that type
-     */
-    public ViewPatientPage saveAndViewSummary()
-    {
-        clickOnElement(saveAndViewSummaryBtn);
-        return new ViewPatientPage(superDriver);
-    }
+
+    /********************************************
+     * "Patient Information" Section - Methods
+     ********************************************/
 
     /**
      * Clears and then sets the patient identifer field box.
@@ -364,75 +406,6 @@ public class CreatePatientPage extends CommonInfoSelectors
     }
 
     /**
-     * Adds a phenotype by searching. Selects the first suggested phenotype search result.
-     * Assumes that "Clinical symptoms and physical findings" is expanded and there is at
-     * least one suggested search result.
-     * @param thePhenotype phenotype needed. Be exact and as specific as possible.
-     * @return Stay on the same page, so return same object.
-     */
-    public CreatePatientPage addPhenotype(String thePhenotype) {
-        clickAndTypeOnElement(phenotypeSearchBox, thePhenotype);
-        clickOnElement(firstPhenotypeSuggestion);
-        return this;
-    }
-
-    /**
-     * Helper method to add a list of Phenotypes to the patient.
-     * Requires the "Clinical symptoms and physical findings" section is expanded and there is at
-     * least one suggested search result.
-     * @param phenotypes is a List of Strings specifying the phenotypes. You should be as exact as possible.
-     * @return Stay on the same page so return the same object.
-     */
-    public CreatePatientPage addPhenotypes(List<String> phenotypes)
-    {
-        for (String aPhenotype : phenotypes) {
-            addPhenotype(aPhenotype);
-        }
-        return this;
-    }
-
-    /**
-     * Adds a gene to the "Genotype information" section, using the gene name, status, and strategy.
-     * Clicks the "add gene" button before adding to the bottom-most row. Searches for gene and selects first
-     * suggestion.
-     * Assumes that "Genotype information" is already expanded (selectors visible) and at least one gene
-     * is returned in search results.
-     * @param theGene name of the gene, be as exact and specific as possible.
-     * @param geneStatus status of the gene, "Candidate", "Rejected candidate", etc. Must be exact.
-     * @param strategy not used/implemented yet, supposed to specify which strategy checkbox to tick.
-     * @return Stay on the same page so we return the same object.
-     */
-    public CreatePatientPage addGene(String theGene, String geneStatus, String strategy) {
-        forceScrollToElement(addGeneBtn);
-        clickOnElement(addGeneBtn);
-
-        waitForElementToBePresent(geneNameBoxes); // Must wait before search for elements
-        unconditionalWaitNs(1);
-
-        List<WebElement> foundGeneBoxes = superDriver.findElements(geneNameBoxes);
-        List<WebElement> foundStatusDrps = superDriver.findElements(geneStatusDrps);
-        List<WebElement> foundSequencingCheckboxes = superDriver.findElements(geneStrategySequencingCheckboxes);
-
-        // Get the last element of each list for the most bottom one
-        WebElement bottommostGeneNameBox = foundGeneBoxes.get(foundGeneBoxes.size() - 1);
-        WebElement bottommostStatusDrp = foundStatusDrps.get(foundStatusDrps.size() - 1);
-        WebElement bottommostSequenceCheckbox = foundSequencingCheckboxes.get(foundSequencingCheckboxes.size() - 1);
-
-        Select statusDrp = new Select(bottommostStatusDrp);
-
-        bottommostGeneNameBox.click();
-        bottommostGeneNameBox.sendKeys(theGene);
-        clickOnElement(firstGeneSuggestion);
-
-        bottommostStatusDrp.click();
-        statusDrp.selectByVisibleText(geneStatus);
-
-        bottommostSequenceCheckbox.click();
-
-        return this;
-    }
-
-    /**
      * Traverses through all the options for the age of onset buttons, clicks on each one.
      * @return a List of Strings which represent the Age of Onset radio button labels in a
      * 'pre-order' traversal.
@@ -446,7 +419,6 @@ public class CreatePatientPage extends CommonInfoSelectors
 
         return loLabels;
     }
-
 
     /**
      * Traverses through all the options for the mode of inheritance checkboxes.
@@ -471,6 +443,11 @@ public class CreatePatientPage extends CommonInfoSelectors
         clickAndTypeOnElement(indicationForReferralBox, neededText);
         return this;
     }
+
+
+    /***************************************************
+     * "Family history and pedigree" Section - Methods
+     ***************************************************/
 
     /**
      * Navigates to the Pedigree Editor page by clicking "OK" on the "Assign patient to family" modal.
@@ -539,6 +516,11 @@ public class CreatePatientPage extends CommonInfoSelectors
         clickAndTypeOnElement(healthConditionsFoundInFamily, note);
         return this;
     }
+
+
+    /*****************************************************
+     * "Prenatal and perinatal history" Section - Methods
+     *****************************************************/
 
     /**
      * Traverses through the options for the health conditions found in
@@ -625,137 +607,9 @@ public class CreatePatientPage extends CommonInfoSelectors
         return this;
     }
 
-    /**
-     * Gets all the labels for the labels within the Edit Phenotype Details box. This does not do a tree
-     * traversal due to the dropdowns having issues hiding/showing for now.
-     * Requires: A phenotype to already be present and "Add Details" to already be pressed so that the details box appears.
-     * @return A list of strings representing the labels found in the Edit Phenotype Details Box. This should not be
-     *          empty.
-     */
-    public List<String> cycleThroughPhenotypeDetailsLabels()
-    {
-        waitForElementToBePresent(phenotypeDetailsLabels);
-
-        List<WebElement> loExpandCarets = superDriver.findElements(expandCaretBtns);
-        List<String> loLabels = new ArrayList<>();
-
-        //Expand all first
-        for (WebElement aCaret : loExpandCarets) {
-            if (aCaret.getText().equals("►")) {
-                clickOnElement(aCaret);
-            }
-        }
-
-        superDriver.findElements(phenotypeDetailsLabels).forEach(x -> loLabels.add(x.getText()));
-
-        return loLabels;
-    }
-
-    /**
-     * Adds phenotype details to the nth detail-less phenotype (done it this way due to the simplicity of implementation)
-     * in the list of phenotypes already present. Makes the grey phenotype details box appear.
-     * @param n is the nth phenotype WITHOUT any details added yet.
-     * @return Stay on the same page so return same object.
-     */
-    public CreatePatientPage addDetailsToNthPhenotype(int n) {
-        waitForElementToBePresent(addPhenotypeDetailsBtns);
-        List<WebElement> loPhenotypeAddBtnsPresent = superDriver.findElements(addPhenotypeDetailsBtns);
-
-        loPhenotypeAddBtnsPresent.get(n - 1).click();
-
-        waitForElementToBePresent(phenotypeDetailsLabels);
-        return this;
-    }
-
-    /**
-     * Traverses through the options for phenotypes in the Clinical Symptoms and Physical Findings Section
-     * Requires: The "Clinical Symptoms and Physical Findings" section to be expanded and that
-     *              none of the yes/no options are already selected/expanded (i.e. should be at the state of a new patient)
-     *               Otherwise, traversal result might be off due to presence of additional (appearing) selectors.
-     * @return a List of Strings which represent the health conditions found under the yes/no boxes of
-     *          "Clinical Symptoms and Physical Findings"
-     */
-    public List<String> cycleThroughAllPhenotypes() {
-
-        By expandAllBtn = By.cssSelector("span.expand-all");
-
-        clickOnElement(expandAllBtn);
-
-        // TODO: Those selectors are used once, okay to leave them without variable?
-        By expandToolSpan = By.cssSelector("span[class=expand-tool]");
-
-        List<String> loLabels = new ArrayList<>();
-
-        forceScrollToElement(By.cssSelector("div.phenotype > div > div > div"));
-
-//      Expand all dropdowns, lets them load first
-        preOrderTraverseAndClick(
-            By.cssSelector("div.phenotype > div > div > div"), expandToolSpan, expandToolSpan);
-
-        List<String> loCategorizedLabels = preOrderTraverseAndClick(
-            By.cssSelector("div.phenotype div[class=dropdown] div[class=entry-data], div.prenatal-info div[class*=term-entry]"),
-            By.cssSelector("span.yes-no-picker > label.na"),
-            By.cssSelector("label.yes-no-picker-label, span.yes-no-picker-label > span.value"));
-
-        loLabels.addAll(loCategorizedLabels);
-
-    //    unconditionalWaitNs(25);
-
-        return loLabels;
-    }
-
-    /**
-     * Retrieves the phenotypes specified by the passed selector. This is a helper method that is used to
-     * differentiate between different phenotypes such as ones automatically added via measurements data vs. manual input
-     * Requires: The "Clinical symptoms and physical findings" section to be expanded
-     * @param phenotypeLabelsSelector The By selector of the phenotype label.
-     *      There are three so far: - phenotypesSelectedLabels (all),
-     *                              - phenotypesAutoSelectedByMeasurementLabels (lightning bolt/auto ones),
-     *                              - phenotypesManuallySelectedLabels (non-lightning bolt/manual ones)
-     * @return A List of Strings representing the names of the phenotypes found. Can potentially be empty.
-     */
-    private List<String> getPresentPhenotypes(By phenotypeLabelsSelector)
-    {
-        List<String> loPhenotypesFound = new ArrayList<>();
-        waitForElementToBePresent(phenotypeSearchBox);
-        superDriver.findElements(phenotypeLabelsSelector).forEach(x -> loPhenotypesFound.add(x.getText()));
-
-        return loPhenotypesFound;
-    }
-
-    /**
-     * Retrieves all of the phenotypes already present (entered) in the Patient Information Form
-     * Requires: The "Clinical symptoms and physical findings" section to be expanded
-     * @return A (potentially empty) list of Strings representing the names of the phenotypes found.
-     */
-    public List<String> getAllPhenotypes()
-    {
-        return getPresentPhenotypes(phenotypesSelectedLabels);
-    }
-
-    /**
-     * Retrieves a list of phenotypes entered automatically due to measurement data. These are the phenotypes
-     * with the lightning symbol beside them.
-     * Requires: The "Clinical symptoms and physical findings" section to be expanded
-     * @return A, possibly empty, list of Strings representing phenotypes that have a lightning symbol beside them
-     *          due to them being automatically added from data contained on a measurements entry.
-     */
-    public List<String> getPhenotypesLightning()
-    {
-        return getPresentPhenotypes(phenotypesAutoSelectedByMeasurementLabels);
-    }
-
-    /**
-     * Retrieves a list of phenotypes that were manually entered. These are the ones that are not prefixed with a
-     * lightning symbol.
-     * Requires: The "Clinical symptoms and physical findings" section to be expanded
-     * @return A List of Strings, possibly empty, of the phenotypes that were manually entered (do not have a lightning
-     *          symbol in front of them).
-     */
-    public List<String> getPhenotypesNonLightning()
-    {
-        return getPresentPhenotypes(phenotypesManuallySelectedLabels);
-    }
+    /*****************************************
+     * "Measurements" Section - Methods
+     *****************************************/
 
     /**
      * Adds a new entry of measurement data to the patient under the "Measurements" section.
@@ -859,6 +713,222 @@ public class CreatePatientPage extends CommonInfoSelectors
             leftEarLength, palpebralFissureLength, leftFootLength, rightFootLength,
             rightEarLength, interpupilaryDistance);
     }
+
+
+    /****************************************************************************
+     * "Clinical symptoms and physical findings" (Phenotypes) Section - Methods
+     ****************************************************************************/
+
+    /**
+     * Adds a phenotype by searching. Selects the first suggested phenotype search result.
+     * Assumes that "Clinical symptoms and physical findings" is expanded and there is at
+     * least one suggested search result.
+     * @param thePhenotype phenotype needed. Be exact and as specific as possible.
+     * @return Stay on the same page, so return same object.
+     */
+    public CreatePatientPage addPhenotype(String thePhenotype) {
+        clickAndTypeOnElement(phenotypeSearchBox, thePhenotype);
+        clickOnElement(firstPhenotypeSuggestion);
+        return this;
+    }
+
+    /**
+     * Helper method to add a list of Phenotypes to the patient.
+     * Requires the "Clinical symptoms and physical findings" section is expanded and there is at
+     * least one suggested search result.
+     * @param phenotypes is a List of Strings specifying the phenotypes. You should be as exact as possible.
+     * @return Stay on the same page so return the same object.
+     */
+    public CreatePatientPage addPhenotypes(List<String> phenotypes)
+    {
+        for (String aPhenotype : phenotypes) {
+            addPhenotype(aPhenotype);
+        }
+        return this;
+    }
+
+    /**
+     * Gets all the labels for the labels within the Edit Phenotype Details box. This does not do a tree
+     * traversal due to the dropdowns having issues hiding/showing for now.
+     * Requires: A phenotype to already be present and "Add Details" to already be pressed so that the details box appears.
+     * @return A list of strings representing the labels found in the Edit Phenotype Details Box. This should not be
+     *          empty.
+     */
+    public List<String> cycleThroughPhenotypeDetailsLabels()
+    {
+        waitForElementToBePresent(phenotypeDetailsLabels);
+
+        List<WebElement> loExpandCarets = superDriver.findElements(expandCaretBtns);
+        List<String> loLabels = new ArrayList<>();
+
+        //Expand all first
+        for (WebElement aCaret : loExpandCarets) {
+            if (aCaret.getText().equals("►")) {
+                clickOnElement(aCaret);
+            }
+        }
+
+        superDriver.findElements(phenotypeDetailsLabels).forEach(x -> loLabels.add(x.getText()));
+
+        return loLabels;
+    }
+
+    /**
+     * Adds phenotype details to the nth detail-less phenotype (done it this way due to the simplicity of implementation)
+     * in the list of phenotypes already present. Makes the grey phenotype details box appear.
+     * @param n is the nth phenotype WITHOUT any details added yet.
+     * @return Stay on the same page so return same object.
+     */
+    public CreatePatientPage addDetailsToNthPhenotype(int n) {
+        waitForElementToBePresent(addPhenotypeDetailsBtns);
+        List<WebElement> loPhenotypeAddBtnsPresent = superDriver.findElements(addPhenotypeDetailsBtns);
+
+        loPhenotypeAddBtnsPresent.get(n - 1).click();
+
+        waitForElementToBePresent(phenotypeDetailsLabels);
+        return this;
+    }
+
+    /**
+     * Traverses through the options for phenotypes in the Clinical Symptoms and Physical Findings Section
+     * Requires: The "Clinical Symptoms and Physical Findings" section to be expanded and that
+     *              none of the yes/no options are already selected/expanded (i.e. should be at the state of a new patient)
+     *               Otherwise, traversal result might be off due to presence of additional (appearing) selectors.
+     * @return a List of Strings which represent the health conditions found under the yes/no boxes of
+     *          "Clinical Symptoms and Physical Findings"
+     */
+    public List<String> cycleThroughAllPhenotypes() {
+
+        By expandAllBtn = By.cssSelector("span.expand-all");
+
+        clickOnElement(expandAllBtn);
+
+        // TODO: Those selectors are used once, okay to leave them without variable?
+        By expandToolSpan = By.cssSelector("span[class=expand-tool]");
+
+        List<String> loLabels = new ArrayList<>();
+
+        forceScrollToElement(By.cssSelector("div.phenotype > div > div > div"));
+
+//      Expand all dropdowns, lets them load first
+        preOrderTraverseAndClick(
+            By.cssSelector("div.phenotype > div > div > div"), expandToolSpan, expandToolSpan);
+
+        List<String> loCategorizedLabels = preOrderTraverseAndClick(
+            By.cssSelector("div.phenotype div[class=dropdown] div[class=entry-data], div.prenatal-info div[class*=term-entry]"),
+            By.cssSelector("span.yes-no-picker > label.na"),
+            By.cssSelector("label.yes-no-picker-label, span.yes-no-picker-label > span.value"));
+
+        loLabels.addAll(loCategorizedLabels);
+
+        //    unconditionalWaitNs(25);
+
+        return loLabels;
+    }
+
+    /**
+     * Retrieves the phenotypes specified by the passed selector. This is a helper method that is used to
+     * differentiate between different phenotypes such as ones automatically added via measurements data vs. manual input
+     * Requires: The "Clinical symptoms and physical findings" section to be expanded
+     * @param phenotypeLabelsSelector The By selector of the phenotype label.
+     *      There are three so far: - phenotypesSelectedLabels (all),
+     *                              - phenotypesAutoSelectedByMeasurementLabels (lightning bolt/auto ones),
+     *                              - phenotypesManuallySelectedLabels (non-lightning bolt/manual ones)
+     * @return A List of Strings representing the names of the phenotypes found. Can potentially be empty.
+     */
+    private List<String> getPresentPhenotypes(By phenotypeLabelsSelector)
+    {
+        List<String> loPhenotypesFound = new ArrayList<>();
+        waitForElementToBePresent(phenotypeSearchBox);
+        superDriver.findElements(phenotypeLabelsSelector).forEach(x -> loPhenotypesFound.add(x.getText()));
+
+        return loPhenotypesFound;
+    }
+
+    /**
+     * Retrieves all of the phenotypes already present (entered) in the Patient Information Form
+     * Requires: The "Clinical symptoms and physical findings" section to be expanded
+     * @return A (potentially empty) list of Strings representing the names of the phenotypes found.
+     */
+    public List<String> getAllPhenotypes()
+    {
+        return getPresentPhenotypes(phenotypesSelectedLabels);
+    }
+
+    /**
+     * Retrieves a list of phenotypes entered automatically due to measurement data. These are the phenotypes
+     * with the lightning symbol beside them.
+     * Requires: The "Clinical symptoms and physical findings" section to be expanded
+     * @return A, possibly empty, list of Strings representing phenotypes that have a lightning symbol beside them
+     *          due to them being automatically added from data contained on a measurements entry.
+     */
+    public List<String> getPhenotypesLightning()
+    {
+        return getPresentPhenotypes(phenotypesAutoSelectedByMeasurementLabels);
+    }
+
+    /**
+     * Retrieves a list of phenotypes that were manually entered. These are the ones that are not prefixed with a
+     * lightning symbol.
+     * Requires: The "Clinical symptoms and physical findings" section to be expanded
+     * @return A List of Strings, possibly empty, of the phenotypes that were manually entered (do not have a lightning
+     *          symbol in front of them).
+     */
+    public List<String> getPhenotypesNonLightning()
+    {
+        return getPresentPhenotypes(phenotypesManuallySelectedLabels);
+    }
+
+
+    /*****************************************
+     * "Genotype Information" Section - Methods
+     *****************************************/
+
+    /**
+     * Adds a gene to the "Genotype information" section, using the gene name, status, and strategy.
+     * Clicks the "add gene" button before adding to the bottom-most row. Searches for gene and selects first
+     * suggestion.
+     * Assumes that "Genotype information" is already expanded (selectors visible) and at least one gene
+     * is returned in search results.
+     * @param theGene name of the gene, be as exact and specific as possible.
+     * @param geneStatus status of the gene, "Candidate", "Rejected candidate", etc. Must be exact.
+     * @param strategy not used/implemented yet, supposed to specify which strategy checkbox to tick.
+     * @return Stay on the same page so we return the same object.
+     */
+    public CreatePatientPage addGene(String theGene, String geneStatus, String strategy) {
+        forceScrollToElement(addGeneBtn);
+        clickOnElement(addGeneBtn);
+
+        waitForElementToBePresent(geneNameBoxes); // Must wait before search for elements
+        unconditionalWaitNs(1);
+
+        List<WebElement> foundGeneBoxes = superDriver.findElements(geneNameBoxes);
+        List<WebElement> foundStatusDrps = superDriver.findElements(geneStatusDrps);
+        List<WebElement> foundSequencingCheckboxes = superDriver.findElements(geneStrategySequencingCheckboxes);
+
+        // Get the last element of each list for the most bottom one
+        WebElement bottommostGeneNameBox = foundGeneBoxes.get(foundGeneBoxes.size() - 1);
+        WebElement bottommostStatusDrp = foundStatusDrps.get(foundStatusDrps.size() - 1);
+        WebElement bottommostSequenceCheckbox = foundSequencingCheckboxes.get(foundSequencingCheckboxes.size() - 1);
+
+        Select statusDrp = new Select(bottommostStatusDrp);
+
+        bottommostGeneNameBox.click();
+        bottommostGeneNameBox.sendKeys(theGene);
+        clickOnElement(firstGeneSuggestion);
+
+        bottommostStatusDrp.click();
+        statusDrp.selectByVisibleText(geneStatus);
+
+        bottommostSequenceCheckbox.click();
+
+        return this;
+    }
+
+
+    /**********************************
+     * "Diagnosis" Section - Methods
+     **********************************/
 
     /**
      * Adds a clinical diagnosis in the "Diagnosis" section to the patient. Selects the first result from
