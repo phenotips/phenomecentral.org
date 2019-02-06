@@ -1,5 +1,8 @@
 package PageObjects;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -10,7 +13,9 @@ public class HomePage extends BasePage
 {
     final By loginLink = By.id("launch-login");
 
-    final By signUpButton = By.cssSelector("launch-register");
+    final By signUpButton = By.id("launch-register");
+
+    final By sectionTitles = By.cssSelector("div.gadget-title"); // Titles of the sections visible on the splash page
 
     public HomePage(WebDriver aDriver)
     {
@@ -35,5 +40,40 @@ public class HomePage extends BasePage
         }
         clickOnElement(loginLink);
         return new LoginPage(superDriver);
+    }
+
+    /**
+     * Navigate to the User Sign up page by clicking on the "Sign Up" button from the homepage.
+     * This is the public sign up page form where people can request access to the PC instance.
+     * Ideally, the no user should be signed in when calling this method.
+     * @return A new instance of the UserSignUp page as we navigate there.
+     */
+    public UserSignUpPage navigateToSignUpPage()
+    {
+        superDriver.navigate().to(HOMEPAGE_URL);
+        if (isElementPresent(logOutLink)) {
+            logOut();
+        }
+        clickOnElement(signUpButton);
+
+        return new UserSignUpPage(superDriver);
+    }
+
+    /**
+     * Retrieves a list of section titles that appear when a user logs in. These are the individual widgets that are
+     * present right after logging in (on the home page). As of now, they are: "My Matches", "My Patients",
+     * "Patients Shared With Me", "My Groups" and "Public Data"
+     * This is useful for determining if the patient has privilages that are granted upon user approval. Without approval,
+     * they should see none of those headings.
+     * @return A list of Strings representing the titles of each section.
+     */
+    public List<String> getSectionTitles()
+    {
+        waitForElementToBePresent(logOutLink);
+        List<String> loTitles = new ArrayList<>();
+
+        superDriver.findElements(sectionTitles).forEach(x-> loTitles.add(x.getText()));
+
+        return loTitles;
     }
 }

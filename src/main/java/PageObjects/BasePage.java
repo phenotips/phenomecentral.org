@@ -73,6 +73,11 @@ public abstract class BasePage
 
     protected final By logOutLink = By.id("tmLogout"); // Used to check when modals close
 
+    // Approval Pending Message that appears on all pages for an unapproved user
+    protected final By approvalPendingMessage = By.cssSelector("#mainContentArea > div.infomessage");
+
+    protected final By phenomeCentralLogoBtn = By.cssSelector("#companylogo > a > img"); // PC logo at top left to navigate to homepage
+
     /**
      * Declaration of the webdriver and the waiting objects. Will be initialized
      * when a test runs.
@@ -203,7 +208,30 @@ public abstract class BasePage
     public void clickAndTypeOnElement(By elementSelector, String input)
     {
         clickOnElement(elementSelector);
+        superDriver.findElement(elementSelector).clear(); // Clear first
         superDriver.findElement(elementSelector).sendKeys(input);
+    }
+
+    /**
+     * Click on the element, usually a text box, and clear the contents.
+     * @param elementSelector The selector for the element to clear the contents of, usually a text box.
+     */
+    public void clickAndClearElement(By elementSelector)
+    {
+        clickOnElement(elementSelector);
+        superDriver.findElement(elementSelector).clear(); // Clear first
+    }
+
+    /**
+     * Toggles the specified checkbox to the enabled state. If it is already selected/enabled,
+     * it does not click on it again.
+     * @param checkboxSelector is the By selector for the checkbox to changed to enabled state.
+     */
+    public void toggleCheckboxToChecked(By checkboxSelector) {
+        waitForElementToBePresent(checkboxSelector);
+        if (!superDriver.findElement(checkboxSelector).isSelected()) {
+            clickOnElement(checkboxSelector);
+        }
     }
 
     /**
@@ -389,5 +417,26 @@ public abstract class BasePage
         }
 
         return loTextStrings;
+    }
+
+    /**
+     * Retrieves the approval pending message that a user receives when they are unapproved and waiting to be
+     * granted access. It should be "Please wait for your account to be approved. Thank you."
+     * @return A String representing the approval pending message.
+     */
+    public String getApprovalPendingMessage()
+    {
+        waitForElementToBePresent(approvalPendingMessage);
+        return superDriver.findElement(approvalPendingMessage).getText();
+    }
+
+    /**
+     * Navigates to the homepage by clicking on the PhenomeCentral Logo at the top left corner of the top toolbar.
+     * @return A new instance of a HomePage as we navigate there.
+     */
+    public HomePage navigateToHomePage()
+    {
+        clickOnElement(phenomeCentralLogoBtn);
+        return new HomePage(superDriver);
     }
 }

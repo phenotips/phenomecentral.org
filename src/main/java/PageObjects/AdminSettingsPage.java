@@ -13,6 +13,10 @@ public class AdminSettingsPage extends BasePage
 
     private final By refreshMatchesMenu = By.id("vertical-menu-Refresh matches");
 
+    private final By usersMenu = By.id("vertical-menu-Users");
+
+    private final By pendingUsersMenu = By.id("vertical-menu-PendingUsers");
+
     public AdminSettingsPage(WebDriver aDriver)
     {
         super(aDriver);
@@ -38,5 +42,26 @@ public class AdminSettingsPage extends BasePage
     {
         clickOnElement(refreshMatchesMenu);
         return new AdminRefreshMatchesPage(superDriver);
+    }
+
+    /**
+     * Navigates to the Users page. From the accordion menu on the left: Users & Groups -> Users
+     * @return an AdminUsersPage object as we navigate there.
+     */
+    public AdminUsersPage navigateToAdminUsersPage()
+    {
+        clickOnElement(usersMenu);
+        return new AdminUsersPage(superDriver);
+    }
+
+    /**
+     * Navigates to the Pending Users page. From the accordion menu on the left:
+     * Users & Groups -> Pending Users
+     * @return an AdminPendingUsersPage as we navigate there.
+     */
+    public AdminPendingUsersPage navigateToPendingUsersPage()
+    {
+        clickOnElement(pendingUsersMenu);
+        return new AdminPendingUsersPage(superDriver);
     }
 }
