@@ -6,6 +6,7 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 
 /**
  * The admin page where match notifications can be sent.
@@ -31,6 +32,12 @@ public class AdminMatchNotificationPage extends AdminSettingsPage
     By contactedStatusCheckbox = By.cssSelector("input[name=notified-filter][value=notified]");
 
     By notContactedStatusCheckbox = By.cssSelector("input[name=notified-filter][value=unnotified]");
+
+    By sendingNotificationMessage = By.cssSelector("#send-notifications-messages > div");
+
+    By matchesGenotypeScoreSlider = By.cssSelector("#show-matches-gen-score > div.handle");
+
+    By matchesAverageScoreSlider = By.cssSelector("#show-matches-score > div.handle");
 
     public AdminMatchNotificationPage(WebDriver aDriver)
     {
@@ -102,7 +109,39 @@ public class AdminMatchNotificationPage extends AdminSettingsPage
 
         clickOnElement(sendNotificationsBtn);
 
+        // Wait for the green "Sending emails..." message to disappear.
+        waitForElementToBePresent(sendingNotificationMessage);
+        waitForElementToBeGone(sendingNotificationMessage);
+
         return this;
+    }
+
+    /**
+     * Determines if the two specified patients appear on the match table, matching to each other.
+     * @param referencePatient The reference patient, either PatientID or unique identifier, can be substring.
+     * @param matchedPatient The matched patient, either patientID or unique identifier, can be substring.
+     * @return boolean, true when there is a referencePatient matching to the matchedPatient, false if match not found.
+     */
+    public boolean doesMatchExist(String referencePatient, String matchedPatient)
+    {
+        filterByID(referencePatient);
+        unconditionalWaitNs(3); // maybe wait on something?
+
+        List<WebElement> loFoundReferencePatients = superDriver.findElements(referencePatientLink);
+        List<WebElement> loFoundMatchedPatients = superDriver.findElements(matchedPatientLink);
+
+        for (int i = 0; i < loFoundMatchedPatients.size(); ++i)
+        {
+            System.out.println("For loop: Reference: " + loFoundMatchedPatients.get(i).getText() +
+                "Matched patient: " + loFoundReferencePatients.get(i).getText());
+            if (loFoundMatchedPatients.get(i).getText().contains(matchedPatient) &&
+                loFoundReferencePatients.get(i).getText().contains(referencePatient))
+            {
+                return true;
+            }
+        }
+
+        return false; // didn't find the specified patients while looping through match table
     }
 
     /**
@@ -122,6 +161,42 @@ public class AdminMatchNotificationPage extends AdminSettingsPage
     public AdminMatchNotificationPage toggleNotContactedStatusCheckbox()
     {
         clickOnElement(notContactedStatusCheckbox);
+        return this;
+    }
+
+    /**
+     * Sets the genotype slider to 0 by dragging all the way to the left.
+     * @return Stay on the same page so return the same object.
+     */
+    public AdminMatchNotificationPage setGenotypeSliderToZero()
+    {
+        waitForElementToBePresent(matchesGenotypeScoreSlider);
+
+        Actions actionBuilder = new Actions(superDriver);
+        actionBuilder.dragAndDropBy(superDriver.findElement(matchesGenotypeScoreSlider), -50, 0)
+            .build().perform();
+        System.out.println("Dragging Genotype score slider to 0.");
+
+        clickOnElement(reloadMatchesBtn);
+
+        return this;
+    }
+
+    /**
+     * Sets the average score to the minimum value by sliding the average score slider all the way to the left.
+     * @return Stay on the same page so return the same object.
+     */
+    public AdminMatchNotificationPage setAverageScoreSliderToMinimum()
+    {
+        waitForElementToBePresent(matchesAverageScoreSlider);
+
+        Actions actionBuilder = new Actions(superDriver);
+        actionBuilder.dragAndDropBy(superDriver.findElement(matchesAverageScoreSlider), -50, 0)
+            .build().perform();
+        System.out.println("Dragging Average Score slider to 0.1");
+
+        clickOnElement(reloadMatchesBtn);
+
         return this;
     }
 

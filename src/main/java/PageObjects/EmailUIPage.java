@@ -72,4 +72,17 @@ public class EmailUIPage extends BasePage
         }
     }
 
+    /**
+     * Navigates to the homepage of PC, regardless of whether or not user is logged in. This is needed as
+     * we need a way to go from MockMock UI back to a PC page. Navigates directly and explicitly to the homepage url.
+     * We are overriding the BasePage method since this does not try to click the PC logo that appears in the top left.
+     * @return a new HomePage object as we navigate there.
+     */
+    @Override
+    public HomePage navigateToHomePage()
+    {
+        superDriver.navigate().to(HOMEPAGE_URL);
+        return new HomePage(superDriver);
+    }
+
 }

@@ -79,12 +79,14 @@ public abstract class BasePage
     protected final By phenomeCentralLogoBtn = By.cssSelector("#companylogo > a > img"); // PC logo at top left to navigate to homepage
 
     /**
-     * Declaration of the webdriver and the waiting objects. Will be initialized
-     * when a test runs.
+     * Declaration of the webdriver and the explicit waiting objects. Will be initialized
+     * when a test runs and any page class instantiated.
      */
     WebDriver superDriver;
 
     WebDriverWait pause;
+
+    WebDriverWait longPause; // Use to wait for element to disappear.
 
     /**
      * CTOR. The timeout period is defined here. We can also set the polling
@@ -95,6 +97,7 @@ public abstract class BasePage
     {
         superDriver = aDriver;
         pause = new WebDriverWait(superDriver, 5);
+        longPause = new WebDriverWait(superDriver, 60);
     }
 
 
@@ -119,7 +122,7 @@ public abstract class BasePage
      */
     public void waitForElementToBeGone(By elementSelector)
     {
-        pause.until(ExpectedConditions.invisibilityOfElementLocated(elementSelector));
+        longPause.until(ExpectedConditions.invisibilityOfElementLocated(elementSelector));
     }
 
     /**

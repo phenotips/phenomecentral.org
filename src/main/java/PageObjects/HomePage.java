@@ -17,6 +17,8 @@ public class HomePage extends BasePage
 
     final By sectionTitles = By.cssSelector("div.gadget-title"); // Titles of the sections visible on the splash page
 
+    final By unauthorizedActionErrorMsg = By.cssSelector("p.xwikimessage"); // Error message that users get when trying to view patients that aren't theirs.
+
     public HomePage(WebDriver aDriver)
     {
         super(aDriver);
@@ -75,5 +77,19 @@ public class HomePage extends BasePage
         superDriver.findElements(sectionTitles).forEach(x-> loTitles.add(x.getText()));
 
         return loTitles;
+    }
+
+    /**
+     * Retrieve the unauthorized action error message that a user gets. For instance, when trying to view a patient that
+     * is not theirs and is not public. "You are not allowed to view this page or perform this action."
+     * Requires: That the error message page be present, otherwise will throw exception that error is not found.
+     *           Exception when there is no error, hence test failure.
+     * @return A String representing the message.
+     */
+    public String getUnauthorizedErrorMessage()
+    {
+        waitForElementToBePresent(unauthorizedActionErrorMsg);
+
+        return superDriver.findElement(unauthorizedActionErrorMsg).getText();
     }
 }
