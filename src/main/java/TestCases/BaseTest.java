@@ -12,7 +12,7 @@ import org.testng.annotations.AfterSuite;
  */
 public abstract class BaseTest
 {
-    protected WebDriver theDriver = new FirefoxDriver();
+    protected static WebDriver theDriver = new FirefoxDriver();
 
 //    @BeforeTest
 //    public void testSetup() {
@@ -45,17 +45,17 @@ public abstract class BaseTest
     public void testCleanup()
     {
         // Pause a bit before closing.
-        try {
-            Thread.sleep(1500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Thread.sleep(1500);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
 
         System.out.println("A single class has finished");
 
-        if (theDriver != null) {
-            theDriver.quit();
-        }
+//        if (theDriver != null) {
+//            theDriver.quit();
+//        }
     }
 
     @AfterSuite
