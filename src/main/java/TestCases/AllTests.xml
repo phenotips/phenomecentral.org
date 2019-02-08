@@ -1,41 +1,5 @@
 <suite name="AllTests" parallel="methods" thread-count="1"  preserve-order="true">
-  <!--
-  <test name="testngTest" parallel="methods" thread-count="1"  preserve-order="true">
-    <classes>
-      <class name="TestCases.LoginPageTest" />
-    </classes>
-  </test>
-  <test name="testngTest2" parallel="methods" thread-count="1"  preserve-order="true">
-    <classes>
-      <class name="TestCases.CreatePatientTest" />
-    </classes>
-  </test>
-  <test name="testngTest3" parallel="methods" thread-count="1"  preserve-order="true">
-    <classes>
-      <class name="TestCases.AddingUsersTests" />
-    </classes>
-  </test>
-  <test name="testngTest4" parallel="methods" thread-count="1"  preserve-order="true">
-    <classes>
-      <class name="TestCases.MatchNotificationPageTests" />
-    </classes>
-  </test>
-  <test name="testngTest5" parallel="methods" thread-count="1"  preserve-order="true">
-    <classes>
-      <class name="TestCases.PatientCreationOptionsTests" />
-    </classes>
-  </test>
-  <test name="testngTest6" parallel="methods" thread-count="1"  preserve-order="true">
-    <classes>
-      <class name="TestCases.PedigreePageTest" />
-    </classes>
-  </test>
-  <test name="testngTest7" parallel="methods" thread-count="1"  preserve-order="true">
-    <classes>
-      <class name="TestCases.PermissionsTests" />
-    </classes>
-  </test> -->
-  <test name="testngTest8" parallel="methods" thread-count="1"  preserve-order="true">
+  <test name="testngTest8" parallel="methods" thread-count="1"  preserve-order="true" group-by-instances="true">
     <classes>
       <class name="TestCases.LoginPageTest" />
       <class name="TestCases.CreatePatientTest" />

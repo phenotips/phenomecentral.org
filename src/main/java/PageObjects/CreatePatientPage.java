@@ -158,6 +158,12 @@ public class CreatePatientPage extends CommonInfoSelectors
     private final By geneStatusDrps = By.cssSelector("td.Status > select");
     private final By geneStrategySequencingCheckboxes = By.cssSelector(
         "td.Strategy > label > input[value=sequencing]");
+    private final By geneStrategyDeletionCheckboxes = By.cssSelector(
+        "td.Strategy > label > input[value=deletion]");
+    private final By geneStrategyFamilialMutationCheckboxes = By.cssSelector(
+        "td.Strategy > label > input[value=familial_mutation]");
+    private final By geneStrategyCommonMutationCheckboxes = By.cssSelector(
+        "td.Strategy > label > input[value=common_mutations]");
     private final By firstGeneSuggestion = By.cssSelector("div.suggestItem > div > span.suggestValue"); // First suggestion result for prenatal phenotypes too
 
     /*******************************************************
@@ -880,9 +886,9 @@ public class CreatePatientPage extends CommonInfoSelectors
     }
 
 
-    /*****************************************
+    /********************************************
      * "Genotype Information" Section - Methods
-     *****************************************/
+     ********************************************/
 
     /**
      * Adds a gene to the "Genotype information" section, using the gene name, status, and strategy.
@@ -891,8 +897,10 @@ public class CreatePatientPage extends CommonInfoSelectors
      * Assumes that "Genotype information" is already expanded (selectors visible) and at least one gene
      * is returned in search results.
      * @param theGene name of the gene, be as exact and specific as possible.
-     * @param geneStatus status of the gene, "Candidate", "Rejected candidate", etc. Must be exact.
-     * @param strategy not used/implemented yet, supposed to specify which strategy checkbox to tick.
+     * @param geneStatus status of the gene. One of: "Candidate", "Rejected candidate", "Confirmed causal", "Carrier",
+     *                  and "Tested negative". Must be exact, will throw exception otherwise.
+     * @param strategy specifies which Gene strategy checkbox to toggle. One of: "Sequencing", "Deletion/duplication",
+     *                 "Familial mutation", and "Common mutations". Must be exact. Defaults to no strategy to specify.
      * @return Stay on the same page so we return the same object.
      */
     public CreatePatientPage addGene(String theGene, String geneStatus, String strategy) {
@@ -904,12 +912,10 @@ public class CreatePatientPage extends CommonInfoSelectors
 
         List<WebElement> foundGeneBoxes = superDriver.findElements(geneNameBoxes);
         List<WebElement> foundStatusDrps = superDriver.findElements(geneStatusDrps);
-        List<WebElement> foundSequencingCheckboxes = superDriver.findElements(geneStrategySequencingCheckboxes);
 
         // Get the last element of each list for the most bottom one
         WebElement bottommostGeneNameBox = foundGeneBoxes.get(foundGeneBoxes.size() - 1);
         WebElement bottommostStatusDrp = foundStatusDrps.get(foundStatusDrps.size() - 1);
-        WebElement bottommostSequenceCheckbox = foundSequencingCheckboxes.get(foundSequencingCheckboxes.size() - 1);
 
         Select statusDrp = new Select(bottommostStatusDrp);
 
@@ -920,7 +926,31 @@ public class CreatePatientPage extends CommonInfoSelectors
         bottommostStatusDrp.click();
         statusDrp.selectByVisibleText(geneStatus);
 
-        bottommostSequenceCheckbox.click();
+        List<WebElement> foundDesiredStrategyCheckboxes;
+
+        switch (strategy) {
+            case "Sequencing":
+                foundDesiredStrategyCheckboxes = superDriver.findElements(geneStrategySequencingCheckboxes);
+                foundDesiredStrategyCheckboxes.get(foundDesiredStrategyCheckboxes.size() - 1).click();
+                break;
+
+            case "Deletion/duplication":
+                foundDesiredStrategyCheckboxes = superDriver.findElements(geneStrategyDeletionCheckboxes);
+                foundDesiredStrategyCheckboxes.get(foundDesiredStrategyCheckboxes.size() - 1).click();
+                break;
+
+            case "Familial mutation":
+                foundDesiredStrategyCheckboxes = superDriver.findElements(geneStrategyFamilialMutationCheckboxes);
+                foundDesiredStrategyCheckboxes.get(foundDesiredStrategyCheckboxes.size() - 1).click();
+                break;
+
+            case "Common mutations":
+                foundDesiredStrategyCheckboxes = superDriver.findElements(geneStrategyCommonMutationCheckboxes);
+                foundDesiredStrategyCheckboxes.get(foundDesiredStrategyCheckboxes.size() - 1).click();
+                break;
+
+            default: System.out.println("Invalid gene strategy passed to addGene(). No strategy checked."); break;
+        }
 
         return this;
     }
