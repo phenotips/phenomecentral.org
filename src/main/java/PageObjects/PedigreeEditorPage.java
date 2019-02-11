@@ -10,7 +10,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
 /**
- * This is the pedigree editor page, i.e. http://localhost:8083/edit/Families/FAMxxxxxxx
+ * This represents the pedigree editor page, i.e. http://localhost:8083/edit/Families/FAMxxxxxxx
  */
 public class PedigreeEditorPage extends BasePage
 {
@@ -29,10 +29,18 @@ public class PedigreeEditorPage extends BasePage
 
     private final By probandTemplate = By.cssSelector("div[title=Proband]");
 
+    /**************************************
+     * Toolbar and save modal  - Selectors
+     **************************************/
+
     private final By closeEditor = By.id("action-close");
     private final By saveAndQuitBtn = By.id("OK_button");
     private final By dontSaveAndQuitBtn = By.cssSelector("input.button[value=\" Don't save and quit \"]");
     private final By keepEditingPedigreeBtn = By.cssSelector("input.button[value=\" Keep editing pedigree \"]");
+
+    /**********************************************************************
+     * Patient Nodes (Hoverboxes) and Add Family Member Links - Selectors
+     **********************************************************************/
 
     private final By hoverBox = By.cssSelector("#work-area > #canvas > svg > rect.pedigree-hoverbox");
     // Actually, no, maybe we shouldn't have all rectangle classes. I think circles would cause it to break.
@@ -42,79 +50,101 @@ public class PedigreeEditorPage extends BasePage
     private final By hoverBoxPartnerLink = By.cssSelector(
         "#work-area > #canvas > svg > rect.pedigree-hoverbox[width=\"52\"]");
 
-//    private final By createSiblingNode = By.cssSelector(
-//        "rect[transform=\"matrix(0.7071,0.7071,-0.7071,0.7071,16.7875,-94.5287)\"]");
-    // CSS breaking from long text strings?
-    private final By createSiblingNode = By.cssSelector(
-        //"rect[transform=\"matrix(0.7071,0.7071,-0.7071,0.7071,444.0081,62.5496)\"]");
-    "rect[transform^=\"matrix(0.7071,0.7071,-0.7071,0.7071\"]");
-//    private final By createChildNode = By.xpath(
-//        "//a[contains(@title, 'Click to draw a child or drag to an existing person without parents (valid choices will be highlighted in green)'"
-//    );
-//    private final By createChildNode = By.cssSelector(
-//        "#canvas > svg:nth-child(1) > a[title=\"Click to draw a child or drag to an existing person without parents (valid choices will be highlighted in green)\"]");
+    private final By createSiblingNode = By.cssSelector("rect[transform^=\"matrix(0.7071,0.7071,-0.7071,0.7071\"]");
+
     private final By createChildNode = By.cssSelector(
         "rect[transform=\"matrix(0.7071,0.7071,-0.7071,0.7071,70.6066,-20.4594)\"]");
+
     private final By createPartnerNode = By.xpath(
         "//*[@*=\"Click to draw a partner or drag to an existing person to create a partnership (valid choices will be highlighted in green)\"]");
+
     private final By createParentNode = By.xpath(
         "//a[contains(@title, 'Click to draw parents or drag to an existing person or partnership (valid choices will be highlighted in green). Dragging to a person will create a new relationship.'");
 
     private final By linkedPatientIDLink = By.cssSelector(
         "text.pedigree-nodePatientTextLink > tspan");
 
-//    private final By createMaleNode = By.cssSelector("div.node-type-options > a.node-type-M");
     private final By createMaleNode = By.cssSelector("a.node-type-M");
 
-    private final By personalTab = By.cssSelector(
-        "div.person-node-menu > div.tabholder > dl.tabs > dd:nth-child(1)");
-    private final By clinicalTab = By.cssSelector(
-        "div.person-node-menu > div.tabholder > dl.tabs > dd:nth-child(2)");
-    private final By cancersTab = By.cssSelector(
-        "div.person-node-menu > div.tabholder > dl.tabs > dd:nth-child(3)");
+    /**********************************************************************************
+     * Patient Information Form Modal (Opens when clicking on a patient) - Selectors
+     **********************************************************************************/
 
+    // Tabs
+    private final By personalTab = By.cssSelector("div.person-node-menu > div.tabholder > dl.tabs > dd:nth-child(1)");
+
+    private final By clinicalTab = By.cssSelector("div.person-node-menu > div.tabholder > dl.tabs > dd:nth-child(2)");
+
+    private final By cancersTab = By.cssSelector("div.person-node-menu > div.tabholder > dl.tabs > dd:nth-child(3)");
+
+    // Personal Tab
     private final By linkPatientBox = By.cssSelector("input.suggest-patients");
+
     private final By linkPatientFirstSuggestion = By.cssSelector("span.suggestValue"); // First suggestion
+
     private final By createNewPatientBtn = By.cssSelector("span.patient-create-button");
+
     private final By confirmNewPatientBtn = By.cssSelector("input[value=Confirm]");
+
     private final By patientIDInModal = By.cssSelector("div.patient-link-container > a.patient-link-url");
 
-
     private final By maleGenderBtn = By.cssSelector("input[value=M]");
+
     private final By femaleGenderBtn = By.cssSelector("input[value=F]");
+
     private final By otherGenderBtn = By.cssSelector("input[value=O]");
+
     private final By unknownGenderBtn = By.cssSelector("input[value=U]");
 
-    private final By ethnicitiesList = By.cssSelector(
-        "div.field-ethnicity > ul.accepted-suggestions > li");
-    private final By ethnicitiesBox = By.cssSelector(
-        "#tab_Personal > div.field-ethnicity > input[name=ethnicity]");
+    private final By identifierBox = By.cssSelector("input[name=external_id]");
 
-    private final By dobYearDrp = By.cssSelector(
-        "div.field-date_of_birth > div > div > span > select[title=year]");
-    private final By dobMonthDrp = By.cssSelector(
-      "div.field-date_of_birth > div > div > span > select[title=month]");
+    private final By ethnicitiesList = By.cssSelector("div.field-ethnicity > ul.accepted-suggestions > li");
 
+    private final By ethnicitiesBox = By.cssSelector("#tab_Personal > div.field-ethnicity > input[name=ethnicity]");
+
+    private final By aliveRadioBtn = By.cssSelector("label.state_alive > input[value=alive]");
+
+    private final By deceasedRadioBtn = By.cssSelector("label.state_deceased > input[value=deceased]");
+
+    private final By unbornRadioBtn = By.cssSelector("label.state_unborn > input[value=unborn]");
+
+    private final By stillbornRadioBtn = By.cssSelector("label.state_stillborn > input[value=stillborn]");
+
+    private final By miscarriedRadioBtn = By.cssSelector("label.state_miscarriage > input[value=miscarriage]");
+
+    private final By abortedRadioBtn = By.cssSelector("label.state_aborted > input[value=aborted]");
+
+    private final By aliveAndWellCheckbox = By.cssSelector("div.field-aliveandwell  input[name=aliveandwell]");
+
+    private final By dobYearDrp = By.cssSelector("div.field-date_of_birth > div > div > span > select[title=year]");
+
+    private final By dobMonthDrp = By.cssSelector("div.field-date_of_birth > div > div > span > select[title=month]");
+
+    // Clinical Tab
     private final By phenotypesList = By.cssSelector(
         "div.field-hpo_positive > ul.accepted-suggestions > li > label.accepted-suggestion > span.value");
+
     private final By phenotypeBox = By.cssSelector("input.suggest-hpo");
 
-    private final By candidateGeneBox = By.cssSelector(
-        "div.field-candidate_genes > input.suggest-genes");
+    private final By candidateGeneBox = By.cssSelector("div.field-candidate_genes > input.suggest-genes");
+
     private final By candidateGeneList = By.cssSelector(
         "div.field-candidate_genes > ul.accepted-suggestions > li > label.accepted-suggestion > span.value");
 
-    private final By causalGeneBox = By.cssSelector(
-        "div.field-causal_genes > input.suggest-genes");
+    private final By causalGeneBox = By.cssSelector("div.field-causal_genes > input.suggest-genes");
+
     private final By causalGeneList = By.cssSelector(
         "div.field-causal_genes > ul.accepted-suggestions > li > label.accepted-suggestion > span.value");
 
-    private final By carrierGeneBox = By.cssSelector(
-        "div.field-carrier_genes > input.suggest-genes");
+    private final By carrierGeneBox = By.cssSelector("div.field-carrier_genes > input.suggest-genes");
+
     private final By carrierGeneList = By.cssSelector(
         "div.field-carrier_genes > ul.accepted-suggestions > li > label.accepted-suggestion > span.value");
 
 
+    /********************
+     * Toolbar methods
+     ********************/
 
     /**
      * Closes the editor and handles the warning dialogue if it appears. Requires that no modals are
@@ -143,6 +173,35 @@ public class PedigreeEditorPage extends BasePage
     }
 
     /**
+     * Checks if a warning dialogue appears when trying to close the editor. Clicks on close
+     * and then tries to click on "Save and Quit". Sometimes, the dialogue isn't supposed to
+     * be there so it would have navigated away with no warning. Waits for the three buttons to appear.
+     * Requires that the pedigree toolbar be interactable, not blocked by some other modal.
+     * @return A Boolean to indicate whether the dialogue, or more specifically, "keep editing pedigree"
+     *          button appears or not.
+     *          State afterwards would be navigation away from the Pedigree Editor to Patient Creation page
+     */
+    public Boolean doesWarningDialogueAppear()
+    {
+        clickOnElement(closeEditor);
+
+        waitForElementToBePresent(saveAndQuitBtn);
+        waitForElementToBePresent(dontSaveAndQuitBtn);
+        waitForElementToBePresent(keepEditingPedigreeBtn);
+
+        Boolean appearance = isElementPresent(saveAndQuitBtn);
+        if (appearance) {
+            clickOnElement(saveAndQuitBtn);
+        }
+        // else, would have navigated back to create patient page.
+        return appearance;
+    }
+
+    /***********************************************
+     * Patient Information Form (Modal) - Methods
+     ***********************************************/
+
+    /**
      * Switches the tab on the current patient info modal.
      * @param infoTab is one of three Strings: "Personal", "Clinical", "Cancers", each corresponding
      * to a tab on the modal. Upon invalid string entry, goes to the Personal tab.
@@ -156,6 +215,48 @@ public class PedigreeEditorPage extends BasePage
             case "Cancers": clickOnElement(cancersTab); break; // Should add wait here
             default: clickOnElement(personalTab); waitForElementToBePresent(ethnicitiesBox); break;
         }
+        return this;
+    }
+
+    /****************************************************
+     * Personal Tab (Patient Information Modal) Methods
+     ****************************************************/
+
+    /**
+     * Retrieves the patient ID of the currently open patient modal.
+     * Requires that the patient to already be linked, otherwise will cause an exception where element is not found.
+     * TODO: Improve this so that it returns some other string when no patient is linked.
+     * @return a String in the form of Pxxxxxxxx
+     */
+    public String getPatientIDFromModal()
+    {
+        waitForElementToBePresent(patientIDInModal);
+        return superDriver.findElement(patientIDInModal).getText();
+    }
+
+    /**
+     * Links the currently focused node to an existing patient via the "Link to an existing patient record"
+     * box in the "Personal" tab.
+     * Requires a patient's information modal to be open.
+     * @param patientID is either "New" to indicate "Create New" should be clicked
+     *          or a patient ID in form of Pxxxxxxx
+     * @return Stay on the same page so return same object.
+     */
+    public PedigreeEditorPage linkPatient(String patientID)
+    {
+        switchToTab("Personal");
+
+        if (patientID.equals("New")) {
+            clickOnElement(createNewPatientBtn);
+            clickOnElement(confirmNewPatientBtn);
+            waitForElementToBeClickable(personalTab);
+            unconditionalWaitNs(5);
+        }
+        else {
+            clickAndTypeOnElement(linkPatientBox, patientID);
+            clickOnElement(linkPatientFirstSuggestion);
+        }
+
         return this;
     }
 
@@ -179,6 +280,26 @@ public class PedigreeEditorPage extends BasePage
     }
 
     /**
+     * Sets the gender of the patient that has its information form modal open.
+     * Requires: The Patient Information Form modal to be open for a patient.
+     * @param gender is the desired gender to set. Must be exact or defaults to Female. One of:
+     *          "Male", "Female", "Other", or "Unknown".
+     * @return Stay on the same page so return the same object.
+     */
+    public PedigreeEditorPage setGender(String gender) {
+        clickOnElement(clinicalTab);
+
+        switch (gender) {
+            case "Male": clickOnElement(maleGenderBtn); break;
+            case "Female": clickOnElement(femaleGenderBtn); break;
+            case "Other": clickOnElement(otherGenderBtn); break;
+            case "Unknown": clickOnElement(unknownGenderBtn); break;
+            default: clickOnElement(femaleGenderBtn); break;
+        }
+        return this;
+    }
+
+    /**
      * Retrieves the ethnicities of the patient listed in the pedigree editor in the "Personal" tab.
      * Requires a patient's information modal to be present.
      * @return A, possibly empty, list of Strings representing the ethnicities that were found.
@@ -189,6 +310,10 @@ public class PedigreeEditorPage extends BasePage
         return getLabelsFromList(ethnicitiesList);
 
     }
+
+    /*****************************************************
+     * Clinical Tab (Patient Information Modal) Methods
+     *****************************************************/
 
     /**
      * Retrieves a list of entered phenotypes within the "Clinical" tab.
@@ -232,7 +357,6 @@ public class PedigreeEditorPage extends BasePage
             case "Carrier": return getLabelsFromList(carrierGeneList);
             default: return getLabelsFromList(candidateGeneList);
         }
-
     }
 
     /**
@@ -272,6 +396,10 @@ public class PedigreeEditorPage extends BasePage
 
         return this;
     }
+
+    /********************************************************
+     * Hover boxes and Patient/Family Member Nodes - Methods
+     ********************************************************/
 
     /**
      * Opens the edit patient modal for the Nth patient it can find on the editor.
@@ -317,64 +445,6 @@ public class PedigreeEditorPage extends BasePage
     }
 
     /**
-     * Links the currently focused node to an existing patient via the "Link to an existing patient record"
-     * box in the "Personal" tab.
-     * Requires a patient's information modal to be open.
-     * @param patientID is either "New" to indicate "Create New" should be clicked
-     *          or a patient ID in form of Pxxxxxxx
-     * @return Stay on the same page so return same object.
-     */
-    public PedigreeEditorPage linkPatient(String patientID)
-    {
-        switchToTab("Personal");
-
-        if (patientID.equals("New")) {
-            clickOnElement(createNewPatientBtn);
-            clickOnElement(confirmNewPatientBtn);
-            waitForElementToBeClickable(personalTab);
-            unconditionalWaitNs(5);
-        }
-        else {
-            clickAndTypeOnElement(linkPatientBox, patientID);
-            clickOnElement(linkPatientFirstSuggestion);
-        }
-
-        return this;
-    }
-
-    /**
-     * Retrieves the patient ID of the currently open patient modal.
-     * Requires that the patient to already be linked, otherwise will cause an exception where element is not found.
-     * TODO: Improve this so that it returns some other string when no patient is linked.
-     * @return a String in the form of Pxxxxxxxx
-     */
-    public String getPatientIDFromModal()
-    {
-        waitForElementToBePresent(patientIDInModal);
-        return superDriver.findElement(patientIDInModal).getText();
-    }
-
-    /**
-     * Checks if a warning dialogue appears when trying to close the editor. Clicks on close
-     * and then tries to click on "Keep editing patient". Sometimes, the dialgoue isn't supposed to
-     * be there so it would have navigated away with no warning.
-     * Requires that the pedigree toolbar be interactable, not blocked by some other modal.
-     * @return A Boolean to indicate whether the dialogue, or more specifically, "keep editing pedigree"
-     *          button appears or not.
-     *          State afterwards would be navigation away from the Pedigree Editor to Patient Creation page
-     */
-    public Boolean doesWarningDialogueAppear()
-    {
-        clickOnElement(closeEditor);
-        Boolean appearance = isElementPresent(saveAndQuitBtn);
-        if (appearance) {
-            clickOnElement(saveAndQuitBtn);
-        }
-        // else, would have navigated back to create patient page.
-        return appearance;
-    }
-
-    /**
      * Creates a child of the specified gender. Currently, it just does it for the first patient node
      * that it can find.
      * @param gender is one of the options on the gender toolbar that appears when trying to create a new node
@@ -385,8 +455,6 @@ public class PedigreeEditorPage extends BasePage
     {
         waitForElementToBePresent(hoverBox);
 
-        Actions builder = new Actions(superDriver);
-//        builder.moveToElement(superDriver.findElement(hoverBox)).perform();
         openNthEditModal(1);
         waitForElementToBeClickable(createChildNode);
 
@@ -451,6 +519,7 @@ public class PedigreeEditorPage extends BasePage
      * @param partner1 is the patient node that has the left circle to be clicked and dragged on
      * @param partner2 is the patient node that is meant to be dragged to wards
      * @return Stay on the same page so return the same object.
+     * TODO: I don't think this is working...
      */
     // 4 and 5th boxes
     public PedigreeEditorPage createPartnership(int partner1, int partner2)
@@ -463,8 +532,6 @@ public class PedigreeEditorPage extends BasePage
         act.moveToElement(loHoverBoxes.get(partner1 - 1))
 //            .pause(2000)
             .build().perform();
-
-//        unconditionalWaitNs(3);
 
         forceClickOnElement(createPartnerNode);
         waitForElementToBePresent(createPartnerNode);
@@ -488,10 +555,6 @@ public class PedigreeEditorPage extends BasePage
     {
         waitForElementToBePresent(hoverBox);
 
-        Actions builder = new Actions(superDriver);
-        List<WebElement> loHoverBoxes = superDriver.findElements(hoverBox);
-
-//        builder.moveToElement(loHoverBoxes.get(NthHoverBox - 1)).click().perform();
         openNthEditModal(NthHoverBox);
         waitForElementToBePresent(createSiblingNode);
 
@@ -499,7 +562,6 @@ public class PedigreeEditorPage extends BasePage
         List<WebElement> loMaleNodes = superDriver.findElements(createMaleNode);
 
         System.out.println("DEBUG Create Nodes found: " + loChildCreateNodes.size());
-//        loChildCreateNodes.get(2*NthHoverBox - 1).click();
 
         clickOnElement(loChildCreateNodes.get(2*NthHoverBox - 1));
         loMaleNodes.get(1).click();
