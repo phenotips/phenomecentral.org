@@ -17,6 +17,8 @@ public class AdminSettingsPage extends BasePage
 
     private final By pendingUsersMenu = By.id("vertical-menu-PendingUsers");
 
+    private final By mailSendingMenu = By.id("vertical-menu-emailSend");
+
     public AdminSettingsPage(WebDriver aDriver)
     {
         super(aDriver);
@@ -63,5 +65,16 @@ public class AdminSettingsPage extends BasePage
     {
         clickOnElement(pendingUsersMenu);
         return new AdminPendingUsersPage(superDriver);
+    }
+
+    /**
+     * Navigates to the Mail Sending settings page. From the left accordion menu:
+     * Email -> Mail Sending
+     * @return an AdminEmailSendingSettingsPage instance as we navigate there.
+     */
+    public AdminEmailSendingSettingsPage navigateToMailSendingSettingsPage()
+    {
+        clickOnElement(pendingUsersMenu);
+        return new AdminEmailSendingSettingsPage(superDriver);
     }
 }
