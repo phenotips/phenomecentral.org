@@ -3,12 +3,24 @@ import org.testng.annotations.Test;
 import PageObjects.HomePage;
 import TestCases.BaseTest;
 
-public class setupUsers extends BaseTest
+public class SetupUsers extends BaseTest
 {
     HomePage aHomePage = new HomePage(theDriver);
 
+    @Test()
+    public void setEmailPort()
+    {
+        aHomePage.navigateToLoginPage()
+            .loginAsAdmin()
+            .navigateToAdminSettingsPage()
+            .navigateToMailSendingSettingsPage()
+            .setEmailPort(1025)
+            .navigateToHomePage()
+            .logOut();
+    }
+
     // Creates the two users used by the automation.
-    @Test(priority = 1)
+    @Test()
     public void setupAutomationUsers()
     {
         aHomePage.navigateToLoginPage()
@@ -32,13 +44,4 @@ public class setupUsers extends BaseTest
         System.out.println("Created Two users for automation");
     }
 
-    @Test(priority = 2)
-    public void setEmailPort()
-    {
-        aHomePage.navigateToLoginPage().loginAsAdmin().navigateToAdminSettingsPage()
-            .navigateToMailSendingSettingsPage()
-            .setEmailPort(1025)
-            .navigateToHomePage()
-            .logOut();
-    }
 }

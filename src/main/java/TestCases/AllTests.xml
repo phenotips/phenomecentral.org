@@ -1,13 +1,81 @@
-<suite name="AllTests" parallel="methods" thread-count="1"  preserve-order="true">
-  <test name="testngTest8" parallel="methods" thread-count="1"  preserve-order="true" group-by-instances="true">
+<suite name="AllTests">
+  <test name="FullSuite">
     <classes>
-      <class name="TestCases.LoginPageTest" />
-      <class name="TestCases.CreatePatientTest" />
-      <class name="TestCases.AddingUsersTests" />
-      <class name="TestCases.MatchNotificationPageTests" />
-      <class name="TestCases.PatientCreationOptionsTests" />
-      <class name="TestCases.PedigreePageTest" />
-      <class name="TestCases.PermissionsTests" />
+
+      <class name="SetupUsers">
+        <methods>
+          <include name="setEmailPort" />
+          <include name="setupAutomationUsers" />
+        </methods>
+      </class>
+
+      <class name="TestCases.LoginPageTest">
+        <methods>
+          <include name="loginAdminTest" />
+          <include name="loginUserTest" />
+        </methods>
+      </class>
+
+      <class name="TestCases.CreatePatientTest" >
+        <methods>
+          <include name="createPatientManually" />
+          <include name="importSecondJSONPatient" />
+          <include name="refreshMatchesForTwoPatients" />
+          <include name="verifyEmailNotifications" />
+          <include name="publicVisiblityTest" />
+          <include name="collaboratorVisibilityTest" />
+          <include name="addMeasurements" />
+          <include name="checkPhenotypesDueToMeasurements" />
+          <include name="checkDiagnosisSection" />
+        </methods>
+      </class>
+
+      <class name="TestCases.AddingUsersTests" >
+        <methods>
+          <include name="adminAddAndApproveUser" />
+          <include name="userSignUpNotApproved" />
+          <include name="userSignUpApproved" />
+          <include name="errorCheckFields" />
+        </methods>
+      </class>
+
+      <class name="TestCases.MatchNotificationPageTests" >
+        <methods>
+          <include name="refreshMatchesFirst" />
+          <include name="matchPhenotypeOnly" />
+          <include name="matchGenotypeOnly" />
+        </methods>
+      </class>
+
+      <class name="TestCases.PatientCreationOptionsTests" >
+        <methods>
+          <include name="cycleThroughInfoOptions" />
+          <include name="cycleThroughFamilialConditions" />
+          <include name="cycleThroughPrenatalHistory" />
+          <include name="cycleThroughPhenotypeDetails" />
+          <include name="cycleThroughAllPhenotypes" />
+          <include name="cycleThroughDiagnosis" />
+          <include name="checkDiagnosisErrorMessages" />
+        </methods>
+      </class>
+
+      <class name="TestCases.PedigreePageTest" >
+        <methods>
+          <include name="basicPedigree" />
+          <include name="createChild" />
+          <include name="editorToPatientForm" />
+          <include name="createNewPatientViaEditor" />
+          <include name="warningDialoguePresent" />
+        </methods>
+      </class>
+
+      <class name="TestCases.PermissionsTests" >
+        <methods>
+          <include name="noMatchPrivatePatient" />
+          <include name="cannotSeeOtherPatients" />
+        </methods>
+      </class>
+
     </classes>
   </test>
 </suite>

@@ -36,7 +36,7 @@ public class PedigreePageTest extends BaseTest implements CommonInfoEnums
      * in the pedigree editor after a save. This tests the pedigree editor when one patient/node is present.
      * Checks that Patient Form Info -> Pedigree Editor Info
      */
-    @Test(priority = 1)
+    @Test()
     public void basicPedigree()
     {
         final List<String> checkPhenotypes = new ArrayList<String>(Arrays.asList(
@@ -87,7 +87,7 @@ public class PedigreePageTest extends BaseTest implements CommonInfoEnums
      * Creates a child for the most recently created patient via the Pedigree editor.
      * Asserts that two new patient nodes are created and the total number of nodes.
      */
-    @Test(priority = 2)
+    @Test()
     public void createChild()
     {
         aHomePage.navigateToLoginPage()
@@ -118,7 +118,7 @@ public class PedigreePageTest extends BaseTest implements CommonInfoEnums
      * - Correct number of nodes (note, does not check the type/gender, just counts the hoverboxes)
      * - Phenotypes correspond on the view Patient Info Form
      */
-    @Test(priority = 3)
+    @Test()
     public void editorToPatientForm()
     {
         List<String> loPhenotypesToAdd = new ArrayList<>(Arrays.asList("Small hand", "Large knee", "Acne"));
@@ -164,7 +164,7 @@ public class PedigreePageTest extends BaseTest implements CommonInfoEnums
      * - Asserts that the phenotypes and genotype information on the modal corresponds to info on the patient's
      *      main profile page. This includes gene names, their status, strategies and comments.
      */
-    @Test(priority = 4)
+    @Test()
     public void createNewPatientViaEditor()
     {
         List<String> loPhenotypesToAdd = new ArrayList<>(Arrays.asList("Small hand", "Large knee", "Acne"));
@@ -245,7 +245,7 @@ public class PedigreePageTest extends BaseTest implements CommonInfoEnums
      * - On trying to click "Close", that there is a js warning dialogue to prompt saving before
      *      navigating away.
      */
-    @Test(priority = 5)
+    @Test()
     public void warningDialoguePresent()
     {
         aHomePage.navigateToLoginPage()

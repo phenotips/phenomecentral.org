@@ -57,7 +57,7 @@ public class MatchNotificationPageTests extends BaseTest implements CommonInfoEn
      * - Two new patients are processed after a match refresh since last update
      * - A match for the two patients is found.
      */
-    @Test(priority = 1)
+    @Test()
     public void matchPhenotypeOnly()
     {
         List<String> loPhenotypesToAdd1 = new ArrayList<String>(Arrays.asList(
@@ -144,7 +144,7 @@ public class MatchNotificationPageTests extends BaseTest implements CommonInfoEn
      * - Two new patients are processed after a match refresh since last update
      * - A match for the two patients is found.
      */
-    @Test(priority = 2)
+    @Test()
     public void matchGenotypeOnly()
     {
         List<String> loPhenotypesToAdd1 = new ArrayList<String>(Arrays.asList(

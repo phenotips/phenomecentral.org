@@ -57,7 +57,8 @@ public class AddingUsersTests extends BaseTest
             .approveNthPendingUser(1);
 
         aHomePage.logOut()
-            .loginAs("AutoAdded1" + randomChars + "AutoAdded1Last", password);
+            .loginAs("AutoAdded1" + randomChars + "AutoAdded1Last", password)
+            .navigateToHomePage();
 
         Assert.assertEquals(aHomePage.getSectionTitles(), loSectionTitlesCheck);
 

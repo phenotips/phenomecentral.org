@@ -49,8 +49,8 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
             "]";
 
     // Create a patient manually as User 1.
-//    @Test(priority = 1, groups={"CreatePatientTest.createTwoPatients"})
-    @Test(priority = 1)
+//    @Test(, groups={"CreatePatientTest.createTwoPatients"})
+    @Test()
     public void createPatientManually()
     {
         List<String> loPhenotypesToAdd = new ArrayList<String>(Arrays.asList(
@@ -85,8 +85,8 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
 
     // Creates an identitcal patient as User 2 via JSON import. Asserts that the section titles are visible.
     // Updates consent, and changes modifies the identifier so that it is unique and matchable.
-//    @Test(priority = 2, groups={"CreatePatientTest.createTwoPatients"})
-    @Test(priority = 2)
+//    @Test(, groups={"CreatePatientTest.createTwoPatients"})
+    @Test()
     public void importSecondJSONPatient()
     {
         aHomePage.navigateToLoginPage()
@@ -108,8 +108,8 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
     }
 
     // Refresh the matches and assert that two new matches are found.
-//    @Test(priority = 3, dependsOnMethods = {"createPatientManually", "importSecondJSONPatient"})
-    @Test(priority = 3)
+//    @Test(, dependsOnMethods = {"createPatientManually", "importSecondJSONPatient"})
+    @Test()
     public void refreshMatchesForTwoPatients()
     {
         AdminRefreshMatchesPage aRefreshMatchesPage= new AdminRefreshMatchesPage(theDriver);
@@ -130,8 +130,8 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
     // Sends the email notification of an identical (100%) match to the two newly created
     // patients, checks that the inbox has emails.
     // TODO: Maybe we should delete patient afterwards, otherwise might get other matches in first row.
-//    @Test(priority = 4, dependsOnMethods = {"createPatientManually", "importSecondJSONPatient"})
-    @Test(priority = 4)
+//    @Test(, dependsOnMethods = {"createPatientManually", "importSecondJSONPatient"})
+    @Test()
     public void verifyEmailNotifications()
     {
         EmailUIPage emailPage = new EmailUIPage(theDriver);
@@ -154,8 +154,8 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
     }
 
     // Adjusts Patient created by User 1 to public, ensures User 2 can now see it.
-//    @Test(priority = 5, dependsOnMethods = {"createPatientManually", "importSecondJSONPatient"})
-    @Test(priority = 5)
+//    @Test(, dependsOnMethods = {"createPatientManually", "importSecondJSONPatient"})
+    @Test()
     public void publicVisiblityTest()
     {
         aHomePage.navigateToLoginPage()
@@ -183,8 +183,8 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
         aHomePage.logOut();
     }
 
-//    @Test(priority = 6, dependsOnMethods = {"createPatientManually", "importSecondJSONPatient"})
-    @Test(priority = 6)
+//    @Test(, dependsOnMethods = {"createPatientManually", "importSecondJSONPatient"})
+    @Test()
     public void collaboratorVisibilityTest()
     {
         aHomePage
@@ -220,7 +220,7 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
             .deleteAllPatients();
     }
 
-    @Test(priority = 7)
+    @Test()
     public void addMeasurements()
     {
         CommonPatientMeasurement measurements = new CommonPatientMeasurement(
@@ -250,7 +250,7 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
             .logOut();
     }
 
-    @Test(priority = 8)
+    @Test()
     public void checkPhenotypesDueToMeasurements()
     {
         final List<String> automaticallyAddedPhenotypesToCheck = new ArrayList<>(
@@ -285,7 +285,7 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
     }
 
     // Checks that the diagnosis section has the appropriate fields from what was entered on the patient form
-    @Test(priority = 9)
+    @Test()
     public void checkDiagnosisSection()
     {
         final List<String> clinicalDiagnosisCheck = new ArrayList<>(

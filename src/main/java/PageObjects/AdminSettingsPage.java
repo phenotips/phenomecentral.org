@@ -74,7 +74,7 @@ public class AdminSettingsPage extends BasePage
      */
     public AdminEmailSendingSettingsPage navigateToMailSendingSettingsPage()
     {
-        clickOnElement(pendingUsersMenu);
+        clickOnElement(mailSendingMenu);
         return new AdminEmailSendingSettingsPage(superDriver);
     }
 }
