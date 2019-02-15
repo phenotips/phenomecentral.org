@@ -71,6 +71,8 @@ public abstract class BasePage
     private final By viewAllPatientsLink = By.cssSelector(
         "#phenotips-globalTools > div > div > ul > li:nth-child(2) > ul > li:nth-child(1) > span > a");
 
+    private final By loadingStatusBar = By.id("patients-ajax-loader");
+
     protected final By logOutLink = By.id("tmLogout"); // Used to check when modals close
 
     // Approval Pending Message that appears on all pages for an unapproved user
@@ -157,7 +159,7 @@ public abstract class BasePage
      *         Handles it by just continuing after printing a message.
      * @param n is time to pause in seconds.
      */
-    public void unconditionalWaitNs(int n)
+    public void unconditionalWaitNs(long n)
     {
         try {
             Thread.sleep(n * 1000);
@@ -280,6 +282,8 @@ public abstract class BasePage
             System.err.println("Might throw an error, All Patients Link not clickable!");
             superDriver.navigate().to(ALL_PAITIENTS_URL);
         }
+
+        waitForLoadingBarToDisappear();
 
         return new AllPatientsPage(superDriver);
     }
@@ -441,5 +445,15 @@ public abstract class BasePage
     {
         clickOnElement(phenomeCentralLogoBtn);
         return new HomePage(superDriver);
+    }
+
+    /**
+     * Explicitly wait for the loading bar to disappear. This is the xwiki loading bar which appears
+     * wherever there is a live table filtration. Examples include the patient list (AllPatientsPage)
+     * and the match table (AdminMatchNotificationPage).
+     */
+    public void waitForLoadingBarToDisappear()
+    {
+        waitForElementToBeGone(loadingStatusBar);
     }
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 
 /**
@@ -25,22 +26,24 @@ public class HomePage extends BasePage
     } // Give the webdriver to the superclass
 
     /**
-     * Go to the login page for a user who is not signed in yet.
-     * Requires a user to not be signed in; The start state of the page should
-     * be the splash page where PC is being introduced.
+     * Go to the login page where a user enters their credentials.
+     * It tries to logout when it cannot find the login link on the homepage.
+     * This should result in the login page being displayed.
+     * Ideally, this gets called from the splash page that the public sees when on the home page.
      * Ex. "Enter cases, find matches, and connect with other rare disease specialists. Find out more..."
-     * Requires: User should be logged out when this is called.
      * @return a new login page object as we navigate there
      */
     public LoginPage navigateToLoginPage()
     {
         superDriver.navigate().to(HOMEPAGE_URL);
-        if (isElementPresent(logOutLink)) {
+        // Try to click on the link immediately, rather than checking for a logOut link
+        // being present. That causes five seconds of whenever trying to navigate to login page.
+        try {
+            clickOnElement(loginLink);
+        } catch (TimeoutException e) {
             logOut();
-            unconditionalWaitNs(5); // Give a pause, logging out took too long last time.
-            System.out.println("Trying to get to login page. Logging out (again).");
         }
-        clickOnElement(loginLink);
+
         return new LoginPage(superDriver);
     }
 

@@ -9,11 +9,17 @@ import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.safari.SafariDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
 
 /**
  * An abstract test. All tests should inherit this class.
@@ -22,29 +28,49 @@ import org.testng.annotations.AfterSuite;
  */
 public abstract class BaseTest
 {
-    protected static WebDriver theDriver = new FirefoxDriver();
+    /*************************************************************
+     * Change browserToUse to the desired browser
+     *************************************************************/
+    private final activeBrowser browserToUse = activeBrowser.CHROME;
 
-    // Old code for instantiating driver for each individual test
-//    @BeforeTest
-//    public void testSetup() {
-//        theDriver = new FirefoxDriver();
-//    }
-//
-//    @AfterTest
-//    public void testCleanup() {
-//        // Pause a bit before closing.
-//        try {
-//            Thread.sleep(1500);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//
-//        System.out.println("A single test has finished");
-//
-//        if (theDriver != null) {
-//            theDriver.quit();
-//        }
-//    }
+    private enum activeBrowser {
+        CHROME, FIREFOX, SAFARI, EDGE, IE
+    }
+
+    protected static WebDriver theDriver;
+
+    /**
+     * Instantiate the webDriver instance here. The WebDriverManager takes care of setting up the
+     * environment including the intermediary protocol used to communicate with the browser.
+     * This allows a user to just run the tests and the manager should take care of finding the path
+     * to the desired executable and setting up environment.
+     */
+    public BaseTest() {
+        if (theDriver == null) {
+            if (browserToUse == activeBrowser.CHROME) {
+                WebDriverManager.chromedriver().setup();
+                theDriver = new ChromeDriver();
+            } else if (browserToUse == activeBrowser.FIREFOX) {
+                WebDriverManager.firefoxdriver().setup();
+                theDriver = new FirefoxDriver();
+            } else if (browserToUse == activeBrowser.EDGE) {
+                WebDriverManager.edgedriver().setup();
+                theDriver = new EdgeDriver();
+            } else if (browserToUse == activeBrowser.IE) {
+                WebDriverManager.iedriver().setup();
+                theDriver = new InternetExplorerDriver();
+            } else if (browserToUse == activeBrowser.SAFARI) {
+                // No need to setup for Safari, native Selenium api should work... according to Apple docs
+                theDriver = new SafariDriver();
+            } else {
+                System.out.println("Unknown browser, defaulting to Chrome");
+                WebDriverManager.chromedriver().setup();
+                theDriver = new ChromeDriver();
+            }
+
+            System.out.println("Initiating the webDriver for: " + browserToUse.toString());
+        }
+    }
 
     /**
      * Runs after every test method. In the case that TestNG's listener reports a failure, will take a

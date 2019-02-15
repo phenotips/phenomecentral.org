@@ -59,7 +59,7 @@ public class AllPatientsPage extends BasePage
     {
         clickOnElement(sortCreationDate);
         clickOnElement(sortCreationDate);
-        unconditionalWaitNs(5);
+        waitForLoadingBarToDisappear();
         return this;
     }
 
