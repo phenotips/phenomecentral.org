@@ -45,7 +45,8 @@ public class AllPatientsPage extends BasePage
         clickOnElement(importJSONLink);
         clickAndTypeOnElement(JSONBox, theJSON);
         clickOnElement(importBtn);
-        unconditionalWaitNs(5);
+        waitForInProgressMsgToDisappear();
+        waitForLoadingBarToDisappear();
         return this;
     }
 
@@ -78,15 +79,17 @@ public class AllPatientsPage extends BasePage
      * @return stay on the same page, so return the same object.
      */
     public AllPatientsPage deleteAllPatients() {
-        // We need to somehow wait for rows to load, maybe empty table so we can't search for elements of the table
-        unconditionalWaitNs(3);
+        waitForLoadingBarToDisappear();
+
         List<WebElement> loDeleteBtns = superDriver.findElements(deleteBtns);
 
+        // theElement just acts as an iterator for the array size, we don't use it.
         for (WebElement theElement : loDeleteBtns) { // Use the original number of rows a counter
             // theElement.click(); // Table pagintes upwards
             clickOnElement(deleteBtns);
             clickOnElement(deleteYesConfirmBtn);
-            unconditionalWaitNs(3);
+            waitForInProgressMsgToDisappear();
+            waitForLoadingBarToDisappear();
         }
 
         return this;
@@ -99,7 +102,7 @@ public class AllPatientsPage extends BasePage
      */
     public AllPatientsPage filterByPatientID(String patientID) {
         clickAndTypeOnElement(patientIDFilterBox, patientID);
-        unconditionalWaitNs(2);
+        waitForLoadingBarToDisappear();
         return this;
     }
 }

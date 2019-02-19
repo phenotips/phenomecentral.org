@@ -52,22 +52,24 @@ public class AdminMatchNotificationPage extends AdminSettingsPage
     {
         clickAndTypeOnElement(patientIDContainsBox, identifier);
         clickOnElement(reloadMatchesBtn);
-        unconditionalWaitNs(2);
+        waitForLoadingBarToDisappear();
         return this;
     }
 
     /**
      * Notifies the two users on the first row of a match. Requires that there is at least one visible row on
-     * the table. Waits 10 seconds before returning as it is difficult to check css state.
+     * the table. Waits until the green "Sending request..." text beside the Send Notifications button disappears
+     * Note that the PC instance should have email configured as this does not check the actual text that appears
+     * after clicking on the Send Notifcations button.
      * @return the same (current) object, as we stay on the same page.
      */
-    // TODO: Requires MockMock to be working and configured!!
     public AdminMatchNotificationPage emailFirstRowUsers()
     {
         clickOnElement(firstRowFirstEmailBox);
         clickOnElement(firstRowSecondEmailBox);
         clickOnElement(sendNotificationsBtn);
-        unconditionalWaitNs(10);
+        waitForElementToBePresent(sendingNotificationMessage);
+        waitForElementToBeGone(sendingNotificationMessage);
         return this;
     }
 
@@ -82,7 +84,7 @@ public class AdminMatchNotificationPage extends AdminSettingsPage
     public AdminMatchNotificationPage emailSpecificPatients(String referencePatient, String matchedPatient)
     {
         filterByID(referencePatient);
-        unconditionalWaitNs(3); // maybe wait on something?
+        waitForLoadingBarToDisappear();
 
         List<WebElement> loFoundReferencePatients = superDriver.findElements(referencePatientLink);
         List<WebElement> loFoundMatchedPatients = superDriver.findElements(matchedPatientLink);
@@ -109,7 +111,7 @@ public class AdminMatchNotificationPage extends AdminSettingsPage
         clickOnElement(sendNotificationsBtn);
 
         // Wait for the green "Sending emails..." message to disappear.
-        waitForElementToBePresent(sendingNotificationMessage);
+//        waitForElementToBePresent(sendingNotificationMessage);
         waitForElementToBeGone(sendingNotificationMessage);
 
         return this;
@@ -124,7 +126,7 @@ public class AdminMatchNotificationPage extends AdminSettingsPage
     public boolean doesMatchExist(String referencePatient, String matchedPatient)
     {
         filterByID(referencePatient);
-        unconditionalWaitNs(3); // maybe wait on something?
+        waitForLoadingBarToDisappear();
 
         List<WebElement> loFoundReferencePatients = superDriver.findElements(referencePatientLink);
         List<WebElement> loFoundMatchedPatients = superDriver.findElements(matchedPatientLink);

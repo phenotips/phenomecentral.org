@@ -149,7 +149,7 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
         Assert.assertEquals(emailPage.getNumberOfEmails(), 2);
 
         emailPage.deleteAllEmails();
-        theDriver.navigate().back();
+        emailPage.navigateToHomePage();
         aViewPatientPage.logOut();
     }
 
@@ -280,7 +280,7 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
         Assert.assertEquals(manuallyAddedPhenotypesFound, manuallyAddedPhenotypesToCheck);
 
         aCreatePatientPage
-//            .saveAndViewSummary()
+            .saveAndViewSummary()
             .logOut();
     }
 
@@ -333,6 +333,8 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
         Assert.assertEquals(aViewPatientPage.getAdditionalComments(), additionalCommentCheck);
         Assert.assertEquals(sortedPubMedIDsFound, pubMedIDsCheck);
         Assert.assertEquals(aViewPatientPage.getResolutionNotes(), resolutionNoteCheck);
+
+        aHomePage.logOut();
 
     }
 

@@ -109,6 +109,7 @@ public class PedigreePageTest extends BaseTest implements CommonInfoEnums
         Assert.assertEquals(aPedigreeEditorPage.getNumberOfPartnerLinks(), 1);
 
         aPedigreeEditorPage.closeEditor("Don't Save")
+            .saveAndViewSummary()
             .logOut();
     }
 
@@ -260,6 +261,8 @@ public class PedigreePageTest extends BaseTest implements CommonInfoEnums
             .addGene("FOXP2", "Carrier");
 
         Assert.assertTrue(aPedigreeEditorPage.doesWarningDialogueAppear());
+
+        aCreatePatientPage.saveAndViewSummary().logOut();
     }
 
 }

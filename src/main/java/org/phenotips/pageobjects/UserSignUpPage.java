@@ -34,7 +34,7 @@ public class UserSignUpPage extends BasePage implements CommonSignUpSelectors
         String email, String affiliation, String referral, String justification)
     {
         clickAndClearElement(userNameBox);
-        unconditionalWaitNs(1);
+        unconditionalWaitNs(1); // Needed as entering a firstname immediately does not regen username.
 
         clickAndTypeOnElement(firstNameBox, firstName);
         clickAndTypeOnElement(lastNameBox, lastName);

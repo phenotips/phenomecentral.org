@@ -262,7 +262,7 @@ public class CreatePatientPage extends CommonInfoSelectors
     public CreatePatientPage updateConsent()
     {
         clickOnElement(updateBtn);
-        unconditionalWaitNs(5);
+        waitForElementToBePresent(identifierBox); // Wait until the identifier box appears
         return this;
     }
 

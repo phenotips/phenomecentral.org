@@ -33,7 +33,7 @@ public class EmailUIPage extends BasePage
     public EmailUIPage deleteAllEmails()
     {
         if (getNumberOfEmails() > 0) {
-            unconditionalWaitNs(5);
+            unconditionalWaitNs(1); // Wait is only used so that a human can see the emails.
             clickOnElement(deleteAllEmailsLink);
         }
         else {
@@ -49,7 +49,7 @@ public class EmailUIPage extends BasePage
     public List<String> getEmailTitles() {
         List<String> loTitles = new Vector<String>();
 
-        unconditionalWaitNs(1);
+        unconditionalWaitNs(1); // Again, this wait was just for human readability
         if (getNumberOfEmails() > 0) {
             waitForElementToBePresent(emailTitles);
             superDriver.findElements(emailTitles).forEach(x -> loTitles.add(x.getText()));

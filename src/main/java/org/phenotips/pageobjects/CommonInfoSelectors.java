@@ -112,7 +112,7 @@ public abstract class CommonInfoSelectors extends BasePage implements CommonInfo
         }
         clickOnElement(updateConfirmBtn);
         waitForElementToBeClickable(logOutLink); // TODO: Make function to wait until clickable
-        unconditionalWaitNs(2);
+        unconditionalWaitNs(2); // This might be needed still. For some reason, modal does not close immediately and nothing to wait for.
     }
 
     /**
@@ -125,7 +125,7 @@ public abstract class CommonInfoSelectors extends BasePage implements CommonInfo
     public void addCollaboratorToPatient(String collaboratorName, PRIVILAGE privilageLevel) {
         clickOnElement(modifyPermissionsBtn);
         clickAndTypeOnElement(newCollaboratorBox, collaboratorName);
-        unconditionalWaitNs(1); // wait for results to reload
+        // unconditionalWaitNs(1); // wait for results to reload. Should not be needed anymore?
         clickOnElement(firstCollaboratorResult);
         superDriver.findElement(newCollaboratorBox).sendKeys(Keys.ENTER); // Looks like we'll have to press enter
         //forceClickOnElement(firstCollaboratorResult); // ?? click twice
@@ -144,7 +144,7 @@ public abstract class CommonInfoSelectors extends BasePage implements CommonInfo
 
         forceClickOnElement(updateConfirmBtn);
         waitForElementToBeClickable(logOutLink);
-        unconditionalWaitNs(2);
+        unconditionalWaitNs(2); // Modal does not seem to be fully closed even when logOut link turns to clickable?
     }
 
     /**
@@ -161,7 +161,7 @@ public abstract class CommonInfoSelectors extends BasePage implements CommonInfo
 
         forceClickOnElement(updateConfirmBtn);
         waitForElementToBeClickable(logOutLink);
-        unconditionalWaitNs(2);
+        unconditionalWaitNs(2); // Likewise, the modal does not seem to be fully closed even when logOut is clickable?
     }
 
 

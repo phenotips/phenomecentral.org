@@ -80,6 +80,7 @@ public class PatientCreationOptionsTests extends BaseTest implements CommonInfoE
 
         aCreationPage.navigateToPedigreeEditor("")
             .closeEditor("save")
+            .saveAndViewSummary()
             .logOut();
 
     }
@@ -104,7 +105,7 @@ public class PatientCreationOptionsTests extends BaseTest implements CommonInfoE
         List<String> loFamilialConditions = aCreationPage.cycleThroughFamilialHealthConditions();
         Assert.assertEquals(loFamilialConditions, checkFamilialConditionsLabels);
 
-        aCreationPage.logOut();
+        aCreationPage.logOut().dismissUnsavedChangesWarning();
     }
 
     @Test()
@@ -147,7 +148,7 @@ public class PatientCreationOptionsTests extends BaseTest implements CommonInfoE
         List<String> loPrenatalYesNoBoxes = aCreationPage.cycleThroughPrenatalHistory();
         Assert.assertEquals(loPrenatalYesNoBoxes, checkPrenatalConditionsLabels);
 
-        aCreationPage.cycleThroughPrenatalOptions().logOut();
+        aCreationPage.cycleThroughPrenatalOptions().logOut().dismissUnsavedChangesWarning();
     }
 
     @Test()
@@ -178,7 +179,7 @@ public class PatientCreationOptionsTests extends BaseTest implements CommonInfoE
         System.out.println(loPhenotypeDetailsOptions);
         Assert.assertEquals(loPhenotypeDetailsOptions, checkPhenotypeDetailsLabels);
 
-        aCreationPage.logOut();
+        aCreationPage.logOut().dismissUnsavedChangesWarning();
     }
 
     // Checks only first level depth on HPO tree. Structure is rather inconsistent, can't figure out
@@ -202,7 +203,7 @@ public class PatientCreationOptionsTests extends BaseTest implements CommonInfoE
         System.out.println(loAllPhenotypes);
         Assert.assertEquals(loAllPhenotypes, checkPhenotypeLabels);
 
-        aCreationPage.logOut();
+        aCreationPage.logOut().dismissUnsavedChangesWarning();
     }
 
     // Clicks on all input boxes within the Diagnosis section and tries to provide input.
@@ -232,7 +233,7 @@ public class PatientCreationOptionsTests extends BaseTest implements CommonInfoE
         Assert.assertFalse(aCreationPage.isCaseSolved());
         Assert.assertFalse(aCreationPage.isPubMedAndResolutionBoxesClickable());
 
-        aCreationPage.logOut();
+        aCreationPage.logOut().dismissUnsavedChangesWarning();
     }
 
     // Checks that the red error message when inputting an invalid PubMed ID shows up.
@@ -256,6 +257,8 @@ public class PatientCreationOptionsTests extends BaseTest implements CommonInfoE
             .addPubMedID("30699054");
 
         Assert.assertTrue(aCreationPage.isNthPubMDBoxValid(1));
+
+        aCreationPage.logOut().dismissUnsavedChangesWarning();
     }
 
 

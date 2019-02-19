@@ -9,6 +9,7 @@ import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.pagefactory.ByChained;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -33,7 +34,7 @@ public abstract class BasePage
      */
     protected final String HOMEPAGE_URL = "http://localhost:8083";
 
-    protected final String ALL_PAITIENTS_URL = "http://localhost:8083/AllData";
+    // protected final String ALL_PAITIENTS_URL = "http://localhost:8083/AllData";
 
     // protected final String NEW_PAITIENTS_URL = "http://localhost:8083/AllData";
 
@@ -71,6 +72,8 @@ public abstract class BasePage
         "#phenotips-globalTools > div > div > ul > li:nth-child(2) > ul > li:nth-child(1) > span > a");
 
     private final By loadingStatusBar = By.id("patients-ajax-loader");
+
+    private final By inProgressMsg = By.cssSelector("div[class='xnotification xnotification-inprogress']");
 
     protected final By logOutLink = By.id("tmLogout"); // Used to check when modals close
 
@@ -190,13 +193,13 @@ public abstract class BasePage
     {
         try {
             aWebElement.click();
-        } catch (ElementNotInteractableException e) {
+        } catch (WebDriverException e) {
             ((JavascriptExecutor)superDriver).executeScript("arguments[0].scrollIntoView();", aWebElement);
             try {
                 aWebElement.click();
-            } catch (ElementNotInteractableException f) {
+            } catch (WebDriverException f) {
                 ((JavascriptExecutor)superDriver).executeScript("arguments[0].click();", aWebElement);
-                System.out.println("Force click on element: " + aWebElement);
+                System.out.println("Warning: Force click on element: " + aWebElement);
             }
 
         }
@@ -279,7 +282,7 @@ public abstract class BasePage
             clickOnElement(viewAllPatientsLink);
         } catch (ElementNotInteractableException e) {
             System.err.println("Might throw an error, All Patients Link not clickable!");
-            superDriver.navigate().to(ALL_PAITIENTS_URL);
+            //superDriver.navigate().to(ALL_PAITIENTS_URL);
         }
 
         waitForLoadingBarToDisappear();
@@ -314,7 +317,7 @@ public abstract class BasePage
      */
     public CreatePatientPage navigateToCreateANewPatientPage() {
         clickOnElement(createMenuDrp);
-        unconditionalWaitNs(1);
+        // unconditionalWaitNs(1); // This should not be needed anymore? Test.
 
         try {
             clickOnElement(newPatientLink);
@@ -438,6 +441,8 @@ public abstract class BasePage
 
     /**
      * Navigates to the homepage by clicking on the PhenomeCentral Logo at the top left corner of the top toolbar.
+     * Note that this gets overridden in the EmailUIPage class because the PC logo doesn't appear there and we have to
+     * explicitly navigate back to the homepage by explicitly navigating to the HOMEPAGE_URL
      * @return A new instance of a HomePage as we navigate there.
      */
     public HomePage navigateToHomePage()
@@ -454,5 +459,31 @@ public abstract class BasePage
     public void waitForLoadingBarToDisappear()
     {
         waitForElementToBeGone(loadingStatusBar);
+    }
+
+    /**
+     * Explicitly wait until the spinning message (xwiki generated) that appears on the bottom of the page disappears.
+     * This message appears when sending a request to the servers. It has several different texts as
+     * they appear in multiple areas but they usually have a black background before changing to green.
+     * Example, deleting a patient makes the black "Sending Request..." before changing to green "Done!".
+     * Also, importing JSON patient also makes "Importing JSON, please be patient..." followed by "Done!".
+     */
+    public void waitForInProgressMsgToDisappear()
+    {
+        waitForElementToBePresent(inProgressMsg);
+        waitForElementToBeGone(inProgressMsg);
+    }
+
+    /**
+     * Dismiss the "You have unsaved changes on this page. Continue?" warning message that appears when
+     * trying to navigate away from a page with unsaved edits. It selects "Leave" button.
+     * This is a native browser (operating system, not web-based) warning dialogue.
+     * Requires: That there actually be a warning box open and active on the browser. Selenium will throw
+     *             a "NoAlertPresentException" if there is actually no dialogue to interact with.
+     */
+    public void dismissUnsavedChangesWarning()
+    {
+        superDriver.switchTo().alert().accept();
+        superDriver.switchTo().defaultContent();
     }
 }

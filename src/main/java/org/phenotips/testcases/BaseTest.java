@@ -1,13 +1,17 @@
 package org.phenotips.testcases;
 
+import org.phenotips.pageobjects.HomePage;
+
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
 import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -75,14 +79,19 @@ public abstract class BaseTest
     /**
      * Runs after every test method. In the case that TestNG's listener reports a failure, will take a
      * screenshot and copy over to targets/screenshots directory as a .png with a methodName and timeStamp
+     * This will also navigate to a blank page taking care of any "Unsaved Changes" warning box so that the next test
+     * can be attempted. Without, the warning modal would block all the other tests.
      * @param testResult resulting status of a test method that has just run, as reported by TestNGs listener.
      *        Check this passed info for failure.
      */
     @AfterMethod
     public void onTestFailure(ITestResult testResult)
     {
+        HomePage tempHomePage = new HomePage(theDriver);
+
         if (ITestResult.FAILURE == testResult.getStatus()) {
 
+            // Screenshot mechanism
             // Cast webDriver over to TakeScreenshot. Call getScreenshotAs method to create image file
             File srcFile = ((TakesScreenshot)theDriver).getScreenshotAs(OutputType.FILE);
 
@@ -99,10 +108,27 @@ public abstract class BaseTest
             } catch (IOException e) {
                 System.out.println("Something went wrong copying over screenshot: " + e);
             }
+
+            // Navigate to a login page. Might trigger a warning modal for unsaved edits.
+            // Ensure that any open alert dialogue is closed before continuing.
+            // Navigating away and taking care of potential unsaved changes alert allows the next test
+            // to be run.
+            // TODO: This is bad logic. Maybe dump the driver and restart a new instance.
+            //          It might not even get to the home page.
+            try {
+                tempHomePage.navigateToLoginPage();
+                System.out.println("Test failure, navigate to login page. There is no unsaved changes warning.");
+            } catch (UnhandledAlertException e) {
+                theDriver.switchTo().alert().accept();
+                theDriver.switchTo().defaultContent();
+                tempHomePage.navigateToLoginPage();
+                System.out.println("Test failure, navigate to login page. Closed an unsaved changes warning dialogue");
+            }
+
         }
 
         else {
-            System.out.println("Method (test) suceeded. No screenshot. Moving on.");
+            System.out.println("Method (test) suceeded or skipped. No screenshot. Moving on.");
         }
 
     }

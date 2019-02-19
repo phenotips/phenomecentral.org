@@ -20,6 +20,7 @@ public class PedigreeEditorPage extends BasePage
         // Try to click on the default Proband template. If there is no template modal present, catch the error
         //   and just assume that there was no modal in the first place.
         try {
+            unconditionalWaitNs(5);
             clickOnElement(probandTemplate);
             waitForElementToBeClickable(hoverBox);
         } catch (TimeoutException e) {
@@ -250,7 +251,7 @@ public class PedigreeEditorPage extends BasePage
             clickOnElement(createNewPatientBtn);
             clickOnElement(confirmNewPatientBtn);
             waitForElementToBeClickable(personalTab);
-            unconditionalWaitNs(5);
+            unconditionalWaitNs(5); // PersonalTab is deemed clickable too early? Loading modal has not fully disappeared.
         }
         else {
             clickAndTypeOnElement(linkPatientBox, patientID);
