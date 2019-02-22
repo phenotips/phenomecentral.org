@@ -120,9 +120,12 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
             .navigateToRefreshMatchesPage()
             .refreshMatchesSinceLastUpdate();
 
+        int initialRefreshMatchCount = Integer.parseInt(aRefreshMatchesPage.getTotalMatchesFound());
+        String expectedMatchCount = Integer.toString(initialRefreshMatchCount + 2);
+
         Assert.assertEquals(aRefreshMatchesPage.getNumberOfLocalPatientsProcessed(), "2");
         // TODO: This assertion will fail... this is "Total" matches found, not new ones.
-        Assert.assertEquals(aRefreshMatchesPage.getTotalMatchesFound(), "2");
+        Assert.assertEquals(aRefreshMatchesPage.getTotalMatchesFound(), expectedMatchCount);
 
         aHomePage.logOut();
     }
