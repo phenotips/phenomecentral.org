@@ -31,14 +31,11 @@ public abstract class BasePage
 
     /**
      * Common URLs, specify address of the PC instance
+     * Possible mutation in BasePage ctor, get URLs from SystemProperty
      */
-    protected final String HOMEPAGE_URL = "http://localhost:8083";
+    protected String HOMEPAGE_URL = "http://localhost:8083";
 
-    // protected final String ALL_PAITIENTS_URL = "http://localhost:8083/AllData";
-
-    // protected final String NEW_PAITIENTS_URL = "http://localhost:8083/AllData";
-
-    protected final String EMAIL_UI_URL = "http://localhost:8085";
+    protected String EMAIL_UI_URL = "http://localhost:8085";
 
     /**
      * Common login credentials.
@@ -99,6 +96,23 @@ public abstract class BasePage
      */
     public BasePage(WebDriver aDriver)
     {
+        // Sets the HOMEPAGE_URL and EMAIL_UI_URL if they were passed in as command line
+        // property to JVM. Otherwise, will use what HOMEPAGE_URL and EMAIL_UI_URL as defined
+        // in its declaration at the top of this page.
+        final String homePageParameter = System.getProperty("homePageURL");
+        final String emailUIPageParameter = System.getProperty("emailUIPageURL");
+
+        if (homePageParameter != null) {
+            HOMEPAGE_URL = homePageParameter;
+            // Debug message in BaseTest when static webDriver gets instantiated
+        }
+
+        if (emailUIPageParameter != null) {
+            EMAIL_UI_URL = emailUIPageParameter;
+            // Debug message in BaseTest when static webDriver gets instantiated
+        }
+
+        // Set the reference to the webdriver passed from a test case and initialize waiting times
         superDriver = aDriver;
         pause = new WebDriverWait(superDriver, 5);
         longPause = new WebDriverWait(superDriver, 60);

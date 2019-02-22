@@ -32,15 +32,6 @@ import io.github.bonigarcia.wdm.WebDriverManager;
  */
 public abstract class BaseTest
 {
-    /*************************************************************
-     * Change browserToUse to the desired browser
-     *************************************************************/
-    private final activeBrowser browserToUse = activeBrowser.CHROME;
-
-    private enum activeBrowser {
-        CHROME, FIREFOX, SAFARI, EDGE, IE
-    }
-
     protected static WebDriver theDriver;
 
     /**
@@ -51,28 +42,64 @@ public abstract class BaseTest
      */
     public BaseTest() {
         if (theDriver == null) {
-            if (browserToUse == activeBrowser.CHROME) {
-                WebDriverManager.chromedriver().setup();
-                theDriver = new ChromeDriver();
-            } else if (browserToUse == activeBrowser.FIREFOX) {
-                WebDriverManager.firefoxdriver().setup();
-                theDriver = new FirefoxDriver();
-            } else if (browserToUse == activeBrowser.EDGE) {
-                WebDriverManager.edgedriver().setup();
-                theDriver = new EdgeDriver();
-            } else if (browserToUse == activeBrowser.IE) {
-                WebDriverManager.iedriver().setup();
-                theDriver = new InternetExplorerDriver();
-            } else if (browserToUse == activeBrowser.SAFARI) {
-                // No need to setup for Safari, native Selenium api should work... according to Apple docs
-                theDriver = new SafariDriver();
-            } else {
-                System.out.println("Unknown browser, defaulting to Chrome");
-                WebDriverManager.chromedriver().setup();
-                theDriver = new ChromeDriver();
-            }
+            printCommandLinePropertyMessages();
+            setUpBrowser();
+        }
+    }
 
-            System.out.println("Initiating the webDriver for: " + browserToUse.toString());
+    /**
+     * Helper function called in ctor to instantiate the desired browser. See BaseTest ctor.
+     */
+    private void setUpBrowser()
+    {
+        String browser = System.getProperty("browser", "chrome"); // If null, set to Chrome
+
+        if (browser.equalsIgnoreCase("chrome")) {
+            WebDriverManager.chromedriver().setup();
+            theDriver = new ChromeDriver();
+        } else if (browser.equalsIgnoreCase("firefox")) {
+            WebDriverManager.firefoxdriver().setup();
+            theDriver = new FirefoxDriver();
+        } else if (browser.equalsIgnoreCase("edge")) {
+            WebDriverManager.edgedriver().setup();
+            theDriver = new EdgeDriver();
+        } else if (browser.equalsIgnoreCase("ie")) {
+            WebDriverManager.iedriver().setup();
+            theDriver = new InternetExplorerDriver();
+        } else if (browser.equalsIgnoreCase("safari")) {
+            // No need to setup for Safari, native Selenium api should work... according to Apple docs
+            theDriver = new SafariDriver();
+        } else {
+            System.out.println("Unknown browser, defaulting to Chrome. browser can be one of (case insensitive): ");
+            System.out.println("chrome, firefox, edge, ie, safari");
+            WebDriverManager.chromedriver().setup();
+            theDriver = new ChromeDriver();
+        }
+
+        System.out.println("Initiated the webDriver for: " + browser);
+    }
+
+    /**
+     * Prints out debug messages for the three environment variables (the ones the tests are interested in) that
+     * were passed through the command line. This includes the homePageURL, emailUIPageURL and browser if they were
+     * passed.
+     * TODO: Perhaps create a superclass for BasePage/BaseTest that handles command line parameters in one place, rather
+     *       than have the URLs set in BasePage and the browser set in BaseTest
+     */
+    private void printCommandLinePropertyMessages()
+    {
+        // Detect if any command line parameters were passed to specify browser, homepageURL or
+        // EmailUI page URL
+        if (System.getProperty("homePageURL") != null) {
+            System.out.println("homePageURL property passed. PC instance is at: " + System.getProperty("homePageURL"));
+        }
+
+        if (System.getProperty("emailUIPageURL") != null) {
+            System.out.println("emailUIPageURL property passed. EmailUI is at: " + System.getProperty("emailUIPageURL"));
+        }
+
+        if (System.getProperty("browser") != null) {
+            System.out.println("browser property passed. Browser to use: " + System.getProperty("browser"));
         }
     }
 
