@@ -9,6 +9,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
+import io.qameta.allure.Step;
+
 /**
  * This represents the pedigree editor page, i.e. http://localhost:8083/edit/Families/FAMxxxxxxx
  */
@@ -154,6 +156,7 @@ public class PedigreeEditorPage extends BasePage
      *          It must be exactly one of "Save", "Don't Save", "Keep Editing". Defaults to "Save" on invalid string.
      * @return Navigates back to the patient creation page so a return new instance of that.
      */
+    @Step("Close the editor with save choice of {0}")
     public CreatePatientPage closeEditor(String saveChoice)
     {
         clickOnElement(closeEditor);
@@ -182,6 +185,7 @@ public class PedigreeEditorPage extends BasePage
      *          button appears or not.
      *          State afterwards would be navigation away from the Pedigree Editor to Patient Creation page
      */
+    @Step("Determine if the warning dialogue appeared")
     public Boolean doesWarningDialogueAppear()
     {
         clickOnElement(closeEditor);
@@ -208,6 +212,7 @@ public class PedigreeEditorPage extends BasePage
      * to a tab on the modal. Upon invalid string entry, goes to the Personal tab.
      * @return stay on the same page so return same object
      */
+    @Step("Switch to tab: {0}")
     public PedigreeEditorPage switchToTab(String infoTab)
     {
         switch (infoTab) {
@@ -229,6 +234,7 @@ public class PedigreeEditorPage extends BasePage
      * TODO: Improve this so that it returns some other string when no patient is linked.
      * @return a String in the form of Pxxxxxxxx
      */
+    @Step("Retrieve the patient ID from the modal")
     public String getPatientIDFromModal()
     {
         waitForElementToBePresent(patientIDInModal);
@@ -243,6 +249,7 @@ public class PedigreeEditorPage extends BasePage
      *          or a patient ID in form of Pxxxxxxx
      * @return Stay on the same page so return same object.
      */
+    @Step("Link this node to patient ID: {0}")
     public PedigreeEditorPage linkPatient(String patientID)
     {
         switchToTab("Personal");
@@ -265,6 +272,7 @@ public class PedigreeEditorPage extends BasePage
      * Returns the current gender that is selected in the radio button options.
      * @return a String representing the gender, one of: "Male", "Female", "Other", "Unknown"
      */
+    @Step("Retrieve the gender of the patient")
     public String getGender() {
         if (superDriver.findElement(maleGenderBtn).isSelected()) {
             return "Male";
@@ -287,6 +295,7 @@ public class PedigreeEditorPage extends BasePage
      *          "Male", "Female", "Other", or "Unknown".
      * @return Stay on the same page so return the same object.
      */
+    @Step("Set the gender of the patient to {0}")
     public PedigreeEditorPage setGender(String gender) {
         clickOnElement(clinicalTab);
 
@@ -305,6 +314,7 @@ public class PedigreeEditorPage extends BasePage
      * Requires a patient's information modal to be present.
      * @return A, possibly empty, list of Strings representing the ethnicities that were found.
      */
+    @Step("Retrieve the ethnicities of the patient")
     public List<String> getEthnicities()
     {
         switchToTab("Personal");
@@ -321,6 +331,7 @@ public class PedigreeEditorPage extends BasePage
      * Requires the patient information modal to be open.
      * @return A, possibly empty, list of Strings containing the names of the phenotypes.
      */
+    @Step("Get the phenotypes of the current patient node")
     public List<String> getPhenotypes()
     {
         switchToTab("Clinical");
@@ -334,6 +345,7 @@ public class PedigreeEditorPage extends BasePage
      *          to the desired phenotype.
      * @return Stay on the same page so return the same object.
      */
+    @Step("Add the following phenotypes to the patient node: {0}")
     public PedigreeEditorPage addPhenotypes(List<String> loPhenotypesToAdd)
     {
         switchToTab("Clinical");
@@ -349,6 +361,7 @@ public class PedigreeEditorPage extends BasePage
      * @param status is the gene status so it is one of "Candidate", "Confirmed Causal", "Carrier"
      * @return a List of Strings, possibly empty, representing the text label for each entered gene.
      */
+    @Step("Retrieve the genes of this patient {0}")
     public List<String> getGenes(String status)
     {
         switchToTab("Clinical");
@@ -384,6 +397,7 @@ public class PedigreeEditorPage extends BasePage
      * @param geneStatus Status of the gene, one of: "Candidate", "Confirmed Causal", and "Carrier"
      * @return Stay on the same page so return the same object.
      */
+    @Step("Add gene: {0} with status: {1}")
     public PedigreeEditorPage addGene(String geneName, String geneStatus)
     {
         switchToTab("Clinical");
@@ -410,6 +424,7 @@ public class PedigreeEditorPage extends BasePage
      *      Ideas: Differentiate via width and height. rect.pedigree-hoverbox[width=180, height=243] for
      *      people, rect.pedigree-hoverbox[width=52, height=92] for relationship node.
      */
+    @Step("Open the {0}th node's edit modal")
     public PedigreeEditorPage openNthEditModal(int n)
     {
         waitForElementToBePresent(hoverBox);
@@ -452,6 +467,7 @@ public class PedigreeEditorPage extends BasePage
      * "Male", "Female", "Unknown", etc. TODO: Possibly create an enum.
      * @return Stay on the same page so return the same object.
      */
+    @Step("Create a child of the currently focused node with gender {0}")
     public PedigreeEditorPage createChild(String gender)
     {
         waitForElementToBePresent(hoverBox);
@@ -471,6 +487,7 @@ public class PedigreeEditorPage extends BasePage
      * node or it can be a partnership linkage node.
      * @return An integer >= 0 representing the number of clickable hover boxes within the tree.
      */
+    @Step("Get the number of nodes")
     public int getNumberOfNodes()
     {
         waitForElementToBePresent(closeEditor);
@@ -482,6 +499,7 @@ public class PedigreeEditorPage extends BasePage
      * appears in a modal.
      * @return int >= 0 representing the number of partner links in the tree.
      */
+    @Step("Get the number of partner links on the tree")
     public int getNumberOfPartnerLinks()
     {
         waitForElementToBePresent(closeEditor);
@@ -493,6 +511,7 @@ public class PedigreeEditorPage extends BasePage
      * I.e. it is total number of hover boxes - number of linkage hover boxes.
      * @return Integer >= 0 representing the total number of patients on tree.
      */
+    @Step("Get the number of patients found on tree")
     public int getNumberOfTotalPatientsInTree()
     {
         return getNumberOfNodes() - getNumberOfPartnerLinks();
@@ -552,6 +571,7 @@ public class PedigreeEditorPage extends BasePage
      * @param NthHoverBox is the nth hover box for the patient that we want to create a sibling for.
      * @return Stay on the same page, so return the same object.
      */
+    @Step("Create a sibling for the patient on the {0}th hover box")
     public PedigreeEditorPage createSibling(int NthHoverBox)
     {
         waitForElementToBePresent(hoverBox);

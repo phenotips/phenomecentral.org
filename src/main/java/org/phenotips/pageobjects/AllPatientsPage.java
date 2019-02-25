@@ -6,6 +6,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import io.qameta.allure.Step;
+
 /**
  * Represents the http://localhost:8083/AllData page, where "Browse... -> Browse patients" is clicked on
  */
@@ -40,6 +42,7 @@ public class AllPatientsPage extends BasePage
      * @param theJSON a long string which represents the JSON. Ensure that backslashes are escaped.
      * @return the same object, we stay on the same page.
      */
+    @Step("Import a patient via JSON {0}")
     public AllPatientsPage importJSONPatient(String theJSON)
     {
         clickOnElement(importJSONLink);
@@ -56,6 +59,7 @@ public class AllPatientsPage extends BasePage
      * for some reason to sort descending.
      * @return same object as it is the same page.
      */
+    @Step("Sort patients in descending date order")
     public AllPatientsPage sortPatientsDateDesc()
     {
         clickOnElement(sortCreationDate);
@@ -68,6 +72,7 @@ public class AllPatientsPage extends BasePage
      * Click on the first patient in the table to view its full profile.
      * @return the patient's full info page which is called the ViewPatientPage
      */
+    @Step("View first patient in table")
     public ViewPatientPage viewFirstPatientInTable()
     {
         clickOnElement(firstPatientRowLink);
@@ -78,6 +83,7 @@ public class AllPatientsPage extends BasePage
      * Deletes all the patients in the table if there are any, only for the first page
      * @return stay on the same page, so return the same object.
      */
+    @Step("Delete all patients on the table")
     public AllPatientsPage deleteAllPatients() {
         waitForLoadingBarToDisappear();
 
@@ -100,6 +106,7 @@ public class AllPatientsPage extends BasePage
      * @param patientID the patient ID to enter, should be in Pxxxxxxx format.
      * @return stay on the same page so return the same object.
      */
+    @Step("Filter patient {0} by their identifier or patient ID")
     public AllPatientsPage filterByPatientID(String patientID) {
         clickAndTypeOnElement(patientIDFilterBox, patientID);
         waitForLoadingBarToDisappear();

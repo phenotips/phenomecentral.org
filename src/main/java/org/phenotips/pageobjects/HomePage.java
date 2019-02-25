@@ -7,6 +7,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 
+import io.qameta.allure.Step;
+
 /**
  * Represents the page on http://localhost:8083/ (HOMEPAGE_URL)
   */
@@ -33,6 +35,7 @@ public class HomePage extends BasePage
      * Ex. "Enter cases, find matches, and connect with other rare disease specialists. Find out more..."
      * @return a new login page object as we navigate there
      */
+    @Step("Navigate to login page")
     public LoginPage navigateToLoginPage()
     {
         superDriver.navigate().to(HOMEPAGE_URL);
@@ -53,6 +56,7 @@ public class HomePage extends BasePage
      * Ideally, the no user should be signed in when calling this method.
      * @return A new instance of the UserSignUp page as we navigate there.
      */
+    @Step("Navigate to sign up page")
     public UserSignUpPage navigateToSignUpPage()
     {
         superDriver.navigate().to(HOMEPAGE_URL);
@@ -72,6 +76,7 @@ public class HomePage extends BasePage
      * they should see none of those headings.
      * @return A list of Strings representing the titles of each section.
      */
+    @Step("Retrieve titles of each section on the splash page")
     public List<String> getSectionTitles()
     {
         waitForElementToBePresent(logOutLink);
@@ -89,6 +94,7 @@ public class HomePage extends BasePage
      *           Exception when there is no error, hence test failure.
      * @return A String representing the message.
      */
+    @Step("Retrieve the unauthorized access error message 'You are not allowed to view this page or perform this action.'")
     public String getUnauthorizedErrorMessage()
     {
         waitForElementToBePresent(unauthorizedActionErrorMsg);

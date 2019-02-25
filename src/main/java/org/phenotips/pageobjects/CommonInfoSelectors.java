@@ -12,6 +12,8 @@ import org.openqa.selenium.support.ui.Select;
 
 import org.phenotips.testcases.CommonInfoEnums;
 
+import io.qameta.allure.Step;
+
 /** Contains common selectors for the accordion sections on the create and view patient info pages.
  *  Ex. http://localhost:8083/data/P0000015 and http://localhost:8083/edit/data/P0000015
  */
@@ -101,6 +103,7 @@ public abstract class CommonInfoSelectors extends BasePage implements CommonInfo
      * Defaults to private on invalid input.
      * @param theVisibility is string, one of "private", "matchable", "public". Must be exact.
      */
+    @Step("Set patient's global visibility to: {0}")
     public void setGlobalVisibility(String theVisibility) {
         clickOnElement(modifyPermissionsBtn);
         waitForElementToBePresent(privateRadioBtn);
@@ -122,6 +125,7 @@ public abstract class CommonInfoSelectors extends BasePage implements CommonInfo
      * @param collaboratorName is the exact name of the collaborator to add.
      * @param privilageLevel is one of three levels of privilages specified by the PRIVIALGE enum.
      */
+    @Step("Add collaborator to patient with: Collaborator name: {0} and Privilage level of: {1}")
     public void addCollaboratorToPatient(String collaboratorName, PRIVILAGE privilageLevel) {
         clickOnElement(modifyPermissionsBtn);
         clickAndTypeOnElement(newCollaboratorBox, collaboratorName);
@@ -152,6 +156,7 @@ public abstract class CommonInfoSelectors extends BasePage implements CommonInfo
      * @param n is the Nth collaborator (n >= 1) Must supply valid Nth collaborator otherwise
      * array out of bounds exception will be thrown.
      */
+    @Step("Remove the {0}th collaborator from the list")
     public void removeNthCollaborator(int n) {
         clickOnElement(modifyPermissionsBtn);
         waitForElementToBePresent(newCollaboratorBox);

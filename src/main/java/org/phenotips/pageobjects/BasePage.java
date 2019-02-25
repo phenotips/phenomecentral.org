@@ -15,6 +15,8 @@ import org.openqa.selenium.support.pagefactory.ByChained;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import io.qameta.allure.Step;
+
 /**
  * This abstract class contains the toolbar (navbar) elements which is visible on all pages
  * All page classes should inherit this base class
@@ -175,6 +177,7 @@ public abstract class BasePage
      *         Handles it by just continuing after printing a message.
      * @param n is time to pause in seconds.
      */
+    @Step("Unconditional wait (wait the full length) of {0} seconds.")
     public void unconditionalWaitNs(long n)
     {
         try {
@@ -275,6 +278,7 @@ public abstract class BasePage
      * @requires: A user to already by logged in.
      * @return a new LoginPage object.
      */
+    @Step("Log out")
     public LoginPage logOut()
     {
         clickOnElement(logOutLink);
@@ -288,6 +292,7 @@ public abstract class BasePage
      * @requires: A user to already by logged in.
      * @return new instance of the browse patients page
      */
+    @Step("Navigate to All Patients page")
     public AllPatientsPage navigateToAllPatientsPage()
     {
         // TODO: Investigate why an error is being thrown (why link is not clickable at times)
@@ -310,6 +315,7 @@ public abstract class BasePage
      * @requires: An administrator to already be logged in.
      * @return new object of the AdminSettingsPage
      */
+    @Step("Navigate to Admin Settings Page")
     public AdminSettingsPage navigateToAdminSettingsPage()
     {
         clickOnElement(adminLink);
@@ -320,6 +326,7 @@ public abstract class BasePage
      * Navigates to MockMock's (fake SMTP service) email landing page.
      * @return new object of the EmailUIPage where the email inbox can be seen
      */
+    @Step("Navigate to Email Inbox Page (Fake SMTP UI)")
     public EmailUIPage navigateToEmailInboxPage() {
         superDriver.navigate().to(EMAIL_UI_URL);
         return new EmailUIPage(superDriver);
@@ -329,6 +336,7 @@ public abstract class BasePage
      * Navigates to the create patient page by "Create... -> New patient"
      * @return a new object of the CreatePatientPage where the creation of a new patient is performed.
      */
+    @Step("Navigate to Create Patient Page (Create a new patient)")
     public CreatePatientPage navigateToCreateANewPatientPage() {
         clickOnElement(createMenuDrp);
         // unconditionalWaitNs(1); // This should not be needed anymore? Test.
@@ -459,6 +467,7 @@ public abstract class BasePage
      * explicitly navigate back to the homepage by explicitly navigating to the HOMEPAGE_URL
      * @return A new instance of a HomePage as we navigate there.
      */
+    @Step("Navigate to PC home page for this instance")
     public HomePage navigateToHomePage()
     {
         clickOnElement(phenomeCentralLogoBtn);
@@ -495,6 +504,7 @@ public abstract class BasePage
      * Requires: That there actually be a warning box open and active on the browser. Selenium will throw
      *             a "NoAlertPresentException" if there is actually no dialogue to interact with.
      */
+    @Step("Dismiss the unsaved changes warning dialogue")
     public void dismissUnsavedChangesWarning()
     {
         superDriver.switchTo().alert().accept();

@@ -3,6 +3,8 @@ package org.phenotips.pageobjects;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import io.qameta.allure.Step;
+
 /**
  * This page corresponds to the Users page from Administrator Settings. We can add users here.
  * I.e. http://localhost:8083/admin/XWiki/XWikiPreferences?section=Users
@@ -29,6 +31,7 @@ public class AdminUsersPage extends AdminSettingsPage implements CommonSignUpSel
      * @param justification value for the "Why are you requesting access" box as a String.
      * @return Stay on the same page so return the same object.
      */
+    @Step("Adds a user with the desired parameters First name: {0} Last name: {1} Password: {2} Email: {3} Affiliation: {4} Referrer {5} and Justification: {6}")
     public AdminUsersPage addUser(String firstName, String lastName, String password,
         String email, String affiliation, String referral, String justification)
     {

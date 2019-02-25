@@ -6,6 +6,8 @@ import java.util.Vector;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import io.qameta.allure.Step;
+
 /**
  * This is the webpage of the fake SMTP service's UI. In this case, we are using MockMock. As it provides a web
  * interface for the email inbox. Assumes that the fake SMTP service is running as per the Readme.
@@ -30,6 +32,7 @@ public class EmailUIPage extends BasePage
      *
      * @return stay on the same page so return the same object.
      */
+    @Step("Delete all emails from inbox")
     public EmailUIPage deleteAllEmails()
     {
         if (getNumberOfEmails() > 0) {
@@ -46,6 +49,7 @@ public class EmailUIPage extends BasePage
      * Get a (possibly empty) list of titles of emails from the inbox.
      * @return a List of Strings which are titles of all the emails.
      */
+    @Step("Retrieve a list of email titles")
     public List<String> getEmailTitles() {
         List<String> loTitles = new Vector<String>();
 
@@ -61,6 +65,7 @@ public class EmailUIPage extends BasePage
      * Indicates the number of emails in the inbox. Checks the main text for the overall status first.
      * @return integer >= 0.
      */
+    @Step("Retrieve the number of emails in the inbox")
     public int getNumberOfEmails() {
         waitForElementToBePresent(emailStatus);
         String emailText = superDriver.findElement(emailStatus).getText();
@@ -79,6 +84,7 @@ public class EmailUIPage extends BasePage
      * @return a new HomePage object as we navigate there.
      */
     @Override
+    @Step("Navigate to the PC instance's homepage")
     public HomePage navigateToHomePage()
     {
         superDriver.navigate().to(HOMEPAGE_URL);

@@ -72,7 +72,8 @@ public class PatientCreationOptionsTests extends BaseTest implements CommonInfoE
         List<String> loModeOfInheritanceLabels = aCreationPage.cycleThroughModeOfInheritance();
 
         Assert.assertEquals(loAgeOnsetLabels, checkOnsetLabels);
-        Assert.assertEquals(loModeOfInheritanceLabels, checkInheritanceLabels);
+        Assert.assertEquals(loModeOfInheritanceLabels, checkInheritanceLabels,
+            "Actual: " + loModeOfInheritanceLabels + "\n Expected: " + checkInheritanceLabels + "\n");
 
         aCreationPage.cycleThroughModeOfInheritance();
         aCreationPage.setIndicationForReferral("Now cycle through the other sections...")

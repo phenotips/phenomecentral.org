@@ -3,6 +3,8 @@ package org.phenotips.pageobjects;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import io.qameta.allure.Step;
+
 /**
  * Represents the page http://localhost:8083/PhenomeCentral/login
  * This is the user login page
@@ -26,6 +28,7 @@ public class LoginPage extends BasePage
      * @param password non-empty and case sensitive password
      * @return a homepage object as we navigate there on successful login.
      */
+    @Step("Login with credentials username {0} and password {1}")
     public HomePage loginAs(String username, String password)
     {
         clickAndTypeOnElement(userNameField, username);
@@ -40,6 +43,7 @@ public class LoginPage extends BasePage
      * Logs in with the default admin credentials
      * @return a homepage object as we navigate there upon sucessful login
      */
+    @Step("Login as an admin")
     public HomePage loginAsAdmin()
     {
         return loginAs(ADMIN_USERNAME, ADMIN_PASS);
@@ -49,6 +53,7 @@ public class LoginPage extends BasePage
      * Logs in with a regular user's credentials.
      * @return a homepage object as we navigate there upon sucessful login
      */
+    @Step("Login as User 1")
     public HomePage loginAsUser()
     {
         return loginAs(USER_USERNAME, USER_PASS);
@@ -58,6 +63,7 @@ public class LoginPage extends BasePage
      * Logs in with the second user's credentials.
      * @return a homepage object as we navigate there upon sucessful login
      */
+    @Step("Login as User 2")
     public HomePage loginAsUserTwo()
     {
         return loginAs(USER_USERNAME2, USER_PASS2);

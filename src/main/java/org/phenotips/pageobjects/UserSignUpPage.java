@@ -3,6 +3,8 @@ package org.phenotips.pageobjects;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import io.qameta.allure.Step;
+
 /**
  * Corresponds to the "Request An Account" page that the public can see to request to sign up.
  * i.e. http://localhost:8083/register/PhenomeCentral/WebHome
@@ -30,6 +32,7 @@ public class UserSignUpPage extends BasePage implements CommonSignUpSelectors
      * @param justification value for the "Why are you requesting access" box as a String.
      * @return Stay on the same page so return the same object.
      */
+    @Step("Request an account for {0}. Information should be listed below.")
     public UserSignUpPage requestAccount(String firstName, String lastName, String password, String confirmPassword,
         String email, String affiliation, String referral, String justification)
     {
@@ -62,6 +65,7 @@ public class UserSignUpPage extends BasePage implements CommonSignUpSelectors
      * request and we will process it shortly."
      * @return A String representing the message.
      */
+    @Step("Retreieve the confirmation message that account has been requested")
     public String getConfirmationMessage()
     {
         waitForElementToBePresent(infoMessageArea);
@@ -72,6 +76,7 @@ public class UserSignUpPage extends BasePage implements CommonSignUpSelectors
      * Cancel the Request an Account page. Navigates back to the home page by clicking on the cancel button
      * @return Navigate back to the home page so return a new instance of HomePage object.
      */
+    @Step("Cancel the account request going back to the home page.")
     public HomePage cancelRequestingAccount()
     {
         clickOnElement(cancelAndReturnBtn);

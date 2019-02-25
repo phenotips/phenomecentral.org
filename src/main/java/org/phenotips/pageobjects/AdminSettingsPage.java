@@ -3,6 +3,8 @@ package org.phenotips.pageobjects;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import io.qameta.allure.Step;
+
 /**
  * This is the main Global Administrator settings page. Reached by clicking on "Administrator" (gear icon)
  * link on the top left of the navbar. Ex. http://localhost:8083/admin/XWiki/XWikiPreferences
@@ -29,6 +31,7 @@ public class AdminSettingsPage extends BasePage
      * PhenoTips -> Matching Notification
      * @return a MatchNotification page object.
      */
+    @Step("Navigate to Admin Matching Notification Page")
     public AdminMatchNotificationPage navigateToMatchingNotificationPage()
     {
         clickOnElement(matchingNotificationMenu);
@@ -40,6 +43,7 @@ public class AdminSettingsPage extends BasePage
      * PhenoTips -> Refresh matches
      * @return a AdminRefreshMatches page object as we navigate there.
      */
+    @Step("Navigate to Admin Refresh Matches Page")
     public AdminRefreshMatchesPage navigateToRefreshMatchesPage()
     {
         clickOnElement(refreshMatchesMenu);
@@ -50,6 +54,7 @@ public class AdminSettingsPage extends BasePage
      * Navigates to the Users page. From the accordion menu on the left: Users & Groups -> Users
      * @return an AdminUsersPage object as we navigate there.
      */
+    @Step("Navigate to Admin's Users Page")
     public AdminUsersPage navigateToAdminUsersPage()
     {
         clickOnElement(usersMenu);
@@ -61,6 +66,7 @@ public class AdminSettingsPage extends BasePage
      * Users & Groups -> Pending Users
      * @return an AdminPendingUsersPage as we navigate there.
      */
+    @Step("Navigate to Admin's Pending Users Page")
     public AdminPendingUsersPage navigateToPendingUsersPage()
     {
         clickOnElement(pendingUsersMenu);
@@ -72,6 +78,7 @@ public class AdminSettingsPage extends BasePage
      * Email -> Mail Sending
      * @return an AdminEmailSendingSettingsPage instance as we navigate there.
      */
+    @Step("Navigate to Admin Mail Sending Settings Page")
     public AdminEmailSendingSettingsPage navigateToMailSendingSettingsPage()
     {
         clickOnElement(mailSendingMenu);

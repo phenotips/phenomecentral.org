@@ -1,2 +1,6 @@
 target/*
 .idea/*
+allure-results/*
+scripts/PCInstance*
+scripts/logFile*
+.allure/*

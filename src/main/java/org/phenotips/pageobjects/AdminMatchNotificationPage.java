@@ -7,6 +7,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
+import io.qameta.allure.Step;
+
 /**
  * The admin page where match notifications can be sent.
  * Administration -> PhenoTips -> Matching Notification in the left accordion menu
@@ -48,6 +50,7 @@ public class AdminMatchNotificationPage extends AdminSettingsPage
      * @param identifier String to search by. Usually an identifier or the Patient ID itself
      * @return the same object as we are still on the same page, just with the table filtered
      */
+    @Step("Filter matches by identifier: {0}")
     public AdminMatchNotificationPage filterByID(String identifier)
     {
         clickAndTypeOnElement(patientIDContainsBox, identifier);
@@ -63,6 +66,7 @@ public class AdminMatchNotificationPage extends AdminSettingsPage
      * after clicking on the Send Notifcations button.
      * @return the same (current) object, as we stay on the same page.
      */
+    @Step("Send an email to the matched patients in the first row")
     public AdminMatchNotificationPage emailFirstRowUsers()
     {
         clickOnElement(firstRowFirstEmailBox);
@@ -81,6 +85,7 @@ public class AdminMatchNotificationPage extends AdminSettingsPage
      * @param matchedPatient The patient name, or ID number, in the Matched Column, on the same row as referencePatient.
      * @return Stay on the same page so return the same object.
      */
+    @Step("Find and email specific matched patients. Reference Patient ID: {0} with Matched Patient ID: {1}")
     public AdminMatchNotificationPage emailSpecificPatients(String referencePatient, String matchedPatient)
     {
         filterByID(referencePatient);
@@ -123,6 +128,7 @@ public class AdminMatchNotificationPage extends AdminSettingsPage
      * @param matchedPatient The matched patient, either patientID or unique identifier, can be substring.
      * @return boolean, true when there is a referencePatient matching to the matchedPatient, false if match not found.
      */
+    @Step("Does match exist between Reference Patient ID: {0} and Matched patient ID: {0}")
     public boolean doesMatchExist(String referencePatient, String matchedPatient)
     {
         filterByID(referencePatient);
@@ -149,6 +155,7 @@ public class AdminMatchNotificationPage extends AdminSettingsPage
      * Toggles the "Contacted status: contacted" filter checkbox.
      * @return Stay on the same page so return the same object.
      */
+    @Step("Toggle contacted status checkbox")
     public AdminMatchNotificationPage toggleContactedStatusCheckbox()
     {
         clickOnElement(contactedStatusCheckbox);
@@ -159,6 +166,7 @@ public class AdminMatchNotificationPage extends AdminSettingsPage
      * Toggles the "Contacted status: not contacted" filter checkbox.
      * @return Stay on the same page so return the same object.
      */
+    @Step("Toggle not contacted status checkbox")
     public AdminMatchNotificationPage toggleNotContactedStatusCheckbox()
     {
         clickOnElement(notContactedStatusCheckbox);
@@ -169,6 +177,7 @@ public class AdminMatchNotificationPage extends AdminSettingsPage
      * Sets the genotype slider to 0 by dragging all the way to the left.
      * @return Stay on the same page so return the same object.
      */
+    @Step("Set genotype slider filter to zero")
     public AdminMatchNotificationPage setGenotypeSliderToZero()
     {
         waitForElementToBePresent(matchesGenotypeScoreSlider);
@@ -187,6 +196,7 @@ public class AdminMatchNotificationPage extends AdminSettingsPage
      * Sets the average score to the minimum value by sliding the average score slider all the way to the left.
      * @return Stay on the same page so return the same object.
      */
+    @Step("Set the Average Score slider filter to the minimum value (hard left)")
     public AdminMatchNotificationPage setAverageScoreSliderToMinimum()
     {
         waitForElementToBePresent(matchesAverageScoreSlider);

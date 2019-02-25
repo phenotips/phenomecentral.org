@@ -12,6 +12,8 @@ import org.openqa.selenium.support.ui.Select;
 
 import org.phenotips.testcases.CommonPatientMeasurement;
 
+import io.qameta.allure.Step;
+
 /**
  * Represents the page reached when "Create... -> New patient" is clicked on the navbar
  * Ex. http://localhost:8083/edit/data/Pxxxxxxx (new patient ID)
@@ -199,6 +201,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * Hits the "Save and View Summary" button on the bottom left.
      * @return navigating to the view page containing patient's full details so a new object of that type
      */
+    @Step("Save and View Summary of patient form")
     public ViewPatientPage saveAndViewSummary()
     {
         clickOnElement(saveAndViewSummaryBtn);
@@ -215,6 +218,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @param n which is an integer between 1-5 representing the specified checkbox.
      * @return the same object as we are on the same page
      */
+    @Step("Toggle the {0}th consent box")
     public CreatePatientPage toggleNthConsentBox(int n)
     {
         switch (n) {
@@ -259,6 +263,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * 5 seconds for it to update the consent.
      * @return same object as we stay on the same page
      */
+    @Step("Click on 'Update' button for consent")
     public CreatePatientPage updateConsent()
     {
         clickOnElement(updateBtn);
@@ -276,6 +281,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @param identifer the string that should be entered into the "Identifer" field under Patient Information
      * @return stay on the same page so return the same instance of object
      */
+    @Step("Set the patient's identifier to: {0}")
     public CreatePatientPage setIdentifer(String identifer)
     {
         clickOnElement(identifierBox);
@@ -290,6 +296,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @param status is either "Alive" or "Deceased". Must be exact string otherwise defaults to "Alive".
      * @return stay on the same page so return same object.
      */
+    @Step("Set patient's life status to: {0}")
     public CreatePatientPage setLifeStatus(String status)
     {
         waitForElementToBePresent(lifeStatusDrp);
@@ -312,6 +319,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @param year the year as a String (1500s - 2019). Must exactly match the dropdown.
      * @return stay on the same page so return same object.
      */
+    @Step("Set the DOB for the patient to: {0} month and {1} year")
     public CreatePatientPage setDOB(String month, String year) {
         Select monthDrp;
         Select yearDrp;
@@ -340,6 +348,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @param year the year as a String (1500s - 2019). Must exactly match the dropdown.
      * @return stay on the same page so return same object.
      */
+    @Step("Set the date of death for the patient to: {0} month and {1} year")
     public CreatePatientPage setDateOfDeath(String month, String year) {
         Select monthDrp;
         Select yearDrp;
@@ -384,6 +393,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @param theGender is String representing gender radio button. Must be exact text.
      * @return the same page so the same object.
      */
+    @Step("Set the gender of the patient to: {0}")
     public CreatePatientPage setGender(String theGender) {
         waitForElementToBePresent(maleGenderBtn);
         switch (theGender) {
@@ -403,6 +413,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @param theOnset onset specified by radio button text, must match exactly.
      * @return Stay on the same page, return same object.
      */
+    @Step("Set the Age of Onset for the patient to: {0}")
     public CreatePatientPage setOnset(String theOnset) {
         waitForElementToBePresent(congenitalOnsentBtn);
         switch (theOnset) {
@@ -416,6 +427,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @return a List of Strings which represent the Age of Onset radio button labels in a
      * 'pre-order' traversal.
      */
+    @Step("Traverse through UI for Age of Onset")
     public List<String> cycleThroughAgeOfOnset() {
         List <String> loLabels =
             preOrderTraverseAndClick(ageOfOnsetBtns, By.cssSelector("ul > li.term-entry > input"),
@@ -431,6 +443,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @return a List of Strings which represent the Mode Of Inheritance checkbox labels in a
      * 'pre-order' traversal.
      */
+    @Step("Traverse through UI for the Mode of Inheritance")
     public List<String> cycleThroughModeOfInheritance() {
 
         return preOrderTraverseAndClick(modeOfInheritanceChkboxes,
@@ -444,6 +457,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @param neededText is the String to enter into the input box.
      * @return stay on the same page so return the same object.
      */
+    @Step("Set the indication for referral to: {0}")
     public CreatePatientPage setIndicationForReferral(String neededText)
     {
         clickAndTypeOnElement(indicationForReferralBox, neededText);
@@ -463,6 +477,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      *          the "Create a new family" radio option. Otherwise, this must be a valid existing family name.
      * @return we navigate to the Pedigree Editor page so return new instance of that.
      */
+    @Step("Navigate to the pedigree editor (from patient form) with family name: {0}")
     public PedigreeEditorPage navigateToPedigreeEditor(String familyName)
     {
         clickOnElement(editPedigreeBox);
@@ -487,6 +502,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * Traverses through the options for the health conditions found in family yes/no boxes.
      * @return a List of Strings which represent the health conditions found under "Family history and pedigree"
      */
+    @Step("Traverse through the familial health conditions UI")
     public List<String> cycleThroughFamilialHealthConditions() {
 
         return preOrderTraverseAndClick(By.cssSelector("div.family-info > div.fieldset"),
@@ -501,6 +517,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @param ethnicity is the ethncity to set. Requires this to be as close as possible to an exact match to suggestions dropdown.
      * @return Stay on the same page so return the same object.
      */
+    @Step("Set the {0} ethnicity to {1}")
     public CreatePatientPage setEthnicity(String maternity, String ethnicity) {
         if (maternity.equals("Paternal")) {
             clickAndTypeOnElement(paternalEthnicityBox, ethnicity);
@@ -518,6 +535,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @param note to type into the box. Any string. Will concatenate to what is there already.
      * @return Stay on the same page so return the same object.
      */
+    @Step("Set the Health Conditions in Family note box to: {0}")
     public CreatePatientPage setHealthConditionsFoundInFamily(String note) {
         clickAndTypeOnElement(healthConditionsFoundInFamily, note);
         return this;
@@ -537,6 +555,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @return a List of Strings which represent the health conditions found under the yes/no boxes of
      *          "Prenatal and perinatal history"
      */
+    @Step("Set the DOB for the patient to: {0} month and {1} year")
     public List<String> cycleThroughPrenatalHistory() {
 
         // TODO: Those selectors are used once, okay to leave them without variable?
@@ -569,6 +588,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * Requires that the "Prenatal and perinatal history" section be expanded
      * @return Stay on the same page so return the same object.
      */
+    @Step("Traverse through the prenatal options UI")
     public CreatePatientPage cycleThroughPrenatalOptions()
     {
         waitForElementToBePresent(APGARScore1MinDrp);
@@ -624,6 +644,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @param aMeasurement is a measurement object (instantiated struct) containing all the measurement fields to enter.
      * @return Stay on the same page so return the same object.
      */
+    @Step("Add a measurement to patient as: {0}")
     public CreatePatientPage addMeasurement(CommonPatientMeasurement aMeasurement)
     {
         clickOnElement(addMeasurementBtn);
@@ -657,6 +678,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @param year is the year as a String "1920" to current year (ex. "2019"). Must be exact.
      * @return Stay on the same page so return the same object.
      */
+    @Step("Change the measurement date to: {0} day {1} month and {2} year")
     public CreatePatientPage changeMeasurementDate(String day, String month, String year)
     {
         By calendarDayBtn = By.xpath("//div[contains(text(), '" + day + "')]");
@@ -687,6 +709,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * Requires: The "Measurement" section to be open and there be at least one measurmenet entry already there.
      * @return A Measurement object constructed with the measurement data gathered from the patient.
      */
+    @Step("Retrieve the patients measurement")
     public CommonPatientMeasurement getPatientMeasurement()
     {
         waitForElementToBePresent(weightBox);
@@ -745,6 +768,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @param phenotypes is a List of Strings specifying the phenotypes. You should be as exact as possible.
      * @return Stay on the same page so return the same object.
      */
+    @Step("Add the following list of phenotypes: {0}")
     public CreatePatientPage addPhenotypes(List<String> phenotypes)
     {
         for (String aPhenotype : phenotypes) {
@@ -760,6 +784,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @return A list of strings representing the labels found in the Edit Phenotype Details Box. This should not be
      *          empty.
      */
+    @Step("Traverse through the phenotype details UI section")
     public List<String> cycleThroughPhenotypeDetailsLabels()
     {
         waitForElementToBePresent(phenotypeDetailsLabels);
@@ -785,6 +810,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @param n is the nth phenotype WITHOUT any details added yet.
      * @return Stay on the same page so return same object.
      */
+    @Step("Add details to the {0}th phenotype")
     public CreatePatientPage addDetailsToNthPhenotype(int n) {
         waitForElementToBePresent(addPhenotypeDetailsBtns);
         List<WebElement> loPhenotypeAddBtnsPresent = superDriver.findElements(addPhenotypeDetailsBtns);
@@ -803,6 +829,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @return a List of Strings which represent the health conditions found under the yes/no boxes of
      *          "Clinical Symptoms and Physical Findings"
      */
+    @Step("Traverse (pre-order) through all phenotypes. Depth level limited to 1.")
     public List<String> cycleThroughAllPhenotypes() {
 
         By expandAllBtn = By.cssSelector("span.expand-all");
@@ -856,6 +883,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * Requires: The "Clinical symptoms and physical findings" section to be expanded
      * @return A (potentially empty) list of Strings representing the names of the phenotypes found.
      */
+    @Step("Retrieve all phenotypes")
     public List<String> getAllPhenotypes()
     {
         return getPresentPhenotypes(phenotypesSelectedLabels);
@@ -868,6 +896,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @return A, possibly empty, list of Strings representing phenotypes that have a lightning symbol beside them
      *          due to them being automatically added from data contained on a measurements entry.
      */
+    @Step("Retrieve phenotypes added automatically due to measurements (lightning icon beside them)")
     public List<String> getPhenotypesLightning()
     {
         return getPresentPhenotypes(phenotypesAutoSelectedByMeasurementLabels);
@@ -880,6 +909,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @return A List of Strings, possibly empty, of the phenotypes that were manually entered (do not have a lightning
      *          symbol in front of them).
      */
+    @Step("Retrieve phenotypes that were added manually (no lightning icon beside them)")
     public List<String> getPhenotypesNonLightning()
     {
         return getPresentPhenotypes(phenotypesManuallySelectedLabels);
@@ -903,6 +933,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      *                 "Familial mutation", and "Common mutations". Must be exact. Defaults to no strategy to specify.
      * @return Stay on the same page so we return the same object.
      */
+    @Step("Add gene: {0} with status: {1} and strategy: {2}")
     public CreatePatientPage addGene(String theGene, String geneStatus, String strategy) {
         forceScrollToElement(addGeneBtn);
         clickOnElement(addGeneBtn);
@@ -967,6 +998,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @param ORDO the name of the diagnosis, either the ID number or the name of the diagnosis.
      * @return Stay on the same page so return the same object.
      */
+    @Step("Add a clinical diagnosis with ORDO: {0}")
     public CreatePatientPage addClinicalDiagnosis(String ORDO)
     {
         clickAndTypeOnElement(clinicalDiagnosisBox, ORDO);
@@ -981,6 +1013,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @param OMIM is the name of the diagnosis or the OMIM number, as a String. Should be as exact as possible.
      * @return Stay on the same page so return the same object.
      */
+    @Step("Add final diagnosis with OMIM: {0}")
     public CreatePatientPage addFinalDiagnosis(String OMIM)
     {
         clickAndTypeOnElement(finalDiagnosisBox, OMIM);
@@ -993,6 +1026,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * Requires the "Diagnosis" section to be expanded.
      * @return Stay on the same page so return the same object.
      */
+    @Step("Toggle the 'Case Solved' checkbox")
     public CreatePatientPage toggleCaseSolved()
     {
         clickOnElement(caseSolvedCheckbox);
@@ -1004,6 +1038,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * Requires the "Diagnosis" section to be expanded.
      * @return A boolean, true for checked and false for unchecked.
      */
+    @Step("Determine if the case is solved")
     public boolean isCaseSolved()
     {
         waitForElementToBePresent(caseSolvedCheckbox);
@@ -1017,6 +1052,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @param ID is the pubMed ID (8 digit number) to add to the patient
      * @return Stay on the same page so return the same object.
      */
+    @Step("Add a PubMed ID of {0}")
     public CreatePatientPage addPubMedID(String ID)
     {
         clickOnElement(additionalCommentsBox); // Needed to defocus PubMed ID boxes.
@@ -1042,6 +1078,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @param n is int >= 1.
      * @return Stay on the same page so return the same object.
      */
+    @Step("Remove the {0}th PubMed ID")
     public CreatePatientPage removeNthPubMedID(int n)
     {
         waitForElementToBePresent(deletePubMDBtns);
@@ -1059,6 +1096,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @param note is a String representing the note you need to enter.
      * @return Stay on the same page so return the same object.
      */
+    @Step("Add resolution notes of {0}")
     public CreatePatientPage addResolutionNotes(String note)
     {
         clickAndTypeOnElement(resolutionNotesBox, note);
@@ -1071,6 +1109,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @param comment is the comment to add, as an arbitrary String
      * @return Stay on the same page so return the same object.
      */
+    @Step("Add additional comments in diagnosis section called {0}")
     public CreatePatientPage addAdditionalComments(String comment)
     {
         clickAndTypeOnElement(additionalCommentsBox, comment);
@@ -1085,6 +1124,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @return A boolean indicating validity, true for valid (summary of article shown) and false for invalid
      *          (the error message is displayed).
      */
+    @Step("Determine if {0}th PubMedID box has valid input")
     public boolean isNthPubMDBoxValid(int n)
     {
         final String invalidPubMedIDError = "Invalid Pubmed ID";
@@ -1105,6 +1145,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * Tries to modify each input box within the "Diagnosis" section. Adds something to each box.
      * @return Stay on the same page so return the same object.
      */
+    @Step("Traverse through the diagnosis section UI")
     public CreatePatientPage cycleThroughDiagnosisBoxes()
     {
         addClinicalDiagnosis("Allergic bronchopulmonary aspergillosis");
@@ -1134,6 +1175,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @param n is int >= 1, indicating the Nth clinical diagnosis checkbox to toggle.
      * @return Stay on the same page so return the same object.
      */
+    @Step("Toggle the {0} clinical diagnosis checkbox.")
     public CreatePatientPage toggleNthClinicalDiagnosisCheckbox(int n)
     {
         waitForElementToBePresent(clinicalDiagnosisCheckboxes);
@@ -1148,6 +1190,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @param n is integer >= 1, indicating the Nth Final Diagnosis checkbox to toggle.
      * @return Stay on the same page so return the same object.
      */
+    @Step("Toggle the {0}th final diagnosis checkbox")
     public CreatePatientPage toggleNthFinalDiagnosisCheckbox(int n)
     {
         waitForElementToBePresent(finalDiagnosisCheckboxes);
@@ -1163,6 +1206,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * Requires the "Diagnosis" section to be expanded.
      * @return bool indicating the presence of those two boxes. True for present, and false if not present.
      */
+    @Step("Determine if the PubMed and Resolution boxes are clickable")
     public boolean isPubMedAndResolutionBoxesClickable()
     {
         return (isElementClickable(pubMDIDBoxes) && (isElementClickable(resolutionNotesBox)));

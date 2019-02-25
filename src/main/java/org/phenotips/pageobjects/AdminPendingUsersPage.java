@@ -6,6 +6,8 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import io.qameta.allure.Step;
+
 /**
  * This class corresponds to the admin's Pending Users page, where users can be approved for
  * access to PC. I.e. http://localhost:8083/admin/XWiki/XWikiPreferences?editor=globaladmin&section=PendingUsers
@@ -26,6 +28,7 @@ public class AdminPendingUsersPage extends AdminSettingsPage
      * @param n is the Nth user in the table, should be >= 1.
      * @return Stay on the same page so return the same object.
      */
+    @Step("Approve the {0}th pending user on the list")
     public AdminPendingUsersPage approveNthPendingUser(int n)
     {
         waitForElementToBePresent(approveUserBtns); // Should wait for first button to appear.
@@ -43,6 +46,7 @@ public class AdminPendingUsersPage extends AdminSettingsPage
      * @param userName is username of pending user as a String.
      * @return Stay on the same page so return the same object.
      */
+    @Step("Approve pending user with username: {0}")
     public AdminPendingUsersPage approvePendingUser(String userName)
     {
         waitForElementToBePresent(approveUserBtns);

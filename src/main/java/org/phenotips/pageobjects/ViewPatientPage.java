@@ -5,6 +5,8 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import io.qameta.allure.Step;
+
 /**
  * Represents viewing a specifc patient's full information page.
  * Ex. http://localhost:8083/P0000005
@@ -41,6 +43,7 @@ public class ViewPatientPage extends CommonInfoSelectors
      * at the top left corner of the page.
      * @return a String in the form of Pxxxxxxx
      */
+    @Step("Retrieve the patient ID")
     public String getPatientID()
     {
         waitForElementToBePresent(patientID);
@@ -51,6 +54,7 @@ public class ViewPatientPage extends CommonInfoSelectors
      * Clicks on the "Edit" link to edit the patient
      * @return new patient editor page object as we navigate to the patient editing page
      */
+    @Step("Edit the currently viewed patient")
     public CreatePatientPage editThisPatient()
     {
         clickOnElement(editBtn);
@@ -61,6 +65,7 @@ public class ViewPatientPage extends CommonInfoSelectors
      * Retrieves all the gene names found in the "Genotype information" section. The order of the table is preserved.
      * @return A, possibly empty, list of strings containing the gene names found. This should not have empty strings (i.e. "").
      */
+    @Step("Retrieve the gene names")
     public List<String> getGeneNames()
     {
         return getLabelsFromList(geneNames);
@@ -72,6 +77,7 @@ public class ViewPatientPage extends CommonInfoSelectors
      * @return A, possibly empty, list of strings containing the gene statuses found (the entire column).
      *          This might have empty strings (i.e. "") for genes with unspecified status.
      */
+    @Step("Retrieve gene statuses")
     public List<String> getGeneStatus()
     {
         return getLabelsFromList(geneStatuses);
@@ -83,6 +89,7 @@ public class ViewPatientPage extends CommonInfoSelectors
      * @return A, possibly empty, list of strings containing the gene strategies found.
      *          This might have empty strings (i.e. "") for genes with unspecified strategy.
      */
+    @Step("Retrieve gene strategies")
     public List<String> getGeneStrategies()
     {
         return getLabelsFromList(geneStrategies);
@@ -94,6 +101,7 @@ public class ViewPatientPage extends CommonInfoSelectors
      * @return A, possibly empty, list of strings containing the gene strategies found.
      *          This might have empty strings (i.e. "") for genes with no comments.
      */
+    @Step("Retrieve gene comments")
     public List<String> getGeneComments()
     {
         return getLabelsFromList(geneComments);
@@ -105,6 +113,7 @@ public class ViewPatientPage extends CommonInfoSelectors
      * @return A possibly empty, list of Strings representing the ORDO names that were found under
      *          Clinical Diagnosis.
      */
+    @Step("Retrieve the clinical diagnosis names")
     public List<String> getClinicalDiagnosisNames() { return getLabelsFromList(clinicalDiagnosisNames); }
 
     /**
@@ -113,6 +122,7 @@ public class ViewPatientPage extends CommonInfoSelectors
      * @return A possibly empty, list of Strings representing the OMIM names that were found under
      *          Final Diagnosis.
      */
+    @Step("Retrieve the final diagnosis names")
     public List<String> getFinalDiagnosisNames() { return getLabelsFromList(finalDiagnosisNames); }
 
     /**
@@ -120,6 +130,7 @@ public class ViewPatientPage extends CommonInfoSelectors
      * @return A String containing the comment under Additional Comments. If there is no Additional Comments
      *          section, will return an empty String ("").
      */
+    @Step("Retrieve any additional comments")
     public String getAdditionalComments()
     {
         if (isElementPresent(additionalCommentsText)) {
@@ -135,6 +146,7 @@ public class ViewPatientPage extends CommonInfoSelectors
      * "Diagnosis" section. These strings will be in the form of "PMID: 30700910".
      * @return A, possibly empty, list of Strings containing the PMIDs of entered cases.
      */
+    @Step("Get existing PubMedIDs")
     public List<String> getExistingPubMedIDs()
     {
         return getLabelsFromList(pubMedIDsPresent);
@@ -145,6 +157,7 @@ public class ViewPatientPage extends CommonInfoSelectors
      * If there is no note and the element is not visible, will return empty String ("").
      * @return A String representing the contents of what was entered and saved in the "Resolution Notes" box.
      */
+    @Step("Retrieve the resolution notes for the patient")
     public String getResolutionNotes()
     {
         if (isElementPresent(resolutionNotesText)) {
