@@ -1,0 +1,20 @@
+<suite name="DemoTests">
+  <test name="TwoTests">
+    <classes>
+
+      <class name="org.phenotips.endtoendtests.SetupUsers">
+        <methods>
+          <include name="setEmailPort" />
+          <include name="setupAutomationUsers" />
+        </methods>
+      </class>
+
+      <class name="org.phenotips.endtoendtests.testcases.PatientCreationOptionsTests" >
+        <methods>
+          <include name="cycleThroughInfoOptions" />
+        </methods>
+      </class>
+
+    </classes>
+  </test>
+</suite>
