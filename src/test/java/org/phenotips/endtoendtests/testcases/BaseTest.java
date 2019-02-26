@@ -28,6 +28,7 @@ import org.testng.annotations.AfterSuite;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.Allure;
+import io.qameta.allure.Step;
 
 /**
  * An abstract test. All tests should inherit this class.
@@ -108,6 +109,62 @@ public abstract class BaseTest
     }
 
     /**
+     * Captures a screenshot of the browser viewport as a PNG to the target/screenshot folder. This is called
+     * by the AfterMethod in the case of a test failure.
+     * @param testMethod The method name of the test that failed, as a String. Will be used to name the file.
+     */
+    @Step("Taking screenshot of {0} on url {1}") // TODO: This is a hacky way of passing a URL as information to failure
+    private void captureScreenshot(String testMethod, String URL) {
+        // Screenshot mechanism
+        // Cast webDriver over to TakeScreenshot. Call getScreenshotAs method to create image file
+        File srcFile = ((TakesScreenshot)theDriver).getScreenshotAs(OutputType.FILE);
+
+        LocalDateTime dateTime = ZonedDateTime.now().toLocalDateTime();
+
+        String scrnFileName = "target/screenshots/" + testMethod + "_" + dateTime + ".png";
+
+        // Save screenshot in target/screenshots folder with the methodName of failed test and timestamp.
+        File destFile = new File(scrnFileName);
+
+        System.out.println("Taking screenshot of failed test...");
+
+        // Copy over to target/screenshots folder
+        try {
+            FileUtils.copyFile(srcFile, destFile);
+        } catch (IOException e) {
+            System.out.println("Something went wrong copying over screenshot to target/screenshots: " + e);
+        }
+
+        // Add screenshot to Allure Report
+        Path content = Paths.get(scrnFileName);
+        try (InputStream is = Files.newInputStream(content)) {
+            Allure.addAttachment("Page Screenshot: " + testMethod, is);
+        } catch (IOException e) {
+            System.out.println("Something went wrong giving screenshot to Allure: " + e);
+        }
+    }
+
+    private void cleanupBrowserState() {
+        HomePage tempHomePage = new HomePage(theDriver);
+
+        // Navigate to a login page. Might trigger a warning modal for unsaved edits.
+        // Ensure that any open alert dialogue is closed before continuing.
+        // Navigating away and taking care of potential unsaved changes alert allows the next test
+        // to be run.
+        // TODO: This is bad logic. Maybe dump the driver and restart a new instance.
+        //          It might not even get to the home page.
+        try {
+            tempHomePage.navigateToLoginPage();
+            System.out.println("Test failure, navigate to login page. There is no unsaved changes warning.");
+        } catch (UnhandledAlertException e) {
+            theDriver.switchTo().alert().accept();
+            theDriver.switchTo().defaultContent();
+            tempHomePage.navigateToLoginPage();
+            System.out.println("Test failure, navigate to login page. Closed an unsaved changes warning dialogue");
+        }
+    }
+
+    /**
      * Runs after every test method. In the case that TestNG's listener reports a failure, will take a
      * screenshot and copy over to targets/screenshots directory as a .png with a methodName and timeStamp
      * This will also navigate to a blank page taking care of any "Unsaved Changes" warning box so that the next test
@@ -116,62 +173,22 @@ public abstract class BaseTest
      *        Check this passed info for failure.
      */
     @AfterMethod
-    public void onTestFailure(ITestResult testResult)
+    public void onTestEnd(ITestResult testResult)
     {
-        HomePage tempHomePage = new HomePage(theDriver);
+        String testMethod = testResult.getMethod().getMethodName();
 
         if (ITestResult.FAILURE == testResult.getStatus()) {
+            System.out.println("Test:" + testMethod + " has failed. Taking a screenshot and cleaning up...");
+            captureScreenshot(testMethod, theDriver.getCurrentUrl());
+            cleanupBrowserState();
+        }
 
-            // Screenshot mechanism
-            // Cast webDriver over to TakeScreenshot. Call getScreenshotAs method to create image file
-            File srcFile = ((TakesScreenshot)theDriver).getScreenshotAs(OutputType.FILE);
-
-            LocalDateTime dateTime = ZonedDateTime.now().toLocalDateTime();
-
-            String scrnFileName = "target/screenshots/" + testResult.getMethod().getMethodName() + " " + dateTime + ".png";
-
-            // Save screenshot in target/screenshots folder with the methodName of failed test and timestamp.
-            File destFile = new File(scrnFileName);
-
-            System.out.println("Test failed. Taking screenshot...");
-
-            // Copy over to target/screenshots folder
-            try {
-                FileUtils.copyFile(srcFile, destFile);
-            } catch (IOException e) {
-                System.out.println("Something went wrong copying over screenshot: " + e);
-            }
-
-            // Add screenshot to Allure Report
-//            Allure.addAttachment("Test fail screenshot", "My attachment content");
-            Path content = Paths.get(scrnFileName);
-            try (InputStream is = Files.newInputStream(content)) {
-                Allure.addAttachment("Page Screenshot: " + testResult.getMethod().getMethodName(), is);
-            } catch (IOException e) {
-                System.out.println("Something went wrong giving screenshot to Allure: " + e);
-            }
-
-
-            // Navigate to a login page. Might trigger a warning modal for unsaved edits.
-            // Ensure that any open alert dialogue is closed before continuing.
-            // Navigating away and taking care of potential unsaved changes alert allows the next test
-            // to be run.
-            // TODO: This is bad logic. Maybe dump the driver and restart a new instance.
-            //          It might not even get to the home page.
-            try {
-                tempHomePage.navigateToLoginPage();
-                System.out.println("Test failure, navigate to login page. There is no unsaved changes warning.");
-            } catch (UnhandledAlertException e) {
-                theDriver.switchTo().alert().accept();
-                theDriver.switchTo().defaultContent();
-                tempHomePage.navigateToLoginPage();
-                System.out.println("Test failure, navigate to login page. Closed an unsaved changes warning dialogue");
-            }
-
+        else if (ITestResult.SKIP == testResult.getStatus()) {
+            System.out.println("Test:" + testMethod + " was skipped, possibly due to unfinished dependent tests, system error, or unable to reach Selenium. No screenshot. Moving on.");
         }
 
         else {
-            System.out.println("Method (test) suceeded or skipped. No screenshot. Moving on.");
+            System.out.println("Test:" + testMethod + " has succeeded. No screenshot. Moving on.");
         }
 
     }

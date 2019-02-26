@@ -5,6 +5,11 @@ import org.testng.annotations.Test;
 import org.phenotips.endtoendtests.pageobjects.HomePage;
 import org.phenotips.endtoendtests.testcases.BaseTest;
 
+/**
+ * This class sets up the state of the PC instance for testing purposes. Notably, it creates the two
+ * main users that all other tests will be using, along with setting an outgoing email port corresponding to
+ * the one that the fake SMTP service is listening to.
+ */
 public class SetupUsers extends BaseTest
 {
     HomePage aHomePage = new HomePage(theDriver);
