@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
@@ -20,11 +19,10 @@ import io.qameta.allure.Step;
 */
 public class CreatePatientPage extends CommonInfoSelectors
 {
-    /*******************************************
-     * "Patient Information" Section - Selectors
-     *******************************************/
 
-    private final By patientIDDiv = By.id("document-title");
+    /************************************************************
+     * "Patient Consent" (Consents Granted) Section - Selectors
+     ************************************************************/
 
     private final By realPatientConsentBox = By.id("real-consent-checkbox");
 
@@ -36,9 +34,11 @@ public class CreatePatientPage extends CommonInfoSelectors
 
     private final By matchingConsentBox = By.id("matching-consent-checkbox");
 
-    private final By patientConsentUpdateBtn = By.id("patient-consent-update");
+    private final By patientConsentUpdateBtn = By.cssSelector("#patient-consent-update > a:nth-child(1)");
 
-    // Add in selectors for text fields here
+    /*********************************************
+     * "Patient Information" Section - Selectors
+     *********************************************/
 
     private final By identifierBox = By.id("PhenoTips.PatientClass_0_external_id");
 
@@ -67,8 +67,6 @@ public class CreatePatientPage extends CommonInfoSelectors
     private final By modeOfInheritanceChkboxes = By.cssSelector("div.global_mode_of_inheritance > div > div > ul > li.term-entry");
 
     private final By indicationForReferralBox = By.id("PhenoTips.PatientClass_0_indication_for_referral");
-
-    private final By updateBtn = By.cssSelector("#patient-consent-update > a:nth-child(1)");
 
     /*******************************************************
      * "Family history and pedigree" Section - Selectors
@@ -109,8 +107,6 @@ public class CreatePatientPage extends CommonInfoSelectors
     private final By measurementYearDrp = By.cssSelector("div.calendar_date_select select.year");
     private final By measurementMonthDrp = By.cssSelector("div.calendar_date_select select.month");
     private final By todayCalendarLink = By.linkText("Today");
-    private final By MondayOfTheThirdWeek = By.cssSelector(
-        "#body > div.calendar_date_select > div.cds_part.cds_body > table > tbody > tr.row_2 > td:nth-child(2) > div");
     private final By measurementDateBoxes = By.id("PhenoTips.MeasurementsClass_0_date");
     private final By weightBox = By.id("PhenoTips.MeasurementsClass_0_weight");
     private final By heightBox = By.id("PhenoTips.MeasurementsClass_0_height");
@@ -136,6 +132,8 @@ public class CreatePatientPage extends CommonInfoSelectors
      ******************************************************************************/
 
     private final By phenotypeSearchBox = By.id("quick-phenotype-search");
+    // Xwiki suggestion dialogue is overlayed ontop of entire page document rather than underneath
+    // the phenotype section div. Hence the vague selector.
     private final By firstPhenotypeSuggestion = By.cssSelector("li.xitem > div");
     private final By addPhenotypeDetailsBtns = By.cssSelector("button.add");
     private final By editPhenotypeDetailsBtns = By.cssSelector("button.edit");
@@ -147,7 +145,6 @@ public class CreatePatientPage extends CommonInfoSelectors
     //   by measurement information.
     private final By phenotypesAutoSelectedByMeasurementLabels = By.xpath("//div[@class='summary-item' and span[@class='fa fa-bolt']]/label[@class='yes']");
     private final By phenotypesManuallySelectedLabels = By.xpath("//div[@class='summary-item' and not(span[@class='fa fa-bolt'])]/label[@class='yes']");
-//    private final By phenotypesSelectedDivs = By.cssSelector("div.summary-item");
 
     /*******************************************************
      * "Genotype information" Section - Selectors
@@ -185,8 +182,27 @@ public class CreatePatientPage extends CommonInfoSelectors
     private final By pubMDIDCheckStatus = By.cssSelector("div.solved__pubmed_id > div.solved__pubmed_id > div > ol > li > div");
     private final By resolutionNotesBox = By.id("PhenoTips.PatientClass_0_solved__notes");
 
+    /**************************************************
+     * Common Tree Traversal Selectors and Strings
+     **************************************************/
+    // For tree traversals
+    private final By ageOfOnsetAndModeInheritanceChildBtn = By.cssSelector("ul > li.term-entry > input");
 
-    private final By saveAndViewSummaryBtn = By.cssSelector("span.buttonwrapper:nth-child(3) > input:nth-child(1)");
+    private final By ageOfOnsetAndModeInheritanceChildLabels = By.cssSelector("ul > li.term-entry > label");
+
+    private final String yesBtnSelectorString = "div.displayed-value > span.yes-no-picker > label.yes";
+
+    private final String labelSelectorString = "div.displayed-value > label.yes-no-picker-label";
+
+    private final By expandToolSpan = By.cssSelector("span[class=expand-tool]");
+
+    // Common Selectors for page
+
+    private final By saveAndViewSummaryBtn = By.cssSelector("div.bottombuttons input[value='Save and view summary']");
+
+    private final By quickSaveBtn = By.cssSelector("div.bottombuttons input[value='Quick save']");
+
+    private final By cancelChangesSinceSaveBtn = By.cssSelector("div.bottombuttons input[value='Cancel changes since last save']");
 
     public CreatePatientPage(WebDriver aDriver)
     {
@@ -205,6 +221,28 @@ public class CreatePatientPage extends CommonInfoSelectors
     public ViewPatientPage saveAndViewSummary()
     {
         clickOnElement(saveAndViewSummaryBtn);
+        return new ViewPatientPage(superDriver);
+    }
+
+    /**
+     * Hits the "Quick Save" button on the bottom left.
+     * @return stay on the same page so return the same object
+     */
+    @Step("Quick Save of patient form")
+    public CreatePatientPage quickSave()
+    {
+        clickOnElement(quickSaveBtn);
+        return this;
+    }
+
+    /**
+     * Hits the "Cancel changes since last save" button on the bottom right.
+     * @return navigating to the view page containing patient's full details so a new object of that type
+     */
+    @Step("Cancel changes on patient form")
+    public ViewPatientPage cancelChanges()
+    {
+        clickOnElement(cancelChangesSinceSaveBtn);
         return new ViewPatientPage(superDriver);
     }
 
@@ -259,15 +297,14 @@ public class CreatePatientPage extends CommonInfoSelectors
     }
 
     /**
-     * Clicks on the "Update" button under the "Consents granted" section and then waits
-     * 5 seconds for it to update the consent.
+     * Clicks on the "Update" button under the "Consents granted" section. Waits 5 seconds for consent to update.
      * @return same object as we stay on the same page
      */
     @Step("Click on 'Update' button for consent")
     public CreatePatientPage updateConsent()
     {
-        clickOnElement(updateBtn);
-        waitForElementToBePresent(identifierBox); // Wait until the identifier box appears
+        clickOnElement(patientConsentUpdateBtn);
+        unconditionalWaitNs(5); // No element to wait on as the state of the consents might not have changed.
         return this;
     }
 
@@ -293,7 +330,8 @@ public class CreatePatientPage extends CommonInfoSelectors
 
     /**
      * Sets the Life Status dropdown of the patient.
-     * @param status is either "Alive" or "Deceased". Must be exact string otherwise defaults to "Alive".
+     * @param status is either "Alive" or "Deceased". Must be exact string otherwise
+     *          Selenium throws NoSuchElementException exception.
      * @return stay on the same page so return same object.
      */
     @Step("Set patient's life status to: {0}")
@@ -302,19 +340,14 @@ public class CreatePatientPage extends CommonInfoSelectors
         waitForElementToBePresent(lifeStatusDrp);
         Select statusDrp = new Select(superDriver.findElement(lifeStatusDrp));
 
-        try {
-            statusDrp.selectByVisibleText(status);
-        } catch (NoSuchElementException e) {
-            System.out.println("No such life status. Defaulting to Alive.");
-            statusDrp.selectByVisibleText("Alive");
-        }
+        statusDrp.selectByVisibleText(status);
 
         return this;
     }
 
     /**
      * Sets the Date of Birth of the patient under Patient Information.
-     * Will safely handle invalid strings by defaulting to 01/2019.
+     * In case of invalid params or unable to find selection, Selenium throws NoSuchElementException exception.
      * @param month the Month as a String (01 - 12). Must exactly match the dropdown.
      * @param year the year as a String (1500s - 2019). Must exactly match the dropdown.
      * @return stay on the same page so return same object.
@@ -328,21 +361,15 @@ public class CreatePatientPage extends CommonInfoSelectors
         monthDrp = new Select(superDriver.findElement(dobMonthDrp));
         yearDrp = new Select(superDriver.findElement(dobYearDrp));
 
-        try {
-            monthDrp.selectByVisibleText(month);
-            yearDrp.selectByVisibleText(year);
-        } catch (NoSuchElementException e) {
-            System.out.println("Invalid DOB passed. Default set to 01/2019");
-            monthDrp.selectByVisibleText("01");
-            yearDrp.selectByVisibleText("2019");
-        }
+        monthDrp.selectByVisibleText(month);
+        yearDrp.selectByVisibleText(year);
 
         return this;
     }
 
     /**
      * Sets the Date of Death of the patient under Patient Information.
-     * Will safely handle invalid strings by defaulting to 01/2018.
+     * In case of invalid params or unable to find selection, Selenium throws NoSuchElementException exception.
      * Requires: Life Status set to "Deceased" so that Date of Death dropdowns are visible.
      * @param month the Month as a String (01 - 12). Must exactly match the dropdown.
      * @param year the year as a String (1500s - 2019). Must exactly match the dropdown.
@@ -357,14 +384,8 @@ public class CreatePatientPage extends CommonInfoSelectors
         monthDrp = new Select(superDriver.findElement(doDeathMonthDrp));
         yearDrp = new Select(superDriver.findElement(doDeathYearDrp));
 
-        try {
-            monthDrp.selectByVisibleText(month);
-            yearDrp.selectByVisibleText(year);
-        } catch (NoSuchElementException e) {
-            System.out.println("Invalid date of death passed. Default set to 01/2018");
-            monthDrp.selectByVisibleText("01");
-            yearDrp.selectByVisibleText("2018");
-        }
+        monthDrp.selectByVisibleText(month);
+        yearDrp.selectByVisibleText(year);
 
         return this;
     }
@@ -377,12 +398,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      */
     public CreatePatientPage expandSection(SECTIONS theSection) {
         forceScrollToElement(sectionMap.get(theSection));
-        /*
-        WebElement element = superDriver.findElement(sectionMap.get(theSection));
-        Actions actions = new Actions(superDriver);
-        actions.moveToElement(element);
-        actions.perform();
-        */
+
         clickOnElement(sectionMap.get(theSection));
         return this;
     }
@@ -408,7 +424,7 @@ public class CreatePatientPage extends CommonInfoSelectors
 
     /**
      * Sets the Age of Onset under patient information.
-     * Currently, only works for congential.
+     * Currently, only works for congential onset.
      * Assumes that Patient Information section is expanded (selectors in that section visible).
      * @param theOnset onset specified by radio button text, must match exactly.
      * @return Stay on the same page, return same object.
@@ -416,6 +432,7 @@ public class CreatePatientPage extends CommonInfoSelectors
     @Step("Set the Age of Onset for the patient to: {0}")
     public CreatePatientPage setOnset(String theOnset) {
         waitForElementToBePresent(congenitalOnsentBtn);
+
         switch (theOnset) {
             default: clickOnElement(congenitalOnsentBtn); break;
         }
@@ -429,9 +446,11 @@ public class CreatePatientPage extends CommonInfoSelectors
      */
     @Step("Traverse through UI for Age of Onset")
     public List<String> cycleThroughAgeOfOnset() {
+
         List <String> loLabels =
-            preOrderTraverseAndClick(ageOfOnsetBtns, By.cssSelector("ul > li.term-entry > input"),
-                By.cssSelector("ul > li.term-entry > label"));
+            preOrderTraverseAndClick(ageOfOnsetBtns,
+                ageOfOnsetAndModeInheritanceChildBtn,
+                ageOfOnsetAndModeInheritanceChildLabels);
 
         clickOnElement(congenitalOnsentBtn);
 
@@ -447,8 +466,8 @@ public class CreatePatientPage extends CommonInfoSelectors
     public List<String> cycleThroughModeOfInheritance() {
 
         return preOrderTraverseAndClick(modeOfInheritanceChkboxes,
-            By.cssSelector("ul > li.term-entry > input"),
-            By.cssSelector("ul > li.term-entry > label"));
+            ageOfOnsetAndModeInheritanceChildBtn,
+            ageOfOnsetAndModeInheritanceChildLabels);
     }
 
     /**
@@ -506,8 +525,8 @@ public class CreatePatientPage extends CommonInfoSelectors
     public List<String> cycleThroughFamilialHealthConditions() {
 
         return preOrderTraverseAndClick(By.cssSelector("div.family-info > div.fieldset"),
-            By.cssSelector("div.displayed-value > span.yes-no-picker > label.yes"),
-            By.cssSelector("div.displayed-value > label.yes-no-picker-label"));
+            By.cssSelector(yesBtnSelectorString),
+            By.cssSelector(labelSelectorString));
     }
 
     /**
@@ -558,16 +577,18 @@ public class CreatePatientPage extends CommonInfoSelectors
     @Step("Set the DOB for the patient to: {0} month and {1} year")
     public List<String> cycleThroughPrenatalHistory() {
 
-        // TODO: Those selectors are used once, okay to leave them without variable?
-        By expandToolSpan = By.cssSelector("span[class=expand-tool]");
-
         List<String> loLabels = new ArrayList<>();
 
+        // It is difficult to specify more unique (readable) selectors for the latter two arguments as they will be searched
+        // for as children of the first argument's selector. We have similar selectors in cycleThroughAllPhenotypes()
+        // but they are a bit different due to how the tree structure is arranged.
+        // We add the strings together instead of ByChained becaues ByChained is itself a recursive tree traversal that
+        // will go deep and ignore the ">" to link the chain which means the "immediate child" (depth 1).
         List<String> loUncategorizedLabels = preOrderTraverseAndClick(By.cssSelector("div.prenatal-info"),
-            By.cssSelector("div.fieldset > div.displayed-value > span.yes-no-picker > label.yes"),
-            By.cssSelector("div.fieldset > div.displayed-value > label.yes-no-picker-label"));
+            By.cssSelector("div.fieldset > " + yesBtnSelectorString),
+            By.cssSelector("div.fieldset > " + labelSelectorString));
 
-//      Expand all dropdowns, lets them load first
+//      Expand the dropdowns for the yes/no options that are categorized into sections, lets them load first
         preOrderTraverseAndClick(
             By.cssSelector("div.prenatal-info > div > div > div"), expandToolSpan, expandToolSpan);
 
@@ -637,9 +658,11 @@ public class CreatePatientPage extends CommonInfoSelectors
      * "Measurements" Section - Methods
      *****************************************/
 
+    // TODO: Methods for this section only support one measurement entry right now. I don't have test cases for
+    //       multiple measurement entries
+
     /**
      * Adds a new entry of measurement data to the patient under the "Measurements" section.
-     * TODO: Check that it truncates floats within the measurements object to something that can be input to the box.
      * Requires: The "Measurements" section to already be expanded.
      * @param aMeasurement is a measurement object (instantiated struct) containing all the measurement fields to enter.
      * @return Stay on the same page so return the same object.
@@ -671,8 +694,8 @@ public class CreatePatientPage extends CommonInfoSelectors
     }
 
     /**
-     * Changes the date of the first measurement to the specified month and year. Defaults to January 2018
-     * upon invalid input.
+     * Changes the date of the first measurement to the specified month and year and date. Must be valid
+     * date otherwise Selenium will throw an ElementNotFound exception.
      * Requires: The measurement section to be open and at least one measurement entry to be present.
      * @param month is the month as a String "January" to "December". Must be exact.
      * @param year is the year as a String "1920" to current year (ex. "2019"). Must be exact.
@@ -689,14 +712,8 @@ public class CreatePatientPage extends CommonInfoSelectors
         Select monthDrp = new Select(superDriver.findElement(measurementMonthDrp));
         Select yearDrp = new Select(superDriver.findElement(measurementYearDrp));
 
-        try {
-            monthDrp.selectByVisibleText(month);
-            yearDrp.selectByVisibleText(year);
-        } catch (NoSuchElementException e) {
-            System.out.println("Invalid dropdown month or year passed. Defaulting to January 2018");
-            monthDrp.selectByVisibleText("January");
-            yearDrp.selectByVisibleText("2018");
-        }
+        monthDrp.selectByVisibleText(month);
+        yearDrp.selectByVisibleText(year);
 
         clickOnElement(calendarDayBtn);
         waitForElementToBeGone(measurementMonthDrp);
@@ -714,33 +731,44 @@ public class CreatePatientPage extends CommonInfoSelectors
     {
         waitForElementToBePresent(weightBox);
 
-        float weight = Float.parseFloat(superDriver.findElement(weightBox).getAttribute("value"));
-        float armSpan = Float.parseFloat(superDriver.findElement(armSpanBox).getAttribute("value"));
-        float headCircumference = Float.parseFloat(superDriver.findElement(headCircumferenceBox).getAttribute("value"));
-        float outerCanthalDistance = Float.parseFloat(superDriver.findElement(outherCanthalDistanceBox).getAttribute("value"));
-        float leftHandLength = Float.parseFloat(superDriver.findElement(leftHandLengthBox).getAttribute("value"));
-        float rightHandLength = Float.parseFloat(superDriver.findElement(rightHandLengthBox).getAttribute("value"));
+        float weight = getSpecificMeasurement(weightBox);
+        float armSpan = getSpecificMeasurement(armSpanBox);
+        float headCircumference = getSpecificMeasurement(headCircumferenceBox);
+        float outerCanthalDistance = getSpecificMeasurement(outherCanthalDistanceBox);
+        float leftHandLength = getSpecificMeasurement(leftHandLengthBox);
+        float rightHandLength = getSpecificMeasurement(rightHandLengthBox);
 
-        float height = Float.parseFloat(superDriver.findElement(heightBox).getAttribute("value"));
-        float sittingHeight = Float.parseFloat(superDriver.findElement(sittingHeightBox).getAttribute("value"));
-        float philtrumLength = Float.parseFloat(superDriver.findElement(philtrumLengthBox).getAttribute("value"));
-        float inntercanthalDistance = Float.parseFloat(superDriver.findElement(innterCanthalDistanceBox).getAttribute("value"));
-        float leftPalmLength = Float.parseFloat(superDriver.findElement(leftPalmLengthBox).getAttribute("value"));
-        float rightPalmLength = Float.parseFloat(superDriver.findElement(rightPalmLengthBox).getAttribute("value"));
+        float height = getSpecificMeasurement(heightBox);
+        float sittingHeight = getSpecificMeasurement(sittingHeightBox);
+        float philtrumLength = getSpecificMeasurement(philtrumLengthBox);
+        float inntercanthalDistance = getSpecificMeasurement(innterCanthalDistanceBox);
+        float leftPalmLength = getSpecificMeasurement(leftPalmLengthBox);
+        float rightPalmLength = getSpecificMeasurement(rightPalmLengthBox);
 
-        float leftEarLength = Float.parseFloat(superDriver.findElement(leftEarLengthBox).getAttribute("value"));
-        float palpebralFissureLength = Float.parseFloat(superDriver.findElement(palpebralFissureLengthBox).getAttribute("value"));
-        float leftFootLength = Float.parseFloat(superDriver.findElement(leftFootLengthBox).getAttribute("value"));
-        float rightFootLength = Float.parseFloat(superDriver.findElement(rightFootLengthBox).getAttribute("value"));
+        float leftEarLength = getSpecificMeasurement(leftEarLengthBox);
+        float palpebralFissureLength = getSpecificMeasurement(palpebralFissureLengthBox);
+        float leftFootLength = getSpecificMeasurement(leftFootLengthBox);
+        float rightFootLength = getSpecificMeasurement(rightFootLengthBox);
 
-        float rightEarLength = Float.parseFloat(superDriver.findElement(rightEarLengthBox).getAttribute("value"));
-        float interpupilaryDistance = Float.parseFloat(superDriver.findElement(interpupilaryDistanceBox).getAttribute("value"));
+        float rightEarLength = getSpecificMeasurement(rightEarLengthBox);
+        float interpupilaryDistance = getSpecificMeasurement(interpupilaryDistanceBox);
 
         return new CommonPatientMeasurement(
             weight, armSpan, headCircumference, outerCanthalDistance, leftHandLength, rightHandLength,
             height, sittingHeight, philtrumLength, inntercanthalDistance, leftPalmLength, rightPalmLength,
             leftEarLength, palpebralFissureLength, leftFootLength, rightFootLength,
             rightEarLength, interpupilaryDistance);
+    }
+
+    /**
+     * Retrieves the measurement value within the specified measurement box as a float.
+     * This is a helper function for getPatientMeasurement()
+     * @param measurementBoxSelector Selector of the specific box
+     * @return The float value of what was in the measurement box. If it were empty, returns 0.
+     */
+    private float getSpecificMeasurement(By measurementBoxSelector)
+    {
+        return Float.parseFloat(superDriver.findElement(measurementBoxSelector).getAttribute("value"));
     }
 
 
@@ -794,6 +822,7 @@ public class CreatePatientPage extends CommonInfoSelectors
 
         //Expand all first
         for (WebElement aCaret : loExpandCarets) {
+            // Should find this text, rather than rely on expansion selector due to PT-3095
             if (aCaret.getText().equals("►")) {
                 clickOnElement(aCaret);
             }
@@ -822,7 +851,9 @@ public class CreatePatientPage extends CommonInfoSelectors
     }
 
     /**
-     * Traverses through the options for phenotypes in the Clinical Symptoms and Physical Findings Section
+     * Traverses through the options for phenotypes in the Clinical Symptoms and Physical Findings Section. This
+     * specific traversal only goes a depth level of 1 as the HPO tree is rather large. Maybe split to several smaller
+     * functions for each HPO section and recurse full tree if we want a more detailed sanity test.
      * Requires: The "Clinical Symptoms and Physical Findings" section to be expanded and that
      *              none of the yes/no options are already selected/expanded (i.e. should be at the state of a new patient)
      *               Otherwise, traversal result might be off due to presence of additional (appearing) selectors.
@@ -832,12 +863,7 @@ public class CreatePatientPage extends CommonInfoSelectors
     @Step("Traverse (pre-order) through all phenotypes. Depth level limited to 1.")
     public List<String> cycleThroughAllPhenotypes() {
 
-        By expandAllBtn = By.cssSelector("span.expand-all");
-
-        clickOnElement(expandAllBtn);
-
-        // TODO: Those selectors are used once, okay to leave them without variable?
-        By expandToolSpan = By.cssSelector("span[class=expand-tool]");
+        clickOnElement(By.cssSelector("span.expand-all"));
 
         List<String> loLabels = new ArrayList<>();
 
@@ -853,8 +879,6 @@ public class CreatePatientPage extends CommonInfoSelectors
             By.cssSelector("label.yes-no-picker-label, span.yes-no-picker-label > span.value"));
 
         loLabels.addAll(loCategorizedLabels);
-
-        //    unconditionalWaitNs(25);
 
         return loLabels;
     }

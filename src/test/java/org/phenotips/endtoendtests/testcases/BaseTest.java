@@ -112,8 +112,9 @@ public abstract class BaseTest
      * Captures a screenshot of the browser viewport as a PNG to the target/screenshot folder. This is called
      * by the AfterMethod in the case of a test failure.
      * @param testMethod The method name of the test that failed, as a String. Will be used to name the file.
+     * @param URL the URL that the browser was at during a test failure. Used by Allure's listener in the Step annotation
      */
-    @Step("Taking screenshot of {0} on url {1}") // TODO: This is a hacky way of passing a URL as information to failure
+    @Step("Taking screenshot of {0} for URL {1}")
     private void captureScreenshot(String testMethod, String URL) {
         // Screenshot mechanism
         // Cast webDriver over to TakeScreenshot. Call getScreenshotAs method to create image file
@@ -144,15 +145,14 @@ public abstract class BaseTest
         }
     }
 
+    /**
+     * Cleans up the state of the browser after a test failure. This takes care of any warning modal that
+     * pops up for unsaved edits before navigating back to the login page so that the next tests can continue.
+     * Called by the AfterMethod in case of test failure.
+     */
     private void cleanupBrowserState() {
         HomePage tempHomePage = new HomePage(theDriver);
 
-        // Navigate to a login page. Might trigger a warning modal for unsaved edits.
-        // Ensure that any open alert dialogue is closed before continuing.
-        // Navigating away and taking care of potential unsaved changes alert allows the next test
-        // to be run.
-        // TODO: This is bad logic. Maybe dump the driver and restart a new instance.
-        //          It might not even get to the home page.
         try {
             tempHomePage.navigateToLoginPage();
             System.out.println("Test failure, navigate to login page. There is no unsaved changes warning.");
@@ -165,10 +165,8 @@ public abstract class BaseTest
     }
 
     /**
-     * Runs after every test method. In the case that TestNG's listener reports a failure, will take a
-     * screenshot and copy over to targets/screenshots directory as a .png with a methodName and timeStamp
-     * This will also navigate to a blank page taking care of any "Unsaved Changes" warning box so that the next test
-     * can be attempted. Without, the warning modal would block all the other tests.
+     * Runs after every test method. In the case that TestNG's listener reports a failure, call methods to
+     * take a screenshot and to cleanup the state of the browser.
      * @param testResult resulting status of a test method that has just run, as reported by TestNGs listener.
      *        Check this passed info for failure.
      */

@@ -4,12 +4,13 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>org.phenomeCentral.brianli</groupId>
+  <groupId>org.phenomecentral</groupId>
   <artifactId>phenomeCentral-automation</artifactId>
   <version>1.0-SNAPSHOT</version>
 
   <properties>
     <aspectj.version>1.9.2</aspectj.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
   <build>
@@ -41,7 +42,10 @@
           </argLine>
 
           <suiteXmlFiles>
-            <!--  <suiteXmlFile>src/main/java/org/phenotips/testcases/xml/AllTests.xml</suiteXmlFile> -->
+            <!-- Specify POM file through command line using -Dsurefire.suiteXmlFiles=...
+                  Default to not run any tests so that doesn't affect mvn build of phenomecentral.org -->
+            <!--  <suiteXmlFile>src/test/java/org/phenotips/endtoendtests/testcases/xml/AllTests.xml</suiteXmlFile> -->
+            <suiteXmlFile>src/test/java/org/phenotips/endtoendtests/testcases/xml/NoTests.xml</suiteXmlFile>
           </suiteXmlFiles>
         </configuration>
 
@@ -52,14 +56,13 @@
             <version>${aspectj.version}</version>
           </dependency>
         </dependencies>
-
       </plugin>
 
     </plugins>
   </build>
 
   <dependencies>
-    <!-- Merge code from here -->
+
     <dependency>
       <groupId>org.seleniumhq.selenium</groupId>
       <artifactId>selenium-java</artifactId>
@@ -94,15 +97,6 @@
       <version>2.10.0</version>
     </dependency>
 
-
-    <!-- https://mvnrepository.com/artifact/junit/junit -->
-    <!--<dependency>
-        <groupId>junit</groupId>
-        <artifactId>junit</artifactId>
-        <version>4.12</version>
-        <scope>test</scope>
-    </dependency> -->
-    <!-- Merge code from here END -->
   </dependencies>
 
 </project>
