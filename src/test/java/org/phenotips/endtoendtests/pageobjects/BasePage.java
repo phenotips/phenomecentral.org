@@ -341,6 +341,7 @@ public abstract class BasePage
     public List<String> preOrderTraverseAndClick(By rootPath, By childrenPath, By childrenLabelLocation)
     {
         waitForElementToBePresent(rootPath); // Must wait before any driver does a find
+        unconditionalWaitNs(2); // Wait two more seconds in case the expansion is actually still loading.
 
         List<String> loLabels = new ArrayList<>();
 

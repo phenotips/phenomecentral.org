@@ -19,6 +19,7 @@
 
       <class name="org.phenotips.endtoendtests.testcases.CreatePatientTest">
         <methods>
+          <include name="initialMatchesRefresh" />
           <include name="createPatientManually" />
           <include name="importSecondJSONPatient" />
           <include name="refreshMatchesForTwoPatients" />

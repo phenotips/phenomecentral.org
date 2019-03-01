@@ -24,22 +24,22 @@ EMAIL_UI_URL="http://localhost:$EMAIL_UI_PORT"
 
 CUR_DATE=$(date '+%Y-%m-%d_%H-%M-%S') # Set once
 ZIP_EXTRACT="PCInstance_$CUR_DATE" # Directory to create and will contain the contents of extracted zip file
-ALL_PC_INSTANCES_FOLDER="instances" # Parent folder after scripts/ for where extracted folders should go
+ALL_PC_INSTANCES_FOLDER="../target/instances" # Parent folder within the endtoend target folder for where all extracted instances should go
 
 
-BUILT_ZIP_LOCATION="../../standalone/target" # Path to phenomecentral.org's build standalone/target folder, where standalone zip is located
+BUILT_ZIP_LOCATION="../../standalone/target" # Path to phenomecentral.org's build standalone/target folder, where standalone zip is located. Relative to scripts folder.
 BUILT_ZIP_REGEX="phenomecentral-standalone*.zip"
 BUILT_ZIP_EXACT_NAME="" # The exact name of the zip file found, to be set in extractZip()
 
 
-OUTPUT_LOG_FILE="outputLog_$CUR_DATE.txt" # Mutate to absolute dir in main
+OUTPUT_LOG_FILE="" # Mutate to absolute dir path to file in main
 START_PC_COMMAND="./start.sh"
 STOP_PC_COMMAND="./stop.sh"
 START_SMTP_COMMAND="java -jar smtp-server/MockMock.jar"
 SMTP_PID="" # PID of the FakeSMTP that is to be set in startSMTP()
 READY_MESSAGE="About PhenomeCentral"
 # Ensure that these relative paths remain when changing file structure of project
-POM_LOCATION="../../../../pom.xml" # Relative to the extracted from inside the extracted PC instance folder (scripts/$ALL_PC_INSTANCES_FOLDER/$ZIP_EXTRACT/phenomecentral-standalone-*/)
+POM_LOCATION="../../../../pom.xml" # Relative to the extracted PC instance folder (target/instances/$ZIP_EXTRACT/phenomecentral-standalone-*/)
 TESTNG_XML_LOCATION="src/test/java/org/phenotips/endtoendtests/testcases/xml/AllTests.xml"
 
 ###########################
@@ -255,7 +255,7 @@ EMAIL_UI_URL="http://localhost:$EMAIL_UI_PORT"
 mkdir -p $ALL_PC_INSTANCES_FOLDER
 
 # Create a debug log file.
-OUTPUT_LOG_FILE="$PWD/$ALL_PC_INSTANCES_FOLDER/$OUTPUT_LOG_FILE" #Specify absolute path to OUTPUT_LOG_FILE
+OUTPUT_LOG_FILE="$PWD/$ALL_PC_INSTANCES_FOLDER/outputLog_$CUR_DATE.txt" #Specify absolute path to OUTPUT_LOG_FILE
 touch $OUTPUT_LOG_FILE
 
 # Capture both stderr and stout to OUTPUT_LOG_FILE.

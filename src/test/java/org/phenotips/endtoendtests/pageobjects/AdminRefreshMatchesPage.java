@@ -69,6 +69,7 @@ public class AdminRefreshMatchesPage extends BasePage
         waitForSucessMessage();
 
         superDriver.navigate().refresh();
+        unconditionalWaitNs(1); // It might find the element before refresh is completed.
         waitForElementToBePresent(selectLocalServerForMatchBox);
 
         return this;
