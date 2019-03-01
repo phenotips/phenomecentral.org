@@ -6,23 +6,24 @@ import org.openqa.selenium.WebDriver;
 import io.qameta.allure.Step;
 
 /**
- * This class corresponds to the Mail Sending Settings page that is found in Admin settings
- * under the left accordion menu: Email -> Mail Sending
- * (I.e. http://localhost:8083/admin/XWiki/XWikiPreferences?editor=globaladmin&section=emailSend)
+ * This class corresponds to the Mail Sending Settings page that is found in Admin settings under the left accordion
+ * menu: Email -> Mail Sending (I.e. http://localhost:8083/admin/XWiki/XWikiPreferences?editor=globaladmin&section=emailSend)
  */
 public class AdminEmailSendingSettingsPage extends AdminSettingsPage
 {
+    private final By emailServerPortBox = By.id("Mail.SendMailConfigClass_0_port");
+
+    private final By saveBtn = By.cssSelector("input[value='Save']");
+
     public AdminEmailSendingSettingsPage(WebDriver aDriver)
     {
         super(aDriver);
     }
 
-    private final By emailServerPortBox = By.id("Mail.SendMailConfigClass_0_port");
-    private final By saveBtn = By.cssSelector("input[value='Save']");
-
     /**
-     * Sets the email port of the PC instance to the one specified. Clears whatever is in the box and sets it.
-     * Requires that the Email Sending Settings page be open.
+     * Sets the email port of the PC instance to the one specified. Clears whatever is in the box and sets it. Requires
+     * that the Email Sending Settings page be open.
+     *
      * @param port is desired port, as number, to direct outgoing emails to.
      * @return Stay on the same page so return the same object.
      */
@@ -34,5 +35,4 @@ public class AdminEmailSendingSettingsPage extends AdminSettingsPage
         clickOnElement(saveBtn);
         return this;
     }
-
 }

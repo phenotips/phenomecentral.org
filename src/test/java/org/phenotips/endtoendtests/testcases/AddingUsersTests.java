@@ -1,5 +1,8 @@
 package org.phenotips.endtoendtests.testcases;
 
+import org.phenotips.endtoendtests.pageobjects.HomePage;
+import org.phenotips.endtoendtests.pageobjects.UserSignUpPage;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -7,14 +10,12 @@ import java.util.List;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import org.phenotips.endtoendtests.pageobjects.HomePage;
-import org.phenotips.endtoendtests.pageobjects.UserSignUpPage;
 import net.bytebuddy.utility.RandomString;
 
 /**
- * Test cases for adding users to the instance. These tests can be run individually, or as a class.
- * There are functional tests for ensuring the user approval workflow and ensuring that the input fields on
- * the "Request Account" form have error checking.
+ * Test cases for adding users to the instance. These tests can be run individually, or as a class. There are functional
+ * tests for ensuring the user approval workflow and ensuring that the input fields on the "Request Account" form have
+ * error checking.
  */
 public class AddingUsersTests extends BaseTest
 {
@@ -24,16 +25,14 @@ public class AddingUsersTests extends BaseTest
 
     // Strings of messages to verify:
 
-    List<String> loSectionTitlesCheck = new ArrayList<>(Arrays.asList("MY MATCHES", "MY PATIENTS\n ",
-        "PATIENTS SHARED WITH ME\n ", "MY GROUPS\n ", "PUBLIC DATA\n "));
-
-    final String confirmationMessageCheck = "Thank you for your interest in PhenomeCentral. We took note of your request and we will process it shortly.";
+    final String confirmationMessageCheck =
+        "Thank you for your interest in PhenomeCentral. We took note of your request and we will process it shortly.";
 
     final String pendingApprovalMessageCheck = "Please wait for your account to be approved. Thank you.";
 
-    // Common Strings for creation of patients:
-
     final String randomChars = RandomString.make(5);
+
+    // Common Strings for creation of patients:
 
     final String password = "123456";
 
@@ -43,6 +42,8 @@ public class AddingUsersTests extends BaseTest
 
     final String justification = "some reason";
 
+    List<String> loSectionTitlesCheck = new ArrayList<>(Arrays.asList("MY MATCHES", "MY PATIENTS\n ",
+        "PATIENTS SHARED WITH ME\n ", "MY GROUPS\n ", "PUBLIC DATA\n "));
 
     // Adds a user through the admin's Users page. Approve the user and login and ensure that dashboard widgets (i.e.
     // My Patients, My Families, etc. are visible.
@@ -74,7 +75,7 @@ public class AddingUsersTests extends BaseTest
 
         aHomePage.navigateToSignUpPage()
             .requestAccount(firstname, lastname, password, password,
-            firstname + "@akjsjdf.cjsjdfn", affiliation, referrer, justification);
+                firstname + "@akjsjdf.cjsjdfn", affiliation, referrer, justification);
 
         Assert.assertEquals(aUserSignUpPage.getConfirmationMessage(), confirmationMessageCheck);
         System.out.println("Request Recieved Msg: " + aUserSignUpPage.getConfirmationMessage());
@@ -84,11 +85,12 @@ public class AddingUsersTests extends BaseTest
 
         System.out.println("Approval Pending Msg: " + aHomePage.getApprovalPendingMessage());
         Assert.assertEquals(aHomePage.getApprovalPendingMessage(), pendingApprovalMessageCheck);
-        Assert.assertEquals(aHomePage.navigateToAllPatientsPage().getApprovalPendingMessage(), pendingApprovalMessageCheck);
-        Assert.assertEquals(aHomePage.navigateToCreateANewPatientPage().getApprovalPendingMessage(), pendingApprovalMessageCheck);
+        Assert.assertEquals(aHomePage.navigateToAllPatientsPage().getApprovalPendingMessage(),
+            pendingApprovalMessageCheck);
+        Assert.assertEquals(aHomePage.navigateToCreateANewPatientPage().getApprovalPendingMessage(),
+            pendingApprovalMessageCheck);
 
         aHomePage.logOut();
-
     }
 
     // User signs up via public "Request An Account" form, approve account, and then login to ensure that dashboard widgets
@@ -100,9 +102,8 @@ public class AddingUsersTests extends BaseTest
         String lastName = "Auto" + randomChars;
         String username = firstName + lastName;
 
-
         aHomePage.navigateToSignUpPage()
-            .requestAccount(firstName , lastName, password, password,
+            .requestAccount(firstName, lastName, password, password,
                 firstName + "@akjsjdf.cjsjdfn", affiliation, referrer, justification);
 
         Assert.assertEquals(aUserSignUpPage.getConfirmationMessage(), confirmationMessageCheck);
@@ -125,7 +126,6 @@ public class AddingUsersTests extends BaseTest
 
         System.out.println("Titles Found: " + aHomePage.getSectionTitles());
         Assert.assertEquals(aHomePage.getSectionTitles(), loSectionTitlesCheck);
-
     }
 
     // Error check the input fields, ensures that a request is not sent if any one of the required fields are missing or invalid.
@@ -135,21 +135,21 @@ public class AddingUsersTests extends BaseTest
     public void errorCheckFields()
     {
         aHomePage.navigateToSignUpPage()
-            .requestAccount("PublicDupe" + randomChars , "Duped" + randomChars, "123456", "123456",
+            .requestAccount("PublicDupe" + randomChars, "Duped" + randomChars, "123456", "123456",
                 "PublicSignUpDupe" + randomChars + "@something.something", "none",
                 "Test server", "Some reason");
 
         // Duplicate Username
         aHomePage.navigateToHomePage()
             .navigateToSignUpPage()
-            .requestAccount("PublicDupe" + randomChars , "Duped" + randomChars, "123456", "123456",
+            .requestAccount("PublicDupe" + randomChars, "Duped" + randomChars, "123456", "123456",
                 "PublicSignUpDupe" + randomChars + "@something.something", "none",
                 "Test server", "Some reason")
 
             // Mismatching passwords
             .requestAccount("MisMatched PassWord" + randomChars, "Mismatch", "123456", "123456 ",
-        "PublicSignUpDupe" + randomChars + "@something.something", "none",
-        "Test server", "Some reason")
+                "PublicSignUpDupe" + randomChars + "@something.something", "none",
+                "Test server", "Some reason")
 
             // Invalid Email
             .requestAccount("Invalid Email" + randomChars, "Invalidated", "123456", "123456",
@@ -183,5 +183,4 @@ public class AddingUsersTests extends BaseTest
             .cancelRequestingAccount()
             .navigateToLoginPage();
     }
-
 }

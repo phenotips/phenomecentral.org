@@ -1,5 +1,11 @@
 package org.phenotips.endtoendtests.testcases;
 
+import org.phenotips.endtoendtests.common.CommonInfoEnums;
+import org.phenotips.endtoendtests.pageobjects.CreatePatientPage;
+import org.phenotips.endtoendtests.pageobjects.HomePage;
+import org.phenotips.endtoendtests.pageobjects.PedigreeEditorPage;
+import org.phenotips.endtoendtests.pageobjects.ViewPatientPage;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -7,17 +13,12 @@ import java.util.List;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import org.phenotips.endtoendtests.pageobjects.CreatePatientPage;
-import org.phenotips.endtoendtests.pageobjects.HomePage;
-import org.phenotips.endtoendtests.pageobjects.PedigreeEditorPage;
-import org.phenotips.endtoendtests.pageobjects.ViewPatientPage;
 import net.bytebuddy.utility.RandomString;
 
 /**
- * Tests for the Pedigree Editor page and the sync with the patient info page.
- * There are cases for creation of a patient and input information both via Pedigree Editor
- * This should be run as an entire class due to the pedigree editor requiring certain kinds of patients
- * to be present for the selectors to work.
+ * Tests for the Pedigree Editor page and the sync with the patient info page. There are cases for creation of a patient
+ * and input information both via Pedigree Editor This should be run as an entire class due to the pedigree editor
+ * requiring certain kinds of patients to be present for the selectors to work.
  */
 public class PedigreePageTest extends BaseTest implements CommonInfoEnums
 {
@@ -32,9 +33,9 @@ public class PedigreePageTest extends BaseTest implements CommonInfoEnums
     final private String randomChars = RandomString.make(5);
 
     /**
-     * Creates a patient with phenotypes and genes. Asserts that they are reflected
-     * in the pedigree editor after a save. This tests the pedigree editor when one patient/node is present.
-     * Checks that Patient Form Info -> Pedigree Editor Info
+     * Creates a patient with phenotypes and genes. Asserts that they are reflected in the pedigree editor after a save.
+     * This tests the pedigree editor when one patient/node is present. Checks that Patient Form Info -> Pedigree Editor
+     * Info
      */
     @Test()
     public void basicPedigree()
@@ -84,8 +85,8 @@ public class PedigreePageTest extends BaseTest implements CommonInfoEnums
     }
 
     /**
-     * Creates a child for the most recently created patient via the Pedigree editor.
-     * Asserts that two new patient nodes are created and the total number of nodes.
+     * Creates a child for the most recently created patient via the Pedigree editor. Asserts that two new patient nodes
+     * are created and the total number of nodes.
      */
     @Test()
     public void createChild()
@@ -114,10 +115,9 @@ public class PedigreePageTest extends BaseTest implements CommonInfoEnums
     }
 
     /**
-     * Ensure changes made through pedigree editor are reflected on the View Patient Form after a save.
-     * Asserts:
-     * - Correct number of nodes (note, does not check the type/gender, just counts the hoverboxes)
-     * - Phenotypes correspond on the view Patient Info Form
+     * Ensure changes made through pedigree editor are reflected on the View Patient Form after a save. Asserts: -
+     * Correct number of nodes (note, does not check the type/gender, just counts the hoverboxes) - Phenotypes
+     * correspond on the view Patient Info Form
      */
     @Test()
     public void editorToPatientForm()
@@ -159,11 +159,10 @@ public class PedigreePageTest extends BaseTest implements CommonInfoEnums
     }
 
     /**
-     * Creates a new patient via the pedigree editor, using an existing pedigree created in the previous test
-     * Asserts:
-     * - Correct number of Patients and Partner Links before and after creating a male sibling.
-     * - Asserts that the phenotypes and genotype information on the modal corresponds to info on the patient's
-     *      main profile page. This includes gene names, their status, strategies and comments.
+     * Creates a new patient via the pedigree editor, using an existing pedigree created in the previous test Asserts: -
+     * Correct number of Patients and Partner Links before and after creating a male sibling. - Asserts that the
+     * phenotypes and genotype information on the modal corresponds to info on the patient's main profile page. This
+     * includes gene names, their status, strategies and comments.
      */
     @Test()
     public void createNewPatientViaEditor()
@@ -193,7 +192,7 @@ public class PedigreePageTest extends BaseTest implements CommonInfoEnums
         String createdPatient = aPedigreeEditorPage.getPatientIDFromModal();
 
         aPedigreeEditorPage.addPhenotypes(loPhenotypesToAdd)
-            .addGene( "LIN7C", "Candidate")
+            .addGene("LIN7C", "Candidate")
             .addGene("TAOK3", "Confirmed Causal")
             .addGene("YKT6", "Carrier")
             .closeEditor("Save")
@@ -241,10 +240,9 @@ public class PedigreePageTest extends BaseTest implements CommonInfoEnums
     }
 
     /**
-     * Opens the pedigree editor for the previously created patient (in the test above) and edit the patient's
-     * genotype. Asserts:
-     * - On trying to click "Close", that there is a js warning dialogue to prompt saving before
-     *      navigating away.
+     * Opens the pedigree editor for the previously created patient (in the test above) and edit the patient's genotype.
+     * Asserts: - On trying to click "Close", that there is a js warning dialogue to prompt saving before navigating
+     * away.
      */
     @Test()
     public void warningDialoguePresent()
@@ -264,5 +262,4 @@ public class PedigreePageTest extends BaseTest implements CommonInfoEnums
 
         aCreatePatientPage.saveAndViewSummary().logOut();
     }
-
 }

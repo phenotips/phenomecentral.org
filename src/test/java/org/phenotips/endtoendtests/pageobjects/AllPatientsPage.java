@@ -37,8 +37,9 @@ public class AllPatientsPage extends BasePage
     }
 
     /**
-     * Imports a patient via the passed JSON string. Waits 5 seconds before returning, difficult to detect
-     * when import is sucessful.
+     * Imports a patient via the passed JSON string. Waits 5 seconds before returning, difficult to detect when import
+     * is sucessful.
+     *
      * @param theJSON a long string which represents the JSON. Ensure that backslashes are escaped.
      * @return the same object, we stay on the same page.
      */
@@ -54,9 +55,10 @@ public class AllPatientsPage extends BasePage
     }
 
     /**
-     * Sorts the list of patients in descending order. Assumes that the default sort (i.e. what comes up
-     * when the page is first visited) is the starting state. Clicks on the sort twice, needs to do that
-     * for some reason to sort descending.
+     * Sorts the list of patients in descending order. Assumes that the default sort (i.e. what comes up when the page
+     * is first visited) is the starting state. Clicks on the sort twice, needs to do that for some reason to sort
+     * descending.
+     *
      * @return same object as it is the same page.
      */
     @Step("Sort patients in descending date order")
@@ -70,6 +72,7 @@ public class AllPatientsPage extends BasePage
 
     /**
      * Click on the first patient in the table to view its full profile.
+     *
      * @return the patient's full info page which is called the ViewPatientPage
      */
     @Step("View first patient in table")
@@ -81,10 +84,12 @@ public class AllPatientsPage extends BasePage
 
     /**
      * Deletes all the patients in the table if there are any, only for the first page
+     *
      * @return stay on the same page, so return the same object.
      */
     @Step("Delete all patients on the table")
-    public AllPatientsPage deleteAllPatients() {
+    public AllPatientsPage deleteAllPatients()
+    {
         waitForLoadingBarToDisappear();
 
         List<WebElement> loDeleteBtns = superDriver.findElements(deleteBtns);
@@ -103,11 +108,13 @@ public class AllPatientsPage extends BasePage
 
     /**
      * Filters by the patient ID by sending keys to the "type to filter" box under the identifier column
+     *
      * @param patientID the patient ID to enter, should be in Pxxxxxxx format.
      * @return stay on the same page so return the same object.
      */
     @Step("Filter patient {0} by their identifier or patient ID")
-    public AllPatientsPage filterByPatientID(String patientID) {
+    public AllPatientsPage filterByPatientID(String patientID)
+    {
         clickAndTypeOnElement(patientIDFilterBox, patientID);
         waitForLoadingBarToDisappear();
         return this;

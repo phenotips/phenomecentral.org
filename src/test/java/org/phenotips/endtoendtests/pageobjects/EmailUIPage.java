@@ -38,8 +38,7 @@ public class EmailUIPage extends BasePage
         if (getNumberOfEmails() > 0) {
             unconditionalWaitNs(1); // Wait is only used so that a human can see the emails.
             clickOnElement(deleteAllEmailsLink);
-        }
-        else {
+        } else {
             System.out.println("There are no emails to delete!");
         }
         return this;
@@ -47,10 +46,12 @@ public class EmailUIPage extends BasePage
 
     /**
      * Get a (possibly empty) list of titles of emails from the inbox.
+     *
      * @return a List of Strings which are titles of all the emails.
      */
     @Step("Retrieve a list of email titles")
-    public List<String> getEmailTitles() {
+    public List<String> getEmailTitles()
+    {
         List<String> loTitles = new Vector<String>();
 
         unconditionalWaitNs(1); // Again, this wait was just for human readability
@@ -63,24 +64,26 @@ public class EmailUIPage extends BasePage
 
     /**
      * Indicates the number of emails in the inbox. Checks the main text for the overall status first.
+     *
      * @return integer >= 0.
      */
     @Step("Retrieve the number of emails in the inbox")
-    public int getNumberOfEmails() {
+    public int getNumberOfEmails()
+    {
         waitForElementToBePresent(emailStatus);
         String emailText = superDriver.findElement(emailStatus).getText();
         if (emailText.contains("You have ")) {
             return superDriver.findElements(emailRows).size();
-        }
-        else {
+        } else {
             return 0;
         }
     }
 
     /**
-     * Navigates to the homepage of PC, regardless of whether or not user is logged in. This is needed as
-     * we need a way to go from MockMock UI back to a PC page. Navigates directly and explicitly to the homepage url.
-     * We are overriding the BasePage method since this does not try to click the PC logo that appears in the top left.
+     * Navigates to the homepage of PC, regardless of whether or not user is logged in. This is needed as we need a way
+     * to go from MockMock UI back to a PC page. Navigates directly and explicitly to the homepage url. We are
+     * overriding the BasePage method since this does not try to click the PC logo that appears in the top left.
+     *
      * @return a new HomePage object as we navigate there.
      */
     @Override
@@ -90,5 +93,4 @@ public class EmailUIPage extends BasePage
         superDriver.navigate().to(HOMEPAGE_URL);
         return new HomePage(superDriver);
     }
-
 }

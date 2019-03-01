@@ -16,42 +16,29 @@ import io.qameta.allure.Step;
  */
 public class PedigreeEditorPage extends BasePage
 {
-    public PedigreeEditorPage(WebDriver aDriver) {
-        super(aDriver);
-
-        // Try to click on the default Proband template. If there is no template modal present, catch the error
-        //   and just assume that there was no modal in the first place.
-        try {
-            unconditionalWaitNs(5);
-            clickOnElement(probandTemplate);
-            waitForElementToBeClickable(hoverBox);
-        } catch (TimeoutException e) {
-            System.out.println("Seems like we are editing an existing pedigree, no template dialogue found.");
-        }
-    }
-
     private final By probandTemplate = By.cssSelector("div[title=Proband]");
 
     /**************************************
      * Toolbar and save modal  - Selectors
      **************************************/
-
     private final By closeEditor = By.id("action-close");
+
     private final By saveAndQuitBtn = By.id("OK_button");
+
     private final By dontSaveAndQuitBtn = By.cssSelector("input.button[value=\" Don't save and quit \"]");
+
     private final By keepEditingPedigreeBtn = By.cssSelector("input.button[value=\" Keep editing pedigree \"]");
 
     /**********************************************************************
      * Patient Nodes (Hoverboxes) and Add Family Member Links - Selectors
      **********************************************************************/
-
     private final By hoverBox = By.cssSelector("#work-area > #canvas > svg > rect.pedigree-hoverbox");
-    // Actually, no, maybe we shouldn't have all rectangle classes. I think circles would cause it to break.
-    // We should figure out how to traverse up the structure of nodes.
-    // It looks like its just a linear list of nodes for now...
-    // TODO: Think some more, probably will need JS
+
     private final By hoverBoxPartnerLink = By.cssSelector(
         "#work-area > #canvas > svg > rect.pedigree-hoverbox[width=\"52\"]");
+    // Actually, no, maybe we shouldn't have all rectangle classes. I think circles would cause it to break.
+    // We should figure out how to traverse up the structure of nodes. Maybe add IDs to each node.
+    // It looks like its just a linear list of nodes for now... so we have to get selectors by grepping weird values
 
     private final By createSiblingNode = By.cssSelector("rect[transform^=\"matrix(0.7071,0.7071,-0.7071,0.7071\"]");
 
@@ -144,16 +131,31 @@ public class PedigreeEditorPage extends BasePage
     private final By carrierGeneList = By.cssSelector(
         "div.field-carrier_genes > ul.accepted-suggestions > li > label.accepted-suggestion > span.value");
 
+    public PedigreeEditorPage(WebDriver aDriver)
+    {
+        super(aDriver);
+
+        // Try to click on the default Proband template. If there is no template modal present, catch the error
+        //   and just assume that there was no modal in the first place.
+        try {
+            unconditionalWaitNs(5);
+            clickOnElement(probandTemplate);
+            waitForElementToBeClickable(hoverBox);
+        } catch (TimeoutException e) {
+            System.out.println("Seems like we are editing an existing pedigree, no template dialogue found.");
+        }
+    }
 
     /********************
      * Toolbar methods
      ********************/
 
     /**
-     * Closes the editor and handles the warning dialogue if it appears. Requires that no modals are
-     * blocking the pedigree toolbar beforehand (ex. the template selection modal).
-     * @param saveChoice is String representing the choice of save.
-     *          It must be exactly one of "Save", "Don't Save", "Keep Editing". Defaults to "Save" on invalid string.
+     * Closes the editor and handles the warning dialogue if it appears. Requires that no modals are blocking the
+     * pedigree toolbar beforehand (ex. the template selection modal).
+     *
+     * @param saveChoice is String representing the choice of save. It must be exactly one of "Save", "Don't Save",
+     * "Keep Editing". Defaults to "Save" on invalid string.
      * @return Navigates back to the patient creation page so a return new instance of that.
      */
     @Step("Close the editor with save choice of {0}")
@@ -163,11 +165,19 @@ public class PedigreeEditorPage extends BasePage
 
         if (isElementPresent(saveAndQuitBtn)) {
             switch (saveChoice) {
-                case "Save": clickOnElement(saveAndQuitBtn); break;
-                case "Don't Save": clickOnElement(dontSaveAndQuitBtn); break;
-                case "Keep Editing": clickOnElement(keepEditingPedigreeBtn); break;
-                default: System.out.println("Invalid saveChoice in closeEditor, default to Save");
-                clickOnElement(saveAndQuitBtn); break;
+                case "Save":
+                    clickOnElement(saveAndQuitBtn);
+                    break;
+                case "Don't Save":
+                    clickOnElement(dontSaveAndQuitBtn);
+                    break;
+                case "Keep Editing":
+                    clickOnElement(keepEditingPedigreeBtn);
+                    break;
+                default:
+                    System.out.println("Invalid saveChoice in closeEditor, default to Save");
+                    clickOnElement(saveAndQuitBtn);
+                    break;
             }
         }
 
@@ -177,13 +187,13 @@ public class PedigreeEditorPage extends BasePage
     }
 
     /**
-     * Checks if a warning dialogue appears when trying to close the editor. Clicks on close
-     * and then tries to click on "Save and Quit". Sometimes, the dialogue isn't supposed to
-     * be there so it would have navigated away with no warning. Waits for the three buttons to appear.
-     * Requires that the pedigree toolbar be interactable, not blocked by some other modal.
-     * @return A Boolean to indicate whether the dialogue, or more specifically, "keep editing pedigree"
-     *          button appears or not.
-     *          State afterwards would be navigation away from the Pedigree Editor to Patient Creation page
+     * Checks if a warning dialogue appears when trying to close the editor. Clicks on close and then tries to click on
+     * "Save and Quit". Sometimes, the dialogue isn't supposed to be there so it would have navigated away with no
+     * warning. Waits for the three buttons to appear. Requires that the pedigree toolbar be interactable, not blocked
+     * by some other modal.
+     *
+     * @return A Boolean to indicate whether the dialogue, or more specifically, "keep editing pedigree" button appears
+     * or not. State afterwards would be navigation away from the Pedigree Editor to Patient Creation page
      */
     @Step("Determine if the warning dialogue appeared")
     public Boolean doesWarningDialogueAppear()
@@ -205,21 +215,32 @@ public class PedigreeEditorPage extends BasePage
     /***********************************************
      * Patient Information Form (Modal) - Methods
      ***********************************************/
-
     /**
      * Switches the tab on the current patient info modal.
-     * @param infoTab is one of three Strings: "Personal", "Clinical", "Cancers", each corresponding
-     * to a tab on the modal. Upon invalid string entry, goes to the Personal tab.
+     *
+     * @param infoTab is one of three Strings: "Personal", "Clinical", "Cancers", each corresponding to a tab on the
+     * modal. Upon invalid string entry, goes to the Personal tab.
      * @return stay on the same page so return same object
      */
     @Step("Switch to tab: {0}")
     public PedigreeEditorPage switchToTab(String infoTab)
     {
         switch (infoTab) {
-            case "Personal": clickOnElement(personalTab); waitForElementToBePresent(ethnicitiesBox); break;
-            case "Clinical": clickOnElement(clinicalTab); waitForElementToBePresent(phenotypeBox); break;
-            case "Cancers": clickOnElement(cancersTab); break; // Should add wait here
-            default: clickOnElement(personalTab); waitForElementToBePresent(ethnicitiesBox); break;
+            case "Personal":
+                clickOnElement(personalTab);
+                waitForElementToBePresent(ethnicitiesBox);
+                break;
+            case "Clinical":
+                clickOnElement(clinicalTab);
+                waitForElementToBePresent(phenotypeBox);
+                break;
+            case "Cancers":
+                clickOnElement(cancersTab);
+                break; // Should add wait here
+            default:
+                clickOnElement(personalTab);
+                waitForElementToBePresent(ethnicitiesBox);
+                break;
         }
         return this;
     }
@@ -227,11 +248,11 @@ public class PedigreeEditorPage extends BasePage
     /****************************************************
      * Personal Tab (Patient Information Modal) Methods
      ****************************************************/
-
     /**
-     * Retrieves the patient ID of the currently open patient modal.
-     * Requires that the patient to already be linked, otherwise will cause an exception where element is not found.
-     * TODO: Improve this so that it returns some other string when no patient is linked.
+     * Retrieves the patient ID of the currently open patient modal. Requires that the patient to already be linked,
+     * otherwise will cause an exception where element is not found. TODO: Improve this so that it returns some other
+     * string when no patient is linked.
+     *
      * @return a String in the form of Pxxxxxxxx
      */
     @Step("Retrieve the patient ID from the modal")
@@ -242,11 +263,10 @@ public class PedigreeEditorPage extends BasePage
     }
 
     /**
-     * Links the currently focused node to an existing patient via the "Link to an existing patient record"
-     * box in the "Personal" tab.
-     * Requires a patient's information modal to be open.
-     * @param patientID is either "New" to indicate "Create New" should be clicked
-     *          or a patient ID in form of Pxxxxxxx
+     * Links the currently focused node to an existing patient via the "Link to an existing patient record" box in the
+     * "Personal" tab. Requires a patient's information modal to be open.
+     *
+     * @param patientID is either "New" to indicate "Create New" should be clicked or a patient ID in form of Pxxxxxxx
      * @return Stay on the same page so return same object.
      */
     @Step("Link this node to patient ID: {0}")
@@ -258,9 +278,9 @@ public class PedigreeEditorPage extends BasePage
             clickOnElement(createNewPatientBtn);
             clickOnElement(confirmNewPatientBtn);
             waitForElementToBeClickable(personalTab);
-            unconditionalWaitNs(5); // PersonalTab is deemed clickable too early? Loading modal has not fully disappeared.
-        }
-        else {
+            unconditionalWaitNs(
+                5); // PersonalTab is deemed clickable too early? Loading modal has not fully disappeared.
+        } else {
             clickAndTypeOnElement(linkPatientBox, patientID);
             clickOnElement(linkPatientFirstSuggestion);
         }
@@ -270,48 +290,60 @@ public class PedigreeEditorPage extends BasePage
 
     /**
      * Returns the current gender that is selected in the radio button options.
+     *
      * @return a String representing the gender, one of: "Male", "Female", "Other", "Unknown"
      */
     @Step("Retrieve the gender of the patient")
-    public String getGender() {
+    public String getGender()
+    {
         if (superDriver.findElement(maleGenderBtn).isSelected()) {
             return "Male";
-        }
-        else if (superDriver.findElement(femaleGenderBtn).isSelected()) {
+        } else if (superDriver.findElement(femaleGenderBtn).isSelected()) {
             return "Female";
-        }
-        else if (superDriver.findElement(otherGenderBtn).isSelected()) {
+        } else if (superDriver.findElement(otherGenderBtn).isSelected()) {
             return "Other";
-        }
-        else {
+        } else {
             return "Unknown";
         }
     }
 
     /**
-     * Sets the gender of the patient that has its information form modal open.
-     * Requires: The Patient Information Form modal to be open for a patient.
-     * @param gender is the desired gender to set. Must be exact or defaults to Female. One of:
-     *          "Male", "Female", "Other", or "Unknown".
+     * Sets the gender of the patient that has its information form modal open. Requires: The Patient Information Form
+     * modal to be open for a patient.
+     *
+     * @param gender is the desired gender to set. Must be exact or defaults to Female. One of: "Male", "Female",
+     * "Other", or "Unknown".
      * @return Stay on the same page so return the same object.
      */
     @Step("Set the gender of the patient to {0}")
-    public PedigreeEditorPage setGender(String gender) {
+    public PedigreeEditorPage setGender(String gender)
+    {
         clickOnElement(clinicalTab);
 
         switch (gender) {
-            case "Male": clickOnElement(maleGenderBtn); break;
-            case "Female": clickOnElement(femaleGenderBtn); break;
-            case "Other": clickOnElement(otherGenderBtn); break;
-            case "Unknown": clickOnElement(unknownGenderBtn); break;
-            default: clickOnElement(femaleGenderBtn); break;
+            case "Male":
+                clickOnElement(maleGenderBtn);
+                break;
+            case "Female":
+                clickOnElement(femaleGenderBtn);
+                break;
+            case "Other":
+                clickOnElement(otherGenderBtn);
+                break;
+            case "Unknown":
+                clickOnElement(unknownGenderBtn);
+                break;
+            default:
+                clickOnElement(femaleGenderBtn);
+                break;
         }
         return this;
     }
 
     /**
-     * Retrieves the ethnicities of the patient listed in the pedigree editor in the "Personal" tab.
-     * Requires a patient's information modal to be present.
+     * Retrieves the ethnicities of the patient listed in the pedigree editor in the "Personal" tab. Requires a
+     * patient's information modal to be present.
+     *
      * @return A, possibly empty, list of Strings representing the ethnicities that were found.
      */
     @Step("Retrieve the ethnicities of the patient")
@@ -319,16 +351,15 @@ public class PedigreeEditorPage extends BasePage
     {
         switchToTab("Personal");
         return getLabelsFromList(ethnicitiesList);
-
     }
 
     /*****************************************************
      * Clinical Tab (Patient Information Modal) Methods
      *****************************************************/
-
     /**
-     * Retrieves a list of entered phenotypes within the "Clinical" tab.
-     * Requires the patient information modal to be open.
+     * Retrieves a list of entered phenotypes within the "Clinical" tab. Requires the patient information modal to be
+     * open.
+     *
      * @return A, possibly empty, list of Strings containing the names of the phenotypes.
      */
     @Step("Get the phenotypes of the current patient node")
@@ -339,17 +370,18 @@ public class PedigreeEditorPage extends BasePage
     }
 
     /**
-     * Adds the passed phenotypes to the patient. Will select the first suggestion for each phenotype.
-     * Requires the patient information modal to be open.
+     * Adds the passed phenotypes to the patient. Will select the first suggestion for each phenotype. Requires the
+     * patient information modal to be open.
+     *
      * @param loPhenotypesToAdd A List containing Strings of the phenotypes to add. Each should be as close as possible
-     *          to the desired phenotype.
+     * to the desired phenotype.
      * @return Stay on the same page so return the same object.
      */
     @Step("Add the following phenotypes to the patient node: {0}")
     public PedigreeEditorPage addPhenotypes(List<String> loPhenotypesToAdd)
     {
         switchToTab("Clinical");
-        for (String phenotype: loPhenotypesToAdd) {
+        for (String phenotype : loPhenotypesToAdd) {
             clickAndTypeOnElement(phenotypeBox, phenotype);
             clickOnElement(linkPatientFirstSuggestion);
         }
@@ -358,6 +390,7 @@ public class PedigreeEditorPage extends BasePage
 
     /**
      * Retrieves a list of entered genes from the "Clinical" tab of the specified status.
+     *
      * @param status is the gene status so it is one of "Candidate", "Confirmed Causal", "Carrier"
      * @return a List of Strings, possibly empty, representing the text label for each entered gene.
      */
@@ -365,25 +398,30 @@ public class PedigreeEditorPage extends BasePage
     public List<String> getGenes(String status)
     {
         switchToTab("Clinical");
-        switch(status) {
-            case "Candidate": return getLabelsFromList(candidateGeneList);
-            case "Confirmed Causal": return getLabelsFromList(causalGeneList);
-            case "Carrier": return getLabelsFromList(carrierGeneList);
-            default: return getLabelsFromList(candidateGeneList);
+        switch (status) {
+            case "Candidate":
+                return getLabelsFromList(candidateGeneList);
+            case "Confirmed Causal":
+                return getLabelsFromList(causalGeneList);
+            case "Carrier":
+                return getLabelsFromList(carrierGeneList);
+            default:
+                return getLabelsFromList(candidateGeneList);
         }
     }
 
     /**
-     * Adds a list of Candidate Genes via the Patient Information modal. Will select the first suggestion that
-     * pops up. Requires the Patient Info modal to be present.
+     * Adds a list of Candidate Genes via the Patient Information modal. Will select the first suggestion that pops up.
+     * Requires the Patient Info modal to be present.
+     *
      * @param loCandidateGenesToAdd A list of Strings, can be empty, of Candidate genes to add. Each should be as close
-     *          as possible to the exact gene name.
+     * as possible to the exact gene name.
      * @return Stay on the same page so return the same object.
      */
     public PedigreeEditorPage addCandidateGenes(List<String> loCandidateGenesToAdd)
     {
         switchToTab("Clinical");
-        for (String candidateGene: loCandidateGenesToAdd) {
+        for (String candidateGene : loCandidateGenesToAdd) {
             clickAndTypeOnElement(candidateGeneBox, candidateGene);
             clickOnElement(linkPatientFirstSuggestion);
         }
@@ -393,6 +431,7 @@ public class PedigreeEditorPage extends BasePage
     /**
      * Adds a gene of geneStatus to the patient with its information modal open. Will select the first gene suggestion.
      * Requires that the Patient Information modal be present.
+     *
      * @param geneName Name of the gene to add. Should be an exact String to the gene name.
      * @param geneStatus Status of the gene, one of: "Candidate", "Confirmed Causal", and "Carrier"
      * @return Stay on the same page so return the same object.
@@ -401,11 +440,19 @@ public class PedigreeEditorPage extends BasePage
     public PedigreeEditorPage addGene(String geneName, String geneStatus)
     {
         switchToTab("Clinical");
-        switch(geneStatus) {
-            case "Candidate": clickAndTypeOnElement(candidateGeneBox, geneName); break;
-            case "Confirmed Causal": clickAndTypeOnElement(causalGeneBox, geneName); break;
-            case "Carrier": clickAndTypeOnElement(carrierGeneBox, geneName); break;
-            default: clickAndTypeOnElement(candidateGeneBox, geneName); break;
+        switch (geneStatus) {
+            case "Candidate":
+                clickAndTypeOnElement(candidateGeneBox, geneName);
+                break;
+            case "Confirmed Causal":
+                clickAndTypeOnElement(causalGeneBox, geneName);
+                break;
+            case "Carrier":
+                clickAndTypeOnElement(carrierGeneBox, geneName);
+                break;
+            default:
+                clickAndTypeOnElement(candidateGeneBox, geneName);
+                break;
         }
         clickOnElement(linkPatientFirstSuggestion);
 
@@ -415,14 +462,13 @@ public class PedigreeEditorPage extends BasePage
     /********************************************************
      * Hover boxes and Patient/Family Member Nodes - Methods
      ********************************************************/
-
     /**
      * Opens the edit patient modal for the Nth patient it can find on the editor.
-     * @return stay on the same page so return same object.
-     * TODO: Figure out how to traverse and search the possible nodes for a patient,
-     *      The js might might make this interesting...
-     *      Ideas: Differentiate via width and height. rect.pedigree-hoverbox[width=180, height=243] for
-     *      people, rect.pedigree-hoverbox[width=52, height=92] for relationship node.
+     *
+     * @return stay on the same page so return same object. TODO: Figure out how to traverse and search the possible
+     * nodes for a patient, The js might might make this interesting... Ideas: Differentiate via width and height.
+     * rect.pedigree-hoverbox[width=180, height=243] for people, rect.pedigree-hoverbox[width=52, height=92] for
+     * relationship node.
      */
     @Step("Open the {0}th node's edit modal")
     public PedigreeEditorPage openNthEditModal(int n)
@@ -444,10 +490,9 @@ public class PedigreeEditorPage extends BasePage
             .build()
             .perform();
 
-        //forceClickOnElement(hoverBox);
         if (!isElementClickable(personalTab)) {
             loHoverBoxes = superDriver.findElements(hoverBox); // Search again, maybe coordiantes changed.
-            System.out.println("Clicking " + n + "th hover box again...");
+            System.out.println("Note: Clicking " + n + "th hover box again...");
             System.out.println("Found hoverboxes, Second Try: " + loHoverBoxes.size());
             action.moveToElement(loHoverBoxes.get(n - 1), 10, 10)
                 .moveToElement(loHoverBoxes.get(n - 1))
@@ -461,10 +506,10 @@ public class PedigreeEditorPage extends BasePage
     }
 
     /**
-     * Creates a child of the specified gender. Currently, it just does it for the first patient node
-     * that it can find.
-     * @param gender is one of the options on the gender toolbar that appears when trying to create a new node
-     * "Male", "Female", "Unknown", etc. TODO: Possibly create an enum.
+     * Creates a child of the specified gender. Currently, it just does it for the first patient node that it can find.
+     *
+     * @param gender is one of the options on the gender toolbar that appears when trying to create a new node "Male",
+     * "Female", "Unknown", etc.
      * @return Stay on the same page so return the same object.
      */
     @Step("Create a child of the currently focused node with gender {0}")
@@ -483,8 +528,9 @@ public class PedigreeEditorPage extends BasePage
     }
 
     /**
-     * Returns the number of total hover boxes in the family tree. A hover box can either be a patient
-     * node or it can be a partnership linkage node.
+     * Returns the number of total hover boxes in the family tree. A hover box can either be a patient node or it can be
+     * a partnership linkage node.
+     *
      * @return An integer >= 0 representing the number of clickable hover boxes within the tree.
      */
     @Step("Get the number of nodes")
@@ -497,6 +543,7 @@ public class PedigreeEditorPage extends BasePage
     /**
      * Gives the number of partner links within the tree. This node is where the "Consanguinity of this relationship"
      * appears in a modal.
+     *
      * @return int >= 0 representing the number of partner links in the tree.
      */
     @Step("Get the number of partner links on the tree")
@@ -507,8 +554,9 @@ public class PedigreeEditorPage extends BasePage
     }
 
     /**
-     * Gives the total number of patients, regardless if linked to an existing patient or not, in the tree.
-     * I.e. it is total number of hover boxes - number of linkage hover boxes.
+     * Gives the total number of patients, regardless if linked to an existing patient or not, in the tree. I.e. it is
+     * total number of hover boxes - number of linkage hover boxes.
+     *
      * @return Integer >= 0 representing the total number of patients on tree.
      */
     @Step("Get the number of patients found on tree")
@@ -519,8 +567,9 @@ public class PedigreeEditorPage extends BasePage
 
     /**
      * Finds a list of Patient IDs that have been linked and are visible on the pedigree editor.
-     * @return A list of Strings, possibly empty, which are the patient IDs for those who are linked
-     *          to a node on the pedigree editor. I.e. a List of Strings in the form of Pxxxxxxx
+     *
+     * @return A list of Strings, possibly empty, which are the patient IDs for those who are linked to a node on the
+     * pedigree editor. I.e. a List of Strings in the form of Pxxxxxxx
      */
     public List<String> getListOfLinkedPatients()
     {
@@ -533,15 +582,14 @@ public class PedigreeEditorPage extends BasePage
     }
 
     /**
-     * Supposed to create a partnership between two patient nodes by clicking and dragging
-     * on the leftmost circle. The partners are specified by the Nth hover box they represent on
-     * the page.
+     * Supposed to create a partnership between two patient nodes by clicking and dragging on the leftmost circle. The
+     * partners are specified by the Nth hover box they represent on the page.
+     *
      * @param partner1 is the patient node that has the left circle to be clicked and dragged on
      * @param partner2 is the patient node that is meant to be dragged to wards
-     * @return Stay on the same page so return the same object.
-     * TODO: I don't think this is working...
+     * @return Stay on the same page so return the same object. TODO: I don't think this is working... we really need
+     * better structure for it to be testable
      */
-    // 4 and 5th boxes
     public PedigreeEditorPage createPartnership(int partner1, int partner2)
     {
         Actions act = new Actions(superDriver);
@@ -558,7 +606,7 @@ public class PedigreeEditorPage extends BasePage
         List<WebElement> loPartnerNodes = superDriver.findElements(createPartnerNode);
 
         act.dragAndDrop(loPartnerNodes.get(partner1 - 1),
-                loHoverBoxes.get(partner2 - 1))
+            loHoverBoxes.get(partner2 - 1))
             .build()
             .perform();
 
@@ -566,8 +614,8 @@ public class PedigreeEditorPage extends BasePage
     }
 
     /**
-     * Creates a sibling for the patient specified by the Nth hover box.
-     * Requires that the Nth hover box exists.
+     * Creates a sibling for the patient specified by the Nth hover box. Requires that the Nth hover box exists.
+     *
      * @param NthHoverBox is the nth hover box for the patient that we want to create a sibling for.
      * @return Stay on the same page, so return the same object.
      */
@@ -584,10 +632,9 @@ public class PedigreeEditorPage extends BasePage
 
         System.out.println("DEBUG Create Nodes found: " + loChildCreateNodes.size());
 
-        clickOnElement(loChildCreateNodes.get(2*NthHoverBox - 1));
+        clickOnElement(loChildCreateNodes.get(2 * NthHoverBox - 1));
         loMaleNodes.get(1).click();
 
         return this;
     }
-
 }

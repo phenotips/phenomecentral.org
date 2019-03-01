@@ -6,16 +6,15 @@ import org.openqa.selenium.WebDriver;
 import io.qameta.allure.Step;
 
 /**
- * Represents the page http://localhost:8083/PhenomeCentral/login
- * This is the user login page
-  */
+ * Represents the page http://localhost:8083/PhenomeCentral/login This is the user login page
+ */
 public class LoginPage extends BasePage
 {
     private final By userNameField = By.id("j_username");
 
-    private final By passField = By.id("j_pasword"); // TODO: There might be a typo there
+    private final By passField = By.id("j_pasword"); // Note: There might be a typo there
 
-    private final By loginButton = By.cssSelector("input.button");
+    private final By loginButton = By.cssSelector("input.button[value='Sign in']");
 
     public LoginPage(WebDriver aDriver)
     {
@@ -24,6 +23,7 @@ public class LoginPage extends BasePage
 
     /**
      * Logs in using username and password. Assumes that login will be sucessful.
+     *
      * @param username non-empty case sensitive user ID
      * @param password non-empty and case sensitive password
      * @return a homepage object as we navigate there on successful login.
@@ -41,6 +41,7 @@ public class LoginPage extends BasePage
 
     /**
      * Logs in with the default admin credentials
+     *
      * @return a homepage object as we navigate there upon sucessful login
      */
     @Step("Login as an admin")
@@ -51,6 +52,7 @@ public class LoginPage extends BasePage
 
     /**
      * Logs in with a regular user's credentials.
+     *
      * @return a homepage object as we navigate there upon sucessful login
      */
     @Step("Login as User 1")
@@ -61,6 +63,7 @@ public class LoginPage extends BasePage
 
     /**
      * Logs in with the second user's credentials.
+     *
      * @return a homepage object as we navigate there upon sucessful login
      */
     @Step("Login as User 2")

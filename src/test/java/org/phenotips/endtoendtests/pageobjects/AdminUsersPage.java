@@ -6,12 +6,13 @@ import org.openqa.selenium.WebDriver;
 import io.qameta.allure.Step;
 
 /**
- * This page corresponds to the Users page from Administrator Settings. We can add users here.
- * I.e. http://localhost:8083/admin/XWiki/XWikiPreferences?section=Users
+ * This page corresponds to the Users page from Administrator Settings. We can add users here. I.e.
+ * http://localhost:8083/admin/XWiki/XWikiPreferences?section=Users
  */
 public class AdminUsersPage extends AdminSettingsPage implements CommonSignUpSelectors
 {
     private final By saveBtn = By.cssSelector("input[value='Save']");
+
     private final By cancelBtn = By.cssSelector("input[value='Cancel changes since last save']");
 
     public AdminUsersPage(WebDriver aDriver)
@@ -20,12 +21,14 @@ public class AdminUsersPage extends AdminSettingsPage implements CommonSignUpSel
     }
 
     /**
-     * Adds a user to the PC instance. Only adds it to the Users table, does not confirm and authorize the user.
-     * Uses the default username that is suggested by XWiki.
+     * Adds a user to the PC instance. Only adds it to the Users table, does not confirm and authorize the user. Uses
+     * the default username that is suggested by XWiki.
+     *
      * @param firstName First Name as a String.
      * @param lastName Last name as a String.
      * @param password is password as a String.
-     * @param email is email for the user as a String. Should be either a dummy address or something that we can access.
+     * @param email is email for the user as a String. Should be either a dummy address or something that we can
+     * access.
      * @param affiliation is the value for the Affiliation box as a String.
      * @param referral value for the "How did you hear about/  Who referred you" box as a String.
      * @param justification value for the "Why are you requesting access" box as a String.
@@ -55,6 +58,4 @@ public class AdminUsersPage extends AdminSettingsPage implements CommonSignUpSel
         clickOnElement(saveBtn);
         return this;
     }
-
-
 }

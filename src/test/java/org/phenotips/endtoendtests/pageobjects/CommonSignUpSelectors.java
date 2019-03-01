@@ -3,10 +3,9 @@ package org.phenotips.endtoendtests.pageobjects;
 import org.openqa.selenium.By;
 
 /**
- * This interface contains selectors that are used on a sign up page. These appear on both the sign up page that a
- * user sees and when an Admin tries to add a user manually.
- * i.e. http://localhost:8083/register/PhenomeCentral/WebHome and
- *      http://localhost:8083/admin/XWiki/XWikiPreferences?editor=globaladmin&section=Users#
+ * This interface contains selectors that are used on a sign up page. These appear on both the sign up page that a user
+ * sees and when an Admin tries to add a user manually. i.e. http://localhost:8083/register/PhenomeCentral/WebHome and
+ * http://localhost:8083/admin/XWiki/XWikiPreferences?editor=globaladmin&section=Users#
  */
 public interface CommonSignUpSelectors
 {
@@ -20,12 +19,10 @@ public interface CommonSignUpSelectors
     By affiliationBox = By.id("register_affiliation");
     By referralBox = By.id("register_referral"); // "How did you hear about / Who referred you to PhenomeCentral?"
     By reasoningBox = By.id("register_comment"); // Why are you requesting access to PhenomeCentral?
-
     // Checkboxes
     By professionalCheckbox = By.id("confirmation_clinician");
     By liabilityCheckbox = By.id("confirmation_research");
     By nonIdentificationCheckbox = By.id("confirmation_identify");
     By cooperationCheckbox = By.id("confirmation_publication");
     By acknoledgementCheckbox = By.id("confirmation_funding");
-
 }

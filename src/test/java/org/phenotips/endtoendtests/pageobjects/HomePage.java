@@ -11,7 +11,7 @@ import io.qameta.allure.Step;
 
 /**
  * Represents the page on http://localhost:8083/ (HOMEPAGE_URL)
-  */
+ */
 public class HomePage extends BasePage
 {
     final By loginLink = By.id("launch-login");
@@ -20,7 +20,8 @@ public class HomePage extends BasePage
 
     final By sectionTitles = By.cssSelector("div.gadget-title"); // Titles of the sections visible on the splash page
 
-    final By unauthorizedActionErrorMsg = By.cssSelector("p.xwikimessage"); // Error message that users get when trying to view patients that aren't theirs.
+    final By unauthorizedActionErrorMsg = By.cssSelector("p.xwikimessage");
+        // Error message that users get when trying to view patients that aren't theirs.
 
     public HomePage(WebDriver aDriver)
     {
@@ -28,11 +29,11 @@ public class HomePage extends BasePage
     } // Give the webdriver to the superclass
 
     /**
-     * Go to the login page where a user enters their credentials.
-     * It tries to logout when it cannot find the login link on the homepage.
-     * This should result in the login page being displayed.
-     * Ideally, this gets called from the splash page that the public sees when on the home page.
-     * Ex. "Enter cases, find matches, and connect with other rare disease specialists. Find out more..."
+     * Go to the login page where a user enters their credentials. It tries to logout when it cannot find the login link
+     * on the homepage. This should result in the login page being displayed. Ideally, this gets called from the splash
+     * page that the public sees when on the home page. Ex. "Enter cases, find matches, and connect with other rare
+     * disease specialists. Find out more..."
+     *
      * @return a new login page object as we navigate there
      */
     @Step("Navigate to login page")
@@ -51,9 +52,10 @@ public class HomePage extends BasePage
     }
 
     /**
-     * Navigate to the User Sign up page by clicking on the "Sign Up" button from the homepage.
-     * This is the public sign up page form where people can request access to the PC instance.
-     * Ideally, the no user should be signed in when calling this method.
+     * Navigate to the User Sign up page by clicking on the "Sign Up" button from the homepage. This is the public sign
+     * up page form where people can request access to the PC instance. Ideally, the no user should be signed in when
+     * calling this method.
+     *
      * @return A new instance of the UserSignUp page as we navigate there.
      */
     @Step("Navigate to sign up page")
@@ -70,10 +72,10 @@ public class HomePage extends BasePage
 
     /**
      * Retrieves a list of section titles that appear when a user logs in. These are the individual widgets that are
-     * present right after logging in (on the home page). As of now, they are: "My Matches", "My Patients",
-     * "Patients Shared With Me", "My Groups" and "Public Data"
-     * This is useful for determining if the patient has privilages that are granted upon user approval. Without approval,
-     * they should see none of those headings.
+     * present right after logging in (on the home page). As of now, they are: "My Matches", "My Patients", "Patients
+     * Shared With Me", "My Groups" and "Public Data" This is useful for determining if the patient has privilages that
+     * are granted upon user approval. Without approval, they should see none of those headings.
+     *
      * @return A list of Strings representing the titles of each section.
      */
     @Step("Retrieve titles of each section on the splash page")
@@ -82,16 +84,17 @@ public class HomePage extends BasePage
         waitForElementToBePresent(logOutLink);
         List<String> loTitles = new ArrayList<>();
 
-        superDriver.findElements(sectionTitles).forEach(x-> loTitles.add(x.getText()));
+        superDriver.findElements(sectionTitles).forEach(x -> loTitles.add(x.getText()));
 
         return loTitles;
     }
 
     /**
      * Retrieve the unauthorized action error message that a user gets. For instance, when trying to view a patient that
-     * is not theirs and is not public. "You are not allowed to view this page or perform this action."
-     * Requires: That the error message page be present, otherwise will throw exception that error is not found.
-     *           Exception when there is no error, hence test failure.
+     * is not theirs and is not public. "You are not allowed to view this page or perform this action." Requires: That
+     * the error message page be present, otherwise will throw exception that error is not found. Exception when there
+     * is no error, hence test failure.
+     *
      * @return A String representing the message.
      */
     @Step("Retrieve the unauthorized access error message 'You are not allowed to view this page or perform this action.'")

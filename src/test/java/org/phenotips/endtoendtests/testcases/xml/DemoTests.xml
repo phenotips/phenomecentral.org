@@ -9,7 +9,7 @@
         </methods>
       </class>
 
-      <class name="org.phenotips.endtoendtests.testcases.PatientCreationOptionsTests" >
+      <class name="org.phenotips.endtoendtests.testcases.PatientCreationOptionsTests">
         <methods>
           <include name="cycleThroughInfoOptions" />
         </methods>

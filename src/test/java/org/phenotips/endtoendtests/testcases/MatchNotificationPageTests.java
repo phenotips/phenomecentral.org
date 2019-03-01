@@ -1,5 +1,11 @@
 package org.phenotips.endtoendtests.testcases;
 
+import org.phenotips.endtoendtests.common.CommonInfoEnums;
+import org.phenotips.endtoendtests.pageobjects.AdminRefreshMatchesPage;
+import org.phenotips.endtoendtests.pageobjects.EmailUIPage;
+import org.phenotips.endtoendtests.pageobjects.HomePage;
+import org.phenotips.endtoendtests.pageobjects.ViewPatientPage;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -8,19 +14,17 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import org.phenotips.endtoendtests.pageobjects.AdminRefreshMatchesPage;
-import org.phenotips.endtoendtests.pageobjects.EmailUIPage;
-import org.phenotips.endtoendtests.pageobjects.HomePage;
-import org.phenotips.endtoendtests.pageobjects.ViewPatientPage;
 import net.bytebuddy.utility.RandomString;
 
 /**
- * This class will contain tests for the match notification table. It will ensure the appropriate
- * patients are present and show up when matched. For instance, match to genes, phenotype, and both.
- * Requires MockMock email UI to be setup with the PC instance that is being tested.
+ * This class will contain tests for the match notification table. It will ensure the appropriate patients are present
+ * and show up when matched. For instance, match to genes, phenotype, and both. Requires MockMock email UI to be setup
+ * with the PC instance that is being tested.
  */
 public class MatchNotificationPageTests extends BaseTest implements CommonInfoEnums
 {
+    final private String randomChars = RandomString.make(5);
+
     HomePage aHomePage = new HomePage(theDriver);
 
     EmailUIPage aEmailUIPage = new EmailUIPage(theDriver);
@@ -29,13 +33,11 @@ public class MatchNotificationPageTests extends BaseTest implements CommonInfoEn
 
     AdminRefreshMatchesPage anAdminRefreshMatchesPage = new AdminRefreshMatchesPage(theDriver);
 
-    final private String randomChars = RandomString.make(5);
-
     /**
-     * Refresh "matches since last modified" so that the number goes to zero before beginning these tests.
-     * This ensures that the assertions for "Number of Patients Processed" will pass as we check for exact match.
-     * It then navigates to MockMock's UI page to clear the email inbox before any of these tests run.
-     * This method runs once before the tests in this class begin running.
+     * Refresh "matches since last modified" so that the number goes to zero before beginning these tests. This ensures
+     * that the assertions for "Number of Patients Processed" will pass as we check for exact match. It then navigates
+     * to MockMock's UI page to clear the email inbox before any of these tests run. This method runs once before the
+     * tests in this class begin running.
      */
     @BeforeClass
     public void refreshMatchesFirst()
@@ -52,10 +54,8 @@ public class MatchNotificationPageTests extends BaseTest implements CommonInfoEn
     }
 
     /**
-     * Creates two new patients with 3/4 same phenotypes and no identical genes.
-     * Asserts that:
-     * - Two new patients are processed after a match refresh since last update
-     * - A match for the two patients is found.
+     * Creates two new patients with 3/4 same phenotypes and no identical genes. Asserts that: - Two new patients are
+     * processed after a match refresh since last update - A match for the two patients is found.
      */
     @Test()
     public void matchPhenotypeOnly()
@@ -139,10 +139,8 @@ public class MatchNotificationPageTests extends BaseTest implements CommonInfoEn
     }
 
     /**
-     * Creates two new patients with identical genotype and no identical phenotype.
-     * Asserts that:
-     * - Two new patients are processed after a match refresh since last update
-     * - A match for the two patients is found.
+     * Creates two new patients with identical genotype and no identical phenotype. Asserts that: - Two new patients are
+     * processed after a match refresh since last update - A match for the two patients is found.
      */
     @Test()
     public void matchGenotypeOnly()
@@ -247,5 +245,4 @@ public class MatchNotificationPageTests extends BaseTest implements CommonInfoEn
 
         aEmailUIPage.deleteAllEmails();
     }
-
 }

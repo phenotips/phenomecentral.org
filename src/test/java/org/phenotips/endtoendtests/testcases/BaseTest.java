@@ -31,24 +31,71 @@ import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
 
 /**
- * An abstract test. All tests should inherit this class.
- * We should put any high level methods using @after- annotations here
- * We can also put any high level @BeforeSuite methods here too to setup/check main conditions.
+ * An abstract test. All tests should inherit this class. We should put any high level methods using @after- annotations
+ * here We can also put any high level @BeforeSuite methods here too to setup/check main conditions.
  */
 public abstract class BaseTest
 {
     protected static WebDriver theDriver;
 
     /**
-     * Instantiate the webDriver instance here. The WebDriverManager takes care of setting up the
-     * environment including the intermediary protocol used to communicate with the browser.
-     * This allows a user to just run the tests and the manager should take care of finding the path
-     * to the desired executable and setting up environment.
+     * Instantiate the webDriver instance here. The WebDriverManager takes care of setting up the environment including
+     * the intermediary protocol used to communicate with the browser. This allows a user to just run the tests and the
+     * manager should take care of finding the path to the desired executable and setting up environment.
      */
-    public BaseTest() {
+    public BaseTest()
+    {
         if (theDriver == null) {
             printCommandLinePropertyMessages();
             setUpBrowser();
+        }
+    }
+
+    /**
+     * Runs after every test method. In the case that TestNG's listener reports a failure, call methods to take a
+     * screenshot and to cleanup the state of the browser.
+     *
+     * @param testResult resulting status of a test method that has just run, as reported by TestNGs listener. Check
+     * this passed info for failure.
+     */
+    @AfterMethod
+    public void onTestEnd(ITestResult testResult)
+    {
+        String testMethod = testResult.getMethod().getMethodName();
+
+        if (ITestResult.FAILURE == testResult.getStatus()) {
+            System.out.println("Test:" + testMethod + " has failed. Taking a screenshot and cleaning up...");
+            captureScreenshot(testMethod, theDriver.getCurrentUrl());
+            cleanupBrowserState();
+        } else if (ITestResult.SKIP == testResult.getStatus()) {
+            System.out.println("Test:" + testMethod +
+                " was skipped, possibly due to unfinished dependent tests, system error, or unable to reach Selenium. No screenshot. Moving on.");
+        } else {
+            System.out.println("Test:" + testMethod + " has succeeded. No screenshot. Moving on.");
+        }
+    }
+
+    /**
+     * Runs after each class finishes. Now no longer really being used, except for a debug message.
+     */
+    @AfterClass
+    public void testCleanup()
+    {
+        System.out.println("A single class has finished");
+    }
+
+    /**
+     * Runs after the entire suite (all test cases specified in the test run) are finished. We explicitly quit the
+     * webDriver here as it does not close on its own when the reference is trashed. Quitting the webDriver means
+     * closing the browser window and quitting the firefox process (important).
+     */
+    @AfterSuite
+    public void cleanup()
+    {
+        System.out.println("Test suite finished running");
+
+        if (theDriver != null) {
+            theDriver.quit();
         }
     }
 
@@ -85,11 +132,10 @@ public abstract class BaseTest
     }
 
     /**
-     * Prints out debug messages for the three environment variables (the ones the tests are interested in) that
-     * were passed through the command line. This includes the homePageURL, emailUIPageURL and browser if they were
-     * passed.
+     * Prints out debug messages for the three environment variables (the ones the tests are interested in) that were
+     * passed through the command line. This includes the homePageURL, emailUIPageURL and browser if they were passed.
      * TODO: Perhaps create a superclass for BasePage/BaseTest that handles command line parameters in one place, rather
-     *       than have the URLs set in BasePage and the browser set in BaseTest
+     * than have the URLs set in BasePage and the browser set in BaseTest
      */
     private void printCommandLinePropertyMessages()
     {
@@ -100,7 +146,8 @@ public abstract class BaseTest
         }
 
         if (System.getProperty("emailUIPageURL") != null) {
-            System.out.println("emailUIPageURL property passed. EmailUI is at: " + System.getProperty("emailUIPageURL"));
+            System.out
+                .println("emailUIPageURL property passed. EmailUI is at: " + System.getProperty("emailUIPageURL"));
         }
 
         if (System.getProperty("browser") != null) {
@@ -109,16 +156,19 @@ public abstract class BaseTest
     }
 
     /**
-     * Captures a screenshot of the browser viewport as a PNG to the target/screenshot folder. This is called
-     * by the AfterMethod in the case of a test failure.
+     * Captures a screenshot of the browser viewport as a PNG to the target/screenshot folder. This is called by the
+     * AfterMethod in the case of a test failure.
+     *
      * @param testMethod The method name of the test that failed, as a String. Will be used to name the file.
-     * @param URL the URL that the browser was at during a test failure. Used by Allure's listener in the Step annotation
+     * @param URL the URL that the browser was at during a test failure. Used by Allure's listener in the Step
+     * annotation
      */
     @Step("Taking screenshot of {0} for URL {1}")
-    private void captureScreenshot(String testMethod, String URL) {
+    private void captureScreenshot(String testMethod, String URL)
+    {
         // Screenshot mechanism
         // Cast webDriver over to TakeScreenshot. Call getScreenshotAs method to create image file
-        File srcFile = ((TakesScreenshot)theDriver).getScreenshotAs(OutputType.FILE);
+        File srcFile = ((TakesScreenshot) theDriver).getScreenshotAs(OutputType.FILE);
 
         LocalDateTime dateTime = ZonedDateTime.now().toLocalDateTime();
 
@@ -146,11 +196,12 @@ public abstract class BaseTest
     }
 
     /**
-     * Cleans up the state of the browser after a test failure. This takes care of any warning modal that
-     * pops up for unsaved edits before navigating back to the login page so that the next tests can continue.
-     * Called by the AfterMethod in case of test failure.
+     * Cleans up the state of the browser after a test failure. This takes care of any warning modal that pops up for
+     * unsaved edits before navigating back to the login page so that the next tests can continue. Called by the
+     * AfterMethod in case of test failure.
      */
-    private void cleanupBrowserState() {
+    private void cleanupBrowserState()
+    {
         HomePage tempHomePage = new HomePage(theDriver);
 
         try {
@@ -161,57 +212,6 @@ public abstract class BaseTest
             theDriver.switchTo().defaultContent();
             tempHomePage.navigateToLoginPage();
             System.out.println("Test failure, navigate to login page. Closed an unsaved changes warning dialogue");
-        }
-    }
-
-    /**
-     * Runs after every test method. In the case that TestNG's listener reports a failure, call methods to
-     * take a screenshot and to cleanup the state of the browser.
-     * @param testResult resulting status of a test method that has just run, as reported by TestNGs listener.
-     *        Check this passed info for failure.
-     */
-    @AfterMethod
-    public void onTestEnd(ITestResult testResult)
-    {
-        String testMethod = testResult.getMethod().getMethodName();
-
-        if (ITestResult.FAILURE == testResult.getStatus()) {
-            System.out.println("Test:" + testMethod + " has failed. Taking a screenshot and cleaning up...");
-            captureScreenshot(testMethod, theDriver.getCurrentUrl());
-            cleanupBrowserState();
-        }
-
-        else if (ITestResult.SKIP == testResult.getStatus()) {
-            System.out.println("Test:" + testMethod + " was skipped, possibly due to unfinished dependent tests, system error, or unable to reach Selenium. No screenshot. Moving on.");
-        }
-
-        else {
-            System.out.println("Test:" + testMethod + " has succeeded. No screenshot. Moving on.");
-        }
-
-    }
-
-    /**
-     * Runs after each class finishes. Now no longer really being used, except for a debug message.
-     */
-    @AfterClass
-    public void testCleanup()
-    {
-        System.out.println("A single class has finished");
-    }
-
-    /**
-     * Runs after the entire suite (all test cases specified in the test run) are finished. We explicitly quit
-     * the webDriver here as it does not close on its own when the reference is trashed. Quitting the webDriver means
-     * closing the browser window and quitting the firefox process (important).
-     */
-    @AfterSuite
-    public void cleanup()
-    {
-        System.out.println("Test suite finished running");
-
-        if (theDriver != null) {
-            theDriver.quit();
         }
     }
 }

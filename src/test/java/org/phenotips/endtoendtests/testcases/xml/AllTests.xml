@@ -13,10 +13,11 @@
         <methods>
           <include name="loginAdminTest" />
           <include name="loginUserTest" />
+          <include name="invalidCredentials" />
         </methods>
       </class>
 
-      <class name="org.phenotips.endtoendtests.testcases.CreatePatientTest" >
+      <class name="org.phenotips.endtoendtests.testcases.CreatePatientTest">
         <methods>
           <include name="createPatientManually" />
           <include name="importSecondJSONPatient" />
@@ -30,7 +31,7 @@
         </methods>
       </class>
 
-      <class name="org.phenotips.endtoendtests.testcases.AddingUsersTests" >
+      <class name="org.phenotips.endtoendtests.testcases.AddingUsersTests">
         <methods>
           <include name="adminAddAndApproveUser" />
           <include name="userSignUpNotApproved" />
@@ -39,7 +40,7 @@
         </methods>
       </class>
 
-      <class name="org.phenotips.endtoendtests.testcases.MatchNotificationPageTests" >
+      <class name="org.phenotips.endtoendtests.testcases.MatchNotificationPageTests">
         <methods>
           <include name="refreshMatchesFirst" />
           <include name="matchPhenotypeOnly" />
@@ -47,7 +48,7 @@
         </methods>
       </class>
 
-      <class name="org.phenotips.endtoendtests.testcases.PatientCreationOptionsTests" >
+      <class name="org.phenotips.endtoendtests.testcases.PatientCreationOptionsTests">
         <methods>
           <include name="cycleThroughInfoOptions" />
           <include name="cycleThroughFamilialConditions" />
@@ -59,7 +60,7 @@
         </methods>
       </class>
 
-      <class name="org.phenotips.endtoendtests.testcases.PedigreePageTest" >
+      <class name="org.phenotips.endtoendtests.testcases.PedigreePageTest">
         <methods>
           <include name="basicPedigree" />
           <include name="createChild" />
@@ -69,7 +70,7 @@
         </methods>
       </class>
 
-      <class name="org.phenotips.endtoendtests.testcases.PermissionsTests" >
+      <class name="org.phenotips.endtoendtests.testcases.PermissionsTests">
         <methods>
           <include name="noMatchPrivatePatient" />
           <include name="cannotSeeOtherPatients" />

@@ -1,5 +1,13 @@
 package org.phenotips.endtoendtests.testcases;
 
+import org.phenotips.endtoendtests.common.CommonInfoEnums;
+import org.phenotips.endtoendtests.common.CommonPatientMeasurement;
+import org.phenotips.endtoendtests.pageobjects.AdminRefreshMatchesPage;
+import org.phenotips.endtoendtests.pageobjects.CreatePatientPage;
+import org.phenotips.endtoendtests.pageobjects.EmailUIPage;
+import org.phenotips.endtoendtests.pageobjects.HomePage;
+import org.phenotips.endtoendtests.pageobjects.ViewPatientPage;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -7,28 +15,22 @@ import java.util.List;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import org.phenotips.endtoendtests.pageobjects.AdminRefreshMatchesPage;
-import org.phenotips.endtoendtests.pageobjects.CreatePatientPage;
-import org.phenotips.endtoendtests.pageobjects.EmailUIPage;
 import net.bytebuddy.utility.RandomString;
-import org.phenotips.endtoendtests.pageobjects.HomePage;
-import org.phenotips.endtoendtests.pageobjects.ViewPatientPage;
 
 /**
  * Testing the creation of two very similar patients via JSON import and manually. Asserts a match at end.
  *
- * The entire class should be run together. Lower methods depend on the ones above.
+ * The entire class should be run together. We need the first two methods to be run first to have two patients created.
  *
- * Requires MockMock email SMTP service to be running for it to check emails.
+ * The remaining tests depend on them. Requires MockMock email SMTP service to be running for it to check emails.
  */
 public class CreatePatientTest extends BaseTest implements CommonInfoEnums
 {
     final private HomePage aHomePage = new HomePage(theDriver);
 
-    // At some point we need to restart the view patients page.
     final private ViewPatientPage aViewPatientPage = new ViewPatientPage(theDriver);
-    final private CreatePatientPage aCreatePatientPage = new CreatePatientPage(theDriver);
 
+    final private CreatePatientPage aCreatePatientPage = new CreatePatientPage(theDriver);
 
     final private SECTIONS[] checkForTheseSections = {
         SECTIONS.PatientInfoSection,
@@ -48,8 +50,7 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
             "\",\"variants\":[],\"clinicalStatus\":\"affected\",\"disorders\":[],\"features\":[{\"id\":\"HP:0000385\",\"label\":\"Small earlobe\",\"type\":\"phenotype\",\"observed\":\"yes\"},{\"id\":\"HP:0000505\",\"label\":\"Visual impairment\",\"type\":\"phenotype\",\"observed\":\"yes\"},{\"id\":\"HP:0000618\",\"label\":\"Blindness\",\"type\":\"phenotype\",\"observed\":\"yes\"},{\"id\":\"HP:0001250\",\"label\":\"Seizures\",\"type\":\"phenotype\",\"observed\":\"yes\"},{\"id\":\"HP:0002121\",\"label\":\"Absence seizures\",\"type\":\"phenotype\",\"observed\":\"yes\"},{\"id\":\"HP:0006266\",\"label\":\"Small placenta\",\"type\":\"phenotype\",\"observed\":\"yes\"},{\"id\":\"HP:0007875\",\"label\":\"Congenital blindness\",\"type\":\"phenotype\",\"observed\":\"yes\"},{\"id\":\"HP:0011146\",\"label\":\"Dialeptic seizures\",\"type\":\"phenotype\",\"observed\":\"yes\"},{\"id\":\"HP:0011147\",\"label\":\"Typical absence seizures\",\"type\":\"phenotype\",\"observed\":\"yes\"},{\"id\":\"HP:0200055\",\"label\":\"Small hand\",\"type\":\"phenotype\",\"observed\":\"yes\"}],\"date_of_death\":\"\",\"last_modification_date\":\"2019-01-11T17:31:13.000Z\",\"nonstandard_features\":[],\"prenatal_perinatal_history\":{\"multipleGestation\":null,\"icsi\":null,\"ivf\":null,\"assistedReproduction_donoregg\":null,\"assistedReproduction_iui\":null,\"twinNumber\":\"\",\"assistedReproduction_fertilityMeds\":null,\"gestation\":null,\"assistedReproduction_surrogacy\":null,\"assistedReproduction_donorsperm\":null},\"family_history\":{\"miscarriages\":null,\"consanguinity\":null,\"affectedRelatives\":null},\"genes\":[{\"gene\":\"PLS1\",\"id\":\"ENSG00000120756\",\"strategy\":[\"sequencing\"],\"status\":\"candidate\"},{\"gene\":\"PLS3\",\"id\":\"ENSG00000102024\",\"strategy\":[\"sequencing\"],\"status\":\"candidate\"},{\"gene\":\"QSOX1\",\"id\":\"ENSG00000116260\",\"strategy\":[\"sequencing\"],\"status\":\"solved\"},{\"gene\":\"TXNL1\",\"id\":\"ENSG00000091164\",\"strategy\":[\"sequencing\"],\"status\":\"carrier\"}],\"life_status\":\"alive\",\"sex\":\"M\",\"clinical-diagnosis\":[],\"reporter\":\"TestUser1Uno\",\"last_modified_by\":\"TestUser1Uno\",\"global_age_of_onset\":[{\"id\":\"HP:0003577\",\"label\":\"Congenital onset\"}],\"report_id\":\"P0000009\",\"medical_reports\":[]}\n" +
             "]";
 
-    // Create a patient manually as User 1.
-//    @Test(, groups={"CreatePatientTest.createTwoPatients"})
+    // Create a patient manually as User 1. Assert that the required section titles in checkForTheseSections are visible.
     @Test()
     public void createPatientManually()
     {
@@ -80,12 +81,10 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
         Assert.assertTrue(aViewPatientPage.checkForVisibleSections(checkForTheseSections));
 
         aViewPatientPage.logOut();
-
     }
 
-    // Creates an identitcal patient as User 2 via JSON import. Asserts that the section titles are visible.
+    // Creates an identical patient as User 2 via JSON import. Asserts that the section titles are visible.
     // Updates consent, and changes modifies the identifier so that it is unique and matchable.
-//    @Test(, groups={"CreatePatientTest.createTwoPatients"})
     @Test()
     public void importSecondJSONPatient()
     {
@@ -108,11 +107,13 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
     }
 
     // Refresh the matches and assert that two new matches are found.
-//    @Test(, dependsOnMethods = {"createPatientManually", "importSecondJSONPatient"})
+//    @Test(dependsOnMethods = {"createPatientManually", "importSecondJSONPatient"})
+//          dependsOnMethods causes order on XML to be ignored as they will have higher priority,
+//          which is a global variable.
     @Test()
     public void refreshMatchesForTwoPatients()
     {
-        AdminRefreshMatchesPage aRefreshMatchesPage= new AdminRefreshMatchesPage(theDriver);
+        AdminRefreshMatchesPage aRefreshMatchesPage = new AdminRefreshMatchesPage(theDriver);
 
         aHomePage.navigateToLoginPage()
             .loginAsAdmin()
@@ -124,7 +125,6 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
         String expectedMatchCount = Integer.toString(initialRefreshMatchCount + 2);
 
         Assert.assertEquals(aRefreshMatchesPage.getNumberOfLocalPatientsProcessed(), "2");
-        // TODO: This assertion will fail... this is "Total" matches found, not new ones.
         Assert.assertEquals(aRefreshMatchesPage.getTotalMatchesFound(), expectedMatchCount);
 
         aHomePage.logOut();
@@ -132,7 +132,6 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
 
     // Sends the email notification of an identical (100%) match to the two newly created
     // patients, checks that the inbox has emails.
-    // TODO: Maybe we should delete patient afterwards, otherwise might get other matches in first row.
 //    @Test(, dependsOnMethods = {"createPatientManually", "importSecondJSONPatient"})
     @Test()
     public void verifyEmailNotifications()
@@ -186,6 +185,7 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
         aHomePage.logOut();
     }
 
+    // Adds a collaborator to a patient belong to User 2. Asserts that User 1 can then access it.
 //    @Test(, dependsOnMethods = {"createPatientManually", "importSecondJSONPatient"})
     @Test()
     public void collaboratorVisibilityTest()
@@ -214,8 +214,10 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
         aViewPatientPage.logOut();
     }
 
+    // Deletes all patients, helper test in case we want to clean up all patients after this class in the future.
     @Test(enabled = false)
-    public void deleteAllUsersHelper() {
+    public void deleteAllUsersHelper()
+    {
         aHomePage
             .navigateToLoginPage()
             .loginAsAdmin()
@@ -223,14 +225,15 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
             .deleteAllPatients();
     }
 
+    // Adds measurements to User 1's patient, ensures that they are saved and viewable on the view patient form.
     @Test()
     public void addMeasurements()
     {
         CommonPatientMeasurement measurements = new CommonPatientMeasurement(
-            1, 2, 3,4, 5,
-            6,7,8,9,10,
-            11,12,13,14,15,
-            16,17,18);
+            1, 2, 3, 4, 5,
+            6, 7, 8, 9, 10,
+            11, 12, 13, 14, 15,
+            16, 17, 18);
 
         aHomePage.navigateToLoginPage()
             .loginAsUser()
@@ -253,6 +256,9 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
             .logOut();
     }
 
+    // Adds a custom phenotype and then asserts that the automatically added phenotypes show up with the
+    // lightning bolt symbol and the manually added phenotype doesn't have that symbol.
+    // DependsOn the addMeasurements() test to have completed.
     @Test()
     public void checkPhenotypesDueToMeasurements()
     {
@@ -287,7 +293,8 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
             .logOut();
     }
 
-    // Checks that the diagnosis section has the appropriate fields from what was entered on the patient form
+    // Enters information to the diagnosis form. Asserts that the diagnosis section has the appropriate fields
+    // as seen on the view patient form.
     @Test()
     public void checkDiagnosisSection()
     {
@@ -338,8 +345,5 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
         Assert.assertEquals(aViewPatientPage.getResolutionNotes(), resolutionNoteCheck);
 
         aHomePage.logOut();
-
     }
-
-
 }
