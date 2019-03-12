@@ -128,8 +128,8 @@
 
   <properties>
     <!-- Downstream project versions -->
-    <patientNetwork.version>1.2-SNAPSHOT</patientNetwork.version>
-    <remoteMatching.version>1.2-SNAPSHOT</remoteMatching.version>
+    <patientNetwork.version>1.2-rc-2</patientNetwork.version>
+    <remoteMatching.version>1.2-rc-2</remoteMatching.version>
 
     <!-- There is no Java code, speedup the build by skipping checks -->
     <checkstyle.skip>true</checkstyle.skip>
