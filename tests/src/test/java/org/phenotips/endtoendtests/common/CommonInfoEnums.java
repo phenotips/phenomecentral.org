@@ -39,8 +39,8 @@ public interface CommonInfoEnums
         SimilarCasesSection
     }
 
-    // Privilage levels
-    enum PRIVILAGE
+    // Privilege levels
+    enum PRIVILEGE
     {
         CanView,
         CanViewAndModify,

@@ -55,7 +55,7 @@ public class AllPatientsPage extends BasePage
 
     /**
      * Imports a patient via the passed JSON string. Waits 5 seconds before returning, difficult to detect when import
-     * is sucessful.
+     * is successful.
      *
      * @param theJSON a long string which represents the JSON. Ensure that backslashes are escaped.
      * @return the same object, we stay on the same page.
@@ -113,7 +113,7 @@ public class AllPatientsPage extends BasePage
 
         // theElement just acts as an iterator for the array size, we don't use it.
         for (WebElement theElement : loDeleteBtns) { // Use the original number of rows a counter
-            // theElement.click(); // Table pagintes upwards
+            // theElement.click(); // Table paginates upwards
             clickOnElement(this.deleteBtns);
             clickOnElement(this.deleteYesConfirmBtn);
             waitForInProgressMsgToDisappear();

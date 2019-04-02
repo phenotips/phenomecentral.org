@@ -87,4 +87,4 @@ Flow of execution:
 
 ## Limitations
 - UI/UX issues can't be detected  effectively. Ex. Element is present but is in 1 pt font or hard to see.
-- A seperate machine or server is highly recommended for test stability. While Selenium does not explicitly capture the mouse or keyboard, the browser window might come into focus if a native OS error dialogue (such as the one we get when being prompted for unsaved changes) pops up. Use with caution. 
+- A separate machine or server is highly recommended for test stability. While Selenium does not explicitly capture the mouse or keyboard, the browser window might come into focus if a native OS error dialogue (such as the one we get when being prompted for unsaved changes) pops up. Use with caution. 

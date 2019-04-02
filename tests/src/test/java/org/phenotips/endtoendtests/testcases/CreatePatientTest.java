@@ -225,7 +225,7 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
             .loginAsUser()
             .navigateToAllPatientsPage()
             .viewFirstPatientInTable()
-            .addCollaboratorToPatient("TestUser2Dos", PRIVILAGE.CanViewAndModifyAndManageRights);
+            .addCollaboratorToPatient("TestUser2Dos", PRIVILEGE.CanViewAndModifyAndManageRights);
 
         String patientIDThroughUser1 = this.aViewPatientPage.getPatientID();
 

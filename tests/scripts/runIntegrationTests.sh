@@ -92,18 +92,18 @@ checkForStart() {
 	local CURL_RESULT
 	local CURL_RETURN
 	CURL_RESULT=$(curl "$PC_INSTANCE_URL")
-	CURL_RETURN=$? # "local" affects the return code of above curl command. Declarae vars first.
+	CURL_RETURN=$? # "local" affects the return code of above curl command. Declare vars first.
 
 	if test "$CURL_RETURN" != "0"; then
 		echo "Curl to $PC_INSTANCE_URL has failed. Wait 10 secs on try again" 
 		sleep 10
 		checkForStart
 	else
-		echo "Response recieved on curl to $PC_INSTANCE_URL." 
+		echo "Response received on curl to $PC_INSTANCE_URL." 
 		local READY_MESSAGE_FOUND=$(echo "$CURL_RESULT" | grep -c "$READY_MESSAGE")
 
 		if [[ "$READY_MESSAGE_FOUND" -gt 0 ]]; then
-			echo "It seems instance has sucessfully started and is ready since '$READY_MESSAGE' is visible on the page" 
+			echo "It seems instance has successfully started and is ready since '$READY_MESSAGE' is visible on the page" 
 		else
 			echo "Instance is not ready yet. The string $READY_MESSAGE was not found on page. Wait 10 seconds and ping again" 
 			sleep 10
@@ -142,7 +142,7 @@ stopSMTP() {
 }
 
 onCtrlC() {
-	echo "Ctrl C recieved. Stopping script" 
+	echo "Ctrl C received. Stopping script" 
 	stopInstance
 	stopSMTP
 	exit 3

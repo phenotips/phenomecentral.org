@@ -90,7 +90,7 @@ public class HomePage extends BasePage
     /**
      * Retrieves a list of section titles that appear when a user logs in. These are the individual widgets that are
      * present right after logging in (on the home page). As of now, they are: "My Matches", "My Patients", "Patients
-     * Shared With Me", "My Groups" and "Public Data" This is useful for determining if the patient has privilages that
+     * Shared With Me", "My Groups" and "Public Data" This is useful for determining if the patient has privileges that
      * are granted upon user approval. Without approval, they should see none of those headings.
      *
      * @return A list of Strings representing the titles of each section.

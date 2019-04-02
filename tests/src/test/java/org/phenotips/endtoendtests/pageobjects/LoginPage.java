@@ -29,7 +29,7 @@ public class LoginPage extends BasePage
 {
     private final By userNameField = By.id("j_username");
 
-    private final By passField = By.id("j_pasword"); // Note: There might be a typo there
+    private final By passField = By.id("j_password"); // Note: There might be a typo there
 
     private final By loginButton = By.cssSelector("input.button[value='Sign in']");
 
@@ -39,7 +39,7 @@ public class LoginPage extends BasePage
     }
 
     /**
-     * Logs in using username and password. Assumes that login will be sucessful.
+     * Logs in using username and password. Assumes that login will be successful.
      *
      * @param username non-empty case sensitive user ID
      * @param password non-empty and case sensitive password
@@ -59,7 +59,7 @@ public class LoginPage extends BasePage
     /**
      * Logs in with the default admin credentials
      *
-     * @return a homepage object as we navigate there upon sucessful login
+     * @return a homepage object as we navigate there upon successful login
      */
     @Step("Login as an admin")
     public HomePage loginAsAdmin()
@@ -70,7 +70,7 @@ public class LoginPage extends BasePage
     /**
      * Logs in with a regular user's credentials.
      *
-     * @return a homepage object as we navigate there upon sucessful login
+     * @return a homepage object as we navigate there upon successful login
      */
     @Step("Login as User 1")
     public HomePage loginAsUser()
@@ -81,7 +81,7 @@ public class LoginPage extends BasePage
     /**
      * Logs in with the second user's credentials.
      *
-     * @return a homepage object as we navigate there upon sucessful login
+     * @return a homepage object as we navigate there upon successful login
      */
     @Step("Login as User 2")
     public HomePage loginAsUserTwo()

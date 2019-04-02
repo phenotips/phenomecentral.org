@@ -51,7 +51,7 @@ public abstract class CommonInfoSelectors extends BasePage implements CommonInfo
 
     private final By updateConfirmBtn = By.cssSelector("input.button[value=Update]");
 
-    private final By privilageLevelDrps = By.cssSelector("select[name=accessLevel]");
+    private final By privilegeLevelDrps = By.cssSelector("select[name=accessLevel]");
 
     private final By deleteCollaboratorBtn = By.cssSelector("span[title=\"Remove this collaborator\"]");
 
@@ -151,13 +151,13 @@ public abstract class CommonInfoSelectors extends BasePage implements CommonInfo
 
     /**
      * Adds a collaborator to the patient via the "Modify Permissions" modal. Searches for name and clicks on first
-     * result, therefore, assumes that there is at least one result. Sets the privilage to the one specified.
+     * result, therefore, assumes that there is at least one result. Sets the privilege to the one specified.
      *
      * @param collaboratorName is the exact name of the collaborator to add.
-     * @param privilageLevel is one of three levels of privilages specified by the PRIVIALGE enum.
+     * @param privilegeLevel is one of three levels of privileges specified by the PRIVIALGE enum.
      */
-    @Step("Add collaborator to patient with: Collaborator name: {0} and Privilage level of: {1}")
-    public void addCollaboratorToPatient(String collaboratorName, PRIVILAGE privilageLevel)
+    @Step("Add collaborator to patient with: Collaborator name: {0} and Privilege level of: {1}")
+    public void addCollaboratorToPatient(String collaboratorName, PRIVILEGE privilegeLevel)
     {
         clickOnElement(this.modifyPermissionsBtn);
         clickAndTypeOnElement(this.newCollaboratorBox, collaboratorName);
@@ -165,10 +165,10 @@ public abstract class CommonInfoSelectors extends BasePage implements CommonInfo
         // Looks like we'll have to press enter
         this.superDriver.findElement(this.newCollaboratorBox).sendKeys(Keys.ENTER);
 
-        List<WebElement> loPrivilageDropdowns = this.superDriver.findElements(this.privilageLevelDrps);
-        Select bottomMostPDrop = new Select(loPrivilageDropdowns.get(loPrivilageDropdowns.size() - 1));
+        List<WebElement> loPrivilegeDropdowns = this.superDriver.findElements(this.privilegeLevelDrps);
+        Select bottomMostPDrop = new Select(loPrivilegeDropdowns.get(loPrivilegeDropdowns.size() - 1));
 
-        switch (privilageLevel) {
+        switch (privilegeLevel) {
             case CanView:
                 bottomMostPDrop.selectByVisibleText("Can view the record");
                 break;

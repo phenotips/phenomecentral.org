@@ -73,7 +73,7 @@ $xwiki.ssx.use('PhenomeCentral.login')##
   {{error}}$services.localization.render($message){{/error}}
 #end
 &lt;p&gt;&lt;input class="username" type="text" id="j_username" name="j_username" value="" placeholder="$services.localization.render('username')" title="$services.localization.render('username')" autofocus="autofocus"/&gt;&lt;/p&gt;
-&lt;p&gt;&lt;input class="password" type="password" id="j_pasword" name="j_password" value="" placeholder="$services.localization.render('password')" title="$services.localization.render('password')"/&gt;&lt;/p&gt;
+&lt;p&gt;&lt;input class="password" type="password" id="j_password" name="j_password" value="" placeholder="$services.localization.render('password')" title="$services.localization.render('password')"/&gt;&lt;/p&gt;
 &lt;div class="buttons"&gt;&lt;input type="submit" class="button" value="Sign in"/&gt; &lt;span class="buttonwrapper"&gt;&lt;a class="button secondary" href="$xwiki.getURL('data.WebHome')"&gt;Cancel and return to homepage&lt;/a&gt;&lt;/span&gt;&lt;/div&gt;
 #if($xwiki.exists('XWiki.ResetPassword') &amp;&amp; $xwiki.hasAccessLevel('view', 'XWiki.ResetPassword'))
   &lt;div class="xHint" &gt;$services.localization.render('plaform.web.login.forgotUserNameOrPassword', ["&lt;a href='$xwiki.getURL('XWiki.ForgotUsername')'&gt;", '&lt;/a&gt;', "&lt;a href='$xwiki.getURL('XWiki.ResetPassword')'&gt;", '&lt;/a&gt;'])&lt;/div&gt;

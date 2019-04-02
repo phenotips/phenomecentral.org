@@ -51,8 +51,8 @@ public class AdminRefreshMatchesPage extends BasePage
     }
 
     /**
-     * Hits the refresh matches "For all patients" button and then calls waitForSucessMessage() to wait for the green
-     * sucess message text.
+     * Hits the refresh matches "For all patients" button and then calls waitForSuccessMessage() to wait for the green
+     * success message text.
      *
      * @return Stay on the same page so we return the same object.
      */
@@ -63,7 +63,7 @@ public class AdminRefreshMatchesPage extends BasePage
         clickOnElement(this.allMatchesBtn);
         clickOnElement(this.confirmFindAllMatchesBtn);
         waitForElementToBePresent(this.findMatchesText); // Must wait for this to appear before passing to loop.
-        waitForSucessMessage();
+        waitForSuccessMessage();
 
         this.superDriver.navigate().refresh();
         waitForElementToBePresent(this.selectLocalServerForMatchBox);
@@ -73,7 +73,7 @@ public class AdminRefreshMatchesPage extends BasePage
 
     /**
      * Hits the refresh matches "For patients modified since last update" button. Calls the helper
-     * waitForSucessMessage() to wait for the green success text to appear.
+     * waitForSuccessMessage() to wait for the green success text to appear.
      *
      * @return Stay on the same page so we return the same object.
      */
@@ -83,7 +83,7 @@ public class AdminRefreshMatchesPage extends BasePage
         clickOnElement(this.selectLocalServerForMatchBox);
         clickOnElement(this.patientsSinceLastModBtn);
         waitForElementToBePresent(this.findMatchesText); // Must wait for this to appear before passing to loop.
-        waitForSucessMessage();
+        waitForSuccessMessage();
 
         this.superDriver.navigate().refresh();
         unconditionalWaitNs(1); // It might find the element before refresh is completed.
@@ -119,12 +119,12 @@ public class AdminRefreshMatchesPage extends BasePage
     }
 
     /**
-     * Helper function to wait for the sucessful green message text ("Done - refresh page to see...") Loop waits 5
+     * Helper function to wait for the successful green message text ("Done - refresh page to see...") Loop waits 5
      * seconds each time until the timeout of 30 seconds. Requires: Some green message text/matches search to be in
      * progress.
      */
-    @Step("Wait for refresh sucess message 'Done - refresh page to see..'")
-    private void waitForSucessMessage()
+    @Step("Wait for refresh success message 'Done - refresh page to see..'")
+    private void waitForSuccessMessage()
     {
         int secondsWaited = 0;
         int secondsToWait = 30;

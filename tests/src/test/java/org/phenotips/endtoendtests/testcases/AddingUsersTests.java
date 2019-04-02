@@ -96,7 +96,7 @@ public class AddingUsersTests extends BaseTest
                 REFERRER, JUSTIFICATION);
 
         Assert.assertEquals(this.aUserSignUpPage.getConfirmationMessage(), CONFIRMATION_MESSAGE_CHECK);
-        System.out.println("Request Recieved Msg: " + this.aUserSignUpPage.getConfirmationMessage());
+        System.out.println("Request Received Msg: " + this.aUserSignUpPage.getConfirmationMessage());
 
         this.aHomePage.navigateToLoginPage().loginAs(firstname + lastname, PASSWORD);
 
