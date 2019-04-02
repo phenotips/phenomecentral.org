@@ -157,5 +157,12 @@
         <module>rpm</module>
       </modules>
     </profile>
+
+    <profile>
+      <id>functional-tests</id>
+      <modules>
+        <module>tests</module>
+      </modules>
+    </profile>
   </profiles>
 </project>
