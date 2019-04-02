@@ -49,7 +49,7 @@ public class CreatePatientPage extends CommonInfoSelectors
 
     private final By matchingConsentBox = By.id("matching-consent-checkbox");
 
-    private final By patientConsentUpdateBtn = By.cssSelector("#patient-consent-update > a:nth-child(1)");
+    private final By patientConsentUpdateBtn = By.cssSelector("#patient-consent-update .button");
 
     /*********************************************
      * "Patient Information" Section - Selectors
@@ -58,25 +58,21 @@ public class CreatePatientPage extends CommonInfoSelectors
 
     private final By lifeStatusDrp = By.id("PhenoTips.PatientClass_0_life_status");
 
-    private final By dobMonthDrp =
-        By.cssSelector("#date-of-birth-block > div > div:nth-child(2) > div > div > span > select.month");
+    private final By dobMonthDrp = By.cssSelector("#date-of-birth-block select.month");
 
-    private final By dobYearDrp =
-        By.cssSelector("#date-of-birth-block > div > div:nth-child(2) > div > div > span > select.year");
+    private final By dobYearDrp = By.cssSelector("#date-of-birth-block select.year");
 
-    private final By doDeathMonthDrp =
-        By.cssSelector("#date-of-death-block > div > div:nth-child(2) > div > div > span > select.month");
+    private final By doDeathMonthDrp = By.cssSelector("#date-of-death-block select.month");
 
-    private final By doDeathYearDrp =
-        By.cssSelector("#date-of-death-block > div > div:nth-child(2) > div > div > span > select.year");
+    private final By doDeathYearDrp = By.cssSelector("#date-of-death-block select.year");
 
-    private final By maleGenderBtn = By.id("xwiki-form-gender-0-0");
+    private final By maleGenderBtn = By.cssSelector(".gender input[value=M]");
 
-    private final By femaleGenderBtn = By.id("xwiki-form-gender-0-1");
+    private final By femaleGenderBtn = By.cssSelector(".gender input[value=F]");
 
-    private final By otherGenderBtn = By.id("xwiki-form-gender-0-2");
+    private final By otherGenderBtn = By.cssSelector(".gender input[value=O]");
 
-    private final By unknownGenderBtn = By.id("xwiki-form-gender-0-3");
+    private final By unknownGenderBtn = By.cssSelector(".gender input[value=U]");
 
     private final By congenitalOnsentBtn = By.id("PhenoTips.PatientClass_0_global_age_of_onset_HP:0003577");
 
@@ -90,9 +86,9 @@ public class CreatePatientPage extends CommonInfoSelectors
     /*******************************************************
      * "Family history and pedigree" Section - Selectors
      *******************************************************/
-    private final By editPedigreeBox = By.cssSelector("div.pedigree-wrapper > div");
+    private final By editPedigreeBox = By.cssSelector("#pedigree-thumbnail");
 
-    private final By editPedigreeOKBtn = By.cssSelector("input.button[name=ok]");
+    private final By editPedigreeOKBtn = By.cssSelector(".pedigree-family-chooser input.button[name=ok]");
 
     private final By assignFamilyRadioBtn = By.id("pedigreeInputAssignFamily");
 
@@ -104,7 +100,7 @@ public class CreatePatientPage extends CommonInfoSelectors
 
     private final By maternalEthnicityBox = By.id("PhenoTips.PatientClass_0_maternal_ethnicity_2");
 
-    private final By addEthnicityBtns = By.cssSelector("div.family-info a[title=add]");
+    private final By addEthnicityBtns = By.cssSelector(".fieldset.ethnicity a[title=add]");
 
     private final By healthConditionsFoundInFamily = By.id("PhenoTips.PatientClass_0_family_history");
 
@@ -114,15 +110,15 @@ public class CreatePatientPage extends CommonInfoSelectors
     private final By termBirthCheckbox = By.id("PhenoTips.PatientClass_0_gestation_term");
 
     private final By gestationWeeksBox =
-        By.cssSelector("input[type=text][name=\"PhenoTips.PatientClass_0_gestation\"]");
+        By.cssSelector("input[type=text][name='PhenoTips.PatientClass_0_gestation']");
 
     private final By maternalAgeBox = By.id("PhenoTips.ParentalInformationClass_0_maternal_age");
 
     private final By paternalAgeBox = By.id("PhenoTips.ParentalInformationClass_0_paternal_age");
 
-    private final By APGARScore1MinDrp = By.id("PhenoTips.PatientClass_0_apgar1");
+    private final By apgarScore1MinDrp = By.id("PhenoTips.PatientClass_0_apgar1");
 
-    private final By APGARScore5MinDrp = By.id("PhenoTips.PatientClass_0_apgar5");
+    private final By apgarScore5MinDrp = By.id("PhenoTips.PatientClass_0_apgar5");
 
     private final By otherPregnancyPhenotypeBox = By.xpath(
         "//*[@id='HPregnancy-history']/parent::*/div[@class='prenatal_phenotype-other custom-entries']/input[@type='text']");
@@ -152,43 +148,44 @@ public class CreatePatientPage extends CommonInfoSelectors
 
     private final By todayCalendarLink = By.linkText("Today");
 
-    private final By measurementDateBoxes = By.id("PhenoTips.MeasurementsClass_0_date");
+    private final By measurementDateBoxes = By.cssSelector("input[id^='PhenoTips.MeasurementsClass_'][id$='date']");
 
-    private final By weightBox = By.id("PhenoTips.MeasurementsClass_0_weight");
+    // Find all boxes, compatible with multiple measurements
+    private final By weightBox = By.cssSelector("input[id^='PhenoTips.MeasurementsClass_'][id$='weight']");
 
-    private final By heightBox = By.id("PhenoTips.MeasurementsClass_0_height");
+    private final By heightBox = By.cssSelector("input[id^='PhenoTips.MeasurementsClass_'][id$='height']");
 
-    private final By armSpanBox = By.id("PhenoTips.MeasurementsClass_0_armspan");
+    private final By armSpanBox = By.cssSelector("input[id^='PhenoTips.MeasurementsClass_'][id$='armspan']");
 
-    private final By sittingHeightBox = By.id("PhenoTips.MeasurementsClass_0_sitting");
+    private final By sittingHeightBox = By.cssSelector("input[id^='PhenoTips.MeasurementsClass_'][id$='sitting']");
 
-    private final By headCircumferenceBox = By.id("PhenoTips.MeasurementsClass_0_hc");
+    private final By headCircumferenceBox = By.cssSelector("input[id^='PhenoTips.MeasurementsClass_'][id$='hc']");
 
-    private final By philtrumLengthBox = By.id("PhenoTips.MeasurementsClass_0_philtrum");
+    private final By philtrumLengthBox = By.cssSelector("input[id^='PhenoTips.MeasurementsClass_'][id$='philtrum']");
 
-    private final By leftEarLengthBox = By.id("PhenoTips.MeasurementsClass_0_ear");
+    private final By leftEarLengthBox = By.cssSelector("input[id^='PhenoTips.MeasurementsClass_'][id$='ear']");
 
-    private final By rightEarLengthBox = By.id("PhenoTips.MeasurementsClass_0_ear_right");
+    private final By rightEarLengthBox = By.cssSelector("input[id^='PhenoTips.MeasurementsClass_'][id$='ear_right']");
 
-    private final By outherCanthalDistanceBox = By.id("PhenoTips.MeasurementsClass_0_ocd");
+    private final By outherCanthalDistanceBox = By.cssSelector("input[id^='PhenoTips.MeasurementsClass_'][id$='ocd']");
 
-    private final By innterCanthalDistanceBox = By.id("PhenoTips.MeasurementsClass_0_icd");
+    private final By innterCanthalDistanceBox = By.cssSelector("input[id^='PhenoTips.MeasurementsClass_'][id$='icd']");
 
-    private final By palpebralFissureLengthBox = By.id("PhenoTips.MeasurementsClass_0_pfl");
+    private final By palpebralFissureLengthBox = By.cssSelector("input[id^='PhenoTips.MeasurementsClass_'][id$='pfl']");
 
-    private final By interpupilaryDistanceBox = By.id("PhenoTips.MeasurementsClass_0_ipd");
+    private final By interpupilaryDistanceBox = By.cssSelector("input[id^='PhenoTips.MeasurementsClass_'][id$='ipd']");
 
-    private final By leftHandLengthBox = By.id("PhenoTips.MeasurementsClass_0_hand");
+    private final By leftHandLengthBox = By.cssSelector("input[id^='PhenoTips.MeasurementsClass_'][id$='hand']");
 
-    private final By leftPalmLengthBox = By.id("PhenoTips.MeasurementsClass_0_palm");
+    private final By leftPalmLengthBox = By.cssSelector("input[id^='PhenoTips.MeasurementsClass_'][id$='palm']");
 
-    private final By leftFootLengthBox = By.id("PhenoTips.MeasurementsClass_0_foot");
+    private final By leftFootLengthBox = By.cssSelector("input[id^='PhenoTips.MeasurementsClass_'][id$='foot']");
 
-    private final By rightHandLengthBox = By.id("PhenoTips.MeasurementsClass_0_hand_right");
+    private final By rightHandLengthBox = By.cssSelector("input[id^='PhenoTips.MeasurementsClass_'][id$='hand_right']");
 
-    private final By rightPalmLengthBox = By.id("PhenoTips.MeasurementsClass_0_palm_right");
+    private final By rightPalmLengthBox = By.cssSelector("input[id^='PhenoTips.MeasurementsClass_'][id$='palm_right']");
 
-    private final By rightFootLengthBox = By.id("PhenoTips.MeasurementsClass_0_foot_right");
+    private final By rightFootLengthBox = By.cssSelector("input[id^='PhenoTips.MeasurementsClass_'][id$='foot_right']");
 
     /******************************************************************************
      * "Clinical symptoms and physical findings" (Phenotypes) Section - Selectors
@@ -259,15 +256,15 @@ public class CreatePatientPage extends CommonInfoSelectors
 
     private final By caseSolvedCheckbox = By.id("PhenoTips.PatientClass_0_solved");
 
-    private final By pubMDIDBoxes = By.cssSelector("[id*='PhenoTips.PatientClass_0_solved__pubmed_id_']");
+    private final By pubMedIDBoxes = By.cssSelector("[id*='PhenoTips.PatientClass_0_solved__pubmed_id_']");
 
-    private final By addPubMDLink = By.cssSelector("div.diagnosis-info a[title=add]");
+    private final By addPubMedLink = By.cssSelector("div.diagnosis-info a[title=add]");
 
-    private final By deletePubMDBtns = By.cssSelector("div.diagnosis-info a[title='delete']");
+    private final By deletePubMedBtns = By.cssSelector("div.diagnosis-info a[title='delete']");
 
-    private final By pubMDArticle = By.cssSelector("div.article-info");
+    private final By pubMedArticle = By.cssSelector("div.article-info");
 
-    private final By pubMDIDCheckStatus =
+    private final By pubMedIDCheckStatus =
         By.cssSelector("div.solved__pubmed_id > div.solved__pubmed_id > div > ol > li > div");
 
     private final By resolutionNotesBox = By.id("PhenoTips.PatientClass_0_solved__notes");
@@ -734,7 +731,7 @@ public class CreatePatientPage extends CommonInfoSelectors
     @Step("Traverse through the prenatal options UI")
     public CreatePatientPage cycleThroughPrenatalOptions()
     {
-        waitForElementToBePresent(this.APGARScore1MinDrp);
+        waitForElementToBePresent(this.apgarScore1MinDrp);
 
         clickOnElement(this.termBirthCheckbox);
         clickOnElement(this.termBirthCheckbox);
@@ -742,19 +739,19 @@ public class CreatePatientPage extends CommonInfoSelectors
         clickAndTypeOnElement(this.maternalAgeBox, "26");
         clickAndTypeOnElement(this.paternalAgeBox, "30");
 
-        forceScrollToElement(this.APGARScore1MinDrp);
-        Select APGARScore1Min = new Select(this.superDriver.findElement(this.APGARScore1MinDrp));
-        Select APGARScore5Min = new Select(this.superDriver.findElement(this.APGARScore5MinDrp));
+        forceScrollToElement(this.apgarScore1MinDrp);
+        Select apgarScore1Min = new Select(this.superDriver.findElement(this.apgarScore1MinDrp));
+        Select apgarScore5Min = new Select(this.superDriver.findElement(this.apgarScore5MinDrp));
         List<String> loAPGARScores = new ArrayList<>(Arrays.asList(
             "Unknown", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"));
 
         for (String score : loAPGARScores) {
-            APGARScore1Min.selectByVisibleText(score);
-            APGARScore5Min.selectByVisibleText(score);
+            apgarScore1Min.selectByVisibleText(score);
+            apgarScore5Min.selectByVisibleText(score);
         }
 
-        APGARScore1Min.selectByVisibleText("Unknown");
-        APGARScore5Min.selectByVisibleText("Unknown");
+        apgarScore1Min.selectByVisibleText("Unknown");
+        apgarScore5Min.selectByVisibleText("Unknown");
 
         clickAndTypeOnElement(this.otherPregnancyPhenotypeBox, "Tall chin");
         clickOnElement(this.firstGeneSuggestion);
@@ -1218,13 +1215,13 @@ public class CreatePatientPage extends CommonInfoSelectors
     {
         clickOnElement(this.additionalCommentsBox); // Needed to defocus PubMed ID boxes.
 
-        if (isElementPresent(this.pubMDArticle)) {
-            clickOnElement(this.addPubMDLink);
+        if (isElementPresent(this.pubMedArticle)) {
+            clickOnElement(this.addPubMedLink);
         }
 
-        List<WebElement> loPubMDIDBoxes = this.superDriver.findElements(this.pubMDIDBoxes);
-        clickOnElement(loPubMDIDBoxes.get(loPubMDIDBoxes.size() - 1));
-        loPubMDIDBoxes.get(loPubMDIDBoxes.size() - 1).sendKeys(ID);
+        List<WebElement> loPubMedIDBoxes = this.superDriver.findElements(this.pubMedIDBoxes);
+        clickOnElement(loPubMedIDBoxes.get(loPubMedIDBoxes.size() - 1));
+        loPubMedIDBoxes.get(loPubMedIDBoxes.size() - 1).sendKeys(ID);
 
         clickOnElement(this.additionalCommentsBox);
 
@@ -1241,10 +1238,10 @@ public class CreatePatientPage extends CommonInfoSelectors
     @Step("Remove the {0}th PubMed ID")
     public CreatePatientPage removeNthPubMedID(int n)
     {
-        waitForElementToBePresent(this.deletePubMDBtns);
-        List<WebElement> loDeletePubMDBtns = this.superDriver.findElements(this.deletePubMDBtns);
+        waitForElementToBePresent(this.deletePubMedBtns);
+        List<WebElement> loDeletePubMedBtns = this.superDriver.findElements(this.deletePubMedBtns);
 
-        clickOnElement(loDeletePubMDBtns.get(n - 1));
+        clickOnElement(loDeletePubMedBtns.get(n - 1));
 
         return this;
     }
@@ -1292,9 +1289,9 @@ public class CreatePatientPage extends CommonInfoSelectors
         final String invalidPubMedIDError = "Invalid Pubmed ID";
 
         clickOnElement(this.additionalCommentsBox); // Needed so that pubMed boxes goes out of focus and does validation
-        waitForElementToBePresent(this.pubMDIDCheckStatus);
+        waitForElementToBePresent(this.pubMedIDCheckStatus);
 
-        String statusText = this.superDriver.findElements(this.pubMDIDCheckStatus).get(n - 1).getText();
+        String statusText = this.superDriver.findElements(this.pubMedIDCheckStatus).get(n - 1).getText();
 
         return !statusText.equals(invalidPubMedIDError);
     }
@@ -1370,6 +1367,6 @@ public class CreatePatientPage extends CommonInfoSelectors
     @Step("Determine if the PubMed and Resolution boxes are clickable")
     public boolean isPubMedAndResolutionBoxesClickable()
     {
-        return (isElementClickable(this.pubMDIDBoxes) && (isElementClickable(this.resolutionNotesBox)));
+        return (isElementClickable(this.pubMedIDBoxes) && (isElementClickable(this.resolutionNotesBox)));
     }
 }
