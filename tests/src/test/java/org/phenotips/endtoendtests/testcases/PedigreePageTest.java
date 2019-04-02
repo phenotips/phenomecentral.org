@@ -27,10 +27,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
-import net.bytebuddy.utility.RandomString;
 
 /**
  * Tests for the Pedigree Editor page and the sync with the patient info page. There are cases for creation of a patient
@@ -47,7 +46,7 @@ public class PedigreePageTest extends BaseTest implements CommonInfoEnums
 
     final private ViewPatientPage aViewPatientPage = new ViewPatientPage(theDriver);
 
-    final private String randomChars = RandomString.make(5);
+    final private String randomChars = RandomStringUtils.randomAlphanumeric(5);
 
     /**
      * Creates a patient with phenotypes and genes. Asserts that they are reflected in the pedigree editor after a save.

@@ -27,11 +27,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
-import net.bytebuddy.utility.RandomString;
 
 /**
  * This class will contain tests for the match notification table. It will ensure the appropriate patients are present
@@ -40,7 +39,7 @@ import net.bytebuddy.utility.RandomString;
  */
 public class MatchNotificationPageTests extends BaseTest implements CommonInfoEnums
 {
-    final private String randomChars = RandomString.make(5);
+    final private String randomChars = RandomStringUtils.randomAlphanumeric(5);
 
     HomePage aHomePage = new HomePage(theDriver);
 

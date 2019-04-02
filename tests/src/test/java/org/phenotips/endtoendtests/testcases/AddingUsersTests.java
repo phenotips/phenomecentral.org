@@ -24,10 +24,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
-import net.bytebuddy.utility.RandomString;
 
 /**
  * Test cases for adding users to the instance. These tests can be run individually, or as a class. There are functional
@@ -47,7 +46,7 @@ public class AddingUsersTests extends BaseTest
 
     final String pendingApprovalMessageCheck = "Please wait for your account to be approved. Thank you.";
 
-    final String randomChars = RandomString.make(5);
+    final String randomChars = RandomStringUtils.randomAlphanumeric(5);
 
     // Common Strings for creation of patients:
 

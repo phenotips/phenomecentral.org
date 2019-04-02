@@ -29,10 +29,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
-import net.bytebuddy.utility.RandomString;
 
 /**
  * Testing the creation of two very similar patients via JSON import and manually. Asserts a match at end.
@@ -57,7 +56,7 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
     SECTIONS.SimilarCasesSection
     };
 
-    final private String randomChars = RandomString.make(5);
+    final private String randomChars = RandomStringUtils.randomAlphanumeric(5);
 
     final private String patientUniqueIdentifier = "Auto " + this.randomChars + " Patient";
 
