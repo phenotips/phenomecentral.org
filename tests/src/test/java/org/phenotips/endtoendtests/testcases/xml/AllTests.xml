@@ -77,7 +77,7 @@
           <include name="cycleThroughPhenotypeDetails" />
           <include name="cycleThroughAllPhenotypes" />
           <include name="cycleThroughDiagnosis" />
-          <include name="checkDiagnosisErrorMessages" />
+          <include name="checkPubMedValidation" />
         </methods>
       </class>
 

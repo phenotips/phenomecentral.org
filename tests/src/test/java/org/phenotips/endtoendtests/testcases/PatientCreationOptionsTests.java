@@ -438,7 +438,7 @@ public class PatientCreationOptionsTests extends BaseTest implements CommonInfoE
 
     // Checks that the red error message when inputting an invalid PubMed ID shows up.
     @Test()
-    public void checkDiagnosisErrorMessages()
+    public void checkPubMedValidation()
     {
         this.aHomePage.navigateToLoginPage()
             .loginAsUser()
