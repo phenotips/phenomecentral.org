@@ -1,0 +1,83 @@
+<suite name="AllTests">
+  <test name="FullSuite">
+    <classes>
+
+      <class name="org.phenotips.endtoendtests.SetupUsers">
+        <methods>
+          <include name="setEmailPort" />
+          <include name="setupAutomationUsers" />
+        </methods>
+      </class>
+
+      <class name="org.phenotips.endtoendtests.testcases.LoginPageTest">
+        <methods>
+          <include name="loginAdminTest" />
+          <include name="loginUserTest" />
+          <include name="invalidCredentials" />
+        </methods>
+      </class>
+
+      <class name="org.phenotips.endtoendtests.testcases.CreatePatientTest">
+        <methods>
+          <include name="initialMatchesRefresh" />
+          <include name="createPatientManually" />
+          <include name="importSecondJSONPatient" />
+          <include name="refreshMatchesForTwoPatients" />
+          <include name="verifyEmailNotifications" />
+          <include name="publicVisiblityTest" />
+          <include name="collaboratorVisibilityTest" />
+          <include name="addMeasurements" />
+          <include name="checkPhenotypesDueToMeasurements" />
+          <include name="checkDiagnosisSection" />
+        </methods>
+      </class>
+
+      <class name="org.phenotips.endtoendtests.testcases.AddingUsersTests">
+        <methods>
+          <include name="adminAddAndApproveUser" />
+          <include name="userSignUpNotApproved" />
+          <include name="userSignUpApproved" />
+          <include name="errorCheckFields" />
+        </methods>
+      </class>
+
+      <class name="org.phenotips.endtoendtests.testcases.MatchNotificationPageTests">
+        <methods>
+          <include name="refreshMatchesFirst" />
+          <include name="matchPhenotypeOnly" />
+          <include name="matchGenotypeOnly" />
+        </methods>
+      </class>
+
+      <class name="org.phenotips.endtoendtests.testcases.PatientCreationOptionsTests">
+        <methods>
+          <include name="cycleThroughInfoOptions" />
+          <include name="cycleThroughFamilialConditions" />
+          <include name="cycleThroughPrenatalHistory" />
+          <include name="cycleThroughPhenotypeDetails" />
+          <include name="cycleThroughAllPhenotypes" />
+          <include name="cycleThroughDiagnosis" />
+          <include name="checkDiagnosisErrorMessages" />
+        </methods>
+      </class>
+
+      <class name="org.phenotips.endtoendtests.testcases.PedigreePageTest">
+        <methods>
+          <include name="basicPedigree" />
+          <include name="createChild" />
+          <include name="editorToPatientForm" />
+          <include name="createNewPatientViaEditor" />
+          <include name="warningDialoguePresent" />
+        </methods>
+      </class>
+
+      <class name="org.phenotips.endtoendtests.testcases.PermissionsTests">
+        <methods>
+          <include name="noMatchPrivatePatient" />
+          <include name="cannotSeeOtherPatients" />
+        </methods>
+      </class>
+
+    </classes>
+  </test>
+</suite>

@@ -1,0 +1,7 @@
+<suite name="NoTests">
+  <test name="NoTest">
+    <classes>
+
+    </classes>
+  </test>
+</suite>
