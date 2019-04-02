@@ -38,7 +38,7 @@ public class HomePage extends BasePage
     final By sectionTitles = By.cssSelector("div.gadget-title"); // Titles of the sections visible on the splash page
 
     final By unauthorizedActionErrorMsg = By.cssSelector("p.xwikimessage");
-        // Error message that users get when trying to view patients that aren't theirs.
+    // Error message that users get when trying to view patients that aren't theirs.
 
     public HomePage(WebDriver aDriver)
     {
@@ -56,16 +56,16 @@ public class HomePage extends BasePage
     @Step("Navigate to login page")
     public LoginPage navigateToLoginPage()
     {
-        superDriver.navigate().to(HOMEPAGE_URL);
+        this.superDriver.navigate().to(this.HOMEPAGE_URL);
         // Try to click on the link immediately, rather than checking for a logOut link
         // being present. That causes five seconds of whenever trying to navigate to login page.
         try {
-            clickOnElement(loginLink);
+            clickOnElement(this.loginLink);
         } catch (TimeoutException e) {
             logOut();
         }
 
-        return new LoginPage(superDriver);
+        return new LoginPage(this.superDriver);
     }
 
     /**
@@ -78,13 +78,13 @@ public class HomePage extends BasePage
     @Step("Navigate to sign up page")
     public UserSignUpPage navigateToSignUpPage()
     {
-        superDriver.navigate().to(HOMEPAGE_URL);
-        if (isElementPresent(logOutLink)) {
+        this.superDriver.navigate().to(this.HOMEPAGE_URL);
+        if (isElementPresent(this.logOutLink)) {
             logOut();
         }
-        clickOnElement(signUpButton);
+        clickOnElement(this.signUpButton);
 
-        return new UserSignUpPage(superDriver);
+        return new UserSignUpPage(this.superDriver);
     }
 
     /**
@@ -98,10 +98,10 @@ public class HomePage extends BasePage
     @Step("Retrieve titles of each section on the splash page")
     public List<String> getSectionTitles()
     {
-        waitForElementToBePresent(logOutLink);
+        waitForElementToBePresent(this.logOutLink);
         List<String> loTitles = new ArrayList<>();
 
-        superDriver.findElements(sectionTitles).forEach(x -> loTitles.add(x.getText()));
+        this.superDriver.findElements(this.sectionTitles).forEach(x -> loTitles.add(x.getText()));
 
         return loTitles;
     }
@@ -117,8 +117,8 @@ public class HomePage extends BasePage
     @Step("Retrieve the unauthorized access error message 'You are not allowed to view this page or perform this action.'")
     public String getUnauthorizedErrorMessage()
     {
-        waitForElementToBePresent(unauthorizedActionErrorMsg);
+        waitForElementToBePresent(this.unauthorizedActionErrorMsg);
 
-        return superDriver.findElement(unauthorizedActionErrorMsg).getText();
+        return this.superDriver.findElement(this.unauthorizedActionErrorMsg).getText();
     }
 }

@@ -36,7 +36,7 @@ public class PedigreeEditorPage extends BasePage
     private final By probandTemplate = By.cssSelector("div[title=Proband]");
 
     /**************************************
-     * Toolbar and save modal  - Selectors
+     * Toolbar and save modal - Selectors
      **************************************/
     private final By closeEditor = By.id("action-close");
 
@@ -153,11 +153,11 @@ public class PedigreeEditorPage extends BasePage
         super(aDriver);
 
         // Try to click on the default Proband template. If there is no template modal present, catch the error
-        //   and just assume that there was no modal in the first place.
+        // and just assume that there was no modal in the first place.
         try {
             unconditionalWaitNs(5);
-            clickOnElement(probandTemplate);
-            waitForElementToBeClickable(hoverBox);
+            clickOnElement(this.probandTemplate);
+            waitForElementToBeClickable(this.hoverBox);
         } catch (TimeoutException e) {
             System.out.println("Seems like we are editing an existing pedigree, no template dialogue found.");
         }
@@ -172,35 +172,35 @@ public class PedigreeEditorPage extends BasePage
      * pedigree toolbar beforehand (ex. the template selection modal).
      *
      * @param saveChoice is String representing the choice of save. It must be exactly one of "Save", "Don't Save",
-     * "Keep Editing". Defaults to "Save" on invalid string.
+     *            "Keep Editing". Defaults to "Save" on invalid string.
      * @return Navigates back to the patient creation page so a return new instance of that.
      */
     @Step("Close the editor with save choice of {0}")
     public CreatePatientPage closeEditor(String saveChoice)
     {
-        clickOnElement(closeEditor);
+        clickOnElement(this.closeEditor);
 
-        if (isElementPresent(saveAndQuitBtn)) {
+        if (isElementPresent(this.saveAndQuitBtn)) {
             switch (saveChoice) {
                 case "Save":
-                    clickOnElement(saveAndQuitBtn);
+                    clickOnElement(this.saveAndQuitBtn);
                     break;
                 case "Don't Save":
-                    clickOnElement(dontSaveAndQuitBtn);
+                    clickOnElement(this.dontSaveAndQuitBtn);
                     break;
                 case "Keep Editing":
-                    clickOnElement(keepEditingPedigreeBtn);
+                    clickOnElement(this.keepEditingPedigreeBtn);
                     break;
                 default:
                     System.out.println("Invalid saveChoice in closeEditor, default to Save");
-                    clickOnElement(saveAndQuitBtn);
+                    clickOnElement(this.saveAndQuitBtn);
                     break;
             }
         }
 
-        waitForElementToBePresent(logOutLink); // We should wait for this to appear.
+        waitForElementToBePresent(this.logOutLink); // We should wait for this to appear.
 
-        return new CreatePatientPage(superDriver);
+        return new CreatePatientPage(this.superDriver);
     }
 
     /**
@@ -210,20 +210,20 @@ public class PedigreeEditorPage extends BasePage
      * by some other modal.
      *
      * @return A Boolean to indicate whether the dialogue, or more specifically, "keep editing pedigree" button appears
-     * or not. State afterwards would be navigation away from the Pedigree Editor to Patient Creation page
+     *         or not. State afterwards would be navigation away from the Pedigree Editor to Patient Creation page
      */
     @Step("Determine if the warning dialogue appeared")
     public Boolean doesWarningDialogueAppear()
     {
-        clickOnElement(closeEditor);
+        clickOnElement(this.closeEditor);
 
-        waitForElementToBePresent(saveAndQuitBtn);
-        waitForElementToBePresent(dontSaveAndQuitBtn);
-        waitForElementToBePresent(keepEditingPedigreeBtn);
+        waitForElementToBePresent(this.saveAndQuitBtn);
+        waitForElementToBePresent(this.dontSaveAndQuitBtn);
+        waitForElementToBePresent(this.keepEditingPedigreeBtn);
 
-        Boolean appearance = isElementPresent(saveAndQuitBtn);
+        Boolean appearance = isElementPresent(this.saveAndQuitBtn);
         if (appearance) {
-            clickOnElement(saveAndQuitBtn);
+            clickOnElement(this.saveAndQuitBtn);
         }
         // else, would have navigated back to create patient page.
         return appearance;
@@ -236,7 +236,7 @@ public class PedigreeEditorPage extends BasePage
      * Switches the tab on the current patient info modal.
      *
      * @param infoTab is one of three Strings: "Personal", "Clinical", "Cancers", each corresponding to a tab on the
-     * modal. Upon invalid string entry, goes to the Personal tab.
+     *            modal. Upon invalid string entry, goes to the Personal tab.
      * @return stay on the same page so return same object
      */
     @Step("Switch to tab: {0}")
@@ -244,19 +244,19 @@ public class PedigreeEditorPage extends BasePage
     {
         switch (infoTab) {
             case "Personal":
-                clickOnElement(personalTab);
-                waitForElementToBePresent(ethnicitiesBox);
+                clickOnElement(this.personalTab);
+                waitForElementToBePresent(this.ethnicitiesBox);
                 break;
             case "Clinical":
-                clickOnElement(clinicalTab);
-                waitForElementToBePresent(phenotypeBox);
+                clickOnElement(this.clinicalTab);
+                waitForElementToBePresent(this.phenotypeBox);
                 break;
             case "Cancers":
-                clickOnElement(cancersTab);
+                clickOnElement(this.cancersTab);
                 break; // Should add wait here
             default:
-                clickOnElement(personalTab);
-                waitForElementToBePresent(ethnicitiesBox);
+                clickOnElement(this.personalTab);
+                waitForElementToBePresent(this.ethnicitiesBox);
                 break;
         }
         return this;
@@ -275,8 +275,8 @@ public class PedigreeEditorPage extends BasePage
     @Step("Retrieve the patient ID from the modal")
     public String getPatientIDFromModal()
     {
-        waitForElementToBePresent(patientIDInModal);
-        return superDriver.findElement(patientIDInModal).getText();
+        waitForElementToBePresent(this.patientIDInModal);
+        return this.superDriver.findElement(this.patientIDInModal).getText();
     }
 
     /**
@@ -292,14 +292,14 @@ public class PedigreeEditorPage extends BasePage
         switchToTab("Personal");
 
         if (patientID.equals("New")) {
-            clickOnElement(createNewPatientBtn);
-            clickOnElement(confirmNewPatientBtn);
-            waitForElementToBeClickable(personalTab);
+            clickOnElement(this.createNewPatientBtn);
+            clickOnElement(this.confirmNewPatientBtn);
+            waitForElementToBeClickable(this.personalTab);
             unconditionalWaitNs(
                 5); // PersonalTab is deemed clickable too early? Loading modal has not fully disappeared.
         } else {
-            clickAndTypeOnElement(linkPatientBox, patientID);
-            clickOnElement(linkPatientFirstSuggestion);
+            clickAndTypeOnElement(this.linkPatientBox, patientID);
+            clickOnElement(this.linkPatientFirstSuggestion);
         }
 
         return this;
@@ -313,11 +313,11 @@ public class PedigreeEditorPage extends BasePage
     @Step("Retrieve the gender of the patient")
     public String getGender()
     {
-        if (superDriver.findElement(maleGenderBtn).isSelected()) {
+        if (this.superDriver.findElement(this.maleGenderBtn).isSelected()) {
             return "Male";
-        } else if (superDriver.findElement(femaleGenderBtn).isSelected()) {
+        } else if (this.superDriver.findElement(this.femaleGenderBtn).isSelected()) {
             return "Female";
-        } else if (superDriver.findElement(otherGenderBtn).isSelected()) {
+        } else if (this.superDriver.findElement(this.otherGenderBtn).isSelected()) {
             return "Other";
         } else {
             return "Unknown";
@@ -329,29 +329,29 @@ public class PedigreeEditorPage extends BasePage
      * modal to be open for a patient.
      *
      * @param gender is the desired gender to set. Must be exact or defaults to Female. One of: "Male", "Female",
-     * "Other", or "Unknown".
+     *            "Other", or "Unknown".
      * @return Stay on the same page so return the same object.
      */
     @Step("Set the gender of the patient to {0}")
     public PedigreeEditorPage setGender(String gender)
     {
-        clickOnElement(clinicalTab);
+        clickOnElement(this.clinicalTab);
 
         switch (gender) {
             case "Male":
-                clickOnElement(maleGenderBtn);
+                clickOnElement(this.maleGenderBtn);
                 break;
             case "Female":
-                clickOnElement(femaleGenderBtn);
+                clickOnElement(this.femaleGenderBtn);
                 break;
             case "Other":
-                clickOnElement(otherGenderBtn);
+                clickOnElement(this.otherGenderBtn);
                 break;
             case "Unknown":
-                clickOnElement(unknownGenderBtn);
+                clickOnElement(this.unknownGenderBtn);
                 break;
             default:
-                clickOnElement(femaleGenderBtn);
+                clickOnElement(this.femaleGenderBtn);
                 break;
         }
         return this;
@@ -367,7 +367,7 @@ public class PedigreeEditorPage extends BasePage
     public List<String> getEthnicities()
     {
         switchToTab("Personal");
-        return getLabelsFromList(ethnicitiesList);
+        return getLabelsFromList(this.ethnicitiesList);
     }
 
     /*****************************************************
@@ -383,7 +383,7 @@ public class PedigreeEditorPage extends BasePage
     public List<String> getPhenotypes()
     {
         switchToTab("Clinical");
-        return getLabelsFromList(phenotypesList);
+        return getLabelsFromList(this.phenotypesList);
     }
 
     /**
@@ -391,7 +391,7 @@ public class PedigreeEditorPage extends BasePage
      * patient information modal to be open.
      *
      * @param loPhenotypesToAdd A List containing Strings of the phenotypes to add. Each should be as close as possible
-     * to the desired phenotype.
+     *            to the desired phenotype.
      * @return Stay on the same page so return the same object.
      */
     @Step("Add the following phenotypes to the patient node: {0}")
@@ -399,8 +399,8 @@ public class PedigreeEditorPage extends BasePage
     {
         switchToTab("Clinical");
         for (String phenotype : loPhenotypesToAdd) {
-            clickAndTypeOnElement(phenotypeBox, phenotype);
-            clickOnElement(linkPatientFirstSuggestion);
+            clickAndTypeOnElement(this.phenotypeBox, phenotype);
+            clickOnElement(this.linkPatientFirstSuggestion);
         }
         return this;
     }
@@ -417,13 +417,13 @@ public class PedigreeEditorPage extends BasePage
         switchToTab("Clinical");
         switch (status) {
             case "Candidate":
-                return getLabelsFromList(candidateGeneList);
+                return getLabelsFromList(this.candidateGeneList);
             case "Confirmed Causal":
-                return getLabelsFromList(causalGeneList);
+                return getLabelsFromList(this.causalGeneList);
             case "Carrier":
-                return getLabelsFromList(carrierGeneList);
+                return getLabelsFromList(this.carrierGeneList);
             default:
-                return getLabelsFromList(candidateGeneList);
+                return getLabelsFromList(this.candidateGeneList);
         }
     }
 
@@ -432,15 +432,15 @@ public class PedigreeEditorPage extends BasePage
      * Requires the Patient Info modal to be present.
      *
      * @param loCandidateGenesToAdd A list of Strings, can be empty, of Candidate genes to add. Each should be as close
-     * as possible to the exact gene name.
+     *            as possible to the exact gene name.
      * @return Stay on the same page so return the same object.
      */
     public PedigreeEditorPage addCandidateGenes(List<String> loCandidateGenesToAdd)
     {
         switchToTab("Clinical");
         for (String candidateGene : loCandidateGenesToAdd) {
-            clickAndTypeOnElement(candidateGeneBox, candidateGene);
-            clickOnElement(linkPatientFirstSuggestion);
+            clickAndTypeOnElement(this.candidateGeneBox, candidateGene);
+            clickOnElement(this.linkPatientFirstSuggestion);
         }
         return this;
     }
@@ -459,19 +459,19 @@ public class PedigreeEditorPage extends BasePage
         switchToTab("Clinical");
         switch (geneStatus) {
             case "Candidate":
-                clickAndTypeOnElement(candidateGeneBox, geneName);
+                clickAndTypeOnElement(this.candidateGeneBox, geneName);
                 break;
             case "Confirmed Causal":
-                clickAndTypeOnElement(causalGeneBox, geneName);
+                clickAndTypeOnElement(this.causalGeneBox, geneName);
                 break;
             case "Carrier":
-                clickAndTypeOnElement(carrierGeneBox, geneName);
+                clickAndTypeOnElement(this.carrierGeneBox, geneName);
                 break;
             default:
-                clickAndTypeOnElement(candidateGeneBox, geneName);
+                clickAndTypeOnElement(this.candidateGeneBox, geneName);
                 break;
         }
-        clickOnElement(linkPatientFirstSuggestion);
+        clickOnElement(this.linkPatientFirstSuggestion);
 
         return this;
     }
@@ -483,23 +483,23 @@ public class PedigreeEditorPage extends BasePage
      * Opens the edit patient modal for the Nth patient it can find on the editor.
      *
      * @return stay on the same page so return same object. TODO: Figure out how to traverse and search the possible
-     * nodes for a patient, The js might might make this interesting... Ideas: Differentiate via width and height.
-     * rect.pedigree-hoverbox[width=180, height=243] for people, rect.pedigree-hoverbox[width=52, height=92] for
-     * relationship node.
+     *         nodes for a patient, The js might might make this interesting... Ideas: Differentiate via width and
+     *         height. rect.pedigree-hoverbox[width=180, height=243] for people, rect.pedigree-hoverbox[width=52,
+     *         height=92] for relationship node.
      */
     @Step("Open the {0}th node's edit modal")
     public PedigreeEditorPage openNthEditModal(int n)
     {
-        waitForElementToBePresent(hoverBox);
+        waitForElementToBePresent(this.hoverBox);
         unconditionalWaitNs(3); // Figure out how to wait for animation to finish
 
         System.out.println("Wait for hover box is done - 3 secs. Now find and click.");
 
-        List<WebElement> loHoverBoxes = superDriver.findElements(hoverBox);
+        List<WebElement> loHoverBoxes = this.superDriver.findElements(this.hoverBox);
 
         System.out.println("Found hoverboxes: " + loHoverBoxes.size());
 
-        Actions action = new Actions(superDriver);
+        Actions action = new Actions(this.superDriver);
         action.moveToElement(loHoverBoxes.get(n - 1)) // Wiggles the mouse a little bit
             .moveToElement(loHoverBoxes.get(n - 1), 10, 10)
             .pause(1000)
@@ -507,8 +507,8 @@ public class PedigreeEditorPage extends BasePage
             .build()
             .perform();
 
-        if (!isElementClickable(personalTab)) {
-            loHoverBoxes = superDriver.findElements(hoverBox); // Search again, maybe coordiantes changed.
+        if (!isElementClickable(this.personalTab)) {
+            loHoverBoxes = this.superDriver.findElements(this.hoverBox); // Search again, maybe coordiantes changed.
             System.out.println("Note: Clicking " + n + "th hover box again...");
             System.out.println("Found hoverboxes, Second Try: " + loHoverBoxes.size());
             action.moveToElement(loHoverBoxes.get(n - 1), 10, 10)
@@ -518,7 +518,7 @@ public class PedigreeEditorPage extends BasePage
                 .build()
                 .perform();
         }
-        waitForElementToBeClickable(personalTab);
+        waitForElementToBeClickable(this.personalTab);
         return this;
     }
 
@@ -526,20 +526,20 @@ public class PedigreeEditorPage extends BasePage
      * Creates a child of the specified gender. Currently, it just does it for the first patient node that it can find.
      *
      * @param gender is one of the options on the gender toolbar that appears when trying to create a new node "Male",
-     * "Female", "Unknown", etc.
+     *            "Female", "Unknown", etc.
      * @return Stay on the same page so return the same object.
      */
     @Step("Create a child of the currently focused node with gender {0}")
     public PedigreeEditorPage createChild(String gender)
     {
-        waitForElementToBePresent(hoverBox);
+        waitForElementToBePresent(this.hoverBox);
 
         openNthEditModal(1);
-        waitForElementToBeClickable(createChildNode);
+        waitForElementToBeClickable(this.createChildNode);
 
-        List<WebElement> loChildCreateNodes = superDriver.findElements(createChildNode);
+        List<WebElement> loChildCreateNodes = this.superDriver.findElements(this.createChildNode);
         loChildCreateNodes.get(1).click();
-        forceClickOnElement(createMaleNode);
+        forceClickOnElement(this.createMaleNode);
 
         return this;
     }
@@ -553,8 +553,8 @@ public class PedigreeEditorPage extends BasePage
     @Step("Get the number of nodes")
     public int getNumberOfNodes()
     {
-        waitForElementToBePresent(closeEditor);
-        return superDriver.findElements(hoverBox).size();
+        waitForElementToBePresent(this.closeEditor);
+        return this.superDriver.findElements(this.hoverBox).size();
     }
 
     /**
@@ -566,8 +566,8 @@ public class PedigreeEditorPage extends BasePage
     @Step("Get the number of partner links on the tree")
     public int getNumberOfPartnerLinks()
     {
-        waitForElementToBePresent(closeEditor);
-        return superDriver.findElements(hoverBoxPartnerLink).size();
+        waitForElementToBePresent(this.closeEditor);
+        return this.superDriver.findElements(this.hoverBoxPartnerLink).size();
     }
 
     /**
@@ -586,13 +586,13 @@ public class PedigreeEditorPage extends BasePage
      * Finds a list of Patient IDs that have been linked and are visible on the pedigree editor.
      *
      * @return A list of Strings, possibly empty, which are the patient IDs for those who are linked to a node on the
-     * pedigree editor. I.e. a List of Strings in the form of Pxxxxxxx
+     *         pedigree editor. I.e. a List of Strings in the form of Pxxxxxxx
      */
     public List<String> getListOfLinkedPatients()
     {
         List<String> loPatientIDs = new ArrayList<>();
-        waitForElementToBePresent(closeEditor);
-        superDriver.findElements(linkedPatientIDLink)
+        waitForElementToBePresent(this.closeEditor);
+        this.superDriver.findElements(this.linkedPatientIDLink)
             .forEach(element -> loPatientIDs.add(element.getText()));
 
         return loPatientIDs;
@@ -605,22 +605,22 @@ public class PedigreeEditorPage extends BasePage
      * @param partner1 is the patient node that has the left circle to be clicked and dragged on
      * @param partner2 is the patient node that is meant to be dragged to wards
      * @return Stay on the same page so return the same object. TODO: I don't think this is working... we really need
-     * better structure for it to be testable
+     *         better structure for it to be testable
      */
     public PedigreeEditorPage createPartnership(int partner1, int partner2)
     {
-        Actions act = new Actions(superDriver);
+        Actions act = new Actions(this.superDriver);
 
-        waitForElementToBePresent(hoverBox);
-        List<WebElement> loHoverBoxes = superDriver.findElements(hoverBox);
+        waitForElementToBePresent(this.hoverBox);
+        List<WebElement> loHoverBoxes = this.superDriver.findElements(this.hoverBox);
 
         act.moveToElement(loHoverBoxes.get(partner1 - 1))
-//            .pause(2000)
+            // .pause(2000)
             .build().perform();
 
-        forceClickOnElement(createPartnerNode);
-        waitForElementToBePresent(createPartnerNode);
-        List<WebElement> loPartnerNodes = superDriver.findElements(createPartnerNode);
+        forceClickOnElement(this.createPartnerNode);
+        waitForElementToBePresent(this.createPartnerNode);
+        List<WebElement> loPartnerNodes = this.superDriver.findElements(this.createPartnerNode);
 
         act.dragAndDrop(loPartnerNodes.get(partner1 - 1),
             loHoverBoxes.get(partner2 - 1))
@@ -639,13 +639,13 @@ public class PedigreeEditorPage extends BasePage
     @Step("Create a sibling for the patient on the {0}th hover box")
     public PedigreeEditorPage createSibling(int NthHoverBox)
     {
-        waitForElementToBePresent(hoverBox);
+        waitForElementToBePresent(this.hoverBox);
 
         openNthEditModal(NthHoverBox);
-        waitForElementToBePresent(createSiblingNode);
+        waitForElementToBePresent(this.createSiblingNode);
 
-        List<WebElement> loChildCreateNodes = superDriver.findElements(createSiblingNode);
-        List<WebElement> loMaleNodes = superDriver.findElements(createMaleNode);
+        List<WebElement> loChildCreateNodes = this.superDriver.findElements(this.createSiblingNode);
+        List<WebElement> loMaleNodes = this.superDriver.findElements(this.createMaleNode);
 
         System.out.println("DEBUG Create Nodes found: " + loChildCreateNodes.size());
 

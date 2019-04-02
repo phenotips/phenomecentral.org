@@ -59,7 +59,7 @@ public class MatchNotificationPageTests extends BaseTest implements CommonInfoEn
     @BeforeClass
     public void refreshMatchesFirst()
     {
-        aHomePage.navigateToLoginPage()
+        this.aHomePage.navigateToLoginPage()
             .loginAsAdmin()
             .navigateToAdminSettingsPage()
             .navigateToRefreshMatchesPage()
@@ -77,19 +77,19 @@ public class MatchNotificationPageTests extends BaseTest implements CommonInfoEn
     @Test()
     public void matchPhenotypeOnly()
     {
-        List<String> loPhenotypesToAdd1 = new ArrayList<String>(Arrays.asList(
+        List<String> loPhenotypesToAdd1 = new ArrayList<>(Arrays.asList(
             "Unilateral deafness", "Poikilocytosis", "Swollen lip", "Narcolepsy", "Eye poking"));
 
-        List<String> loPhenotypesToAdd2 = new ArrayList<String>(Arrays.asList(
+        List<String> loPhenotypesToAdd2 = new ArrayList<>(Arrays.asList(
             "Nausea and vomiting", "Poikilocytosis", "Swollen lip", "Narcolepsy", "Eye poking"));
 
-        final String patientUniqueIdentifier = "PhenoOnlyMatch " + randomChars;
+        final String patientUniqueIdentifier = "PhenoOnlyMatch " + this.randomChars;
 
         String createdPatient1;
         String createdPatient2;
         List<String> patientsEmailTitleCheck;
 
-        aHomePage.navigateToLoginPage()
+        this.aHomePage.navigateToLoginPage()
             .loginAsUser()
             .navigateToCreateANewPatientPage()
             .toggleFirstFourConsentBoxes()
@@ -108,9 +108,9 @@ public class MatchNotificationPageTests extends BaseTest implements CommonInfoEn
             .addGene("SCN5A", "Tested negative", "Sequencing")
             .saveAndViewSummary();
 
-        createdPatient1 = aViewPatientPage.getPatientID();
+        createdPatient1 = this.aViewPatientPage.getPatientID();
 
-        aViewPatientPage.logOut()
+        this.aViewPatientPage.logOut()
             .loginAsUserTwo()
             .navigateToCreateANewPatientPage()
             .toggleFirstFourConsentBoxes()
@@ -129,17 +129,17 @@ public class MatchNotificationPageTests extends BaseTest implements CommonInfoEn
             .addGene("PRKCZ", "Tested negative", "Sequencing")
             .saveAndViewSummary();
 
-        createdPatient2 = aViewPatientPage.getPatientID();
+        createdPatient2 = this.aViewPatientPage.getPatientID();
 
-        aViewPatientPage.logOut()
+        this.aViewPatientPage.logOut()
             .loginAsAdmin()
             .navigateToAdminSettingsPage()
             .navigateToRefreshMatchesPage()
             .refreshMatchesSinceLastUpdate();
 
-        Assert.assertEquals(anAdminRefreshMatchesPage.getNumberOfLocalPatientsProcessed(), "2");
+        Assert.assertEquals(this.anAdminRefreshMatchesPage.getNumberOfLocalPatientsProcessed(), "2");
 
-        anAdminRefreshMatchesPage.navigateToAdminSettingsPage()
+        this.anAdminRefreshMatchesPage.navigateToAdminSettingsPage()
             .navigateToMatchingNotificationPage()
             .setAverageScoreSliderToMinimum()
             .setGenotypeSliderToZero()
@@ -150,9 +150,9 @@ public class MatchNotificationPageTests extends BaseTest implements CommonInfoEn
         patientsEmailTitleCheck = new ArrayList<>(Arrays.asList(
             "Matches found for patient: " + createdPatient2, "Matches found for patient: " + createdPatient1));
 
-        Assert.assertTrue(aEmailUIPage.getEmailTitles().containsAll(patientsEmailTitleCheck));
+        Assert.assertTrue(this.aEmailUIPage.getEmailTitles().containsAll(patientsEmailTitleCheck));
 
-        aEmailUIPage.navigateToHomePage().logOut();
+        this.aEmailUIPage.navigateToHomePage().logOut();
     }
 
     /**
@@ -162,20 +162,20 @@ public class MatchNotificationPageTests extends BaseTest implements CommonInfoEn
     @Test()
     public void matchGenotypeOnly()
     {
-        List<String> loPhenotypesToAdd1 = new ArrayList<String>(Arrays.asList(
+        List<String> loPhenotypesToAdd1 = new ArrayList<>(Arrays.asList(
             "Unilateral deafness", "Tarsal synostosis", "Impairment of activities of daily living",
             "Obliteration of the pulp chamber", "Abnormal proportion of marginal zone B cells"));
 
-        List<String> loPhenotypesToAdd2 = new ArrayList<String>(Arrays.asList(
+        List<String> loPhenotypesToAdd2 = new ArrayList<>(Arrays.asList(
             "Nausea and vomiting", "Poikilocytosis", "Swollen lip", "Narcolepsy", "Eye poking"));
 
-        final String patientUniqueIdentifier = "GenoOnlyMatch " + randomChars;
+        final String patientUniqueIdentifier = "GenoOnlyMatch " + this.randomChars;
 
         String createdPatient1;
         String createdPatient2;
         List<String> patientsEmailTitleCheck;
 
-        aHomePage.navigateToLoginPage()
+        this.aHomePage.navigateToLoginPage()
             .loginAsUser()
             .navigateToCreateANewPatientPage()
             .toggleFirstFourConsentBoxes()
@@ -196,9 +196,9 @@ public class MatchNotificationPageTests extends BaseTest implements CommonInfoEn
             .addGene("RIOK3", "Tested negative", "Sequencing")
             .saveAndViewSummary();
 
-        createdPatient1 = aViewPatientPage.getPatientID();
+        createdPatient1 = this.aViewPatientPage.getPatientID();
 
-        aViewPatientPage.logOut()
+        this.aViewPatientPage.logOut()
             .loginAsUserTwo()
             .navigateToCreateANewPatientPage()
             .toggleFirstFourConsentBoxes()
@@ -219,17 +219,17 @@ public class MatchNotificationPageTests extends BaseTest implements CommonInfoEn
             .addGene("RIOK3", "Tested negative", "Sequencing")
             .saveAndViewSummary();
 
-        createdPatient2 = aViewPatientPage.getPatientID();
+        createdPatient2 = this.aViewPatientPage.getPatientID();
 
-        aViewPatientPage.logOut()
+        this.aViewPatientPage.logOut()
             .loginAsAdmin()
             .navigateToAdminSettingsPage()
             .navigateToRefreshMatchesPage()
             .refreshMatchesSinceLastUpdate();
 
-        Assert.assertEquals(anAdminRefreshMatchesPage.getNumberOfLocalPatientsProcessed(), "2");
+        Assert.assertEquals(this.anAdminRefreshMatchesPage.getNumberOfLocalPatientsProcessed(), "2");
 
-        anAdminRefreshMatchesPage.navigateToAdminSettingsPage()
+        this.anAdminRefreshMatchesPage.navigateToAdminSettingsPage()
             .navigateToMatchingNotificationPage()
             .filterByID(createdPatient1)
             .emailSpecificPatients(createdPatient1, createdPatient2)
@@ -238,9 +238,9 @@ public class MatchNotificationPageTests extends BaseTest implements CommonInfoEn
         patientsEmailTitleCheck = new ArrayList<>(Arrays.asList(
             "Matches found for patient: " + createdPatient2, "Matches found for patient: " + createdPatient1));
 
-        Assert.assertTrue(aEmailUIPage.getEmailTitles().containsAll(patientsEmailTitleCheck));
+        Assert.assertTrue(this.aEmailUIPage.getEmailTitles().containsAll(patientsEmailTitleCheck));
 
-        aEmailUIPage.navigateToHomePage().logOut();
+        this.aEmailUIPage.navigateToHomePage().logOut();
     }
 
     @Test(enabled = false)
@@ -249,7 +249,7 @@ public class MatchNotificationPageTests extends BaseTest implements CommonInfoEn
         List<String> patientsEmailTitleCheck = new ArrayList<>(Arrays.asList(
             "Matches found for patient: P0000002", "Matches found for patient: P0000001"));
 
-        aHomePage.navigateToLoginPage()
+        this.aHomePage.navigateToLoginPage()
             .loginAsAdmin()
             .navigateToAdminSettingsPage()
             .navigateToMatchingNotificationPage()
@@ -258,8 +258,8 @@ public class MatchNotificationPageTests extends BaseTest implements CommonInfoEn
             .logOut()
             .navigateToEmailInboxPage();
 
-        Assert.assertEquals(aEmailUIPage.getEmailTitles(), patientsEmailTitleCheck);
+        Assert.assertEquals(this.aEmailUIPage.getEmailTitles(), patientsEmailTitleCheck);
 
-        aEmailUIPage.deleteAllEmails();
+        this.aEmailUIPage.deleteAllEmails();
     }
 }

@@ -88,7 +88,8 @@ public class CommonPatientMeasurement
         this.interpupilaryDistance = interpupilaryDistance;
     }
 
-    @Override public boolean equals(Object o)
+    @Override
+    public boolean equals(Object o)
     {
         if (this == o) {
             return true;
@@ -97,55 +98,60 @@ public class CommonPatientMeasurement
             return false;
         }
         CommonPatientMeasurement that = (CommonPatientMeasurement) o;
-        return Float.compare(that.weight, weight) == 0 &&
-            Float.compare(that.armSpan, armSpan) == 0 &&
-            Float.compare(that.headCircumference, headCircumference) == 0 &&
-            Float.compare(that.outerCanthalDistance, outerCanthalDistance) == 0 &&
-            Float.compare(that.leftHandLength, leftHandLength) == 0 &&
-            Float.compare(that.rightHandLength, rightHandLength) == 0 &&
-            Float.compare(that.height, height) == 0 &&
-            Float.compare(that.sittingHeight, sittingHeight) == 0 &&
-            Float.compare(that.philtrumLength, philtrumLength) == 0 &&
-            Float.compare(that.inntercanthalDistance, inntercanthalDistance) == 0 &&
-            Float.compare(that.leftPalmLength, leftPalmLength) == 0 &&
-            Float.compare(that.rightPalmLength, rightPalmLength) == 0 &&
-            Float.compare(that.leftEarLength, leftEarLength) == 0 &&
-            Float.compare(that.palpebralFissureLength, palpebralFissureLength) == 0 &&
-            Float.compare(that.leftFootLength, leftFootLength) == 0 &&
-            Float.compare(that.rightFootLength, rightFootLength) == 0 &&
-            Float.compare(that.rightEarLength, rightEarLength) == 0 &&
-            Float.compare(that.interpupilaryDistance, interpupilaryDistance) == 0;
+        return Float.compare(that.weight, this.weight) == 0 &&
+            Float.compare(that.armSpan, this.armSpan) == 0 &&
+            Float.compare(that.headCircumference, this.headCircumference) == 0 &&
+            Float.compare(that.outerCanthalDistance, this.outerCanthalDistance) == 0 &&
+            Float.compare(that.leftHandLength, this.leftHandLength) == 0 &&
+            Float.compare(that.rightHandLength, this.rightHandLength) == 0 &&
+            Float.compare(that.height, this.height) == 0 &&
+            Float.compare(that.sittingHeight, this.sittingHeight) == 0 &&
+            Float.compare(that.philtrumLength, this.philtrumLength) == 0 &&
+            Float.compare(that.inntercanthalDistance, this.inntercanthalDistance) == 0 &&
+            Float.compare(that.leftPalmLength, this.leftPalmLength) == 0 &&
+            Float.compare(that.rightPalmLength, this.rightPalmLength) == 0 &&
+            Float.compare(that.leftEarLength, this.leftEarLength) == 0 &&
+            Float.compare(that.palpebralFissureLength, this.palpebralFissureLength) == 0 &&
+            Float.compare(that.leftFootLength, this.leftFootLength) == 0 &&
+            Float.compare(that.rightFootLength, this.rightFootLength) == 0 &&
+            Float.compare(that.rightEarLength, this.rightEarLength) == 0 &&
+            Float.compare(that.interpupilaryDistance, this.interpupilaryDistance) == 0;
     }
 
-    @Override public int hashCode()
+    @Override
+    public int hashCode()
     {
         return Objects
-            .hash(weight, armSpan, headCircumference, outerCanthalDistance, leftHandLength, rightHandLength, height,
-                sittingHeight, philtrumLength, inntercanthalDistance, leftPalmLength, rightPalmLength, leftEarLength,
-                palpebralFissureLength, leftFootLength, rightFootLength, rightEarLength, interpupilaryDistance);
+            .hash(this.weight, this.armSpan, this.headCircumference, this.outerCanthalDistance, this.leftHandLength,
+                this.rightHandLength, this.height,
+                this.sittingHeight, this.philtrumLength, this.inntercanthalDistance, this.leftPalmLength,
+                this.rightPalmLength, this.leftEarLength,
+                this.palpebralFissureLength, this.leftFootLength, this.rightFootLength, this.rightEarLength,
+                this.interpupilaryDistance);
     }
 
-    @Override public String toString()
+    @Override
+    public String toString()
     {
         return "CommonPatientMeasurement{" +
-            "weight=" + weight +
-            ", armSpan=" + armSpan +
-            ", headCircumference=" + headCircumference +
-            ", outerCanthalDistance=" + outerCanthalDistance +
-            ", leftHandLength=" + leftHandLength +
-            ", rightHandLength=" + rightHandLength +
-            ", height=" + height +
-            ", sittingHeight=" + sittingHeight +
-            ", philtrumLength=" + philtrumLength +
-            ", inntercanthalDistance=" + inntercanthalDistance +
-            ", leftPalmLength=" + leftPalmLength +
-            ", rightPalmLength=" + rightPalmLength +
-            ", leftEarLength=" + leftEarLength +
-            ", palpebralFissureLength=" + palpebralFissureLength +
-            ", leftFootLength=" + leftFootLength +
-            ", rightFootLength=" + rightFootLength +
-            ", rightEarLength=" + rightEarLength +
-            ", interpupilaryDistance=" + interpupilaryDistance +
+            "weight=" + this.weight +
+            ", armSpan=" + this.armSpan +
+            ", headCircumference=" + this.headCircumference +
+            ", outerCanthalDistance=" + this.outerCanthalDistance +
+            ", leftHandLength=" + this.leftHandLength +
+            ", rightHandLength=" + this.rightHandLength +
+            ", height=" + this.height +
+            ", sittingHeight=" + this.sittingHeight +
+            ", philtrumLength=" + this.philtrumLength +
+            ", inntercanthalDistance=" + this.inntercanthalDistance +
+            ", leftPalmLength=" + this.leftPalmLength +
+            ", rightPalmLength=" + this.rightPalmLength +
+            ", leftEarLength=" + this.leftEarLength +
+            ", palpebralFissureLength=" + this.palpebralFissureLength +
+            ", leftFootLength=" + this.leftFootLength +
+            ", rightFootLength=" + this.rightFootLength +
+            ", rightEarLength=" + this.rightEarLength +
+            ", interpupilaryDistance=" + this.interpupilaryDistance +
             '}';
     }
 }

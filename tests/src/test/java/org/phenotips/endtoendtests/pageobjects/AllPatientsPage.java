@@ -63,9 +63,9 @@ public class AllPatientsPage extends BasePage
     @Step("Import a patient via JSON {0}")
     public AllPatientsPage importJSONPatient(String theJSON)
     {
-        clickOnElement(importJSONLink);
-        clickAndTypeOnElement(JSONBox, theJSON);
-        clickOnElement(importBtn);
+        clickOnElement(this.importJSONLink);
+        clickAndTypeOnElement(this.JSONBox, theJSON);
+        clickOnElement(this.importBtn);
         waitForInProgressMsgToDisappear();
         waitForLoadingBarToDisappear();
         return this;
@@ -81,8 +81,8 @@ public class AllPatientsPage extends BasePage
     @Step("Sort patients in descending date order")
     public AllPatientsPage sortPatientsDateDesc()
     {
-        clickOnElement(sortCreationDate);
-        clickOnElement(sortCreationDate);
+        clickOnElement(this.sortCreationDate);
+        clickOnElement(this.sortCreationDate);
         waitForLoadingBarToDisappear();
         return this;
     }
@@ -95,8 +95,8 @@ public class AllPatientsPage extends BasePage
     @Step("View first patient in table")
     public ViewPatientPage viewFirstPatientInTable()
     {
-        clickOnElement(firstPatientRowLink);
-        return new ViewPatientPage(superDriver);
+        clickOnElement(this.firstPatientRowLink);
+        return new ViewPatientPage(this.superDriver);
     }
 
     /**
@@ -109,13 +109,13 @@ public class AllPatientsPage extends BasePage
     {
         waitForLoadingBarToDisappear();
 
-        List<WebElement> loDeleteBtns = superDriver.findElements(deleteBtns);
+        List<WebElement> loDeleteBtns = this.superDriver.findElements(this.deleteBtns);
 
         // theElement just acts as an iterator for the array size, we don't use it.
         for (WebElement theElement : loDeleteBtns) { // Use the original number of rows a counter
             // theElement.click(); // Table pagintes upwards
-            clickOnElement(deleteBtns);
-            clickOnElement(deleteYesConfirmBtn);
+            clickOnElement(this.deleteBtns);
+            clickOnElement(this.deleteYesConfirmBtn);
             waitForInProgressMsgToDisappear();
             waitForLoadingBarToDisappear();
         }
@@ -132,7 +132,7 @@ public class AllPatientsPage extends BasePage
     @Step("Filter patient {0} by their identifier or patient ID")
     public AllPatientsPage filterByPatientID(String patientID)
     {
-        clickAndTypeOnElement(patientIDFilterBox, patientID);
+        clickAndTypeOnElement(this.patientIDFilterBox, patientID);
         waitForLoadingBarToDisappear();
         return this;
     }

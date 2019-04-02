@@ -211,7 +211,7 @@ public class CreatePatientPage extends CommonInfoSelectors
     private final By phenotypesSelectedLabels = By.cssSelector("div.summary-item > label.yes");
 
     // Different selectors for when the thunderbolt symbol is present or not. Lightning appears when auto added
-    //   by measurement information.
+    // by measurement information.
     private final By phenotypesAutoSelectedByMeasurementLabels =
         By.xpath("//div[@class='summary-item' and span[@class='fa fa-bolt']]/label[@class='yes']");
 
@@ -241,7 +241,7 @@ public class CreatePatientPage extends CommonInfoSelectors
         "td.Strategy > label > input[value=common_mutations]");
 
     private final By firstGeneSuggestion = By.cssSelector("div.suggestItem > div > span.suggestValue");
-        // First suggestion result for prenatal phenotypes too
+    // First suggestion result for prenatal phenotypes too
 
     /*******************************************************
      * "Diagnosis" Section - Selectors
@@ -311,8 +311,8 @@ public class CreatePatientPage extends CommonInfoSelectors
     @Step("Save and View Summary of patient form")
     public ViewPatientPage saveAndViewSummary()
     {
-        clickOnElement(saveAndViewSummaryBtn);
-        return new ViewPatientPage(superDriver);
+        clickOnElement(this.saveAndViewSummaryBtn);
+        return new ViewPatientPage(this.superDriver);
     }
 
     /**
@@ -323,7 +323,7 @@ public class CreatePatientPage extends CommonInfoSelectors
     @Step("Quick Save of patient form")
     public CreatePatientPage quickSave()
     {
-        clickOnElement(quickSaveBtn);
+        clickOnElement(this.quickSaveBtn);
         return this;
     }
 
@@ -335,8 +335,8 @@ public class CreatePatientPage extends CommonInfoSelectors
     @Step("Cancel changes on patient form")
     public ViewPatientPage cancelChanges()
     {
-        clickOnElement(cancelChangesSinceSaveBtn);
-        return new ViewPatientPage(superDriver);
+        clickOnElement(this.cancelChangesSinceSaveBtn);
+        return new ViewPatientPage(this.superDriver);
     }
 
     /****************************
@@ -353,19 +353,19 @@ public class CreatePatientPage extends CommonInfoSelectors
     {
         switch (n) {
             case 1:
-                clickOnElement(realPatientConsentBox);
+                clickOnElement(this.realPatientConsentBox);
                 break;
             case 2:
-                clickOnElement(geneticConsentBox);
+                clickOnElement(this.geneticConsentBox);
                 break;
             case 3:
-                clickOnElement(shareHistoryConsentBox);
+                clickOnElement(this.shareHistoryConsentBox);
                 break;
             case 4:
-                clickOnElement(shareImagesConsentBox);
+                clickOnElement(this.shareImagesConsentBox);
                 break;
             case 5:
-                clickOnElement(matchingConsentBox);
+                clickOnElement(this.matchingConsentBox);
                 break;
             default:
                 System.out.println("Invalid nth consent box specified: " + n);
@@ -397,7 +397,7 @@ public class CreatePatientPage extends CommonInfoSelectors
     @Step("Click on 'Update' button for consent")
     public CreatePatientPage updateConsent()
     {
-        clickOnElement(patientConsentUpdateBtn);
+        clickOnElement(this.patientConsentUpdateBtn);
         unconditionalWaitNs(5); // No element to wait on as the state of the consents might not have changed.
         return this;
     }
@@ -414,9 +414,9 @@ public class CreatePatientPage extends CommonInfoSelectors
     @Step("Set the patient's identifier to: {0}")
     public CreatePatientPage setIdentifer(String identifer)
     {
-        clickOnElement(identifierBox);
-        superDriver.findElement(identifierBox).clear();
-        clickAndTypeOnElement(identifierBox, identifer);
+        clickOnElement(this.identifierBox);
+        this.superDriver.findElement(this.identifierBox).clear();
+        clickAndTypeOnElement(this.identifierBox, identifer);
         unconditionalWaitNs(1); // Gives "identifier already exists" if we navigate away too fast.
         return this;
     }
@@ -425,14 +425,14 @@ public class CreatePatientPage extends CommonInfoSelectors
      * Sets the Life Status dropdown of the patient.
      *
      * @param status is either "Alive" or "Deceased". Must be exact string otherwise Selenium throws
-     * NoSuchElementException exception.
+     *            NoSuchElementException exception.
      * @return stay on the same page so return same object.
      */
     @Step("Set patient's life status to: {0}")
     public CreatePatientPage setLifeStatus(String status)
     {
-        waitForElementToBePresent(lifeStatusDrp);
-        Select statusDrp = new Select(superDriver.findElement(lifeStatusDrp));
+        waitForElementToBePresent(this.lifeStatusDrp);
+        Select statusDrp = new Select(this.superDriver.findElement(this.lifeStatusDrp));
 
         statusDrp.selectByVisibleText(status);
 
@@ -453,9 +453,9 @@ public class CreatePatientPage extends CommonInfoSelectors
         Select monthDrp;
         Select yearDrp;
 
-        waitForElementToBePresent(dobMonthDrp);
-        monthDrp = new Select(superDriver.findElement(dobMonthDrp));
-        yearDrp = new Select(superDriver.findElement(dobYearDrp));
+        waitForElementToBePresent(this.dobMonthDrp);
+        monthDrp = new Select(this.superDriver.findElement(this.dobMonthDrp));
+        yearDrp = new Select(this.superDriver.findElement(this.dobYearDrp));
 
         monthDrp.selectByVisibleText(month);
         yearDrp.selectByVisibleText(year);
@@ -478,9 +478,9 @@ public class CreatePatientPage extends CommonInfoSelectors
         Select monthDrp;
         Select yearDrp;
 
-        waitForElementToBePresent(doDeathMonthDrp);
-        monthDrp = new Select(superDriver.findElement(doDeathMonthDrp));
-        yearDrp = new Select(superDriver.findElement(doDeathYearDrp));
+        waitForElementToBePresent(this.doDeathMonthDrp);
+        monthDrp = new Select(this.superDriver.findElement(this.doDeathMonthDrp));
+        yearDrp = new Select(this.superDriver.findElement(this.doDeathYearDrp));
 
         monthDrp.selectByVisibleText(month);
         yearDrp.selectByVisibleText(year);
@@ -497,9 +497,9 @@ public class CreatePatientPage extends CommonInfoSelectors
      */
     public CreatePatientPage expandSection(SECTIONS theSection)
     {
-        forceScrollToElement(sectionMap.get(theSection));
+        forceScrollToElement(this.sectionMap.get(theSection));
 
-        clickOnElement(sectionMap.get(theSection));
+        clickOnElement(this.sectionMap.get(theSection));
         return this;
     }
 
@@ -513,19 +513,19 @@ public class CreatePatientPage extends CommonInfoSelectors
     @Step("Set the gender of the patient to: {0}")
     public CreatePatientPage setGender(String theGender)
     {
-        waitForElementToBePresent(maleGenderBtn);
+        waitForElementToBePresent(this.maleGenderBtn);
         switch (theGender) {
             case "Male":
-                clickOnElement(maleGenderBtn);
+                clickOnElement(this.maleGenderBtn);
                 break;
             case "Female":
-                clickOnElement(femaleGenderBtn);
+                clickOnElement(this.femaleGenderBtn);
                 break;
             case "Other":
-                clickOnElement(otherGenderBtn);
+                clickOnElement(this.otherGenderBtn);
                 break;
             case "Unknown":
-                clickOnElement(unknownGenderBtn);
+                clickOnElement(this.unknownGenderBtn);
                 break;
             default:
                 System.out.println("Invalid gender selected! Default to Unknown");
@@ -544,11 +544,11 @@ public class CreatePatientPage extends CommonInfoSelectors
     @Step("Set the Age of Onset for the patient to: {0}")
     public CreatePatientPage setOnset(String theOnset)
     {
-        waitForElementToBePresent(congenitalOnsentBtn);
+        waitForElementToBePresent(this.congenitalOnsentBtn);
 
         switch (theOnset) {
             default:
-                clickOnElement(congenitalOnsentBtn);
+                clickOnElement(this.congenitalOnsentBtn);
                 break;
         }
         return this;
@@ -564,11 +564,11 @@ public class CreatePatientPage extends CommonInfoSelectors
     {
 
         List<String> loLabels =
-            preOrderTraverseAndClick(ageOfOnsetBtns,
-                ageOfOnsetAndModeInheritanceChildBtn,
-                ageOfOnsetAndModeInheritanceChildLabels);
+            preOrderTraverseAndClick(this.ageOfOnsetBtns,
+                this.ageOfOnsetAndModeInheritanceChildBtn,
+                this.ageOfOnsetAndModeInheritanceChildLabels);
 
-        clickOnElement(congenitalOnsentBtn);
+        clickOnElement(this.congenitalOnsentBtn);
 
         return loLabels;
     }
@@ -582,9 +582,9 @@ public class CreatePatientPage extends CommonInfoSelectors
     public List<String> cycleThroughModeOfInheritance()
     {
 
-        return preOrderTraverseAndClick(modeOfInheritanceChkboxes,
-            ageOfOnsetAndModeInheritanceChildBtn,
-            ageOfOnsetAndModeInheritanceChildLabels);
+        return preOrderTraverseAndClick(this.modeOfInheritanceChkboxes,
+            this.ageOfOnsetAndModeInheritanceChildBtn,
+            this.ageOfOnsetAndModeInheritanceChildLabels);
     }
 
     /**
@@ -597,7 +597,7 @@ public class CreatePatientPage extends CommonInfoSelectors
     @Step("Set the indication for referral to: {0}")
     public CreatePatientPage setIndicationForReferral(String neededText)
     {
-        clickAndTypeOnElement(indicationForReferralBox, neededText);
+        clickAndTypeOnElement(this.indicationForReferralBox, neededText);
         return this;
     }
 
@@ -609,28 +609,28 @@ public class CreatePatientPage extends CommonInfoSelectors
      * "Create a new family" radio option is selected by default. Requires the "Family History" section to be expanded
      *
      * @param familyName is the family name to base the pedigree off of. Pass "" (empty string) to specify the "Create a
-     * new family" radio option. Otherwise, this must be a valid existing family name.
+     *            new family" radio option. Otherwise, this must be a valid existing family name.
      * @return we navigate to the Pedigree Editor page so return new instance of that.
      */
     @Step("Navigate to the pedigree editor (from patient form) with family name: {0}")
     public PedigreeEditorPage navigateToPedigreeEditor(String familyName)
     {
-        clickOnElement(editPedigreeBox);
+        clickOnElement(this.editPedigreeBox);
 
         // Case where we want to specify a family, also need to ensure that the dialogue is actually there.
-        if (!familyName.equals("") && isElementPresent(editPedigreeOKBtn)) {
-            clickOnElement(assignFamilyRadioBtn);
-            clickAndTypeOnElement(familySearchInputBox, familyName);
-            clickOnElement(firstFamilySuggestion);
+        if (!familyName.equals("") && isElementPresent(this.editPedigreeOKBtn)) {
+            clickOnElement(this.assignFamilyRadioBtn);
+            clickAndTypeOnElement(this.familySearchInputBox, familyName);
+            clickOnElement(this.firstFamilySuggestion);
         }
 
         // If we are editing a pedigree, there is no family selection dialogue that appears, hence just
-        //   check for an OK button before trying to click.
-        if (isElementPresent(editPedigreeOKBtn)) {
-            clickOnElement(editPedigreeOKBtn);
+        // check for an OK button before trying to click.
+        if (isElementPresent(this.editPedigreeOKBtn)) {
+            clickOnElement(this.editPedigreeOKBtn);
         }
 
-        return new PedigreeEditorPage(superDriver);
+        return new PedigreeEditorPage(this.superDriver);
     }
 
     /**
@@ -643,8 +643,8 @@ public class CreatePatientPage extends CommonInfoSelectors
     {
 
         return preOrderTraverseAndClick(By.cssSelector("div.family-info > div.fieldset"),
-            By.cssSelector(yesBtnSelectorString),
-            By.cssSelector(labelSelectorString));
+            By.cssSelector(this.yesBtnSelectorString),
+            By.cssSelector(this.labelSelectorString));
     }
 
     /**
@@ -653,18 +653,18 @@ public class CreatePatientPage extends CommonInfoSelectors
      *
      * @param maternity pass either "Paternal" or "Maternal"
      * @param ethnicity is the ethncity to set. Requires this to be as close as possible to an exact match to
-     * suggestions dropdown.
+     *            suggestions dropdown.
      * @return Stay on the same page so return the same object.
      */
     @Step("Set the {0} ethnicity to {1}")
     public CreatePatientPage setEthnicity(String maternity, String ethnicity)
     {
         if (maternity.equals("Paternal")) {
-            clickAndTypeOnElement(paternalEthnicityBox, ethnicity);
-            clickOnElement(firstFamilySuggestion);
+            clickAndTypeOnElement(this.paternalEthnicityBox, ethnicity);
+            clickOnElement(this.firstFamilySuggestion);
         } else {
-            clickAndTypeOnElement(maternalEthnicityBox, ethnicity);
-            clickOnElement(firstFamilySuggestion);
+            clickAndTypeOnElement(this.maternalEthnicityBox, ethnicity);
+            clickOnElement(this.firstFamilySuggestion);
         }
         return this;
     }
@@ -678,7 +678,7 @@ public class CreatePatientPage extends CommonInfoSelectors
     @Step("Set the Health Conditions in Family note box to: {0}")
     public CreatePatientPage setHealthConditionsFoundInFamily(String note)
     {
-        clickAndTypeOnElement(healthConditionsFoundInFamily, note);
+        clickAndTypeOnElement(this.healthConditionsFoundInFamily, note);
         return this;
     }
 
@@ -692,7 +692,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * due to presence of additional (appearing) selectors.
      *
      * @return a List of Strings which represent the health conditions found under the yes/no boxes of "Prenatal and
-     * perinatal history"
+     *         perinatal history"
      */
     @Step("Set the DOB for the patient to: {0} month and {1} year")
     public List<String> cycleThroughPrenatalHistory()
@@ -706,12 +706,12 @@ public class CreatePatientPage extends CommonInfoSelectors
         // We add the strings together instead of ByChained becaues ByChained is itself a recursive tree traversal that
         // will go deep and ignore the ">" to link the chain which means the "immediate child" (depth 1).
         List<String> loUncategorizedLabels = preOrderTraverseAndClick(By.cssSelector("div.prenatal-info"),
-            By.cssSelector("div.fieldset > " + yesBtnSelectorString),
-            By.cssSelector("div.fieldset > " + labelSelectorString));
+            By.cssSelector("div.fieldset > " + this.yesBtnSelectorString),
+            By.cssSelector("div.fieldset > " + this.labelSelectorString));
 
-//      Expand the dropdowns for the yes/no options that are categorized into sections, lets them load first
+        // Expand the dropdowns for the yes/no options that are categorized into sections, lets them load first
         preOrderTraverseAndClick(
-            By.cssSelector("div.prenatal-info > div > div > div"), expandToolSpan, expandToolSpan);
+            By.cssSelector("div.prenatal-info > div > div > div"), this.expandToolSpan, this.expandToolSpan);
 
         List<String> loCategorizedLabels = preOrderTraverseAndClick(
             By.cssSelector(
@@ -734,17 +734,17 @@ public class CreatePatientPage extends CommonInfoSelectors
     @Step("Traverse through the prenatal options UI")
     public CreatePatientPage cycleThroughPrenatalOptions()
     {
-        waitForElementToBePresent(APGARScore1MinDrp);
+        waitForElementToBePresent(this.APGARScore1MinDrp);
 
-        clickOnElement(termBirthCheckbox);
-        clickOnElement(termBirthCheckbox);
-        clickAndTypeOnElement(gestationWeeksBox, "12");
-        clickAndTypeOnElement(maternalAgeBox, "26");
-        clickAndTypeOnElement(paternalAgeBox, "30");
+        clickOnElement(this.termBirthCheckbox);
+        clickOnElement(this.termBirthCheckbox);
+        clickAndTypeOnElement(this.gestationWeeksBox, "12");
+        clickAndTypeOnElement(this.maternalAgeBox, "26");
+        clickAndTypeOnElement(this.paternalAgeBox, "30");
 
-        forceScrollToElement(APGARScore1MinDrp);
-        Select APGARScore1Min = new Select(superDriver.findElement(APGARScore1MinDrp));
-        Select APGARScore5Min = new Select(superDriver.findElement(APGARScore5MinDrp));
+        forceScrollToElement(this.APGARScore1MinDrp);
+        Select APGARScore1Min = new Select(this.superDriver.findElement(this.APGARScore1MinDrp));
+        Select APGARScore5Min = new Select(this.superDriver.findElement(this.APGARScore5MinDrp));
         List<String> loAPGARScores = new ArrayList<>(Arrays.asList(
             "Unknown", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"));
 
@@ -756,22 +756,22 @@ public class CreatePatientPage extends CommonInfoSelectors
         APGARScore1Min.selectByVisibleText("Unknown");
         APGARScore5Min.selectByVisibleText("Unknown");
 
-        clickAndTypeOnElement(otherPregnancyPhenotypeBox, "Tall chin");
-        clickOnElement(firstGeneSuggestion);
+        clickAndTypeOnElement(this.otherPregnancyPhenotypeBox, "Tall chin");
+        clickOnElement(this.firstGeneSuggestion);
 
-        clickAndTypeOnElement(otherDevelopmentPhenotypeBox, "Tall chin");
-        clickOnElement(firstGeneSuggestion);
+        clickAndTypeOnElement(this.otherDevelopmentPhenotypeBox, "Tall chin");
+        clickOnElement(this.firstGeneSuggestion);
 
-        clickAndTypeOnElement(otherDeliveryPhenotypeBox, "Tall chin");
-        clickOnElement(firstGeneSuggestion);
+        clickAndTypeOnElement(this.otherDeliveryPhenotypeBox, "Tall chin");
+        clickOnElement(this.firstGeneSuggestion);
 
-        clickAndTypeOnElement(otherGrowthPhenotypeBox, "Tall chin");
-        clickOnElement(firstGeneSuggestion);
+        clickAndTypeOnElement(this.otherGrowthPhenotypeBox, "Tall chin");
+        clickOnElement(this.firstGeneSuggestion);
 
-        clickAndTypeOnElement(otherComplicationsPhenotypeBox, "Tall chin");
-        clickOnElement(firstGeneSuggestion);
+        clickAndTypeOnElement(this.otherComplicationsPhenotypeBox, "Tall chin");
+        clickOnElement(this.firstGeneSuggestion);
 
-        clickAndTypeOnElement(prenatalNotesBox, "Notes for prenatal. Moving on...");
+        clickAndTypeOnElement(this.prenatalNotesBox, "Notes for prenatal. Moving on...");
 
         return this;
     }
@@ -781,38 +781,37 @@ public class CreatePatientPage extends CommonInfoSelectors
      *****************************************/
 
     // TODO: Methods for this section only support one measurement entry right now. I don't have test cases for
-    //       multiple measurement entries
+    // multiple measurement entries
 
     /**
      * Adds a new entry of measurement data to the patient under the "Measurements" section. Requires: The
      * "Measurements" section to already be expanded.
      *
-     * @param aMeasurement is a measurement object (instantiated struct) containing all the measurement fields to
-     * enter.
+     * @param aMeasurement is a measurement object (instantiated struct) containing all the measurement fields to enter.
      * @return Stay on the same page so return the same object.
      */
     @Step("Add a measurement to patient as: {0}")
     public CreatePatientPage addMeasurement(CommonPatientMeasurement aMeasurement)
     {
-        clickOnElement(addMeasurementBtn);
-        clickAndTypeOnElement(weightBox, String.valueOf(aMeasurement.weight));
-        clickAndTypeOnElement(heightBox, String.valueOf(aMeasurement.height));
-        clickAndTypeOnElement(armSpanBox, String.valueOf(aMeasurement.armSpan));
-        clickAndTypeOnElement(sittingHeightBox, String.valueOf(aMeasurement.sittingHeight));
-        clickAndTypeOnElement(headCircumferenceBox, String.valueOf(aMeasurement.headCircumference));
-        clickAndTypeOnElement(philtrumLengthBox, String.valueOf(aMeasurement.philtrumLength));
-        clickAndTypeOnElement(leftEarLengthBox, String.valueOf(aMeasurement.leftEarLength));
-        clickAndTypeOnElement(rightEarLengthBox, String.valueOf(aMeasurement.rightEarLength));
-        clickAndTypeOnElement(outherCanthalDistanceBox, String.valueOf(aMeasurement.outerCanthalDistance));
-        clickAndTypeOnElement(innterCanthalDistanceBox, String.valueOf(aMeasurement.inntercanthalDistance));
-        clickAndTypeOnElement(palpebralFissureLengthBox, String.valueOf(aMeasurement.palpebralFissureLength));
-        clickAndTypeOnElement(interpupilaryDistanceBox, String.valueOf(aMeasurement.interpupilaryDistance));
-        clickAndTypeOnElement(leftHandLengthBox, String.valueOf(aMeasurement.leftHandLength));
-        clickAndTypeOnElement(leftPalmLengthBox, String.valueOf(aMeasurement.leftPalmLength));
-        clickAndTypeOnElement(leftFootLengthBox, String.valueOf(aMeasurement.leftFootLength));
-        clickAndTypeOnElement(rightHandLengthBox, String.valueOf(aMeasurement.rightHandLength));
-        clickAndTypeOnElement(rightPalmLengthBox, String.valueOf(aMeasurement.rightPalmLength));
-        clickAndTypeOnElement(rightFootLengthBox, String.valueOf(aMeasurement.rightFootLength));
+        clickOnElement(this.addMeasurementBtn);
+        clickAndTypeOnElement(this.weightBox, String.valueOf(aMeasurement.weight));
+        clickAndTypeOnElement(this.heightBox, String.valueOf(aMeasurement.height));
+        clickAndTypeOnElement(this.armSpanBox, String.valueOf(aMeasurement.armSpan));
+        clickAndTypeOnElement(this.sittingHeightBox, String.valueOf(aMeasurement.sittingHeight));
+        clickAndTypeOnElement(this.headCircumferenceBox, String.valueOf(aMeasurement.headCircumference));
+        clickAndTypeOnElement(this.philtrumLengthBox, String.valueOf(aMeasurement.philtrumLength));
+        clickAndTypeOnElement(this.leftEarLengthBox, String.valueOf(aMeasurement.leftEarLength));
+        clickAndTypeOnElement(this.rightEarLengthBox, String.valueOf(aMeasurement.rightEarLength));
+        clickAndTypeOnElement(this.outherCanthalDistanceBox, String.valueOf(aMeasurement.outerCanthalDistance));
+        clickAndTypeOnElement(this.innterCanthalDistanceBox, String.valueOf(aMeasurement.inntercanthalDistance));
+        clickAndTypeOnElement(this.palpebralFissureLengthBox, String.valueOf(aMeasurement.palpebralFissureLength));
+        clickAndTypeOnElement(this.interpupilaryDistanceBox, String.valueOf(aMeasurement.interpupilaryDistance));
+        clickAndTypeOnElement(this.leftHandLengthBox, String.valueOf(aMeasurement.leftHandLength));
+        clickAndTypeOnElement(this.leftPalmLengthBox, String.valueOf(aMeasurement.leftPalmLength));
+        clickAndTypeOnElement(this.leftFootLengthBox, String.valueOf(aMeasurement.leftFootLength));
+        clickAndTypeOnElement(this.rightHandLengthBox, String.valueOf(aMeasurement.rightHandLength));
+        clickAndTypeOnElement(this.rightPalmLengthBox, String.valueOf(aMeasurement.rightPalmLength));
+        clickAndTypeOnElement(this.rightFootLengthBox, String.valueOf(aMeasurement.rightFootLength));
 
         return this;
     }
@@ -831,17 +830,17 @@ public class CreatePatientPage extends CommonInfoSelectors
     {
         By calendarDayBtn = By.xpath("//div[contains(text(), '" + day + "')]");
 
-        clickOnElement(measurementDateBoxes);
+        clickOnElement(this.measurementDateBoxes);
 
-        waitForElementToBePresent(measurementMonthDrp);
-        Select monthDrp = new Select(superDriver.findElement(measurementMonthDrp));
-        Select yearDrp = new Select(superDriver.findElement(measurementYearDrp));
+        waitForElementToBePresent(this.measurementMonthDrp);
+        Select monthDrp = new Select(this.superDriver.findElement(this.measurementMonthDrp));
+        Select yearDrp = new Select(this.superDriver.findElement(this.measurementYearDrp));
 
         monthDrp.selectByVisibleText(month);
         yearDrp.selectByVisibleText(year);
 
         clickOnElement(calendarDayBtn);
-        waitForElementToBeGone(measurementMonthDrp);
+        waitForElementToBeGone(this.measurementMonthDrp);
 
         return this;
     }
@@ -855,29 +854,29 @@ public class CreatePatientPage extends CommonInfoSelectors
     @Step("Retrieve the patients measurement")
     public CommonPatientMeasurement getPatientMeasurement()
     {
-        waitForElementToBePresent(weightBox);
+        waitForElementToBePresent(this.weightBox);
 
-        float weight = getSpecificMeasurement(weightBox);
-        float armSpan = getSpecificMeasurement(armSpanBox);
-        float headCircumference = getSpecificMeasurement(headCircumferenceBox);
-        float outerCanthalDistance = getSpecificMeasurement(outherCanthalDistanceBox);
-        float leftHandLength = getSpecificMeasurement(leftHandLengthBox);
-        float rightHandLength = getSpecificMeasurement(rightHandLengthBox);
+        float weight = getSpecificMeasurement(this.weightBox);
+        float armSpan = getSpecificMeasurement(this.armSpanBox);
+        float headCircumference = getSpecificMeasurement(this.headCircumferenceBox);
+        float outerCanthalDistance = getSpecificMeasurement(this.outherCanthalDistanceBox);
+        float leftHandLength = getSpecificMeasurement(this.leftHandLengthBox);
+        float rightHandLength = getSpecificMeasurement(this.rightHandLengthBox);
 
-        float height = getSpecificMeasurement(heightBox);
-        float sittingHeight = getSpecificMeasurement(sittingHeightBox);
-        float philtrumLength = getSpecificMeasurement(philtrumLengthBox);
-        float inntercanthalDistance = getSpecificMeasurement(innterCanthalDistanceBox);
-        float leftPalmLength = getSpecificMeasurement(leftPalmLengthBox);
-        float rightPalmLength = getSpecificMeasurement(rightPalmLengthBox);
+        float height = getSpecificMeasurement(this.heightBox);
+        float sittingHeight = getSpecificMeasurement(this.sittingHeightBox);
+        float philtrumLength = getSpecificMeasurement(this.philtrumLengthBox);
+        float inntercanthalDistance = getSpecificMeasurement(this.innterCanthalDistanceBox);
+        float leftPalmLength = getSpecificMeasurement(this.leftPalmLengthBox);
+        float rightPalmLength = getSpecificMeasurement(this.rightPalmLengthBox);
 
-        float leftEarLength = getSpecificMeasurement(leftEarLengthBox);
-        float palpebralFissureLength = getSpecificMeasurement(palpebralFissureLengthBox);
-        float leftFootLength = getSpecificMeasurement(leftFootLengthBox);
-        float rightFootLength = getSpecificMeasurement(rightFootLengthBox);
+        float leftEarLength = getSpecificMeasurement(this.leftEarLengthBox);
+        float palpebralFissureLength = getSpecificMeasurement(this.palpebralFissureLengthBox);
+        float leftFootLength = getSpecificMeasurement(this.leftFootLengthBox);
+        float rightFootLength = getSpecificMeasurement(this.rightFootLengthBox);
 
-        float rightEarLength = getSpecificMeasurement(rightEarLengthBox);
-        float interpupilaryDistance = getSpecificMeasurement(interpupilaryDistanceBox);
+        float rightEarLength = getSpecificMeasurement(this.rightEarLengthBox);
+        float interpupilaryDistance = getSpecificMeasurement(this.interpupilaryDistanceBox);
 
         return new CommonPatientMeasurement(
             weight, armSpan, headCircumference, outerCanthalDistance, leftHandLength, rightHandLength,
@@ -895,7 +894,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      */
     private float getSpecificMeasurement(By measurementBoxSelector)
     {
-        return Float.parseFloat(superDriver.findElement(measurementBoxSelector).getAttribute("value"));
+        return Float.parseFloat(this.superDriver.findElement(measurementBoxSelector).getAttribute("value"));
     }
 
     /****************************************************************************
@@ -910,8 +909,8 @@ public class CreatePatientPage extends CommonInfoSelectors
      */
     public CreatePatientPage addPhenotype(String thePhenotype)
     {
-        clickAndTypeOnElement(phenotypeSearchBox, thePhenotype);
-        clickOnElement(firstPhenotypeSuggestion);
+        clickAndTypeOnElement(this.phenotypeSearchBox, thePhenotype);
+        clickOnElement(this.firstPhenotypeSuggestion);
         return this;
     }
 
@@ -937,17 +936,17 @@ public class CreatePatientPage extends CommonInfoSelectors
      * Details" to already be pressed so that the details box appears.
      *
      * @return A list of strings representing the labels found in the Edit Phenotype Details Box. This should not be
-     * empty.
+     *         empty.
      */
     @Step("Traverse through the phenotype details UI section")
     public List<String> cycleThroughPhenotypeDetailsLabels()
     {
-        waitForElementToBePresent(phenotypeDetailsLabels);
+        waitForElementToBePresent(this.phenotypeDetailsLabels);
 
-        List<WebElement> loExpandCarets = superDriver.findElements(expandCaretBtns);
+        List<WebElement> loExpandCarets = this.superDriver.findElements(this.expandCaretBtns);
         List<String> loLabels = new ArrayList<>();
 
-        //Expand all first
+        // Expand all first
         for (WebElement aCaret : loExpandCarets) {
             // Should find this text, rather than rely on expansion selector due to PT-3095
             if (aCaret.getText().equals("►")) {
@@ -955,7 +954,7 @@ public class CreatePatientPage extends CommonInfoSelectors
             }
         }
 
-        superDriver.findElements(phenotypeDetailsLabels).forEach(x -> loLabels.add(x.getText()));
+        this.superDriver.findElements(this.phenotypeDetailsLabels).forEach(x -> loLabels.add(x.getText()));
 
         return loLabels;
     }
@@ -970,12 +969,12 @@ public class CreatePatientPage extends CommonInfoSelectors
     @Step("Add details to the {0}th phenotype")
     public CreatePatientPage addDetailsToNthPhenotype(int n)
     {
-        waitForElementToBePresent(addPhenotypeDetailsBtns);
-        List<WebElement> loPhenotypeAddBtnsPresent = superDriver.findElements(addPhenotypeDetailsBtns);
+        waitForElementToBePresent(this.addPhenotypeDetailsBtns);
+        List<WebElement> loPhenotypeAddBtnsPresent = this.superDriver.findElements(this.addPhenotypeDetailsBtns);
 
         loPhenotypeAddBtnsPresent.get(n - 1).click();
 
-        waitForElementToBePresent(phenotypeDetailsLabels);
+        waitForElementToBePresent(this.phenotypeDetailsLabels);
         return this;
     }
 
@@ -988,7 +987,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * presence of additional (appearing) selectors.
      *
      * @return a List of Strings which represent the health conditions found under the yes/no boxes of "Clinical
-     * Symptoms and Physical Findings"
+     *         Symptoms and Physical Findings"
      */
     @Step("Traverse (pre-order) through all phenotypes. Depth level limited to 1.")
     public List<String> cycleThroughAllPhenotypes()
@@ -1000,9 +999,9 @@ public class CreatePatientPage extends CommonInfoSelectors
 
         forceScrollToElement(By.cssSelector("div.phenotype > div > div > div"));
 
-//      Expand all dropdowns, lets them load first
+        // Expand all dropdowns, lets them load first
         preOrderTraverseAndClick(
-            By.cssSelector("div.phenotype > div > div > div"), expandToolSpan, expandToolSpan);
+            By.cssSelector("div.phenotype > div > div > div"), this.expandToolSpan, this.expandToolSpan);
 
         List<String> loCategorizedLabels = preOrderTraverseAndClick(
             By.cssSelector(
@@ -1020,16 +1019,17 @@ public class CreatePatientPage extends CommonInfoSelectors
      * between different phenotypes such as ones automatically added via measurements data vs. manual input Requires:
      * The "Clinical symptoms and physical findings" section to be expanded
      *
-     * @param phenotypeLabelsSelector The By selector of the phenotype label. There are three so far: -
-     * phenotypesSelectedLabels (all), - phenotypesAutoSelectedByMeasurementLabels (lightning bolt/auto ones), -
-     * phenotypesManuallySelectedLabels (non-lightning bolt/manual ones)
+     * @param phenotypeLabelsSelector the By selector of the phenotype label, three standard selectors defined so far in
+     *            this class: {@link #phenotypesSelectedLabels} (all),
+     *            {@link #phenotypesAutoSelectedByMeasurementLabels} (lightning bolt/auto ones), and
+     *            {@link #phenotypesManuallySelectedLabels} (non-lightning bolt/manual ones)
      * @return A List of Strings representing the names of the phenotypes found. Can potentially be empty.
      */
     private List<String> getPresentPhenotypes(By phenotypeLabelsSelector)
     {
         List<String> loPhenotypesFound = new ArrayList<>();
-        waitForElementToBePresent(phenotypeSearchBox);
-        superDriver.findElements(phenotypeLabelsSelector).forEach(x -> loPhenotypesFound.add(x.getText()));
+        waitForElementToBePresent(this.phenotypeSearchBox);
+        this.superDriver.findElements(phenotypeLabelsSelector).forEach(x -> loPhenotypesFound.add(x.getText()));
 
         return loPhenotypesFound;
     }
@@ -1043,7 +1043,7 @@ public class CreatePatientPage extends CommonInfoSelectors
     @Step("Retrieve all phenotypes")
     public List<String> getAllPhenotypes()
     {
-        return getPresentPhenotypes(phenotypesSelectedLabels);
+        return getPresentPhenotypes(this.phenotypesSelectedLabels);
     }
 
     /**
@@ -1051,12 +1051,12 @@ public class CreatePatientPage extends CommonInfoSelectors
      * lightning symbol beside them. Requires: The "Clinical symptoms and physical findings" section to be expanded
      *
      * @return A, possibly empty, list of Strings representing phenotypes that have a lightning symbol beside them due
-     * to them being automatically added from data contained on a measurements entry.
+     *         to them being automatically added from data contained on a measurements entry.
      */
     @Step("Retrieve phenotypes added automatically due to measurements (lightning icon beside them)")
     public List<String> getPhenotypesLightning()
     {
-        return getPresentPhenotypes(phenotypesAutoSelectedByMeasurementLabels);
+        return getPresentPhenotypes(this.phenotypesAutoSelectedByMeasurementLabels);
     }
 
     /**
@@ -1064,12 +1064,12 @@ public class CreatePatientPage extends CommonInfoSelectors
      * lightning symbol. Requires: The "Clinical symptoms and physical findings" section to be expanded
      *
      * @return A List of Strings, possibly empty, of the phenotypes that were manually entered (do not have a lightning
-     * symbol in front of them).
+     *         symbol in front of them).
      */
     @Step("Retrieve phenotypes that were added manually (no lightning icon beside them)")
     public List<String> getPhenotypesNonLightning()
     {
-        return getPresentPhenotypes(phenotypesManuallySelectedLabels);
+        return getPresentPhenotypes(this.phenotypesManuallySelectedLabels);
     }
 
     /********************************************
@@ -1083,22 +1083,22 @@ public class CreatePatientPage extends CommonInfoSelectors
      *
      * @param theGene name of the gene, be as exact and specific as possible.
      * @param geneStatus status of the gene. One of: "Candidate", "Rejected candidate", "Confirmed causal", "Carrier",
-     * and "Tested negative". Must be exact, will throw exception otherwise.
+     *            and "Tested negative". Must be exact, will throw exception otherwise.
      * @param strategy specifies which Gene strategy checkbox to toggle. One of: "Sequencing", "Deletion/duplication",
-     * "Familial mutation", and "Common mutations". Must be exact. Defaults to no strategy to specify.
+     *            "Familial mutation", and "Common mutations". Must be exact. Defaults to no strategy to specify.
      * @return Stay on the same page so we return the same object.
      */
     @Step("Add gene: {0} with status: {1} and strategy: {2}")
     public CreatePatientPage addGene(String theGene, String geneStatus, String strategy)
     {
-        forceScrollToElement(addGeneBtn);
-        clickOnElement(addGeneBtn);
+        forceScrollToElement(this.addGeneBtn);
+        clickOnElement(this.addGeneBtn);
 
-        waitForElementToBePresent(geneNameBoxes); // Must wait before search for elements
+        waitForElementToBePresent(this.geneNameBoxes); // Must wait before search for elements
         unconditionalWaitNs(1);
 
-        List<WebElement> foundGeneBoxes = superDriver.findElements(geneNameBoxes);
-        List<WebElement> foundStatusDrps = superDriver.findElements(geneStatusDrps);
+        List<WebElement> foundGeneBoxes = this.superDriver.findElements(this.geneNameBoxes);
+        List<WebElement> foundStatusDrps = this.superDriver.findElements(this.geneStatusDrps);
 
         // Get the last element of each list for the most bottom one
         WebElement bottommostGeneNameBox = foundGeneBoxes.get(foundGeneBoxes.size() - 1);
@@ -1108,7 +1108,7 @@ public class CreatePatientPage extends CommonInfoSelectors
 
         bottommostGeneNameBox.click();
         bottommostGeneNameBox.sendKeys(theGene);
-        clickOnElement(firstGeneSuggestion);
+        clickOnElement(this.firstGeneSuggestion);
 
         bottommostStatusDrp.click();
         statusDrp.selectByVisibleText(geneStatus);
@@ -1117,22 +1117,24 @@ public class CreatePatientPage extends CommonInfoSelectors
 
         switch (strategy) {
             case "Sequencing":
-                foundDesiredStrategyCheckboxes = superDriver.findElements(geneStrategySequencingCheckboxes);
+                foundDesiredStrategyCheckboxes = this.superDriver.findElements(this.geneStrategySequencingCheckboxes);
                 foundDesiredStrategyCheckboxes.get(foundDesiredStrategyCheckboxes.size() - 1).click();
                 break;
 
             case "Deletion/duplication":
-                foundDesiredStrategyCheckboxes = superDriver.findElements(geneStrategyDeletionCheckboxes);
+                foundDesiredStrategyCheckboxes = this.superDriver.findElements(this.geneStrategyDeletionCheckboxes);
                 foundDesiredStrategyCheckboxes.get(foundDesiredStrategyCheckboxes.size() - 1).click();
                 break;
 
             case "Familial mutation":
-                foundDesiredStrategyCheckboxes = superDriver.findElements(geneStrategyFamilialMutationCheckboxes);
+                foundDesiredStrategyCheckboxes =
+                    this.superDriver.findElements(this.geneStrategyFamilialMutationCheckboxes);
                 foundDesiredStrategyCheckboxes.get(foundDesiredStrategyCheckboxes.size() - 1).click();
                 break;
 
             case "Common mutations":
-                foundDesiredStrategyCheckboxes = superDriver.findElements(geneStrategyCommonMutationCheckboxes);
+                foundDesiredStrategyCheckboxes =
+                    this.superDriver.findElements(this.geneStrategyCommonMutationCheckboxes);
                 foundDesiredStrategyCheckboxes.get(foundDesiredStrategyCheckboxes.size() - 1).click();
                 break;
 
@@ -1158,8 +1160,8 @@ public class CreatePatientPage extends CommonInfoSelectors
     @Step("Add a clinical diagnosis with ORDO: {0}")
     public CreatePatientPage addClinicalDiagnosis(String ORDO)
     {
-        clickAndTypeOnElement(clinicalDiagnosisBox, ORDO);
-        clickOnElement(firstGeneSuggestion);
+        clickAndTypeOnElement(this.clinicalDiagnosisBox, ORDO);
+        clickOnElement(this.firstGeneSuggestion);
         return this;
     }
 
@@ -1173,8 +1175,8 @@ public class CreatePatientPage extends CommonInfoSelectors
     @Step("Add final diagnosis with OMIM: {0}")
     public CreatePatientPage addFinalDiagnosis(String OMIM)
     {
-        clickAndTypeOnElement(finalDiagnosisBox, OMIM);
-        clickOnElement(firstGeneSuggestion);
+        clickAndTypeOnElement(this.finalDiagnosisBox, OMIM);
+        clickOnElement(this.firstGeneSuggestion);
         return this;
     }
 
@@ -1186,7 +1188,7 @@ public class CreatePatientPage extends CommonInfoSelectors
     @Step("Toggle the 'Case Solved' checkbox")
     public CreatePatientPage toggleCaseSolved()
     {
-        clickOnElement(caseSolvedCheckbox);
+        clickOnElement(this.caseSolvedCheckbox);
         return this;
     }
 
@@ -1199,8 +1201,8 @@ public class CreatePatientPage extends CommonInfoSelectors
     @Step("Determine if the case is solved")
     public boolean isCaseSolved()
     {
-        waitForElementToBePresent(caseSolvedCheckbox);
-        return superDriver.findElement(caseSolvedCheckbox).isSelected();
+        waitForElementToBePresent(this.caseSolvedCheckbox);
+        return this.superDriver.findElement(this.caseSolvedCheckbox).isSelected();
     }
 
     /**
@@ -1214,17 +1216,17 @@ public class CreatePatientPage extends CommonInfoSelectors
     @Step("Add a PubMed ID of {0}")
     public CreatePatientPage addPubMedID(String ID)
     {
-        clickOnElement(additionalCommentsBox); // Needed to defocus PubMed ID boxes.
+        clickOnElement(this.additionalCommentsBox); // Needed to defocus PubMed ID boxes.
 
-        if (isElementPresent(pubMDArticle)) {
-            clickOnElement(addPubMDLink);
+        if (isElementPresent(this.pubMDArticle)) {
+            clickOnElement(this.addPubMDLink);
         }
 
-        List<WebElement> loPubMDIDBoxes = superDriver.findElements(pubMDIDBoxes);
+        List<WebElement> loPubMDIDBoxes = this.superDriver.findElements(this.pubMDIDBoxes);
         clickOnElement(loPubMDIDBoxes.get(loPubMDIDBoxes.size() - 1));
         loPubMDIDBoxes.get(loPubMDIDBoxes.size() - 1).sendKeys(ID);
 
-        clickOnElement(additionalCommentsBox);
+        clickOnElement(this.additionalCommentsBox);
 
         return this;
     }
@@ -1239,8 +1241,8 @@ public class CreatePatientPage extends CommonInfoSelectors
     @Step("Remove the {0}th PubMed ID")
     public CreatePatientPage removeNthPubMedID(int n)
     {
-        waitForElementToBePresent(deletePubMDBtns);
-        List<WebElement> loDeletePubMDBtns = superDriver.findElements(deletePubMDBtns);
+        waitForElementToBePresent(this.deletePubMDBtns);
+        List<WebElement> loDeletePubMDBtns = this.superDriver.findElements(this.deletePubMDBtns);
 
         clickOnElement(loDeletePubMDBtns.get(n - 1));
 
@@ -1257,7 +1259,7 @@ public class CreatePatientPage extends CommonInfoSelectors
     @Step("Add resolution notes of {0}")
     public CreatePatientPage addResolutionNotes(String note)
     {
-        clickAndTypeOnElement(resolutionNotesBox, note);
+        clickAndTypeOnElement(this.resolutionNotesBox, note);
         return this;
     }
 
@@ -1271,7 +1273,7 @@ public class CreatePatientPage extends CommonInfoSelectors
     @Step("Add additional comments in diagnosis section called {0}")
     public CreatePatientPage addAdditionalComments(String comment)
     {
-        clickAndTypeOnElement(additionalCommentsBox, comment);
+        clickAndTypeOnElement(this.additionalCommentsBox, comment);
         return this;
     }
 
@@ -1282,17 +1284,17 @@ public class CreatePatientPage extends CommonInfoSelectors
      *
      * @param n is the Nth PubMed ID box.
      * @return A boolean indicating validity, true for valid (summary of article shown) and false for invalid (the error
-     * message is displayed).
+     *         message is displayed).
      */
     @Step("Determine if {0}th PubMedID box has valid input")
     public boolean isNthPubMDBoxValid(int n)
     {
         final String invalidPubMedIDError = "Invalid Pubmed ID";
 
-        clickOnElement(additionalCommentsBox); // Needed so that pubMed boxes goes out of focus and does validation
-        waitForElementToBePresent(pubMDIDCheckStatus);
+        clickOnElement(this.additionalCommentsBox); // Needed so that pubMed boxes goes out of focus and does validation
+        waitForElementToBePresent(this.pubMDIDCheckStatus);
 
-        String statusText = superDriver.findElements(pubMDIDCheckStatus).get(n - 1).getText();
+        String statusText = this.superDriver.findElements(this.pubMDIDCheckStatus).get(n - 1).getText();
 
         return !statusText.equals(invalidPubMedIDError);
     }
@@ -1336,8 +1338,8 @@ public class CreatePatientPage extends CommonInfoSelectors
     @Step("Toggle the {0} clinical diagnosis checkbox.")
     public CreatePatientPage toggleNthClinicalDiagnosisCheckbox(int n)
     {
-        waitForElementToBePresent(clinicalDiagnosisCheckboxes);
-        clickOnElement(superDriver.findElements(clinicalDiagnosisCheckboxes).get(n - 1));
+        waitForElementToBePresent(this.clinicalDiagnosisCheckboxes);
+        clickOnElement(this.superDriver.findElements(this.clinicalDiagnosisCheckboxes).get(n - 1));
 
         return this;
     }
@@ -1352,8 +1354,8 @@ public class CreatePatientPage extends CommonInfoSelectors
     @Step("Toggle the {0}th final diagnosis checkbox")
     public CreatePatientPage toggleNthFinalDiagnosisCheckbox(int n)
     {
-        waitForElementToBePresent(finalDiagnosisCheckboxes);
-        clickOnElement(superDriver.findElements(finalDiagnosisCheckboxes).get(n - 1));
+        waitForElementToBePresent(this.finalDiagnosisCheckboxes);
+        clickOnElement(this.superDriver.findElements(this.finalDiagnosisCheckboxes).get(n - 1));
 
         return this;
     }
@@ -1368,6 +1370,6 @@ public class CreatePatientPage extends CommonInfoSelectors
     @Step("Determine if the PubMed and Resolution boxes are clickable")
     public boolean isPubMedAndResolutionBoxesClickable()
     {
-        return (isElementClickable(pubMDIDBoxes) && (isElementClickable(resolutionNotesBox)));
+        return (isElementClickable(this.pubMDIDBoxes) && (isElementClickable(this.resolutionNotesBox)));
     }
 }

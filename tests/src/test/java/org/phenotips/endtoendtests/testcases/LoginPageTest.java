@@ -24,9 +24,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 /**
- * Test the login functionality.
- *
- * Each test can be run separately.
+ * Test the login functionality. Each test can be run separately.
  */
 public class LoginPageTest extends BaseTest
 {
@@ -40,16 +38,17 @@ public class LoginPageTest extends BaseTest
     @Test
     public void loginAdminTest()
     {
-        currentPage.navigateToLoginPage()
+        this.currentPage.navigateToLoginPage()
             .loginAsAdmin();
 
         // This is a basic test so we touch a selector directly.
-        //  But for all other tests, don't touch selectors directly - abstract the action out to a method in a pageObject.
-        //  Ex. isAdminLinkVisible()
-        Assert.assertTrue(currentPage.isElementPresent(currentPage.adminLink));
-        Assert.assertTrue(currentPage.isElementPresent(currentPage.aboutLink));
+        // But for all other tests, don't touch selectors directly - abstract the action out to a method in a
+        // pageObject.
+        // Ex. isAdminLinkVisible()
+        Assert.assertTrue(this.currentPage.isElementPresent(this.currentPage.adminLink));
+        Assert.assertTrue(this.currentPage.isElementPresent(this.currentPage.aboutLink));
 
-        currentPage.logOut();
+        this.currentPage.logOut();
     }
 
     /**
@@ -58,13 +57,13 @@ public class LoginPageTest extends BaseTest
     @Test
     public void loginUserTest()
     {
-        currentPage.navigateToLoginPage()
+        this.currentPage.navigateToLoginPage()
             .loginAsUser();
 
-        Assert.assertFalse(currentPage.isElementPresent(currentPage.adminLink));
-        Assert.assertTrue(currentPage.isElementPresent(currentPage.aboutLink));
+        Assert.assertFalse(this.currentPage.isElementPresent(this.currentPage.adminLink));
+        Assert.assertTrue(this.currentPage.isElementPresent(this.currentPage.aboutLink));
 
-        currentPage.logOut();
+        this.currentPage.logOut();
     }
 
     /**
@@ -75,11 +74,11 @@ public class LoginPageTest extends BaseTest
     @Test
     public void invalidCredentials()
     {
-        currentPage.navigateToLoginPage()
+        this.currentPage.navigateToLoginPage()
             .loginAs("TestUser1Uno", "BadPassword"); // Valid username but invalid password.
-        aLoginPage.loginAs("", "123"); // Empty username
-        aLoginPage.loginAs("SomeoneLikeYou", ""); // Empty password
+        this.aLoginPage.loginAs("", "123"); // Empty username
+        this.aLoginPage.loginAs("SomeoneLikeYou", ""); // Empty password
 
-        aLoginPage.loginAsAdmin().logOut();
+        this.aLoginPage.loginAsAdmin().logOut();
     }
 }

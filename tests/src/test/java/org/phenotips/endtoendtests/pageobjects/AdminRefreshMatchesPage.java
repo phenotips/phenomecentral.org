@@ -59,14 +59,14 @@ public class AdminRefreshMatchesPage extends BasePage
     @Step("Refresh matches for All Patients")
     public AdminRefreshMatchesPage refreshAllMatches()
     {
-        clickOnElement(selectLocalServerForMatchBox);
-        clickOnElement(allMatchesBtn);
-        clickOnElement(confirmFindAllMatchesBtn);
-        waitForElementToBePresent(findMatchesText); // Must wait for this to appear before passing to loop.
+        clickOnElement(this.selectLocalServerForMatchBox);
+        clickOnElement(this.allMatchesBtn);
+        clickOnElement(this.confirmFindAllMatchesBtn);
+        waitForElementToBePresent(this.findMatchesText); // Must wait for this to appear before passing to loop.
         waitForSucessMessage();
 
-        superDriver.navigate().refresh();
-        waitForElementToBePresent(selectLocalServerForMatchBox);
+        this.superDriver.navigate().refresh();
+        waitForElementToBePresent(this.selectLocalServerForMatchBox);
 
         return this;
     }
@@ -80,14 +80,14 @@ public class AdminRefreshMatchesPage extends BasePage
     @Step("Refresh matches for patients that were modified since last update")
     public AdminRefreshMatchesPage refreshMatchesSinceLastUpdate()
     {
-        clickOnElement(selectLocalServerForMatchBox);
-        clickOnElement(patientsSinceLastModBtn);
-        waitForElementToBePresent(findMatchesText); // Must wait for this to appear before passing to loop.
+        clickOnElement(this.selectLocalServerForMatchBox);
+        clickOnElement(this.patientsSinceLastModBtn);
+        waitForElementToBePresent(this.findMatchesText); // Must wait for this to appear before passing to loop.
         waitForSucessMessage();
 
-        superDriver.navigate().refresh();
+        this.superDriver.navigate().refresh();
         unconditionalWaitNs(1); // It might find the element before refresh is completed.
-        waitForElementToBePresent(selectLocalServerForMatchBox);
+        waitForElementToBePresent(this.selectLocalServerForMatchBox);
 
         return this;
     }
@@ -101,8 +101,8 @@ public class AdminRefreshMatchesPage extends BasePage
     @Step("Get the number of local patients processed")
     public String getNumberOfLocalPatientsProcessed()
     {
-        waitForElementToBePresent(numberPatientsProcessed);
-        return superDriver.findElement(numberPatientsProcessed).getText();
+        waitForElementToBePresent(this.numberPatientsProcessed);
+        return this.superDriver.findElement(this.numberPatientsProcessed).getText();
     }
 
     /**
@@ -114,8 +114,8 @@ public class AdminRefreshMatchesPage extends BasePage
     @Step("Get the number of total matches found")
     public String getTotalMatchesFound()
     {
-        waitForElementToBePresent(totalMatchesFound);
-        return superDriver.findElement(totalMatchesFound).getText();
+        waitForElementToBePresent(this.totalMatchesFound);
+        return this.superDriver.findElement(this.totalMatchesFound).getText();
     }
 
     /**
@@ -130,7 +130,7 @@ public class AdminRefreshMatchesPage extends BasePage
         int secondsToWait = 30;
 
         // While the green matches message text is not "Done, refresh page to see...", wait 5 secs and check again.
-        while (!(superDriver.findElement(findMatchesText).getText().equals(completedMatchesMessage))) {
+        while (!(this.superDriver.findElement(this.findMatchesText).getText().equals(this.completedMatchesMessage))) {
             if (secondsWaited > secondsToWait) {
                 break;
             }

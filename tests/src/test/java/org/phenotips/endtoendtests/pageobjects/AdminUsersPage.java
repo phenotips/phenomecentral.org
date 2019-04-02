@@ -44,10 +44,9 @@ public class AdminUsersPage extends AdminSettingsPage implements CommonSignUpSel
      * @param firstName First Name as a String.
      * @param lastName Last name as a String.
      * @param password is password as a String.
-     * @param email is email for the user as a String. Should be either a dummy address or something that we can
-     * access.
+     * @param email is email for the user as a String. Should be either a dummy address or something that we can access.
      * @param affiliation is the value for the Affiliation box as a String.
-     * @param referral value for the "How did you hear about/  Who referred you" box as a String.
+     * @param referral value for the "How did you hear about/ Who referred you" box as a String.
      * @param justification value for the "Why are you requesting access" box as a String.
      * @return Stay on the same page so return the same object.
      */
@@ -72,7 +71,7 @@ public class AdminUsersPage extends AdminSettingsPage implements CommonSignUpSel
         clickOnElement(cooperationCheckbox);
         clickOnElement(acknoledgementCheckbox);
 
-        clickOnElement(saveBtn);
+        clickOnElement(this.saveBtn);
         return this;
     }
 }

@@ -48,12 +48,12 @@ public class LoginPage extends BasePage
     @Step("Login with credentials username {0} and password {1}")
     public HomePage loginAs(String username, String password)
     {
-        clickAndTypeOnElement(userNameField, username);
-        clickAndTypeOnElement(passField, password);
+        clickAndTypeOnElement(this.userNameField, username);
+        clickAndTypeOnElement(this.passField, password);
 
-        clickOnElement(loginButton);
+        clickOnElement(this.loginButton);
 
-        return new HomePage(superDriver);
+        return new HomePage(this.superDriver);
     }
 
     /**
@@ -64,7 +64,7 @@ public class LoginPage extends BasePage
     @Step("Login as an admin")
     public HomePage loginAsAdmin()
     {
-        return loginAs(ADMIN_USERNAME, ADMIN_PASS);
+        return loginAs(this.ADMIN_USERNAME, this.ADMIN_PASS);
     }
 
     /**
@@ -75,7 +75,7 @@ public class LoginPage extends BasePage
     @Step("Login as User 1")
     public HomePage loginAsUser()
     {
-        return loginAs(USER_USERNAME, USER_PASS);
+        return loginAs(this.USER_USERNAME, this.USER_PASS);
     }
 
     /**
@@ -86,6 +86,6 @@ public class LoginPage extends BasePage
     @Step("Login as User 2")
     public HomePage loginAsUserTwo()
     {
-        return loginAs(USER_USERNAME2, USER_PASS2);
+        return loginAs(this.USER_USERNAME2, this.USER_PASS2);
     }
 }

@@ -55,16 +55,16 @@ public class PermissionsTests extends BaseTest
     @Test()
     public void noMatchPrivatePatient()
     {
-        List<String> loPhenotypesToAdd = new ArrayList<String>(Arrays.asList(
+        List<String> loPhenotypesToAdd = new ArrayList<>(Arrays.asList(
             "Perimembranous ventricular septal defect", "Postaxial polysyndactyly of foot",
             "Delayed ability to stand"));
 
-        final String patientUniqueIdentifier = "NoPermissionForMatch " + randomChars;
+        final String patientUniqueIdentifier = "NoPermissionForMatch " + this.randomChars;
 
         String createdPatient1;
         String createdPatient2;
 
-        aHomePage.navigateToLoginPage()
+        this.aHomePage.navigateToLoginPage()
             .loginAsAdmin()
             .navigateToAdminSettingsPage()
             .navigateToRefreshMatchesPage()
@@ -85,11 +85,11 @@ public class PermissionsTests extends BaseTest
             .addGene("CEP85", "Confirmed causal", "Sequencing")
             .saveAndViewSummary();
 
-        aViewPatientPage.setGlobalVisibility("Private");
+        this.aViewPatientPage.setGlobalVisibility("Private");
 
-        createdPatient1 = aViewPatientPage.getPatientID();
+        createdPatient1 = this.aViewPatientPage.getPatientID();
 
-        aViewPatientPage.logOut()
+        this.aViewPatientPage.logOut()
             .loginAsUserTwo()
             .navigateToCreateANewPatientPage()
             .toggleFirstFourConsentBoxes()
@@ -104,23 +104,23 @@ public class PermissionsTests extends BaseTest
             .addGene("CEP85", "Confirmed causal", "Sequencing")
             .saveAndViewSummary();
 
-        createdPatient2 = aViewPatientPage.getPatientID();
+        createdPatient2 = this.aViewPatientPage.getPatientID();
 
-        aViewPatientPage.logOut()
+        this.aViewPatientPage.logOut()
             .loginAsAdmin()
             .navigateToAdminSettingsPage()
             .navigateToRefreshMatchesPage()
             .refreshMatchesSinceLastUpdate();
 
-        Assert.assertEquals(anAdminRefreshMatchesPage.getNumberOfLocalPatientsProcessed(), "1");
+        Assert.assertEquals(this.anAdminRefreshMatchesPage.getNumberOfLocalPatientsProcessed(), "1");
 
-        anAdminRefreshMatchesPage.navigateToAdminSettingsPage()
+        this.anAdminRefreshMatchesPage.navigateToAdminSettingsPage()
             .navigateToMatchingNotificationPage()
             .filterByID(createdPatient1);
 
-        Assert.assertFalse(anAdminMatchNotificationPage.doesMatchExist(createdPatient1, createdPatient2));
+        Assert.assertFalse(this.anAdminMatchNotificationPage.doesMatchExist(createdPatient1, createdPatient2));
 
-        anAdminRefreshMatchesPage.logOut();
+        this.anAdminRefreshMatchesPage.logOut();
     }
 
     /**
@@ -132,7 +132,7 @@ public class PermissionsTests extends BaseTest
     {
         String unauthorizedActionMsgCheck = "You are not allowed to view this page or perform this action.";
 
-        aHomePage.navigateToLoginPage()
+        this.aHomePage.navigateToLoginPage()
             .loginAsUserTwo()
             .navigateToAllPatientsPage()
             .sortPatientsDateDesc()
@@ -140,8 +140,8 @@ public class PermissionsTests extends BaseTest
             .logOut()
             .loginAsUser();
 
-        Assert.assertEquals(aHomePage.getUnauthorizedErrorMessage(), unauthorizedActionMsgCheck);
+        Assert.assertEquals(this.aHomePage.getUnauthorizedErrorMessage(), unauthorizedActionMsgCheck);
 
-        anAdminRefreshMatchesPage.logOut();
+        this.anAdminRefreshMatchesPage.logOut();
     }
 }

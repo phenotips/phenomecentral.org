@@ -40,8 +40,8 @@ import io.qameta.allure.Step;
 public abstract class BasePage
 {
     /***************************************************************************************
-     * Environment Information. You can change these as needed to run tests easily through
-     * IDE instead of passing in command line options to JVM.
+     * Environment Information. You can change these as needed to run tests easily through IDE instead of passing in
+     * command line options to JVM.
      ***************************************************************************************/
     /**
      * Public selectors, the LoginPageTest touches these. Ideally, tests should not touch selectors.
@@ -86,8 +86,7 @@ public abstract class BasePage
      * Private selectors from the navigation toolbar
      */
     private final By createMenuDrp = By.cssSelector(
-        "#phenotips-globalTools > div > div > ul > li:nth-child(1) > span"
-    );
+        "#phenotips-globalTools > div > div > ul > li:nth-child(1) > span");
 
     private final By newPatientLink = By.id("create-patient-record");
 
@@ -132,21 +131,21 @@ public abstract class BasePage
         final String emailUIPageParameter = System.getProperty("emailUIPageURL");
 
         if (homePageParameter != null) {
-            HOMEPAGE_URL = homePageParameter;
+            this.HOMEPAGE_URL = homePageParameter;
             // Debug message in BaseTest when static webDriver gets instantiated
         }
 
         if (emailUIPageParameter != null) {
-            EMAIL_UI_URL = emailUIPageParameter;
+            this.EMAIL_UI_URL = emailUIPageParameter;
             // Debug message in BaseTest when static webDriver gets instantiated
         }
 
         // Set the reference to the webdriver passed from a test case and initialize waiting times
         // longPause is used to wait for something to disappear. Ex. loading bar, or a sending message.
-        //  Might take longer than PAUSE_LENGTH seconds, so give it up to a minute.
-        superDriver = aDriver;
-        pause = new WebDriverWait(superDriver, PAUSE_LENGTH);
-        longPause = new WebDriverWait(superDriver, PAUSE_LENGTH + 55);
+        // Might take longer than PAUSE_LENGTH seconds, so give it up to a minute.
+        this.superDriver = aDriver;
+        this.pause = new WebDriverWait(this.superDriver, this.PAUSE_LENGTH);
+        this.longPause = new WebDriverWait(this.superDriver, this.PAUSE_LENGTH + 55);
     }
 
     /*************************************
@@ -161,7 +160,7 @@ public abstract class BasePage
      */
     public void waitForElementToBePresent(By elementSelector)
     {
-        pause.until(ExpectedConditions.presenceOfElementLocated(elementSelector));
+        this.pause.until(ExpectedConditions.presenceOfElementLocated(elementSelector));
     }
 
     /**
@@ -174,7 +173,7 @@ public abstract class BasePage
      */
     public void waitForElementToBeGone(By elementSelector)
     {
-        longPause.until(ExpectedConditions.invisibilityOfElementLocated(elementSelector));
+        this.longPause.until(ExpectedConditions.invisibilityOfElementLocated(elementSelector));
     }
 
     /**
@@ -185,7 +184,7 @@ public abstract class BasePage
      */
     public void waitForElementToBeClickable(By elementSelector)
     {
-        pause.until(ExpectedConditions.elementToBeClickable(elementSelector));
+        this.pause.until(ExpectedConditions.elementToBeClickable(elementSelector));
     }
 
     /**
@@ -210,7 +209,7 @@ public abstract class BasePage
      *
      * @param n is time to pause in seconds.
      * @Throws InterruptedException (implicit) if thread is interrupted, ex. SIGIGNT. Handles it by just continuing
-     * after printing a message.
+     *         after printing a message.
      */
     @Step("Unconditional wait (wait the full length) of {0} seconds.")
     public void unconditionalWaitNs(long n)
@@ -231,7 +230,7 @@ public abstract class BasePage
     public void clickOnElement(By elementSelector)
     {
         waitForElementToBePresent(elementSelector);
-        clickOnElement(superDriver.findElement(elementSelector));
+        clickOnElement(this.superDriver.findElement(elementSelector));
     }
 
     /**
@@ -247,11 +246,11 @@ public abstract class BasePage
         try {
             aWebElement.click();
         } catch (WebDriverException e) {
-            ((JavascriptExecutor) superDriver).executeScript("arguments[0].scrollIntoView();", aWebElement);
+            ((JavascriptExecutor) this.superDriver).executeScript("arguments[0].scrollIntoView();", aWebElement);
             try {
                 aWebElement.click();
             } catch (WebDriverException f) {
-                ((JavascriptExecutor) superDriver).executeScript("arguments[0].click();", aWebElement);
+                ((JavascriptExecutor) this.superDriver).executeScript("arguments[0].click();", aWebElement);
                 System.out.println("Warning: Force click on element: " + aWebElement);
             }
         }
@@ -268,8 +267,8 @@ public abstract class BasePage
     public void clickAndTypeOnElement(By elementSelector, String input)
     {
         clickOnElement(elementSelector);
-        superDriver.findElement(elementSelector).clear(); // Clear first
-        superDriver.findElement(elementSelector).sendKeys(input);
+        this.superDriver.findElement(elementSelector).clear(); // Clear first
+        this.superDriver.findElement(elementSelector).sendKeys(input);
     }
 
     /**
@@ -280,7 +279,7 @@ public abstract class BasePage
     public void clickAndClearElement(By elementSelector)
     {
         clickOnElement(elementSelector);
-        superDriver.findElement(elementSelector).clear(); // Clear first
+        this.superDriver.findElement(elementSelector).clear(); // Clear first
     }
 
     /**
@@ -292,7 +291,7 @@ public abstract class BasePage
     public void toggleCheckboxToChecked(By checkboxSelector)
     {
         waitForElementToBePresent(checkboxSelector);
-        if (!superDriver.findElement(checkboxSelector).isSelected()) {
+        if (!this.superDriver.findElement(checkboxSelector).isSelected()) {
             clickOnElement(checkboxSelector);
         }
     }
@@ -316,9 +315,7 @@ public abstract class BasePage
     /**
      * Forces a scroll via JS so that the indicated element is in Selenium's viewport. Without this, sometimes a
      * "ElementClickInterceptedException" exception is thrown as the element to click is out of window or otherwise
-     * blocked by some other element.
-     *
-     * Not sure why Selenium doesn't do this automatically for Firefox
+     * blocked by some other element. Not sure why Selenium doesn't do this automatically for Firefox
      *
      * @param elementSelector a By selector to indicate which element you want to scroll into view.
      */
@@ -326,8 +323,8 @@ public abstract class BasePage
     {
         waitForElementToBePresent(elementSelector);
 
-        WebElement webElement = superDriver.findElement(elementSelector);
-        ((JavascriptExecutor) superDriver).executeScript("arguments[0].scrollIntoView();", webElement);
+        WebElement webElement = this.superDriver.findElement(elementSelector);
+        ((JavascriptExecutor) this.superDriver).executeScript("arguments[0].scrollIntoView();", webElement);
     }
 
     /**
@@ -340,8 +337,8 @@ public abstract class BasePage
     {
         waitForElementToBePresent(elementSelector);
 
-        WebElement webElement = superDriver.findElement(elementSelector);
-        ((JavascriptExecutor) superDriver).executeScript("arguments[0].click();", webElement);
+        WebElement webElement = this.superDriver.findElement(elementSelector);
+        ((JavascriptExecutor) this.superDriver).executeScript("arguments[0].click();", webElement);
     }
 
     /**
@@ -350,10 +347,11 @@ public abstract class BasePage
      *
      * @param rootPath is the By selector of where the root nodes of the tree structure is
      * @param childrenPath within each root structure found, children under {$code rootPath} are searched for using this
-     * path.
+     *            path.
      * @param childrenLabelLocation is the path to where the label text is located for the children.
      * @return a (might be empty) list of Strings representing the visits of the traversal. In case of unequal lengths
-     * of the lists (i.e. it found more buttons than labels), it prints error message to stdout then returns NULL
+     *         of the lists (i.e. it found more buttons than labels), it prints error message to stdout then returns
+     *         NULL
      */
     public List<String> preOrderTraverseAndClick(By rootPath, By childrenPath, By childrenLabelLocation)
     {
@@ -363,10 +361,10 @@ public abstract class BasePage
         List<String> loLabels = new ArrayList<>();
 
         // Finds all children, pre-order, no recursion needed?
-        List<WebElement> loButtons = superDriver
+        List<WebElement> loButtons = this.superDriver
             .findElements(new ByChained(rootPath, childrenPath));
 
-        List<WebElement> loButtonsLabels = superDriver
+        List<WebElement> loButtonsLabels = this.superDriver
             .findElements(new ByChained(rootPath, childrenLabelLocation));
 
         Iterator<WebElement> buttonIter = loButtons.iterator();
@@ -401,14 +399,14 @@ public abstract class BasePage
      *
      * @param labelsSelector is the selector for zero or more elements existing on the page containing text to extract.
      * @return a, possibly empty, list of Strings representing the text from each instance of the selector. A String
-     * will be the empty String ("") if an element had no text on it.
+     *         will be the empty String ("") if an element had no text on it.
      */
     public List<String> getLabelsFromList(By labelsSelector)
     {
         waitForElementToBePresent(labelsSelector);
 
         List<String> loTextStrings = new ArrayList<>();
-        List<WebElement> loFoundLabels = superDriver.findElements(labelsSelector);
+        List<WebElement> loFoundLabels = this.superDriver.findElements(labelsSelector);
 
         for (WebElement e : loFoundLabels) {
             loTextStrings.add(e.getText());
@@ -429,8 +427,8 @@ public abstract class BasePage
     @Step("Log out")
     public LoginPage logOut()
     {
-        clickOnElement(logOutLink);
-        return new LoginPage(superDriver);
+        clickOnElement(this.logOutLink);
+        return new LoginPage(this.superDriver);
     }
 
     /**
@@ -442,13 +440,13 @@ public abstract class BasePage
     @Step("Navigate to All Patients page")
     public AllPatientsPage navigateToAllPatientsPage()
     {
-        clickOnElement(browseMenuDrp);
+        clickOnElement(this.browseMenuDrp);
 
-        clickOnElement(viewAllPatientsLink);
+        clickOnElement(this.viewAllPatientsLink);
 
         waitForLoadingBarToDisappear();
 
-        return new AllPatientsPage(superDriver);
+        return new AllPatientsPage(this.superDriver);
     }
 
     /**
@@ -461,8 +459,8 @@ public abstract class BasePage
     @Step("Navigate to Admin Settings Page")
     public AdminSettingsPage navigateToAdminSettingsPage()
     {
-        clickOnElement(adminLink);
-        return new AdminSettingsPage(superDriver);
+        clickOnElement(this.adminLink);
+        return new AdminSettingsPage(this.superDriver);
     }
 
     /**
@@ -473,8 +471,8 @@ public abstract class BasePage
     @Step("Navigate to Email Inbox Page (Fake SMTP UI)")
     public EmailUIPage navigateToEmailInboxPage()
     {
-        superDriver.navigate().to(EMAIL_UI_URL);
-        return new EmailUIPage(superDriver);
+        this.superDriver.navigate().to(this.EMAIL_UI_URL);
+        return new EmailUIPage(this.superDriver);
     }
 
     /**
@@ -485,11 +483,11 @@ public abstract class BasePage
     @Step("Navigate to Create Patient Page (Create a new patient)")
     public CreatePatientPage navigateToCreateANewPatientPage()
     {
-        clickOnElement(createMenuDrp);
+        clickOnElement(this.createMenuDrp);
 
-        clickOnElement(newPatientLink);
+        clickOnElement(this.newPatientLink);
 
-        return new CreatePatientPage(superDriver);
+        return new CreatePatientPage(this.superDriver);
     }
 
     /**
@@ -500,8 +498,8 @@ public abstract class BasePage
      */
     public String getApprovalPendingMessage()
     {
-        waitForElementToBePresent(approvalPendingMessage);
-        return superDriver.findElement(approvalPendingMessage).getText();
+        waitForElementToBePresent(this.approvalPendingMessage);
+        return this.superDriver.findElement(this.approvalPendingMessage).getText();
     }
 
     /**
@@ -514,8 +512,8 @@ public abstract class BasePage
     @Step("Navigate to PC home page for this instance")
     public HomePage navigateToHomePage()
     {
-        clickOnElement(phenomeCentralLogoBtn);
-        return new HomePage(superDriver);
+        clickOnElement(this.phenomeCentralLogoBtn);
+        return new HomePage(this.superDriver);
     }
 
     /**
@@ -525,7 +523,7 @@ public abstract class BasePage
      */
     public void waitForLoadingBarToDisappear()
     {
-        waitForElementToBeGone(loadingStatusBar);
+        waitForElementToBeGone(this.loadingStatusBar);
     }
 
     /**
@@ -537,8 +535,8 @@ public abstract class BasePage
      */
     public void waitForInProgressMsgToDisappear()
     {
-        waitForElementToBePresent(inProgressMsg);
-        waitForElementToBeGone(inProgressMsg);
+        waitForElementToBePresent(this.inProgressMsg);
+        waitForElementToBeGone(this.inProgressMsg);
     }
 
     /**
@@ -550,7 +548,7 @@ public abstract class BasePage
     @Step("Dismiss the unsaved changes warning dialogue")
     public void dismissUnsavedChangesWarning()
     {
-        superDriver.switchTo().alert().accept();
-        superDriver.switchTo().defaultContent();
+        this.superDriver.switchTo().alert().accept();
+        this.superDriver.switchTo().defaultContent();
     }
 }

@@ -51,8 +51,8 @@ public class AdminSettingsPage extends BasePage
     @Step("Navigate to Admin Matching Notification Page")
     public AdminMatchNotificationPage navigateToMatchingNotificationPage()
     {
-        clickOnElement(matchingNotificationMenu);
-        return new AdminMatchNotificationPage(superDriver);
+        clickOnElement(this.matchingNotificationMenu);
+        return new AdminMatchNotificationPage(this.superDriver);
     }
 
     /**
@@ -63,8 +63,8 @@ public class AdminSettingsPage extends BasePage
     @Step("Navigate to Admin Refresh Matches Page")
     public AdminRefreshMatchesPage navigateToRefreshMatchesPage()
     {
-        clickOnElement(refreshMatchesMenu);
-        return new AdminRefreshMatchesPage(superDriver);
+        clickOnElement(this.refreshMatchesMenu);
+        return new AdminRefreshMatchesPage(this.superDriver);
     }
 
     /**
@@ -75,8 +75,8 @@ public class AdminSettingsPage extends BasePage
     @Step("Navigate to Admin's Users Page")
     public AdminUsersPage navigateToAdminUsersPage()
     {
-        clickOnElement(usersMenu);
-        return new AdminUsersPage(superDriver);
+        clickOnElement(this.usersMenu);
+        return new AdminUsersPage(this.superDriver);
     }
 
     /**
@@ -87,8 +87,8 @@ public class AdminSettingsPage extends BasePage
     @Step("Navigate to Admin's Pending Users Page")
     public AdminPendingUsersPage navigateToPendingUsersPage()
     {
-        clickOnElement(pendingUsersMenu);
-        return new AdminPendingUsersPage(superDriver);
+        clickOnElement(this.pendingUsersMenu);
+        return new AdminPendingUsersPage(this.superDriver);
     }
 
     /**
@@ -99,7 +99,7 @@ public class AdminSettingsPage extends BasePage
     @Step("Navigate to Admin Mail Sending Settings Page")
     public AdminEmailSendingSettingsPage navigateToMailSendingSettingsPage()
     {
-        clickOnElement(mailSendingMenu);
-        return new AdminEmailSendingSettingsPage(superDriver);
+        clickOnElement(this.mailSendingMenu);
+        return new AdminEmailSendingSettingsPage(this.superDriver);
     }
 }

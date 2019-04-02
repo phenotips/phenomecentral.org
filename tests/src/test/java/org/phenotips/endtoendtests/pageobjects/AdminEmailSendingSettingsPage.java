@@ -24,7 +24,8 @@ import io.qameta.allure.Step;
 
 /**
  * This class corresponds to the Mail Sending Settings page that is found in Admin settings under the left accordion
- * menu: Email -> Mail Sending (I.e. http://localhost:8083/admin/XWiki/XWikiPreferences?editor=globaladmin&section=emailSend)
+ * menu: Email -> Mail Sending (I.e.
+ * http://localhost:8083/admin/XWiki/XWikiPreferences?editor=globaladmin&section=emailSend)
  */
 public class AdminEmailSendingSettingsPage extends AdminSettingsPage
 {
@@ -47,9 +48,9 @@ public class AdminEmailSendingSettingsPage extends AdminSettingsPage
     @Step("Set the outgoing email port to: {0}")
     public AdminEmailSendingSettingsPage setEmailPort(int port)
     {
-        clickAndClearElement(emailServerPortBox);
-        clickAndTypeOnElement(emailServerPortBox, Integer.toString(port));
-        clickOnElement(saveBtn);
+        clickAndClearElement(this.emailServerPortBox);
+        clickAndTypeOnElement(this.emailServerPortBox, Integer.toString(port));
+        clickOnElement(this.saveBtn);
         return this;
     }
 }

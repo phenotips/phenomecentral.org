@@ -42,12 +42,12 @@ public class PatientCreationOptionsTests extends BaseTest implements CommonInfoE
     @Test()
     public void cycleThroughInfoOptions()
     {
-        final List<String> checkOnsetLabels = new ArrayList<String>(Arrays.asList(
+        final List<String> checkOnsetLabels = new ArrayList<>(Arrays.asList(
             "Unknown", "Congenital onset", "Antenatal onset", "Embryonal onset", "Fetal onset", "Neonatal onset",
             "Infantile onset", "Childhood onset", "Juvenile onset", "Adult onset", "Young adult onset",
             "Middle age onset", "Late onset"));
 
-        final List<String> checkInheritanceLabels = new ArrayList<String>(Arrays.asList(
+        final List<String> checkInheritanceLabels = new ArrayList<>(Arrays.asList(
             "Sporadic", "Autosomal dominant inheritance", "Sex-limited autosomal dominant",
             "Male-limited autosomal dominant", "Autosomal dominant somatic cell mutation",
             "Autosomal dominant contiguous gene syndrome", "Autosomal recessive inheritance",
@@ -57,7 +57,7 @@ public class PatientCreationOptionsTests extends BaseTest implements CommonInfoE
             "Digenic inheritance", "Oligogenic inheritance", "Polygenic inheritance",
             "Mitochondrial inheritance"));
 
-        aHomePage.navigateToLoginPage()
+        this.aHomePage.navigateToLoginPage()
             .loginAsUser()
             .navigateToCreateANewPatientPage()
             .toggleFirstFourConsentBoxes()
@@ -70,33 +70,33 @@ public class PatientCreationOptionsTests extends BaseTest implements CommonInfoE
 
         for (int i = 1; i <= 12; ++i) {
             if (i < 10) {
-                aCreationPage.setDOB("0" + i, "2019");
-                aCreationPage.setDateOfDeath("0" + i, "2019");
+                this.aCreationPage.setDOB("0" + i, "2019");
+                this.aCreationPage.setDateOfDeath("0" + i, "2019");
             } else {
-                aCreationPage.setDOB(String.valueOf(i), "2019");
-                aCreationPage.setDateOfDeath(String.valueOf(i), "2019");
+                this.aCreationPage.setDOB(String.valueOf(i), "2019");
+                this.aCreationPage.setDateOfDeath(String.valueOf(i), "2019");
             }
         }
 
-        aCreationPage.setLifeStatus("Alive")
+        this.aCreationPage.setLifeStatus("Alive")
             .setGender("Male")
             .setGender("Female")
             .setGender("Other")
             .setGender("Unknown")
             .setGender("Male");
 
-        List<String> loAgeOnsetLabels = aCreationPage.cycleThroughAgeOfOnset();
-        List<String> loModeOfInheritanceLabels = aCreationPage.cycleThroughModeOfInheritance();
+        List<String> loAgeOnsetLabels = this.aCreationPage.cycleThroughAgeOfOnset();
+        List<String> loModeOfInheritanceLabels = this.aCreationPage.cycleThroughModeOfInheritance();
 
         Assert.assertEquals(loAgeOnsetLabels, checkOnsetLabels);
         Assert.assertEquals(loModeOfInheritanceLabels, checkInheritanceLabels,
             "Actual: " + loModeOfInheritanceLabels + "\n Expected: " + checkInheritanceLabels + "\n");
 
-        aCreationPage.cycleThroughModeOfInheritance();
-        aCreationPage.setIndicationForReferral("Now cycle through the other sections...")
+        this.aCreationPage.cycleThroughModeOfInheritance();
+        this.aCreationPage.setIndicationForReferral("Now cycle through the other sections...")
             .expandSection(SECTIONS.FamilyHistorySection);
 
-        aCreationPage.navigateToPedigreeEditor("")
+        this.aCreationPage.navigateToPedigreeEditor("")
             .closeEditor("save")
             .saveAndViewSummary()
             .logOut();
@@ -105,10 +105,10 @@ public class PatientCreationOptionsTests extends BaseTest implements CommonInfoE
     @Test()
     public void cycleThroughFamilialConditions()
     {
-        final List<String> checkFamilialConditionsLabels = new ArrayList<String>(Arrays.asList(
+        final List<String> checkFamilialConditionsLabels = new ArrayList<>(Arrays.asList(
             "Other affected relatives", "Consanguinity", "Parents with at least 3 miscarriages"));
 
-        aHomePage.navigateToLoginPage()
+        this.aHomePage.navigateToLoginPage()
             .loginAsUser()
             .navigateToAllPatientsPage()
             .sortPatientsDateDesc()
@@ -119,16 +119,16 @@ public class PatientCreationOptionsTests extends BaseTest implements CommonInfoE
             .setEthnicity("Maternal", "European Americans")
             .setHealthConditionsFoundInFamily("There are some conditions here: \n Bla bla bla");
 
-        List<String> loFamilialConditions = aCreationPage.cycleThroughFamilialHealthConditions();
+        List<String> loFamilialConditions = this.aCreationPage.cycleThroughFamilialHealthConditions();
         Assert.assertEquals(loFamilialConditions, checkFamilialConditionsLabels);
 
-        aCreationPage.logOut().dismissUnsavedChangesWarning();
+        this.aCreationPage.logOut().dismissUnsavedChangesWarning();
     }
 
     @Test()
     public void cycleThroughPrenatalHistory()
     {
-        final List<String> checkPrenatalConditionsLabels = new ArrayList<String>(Arrays.asList(
+        final List<String> checkPrenatalConditionsLabels = new ArrayList<>(Arrays.asList(
             "Multiple gestation", "Conception after fertility medication", "Intrauterine insemination (IUI)",
             "In vitro fertilization", "Intra-cytoplasmic sperm injection", "Gestational surrogacy",
             "Donor egg", "Donor sperm", "Hyperemesis gravidarum (excessive vomiting)",
@@ -155,7 +155,7 @@ public class PatientCreationOptionsTests extends BaseTest implements CommonInfoE
             "Neonatal respiratory distress", "Neonatal asphyxia", "Neonatal inspiratory stridor",
             "Prolonged neonatal jaundice", "Poor suck", "Neonatal hypoglycemia", "Neonatal sepsis"));
 
-        aHomePage.navigateToLoginPage()
+        this.aHomePage.navigateToLoginPage()
             .loginAsUser()
             .navigateToAllPatientsPage()
             .sortPatientsDateDesc()
@@ -163,16 +163,16 @@ public class PatientCreationOptionsTests extends BaseTest implements CommonInfoE
             .editThisPatient()
             .expandSection(SECTIONS.PrenatalHistorySection);
 
-        List<String> loPrenatalYesNoBoxes = aCreationPage.cycleThroughPrenatalHistory();
+        List<String> loPrenatalYesNoBoxes = this.aCreationPage.cycleThroughPrenatalHistory();
         Assert.assertEquals(loPrenatalYesNoBoxes, checkPrenatalConditionsLabels);
 
-        aCreationPage.cycleThroughPrenatalOptions().logOut().dismissUnsavedChangesWarning();
+        this.aCreationPage.cycleThroughPrenatalOptions().logOut().dismissUnsavedChangesWarning();
     }
 
     @Test()
     public void cycleThroughPhenotypeDetails()
     {
-        final List<String> checkPhenotypeDetailsLabels = new ArrayList<String>(Arrays.asList(
+        final List<String> checkPhenotypeDetailsLabels = new ArrayList<>(Arrays.asList(
             "", "", "Age of onset:", "Unknown", "Congenital onset", "Antenatal onset",
             "Embryonal onset", "Fetal onset", "Neonatal onset", "Infantile onset", "Childhood onset",
             "Juvenile onset", "Adult onset", "Young adult onset", "Middle age onset", "Late onset",
@@ -183,7 +183,7 @@ public class PatientCreationOptionsTests extends BaseTest implements CommonInfoE
             "Proximal", "Laterality:", "Unknown", "Bilateral", "Unilateral", "Right", "Left", "Comments:",
             "Image / photo (optional):", "+", "Medical report (optional):", "+"));
 
-        aHomePage.navigateToLoginPage()
+        this.aHomePage.navigateToLoginPage()
             .loginAsUser()
             .navigateToAllPatientsPage()
             .sortPatientsDateDesc()
@@ -193,15 +193,15 @@ public class PatientCreationOptionsTests extends BaseTest implements CommonInfoE
             .addPhenotype("Small earlobe")
             .addDetailsToNthPhenotype(1);
 
-        List<String> loPhenotypeDetailsOptions = aCreationPage.cycleThroughPhenotypeDetailsLabels();
+        List<String> loPhenotypeDetailsOptions = this.aCreationPage.cycleThroughPhenotypeDetailsLabels();
         System.out.println(loPhenotypeDetailsOptions);
         Assert.assertEquals(loPhenotypeDetailsOptions, checkPhenotypeDetailsLabels);
 
-        aCreationPage.logOut().dismissUnsavedChangesWarning();
+        this.aCreationPage.logOut().dismissUnsavedChangesWarning();
     }
 
     // Checks only first level depth on HPO tree. Structure is rather inconsistent, can't figure out
-    //   a simple recursive function for it.
+    // a simple recursive function for it.
     @Test()
     public void cycleThroughAllPhenotypes()
     {
@@ -391,7 +391,7 @@ public class PatientCreationOptionsTests extends BaseTest implements CommonInfoE
             "Atrophy/Degeneration affecting the central nervous system", "CNS infection", "Central nervous system cyst",
             "Encephalocele", "Morphological abnormality of the pyramidal tract",
             "Neoplasm of the central nervous system"));
-        aHomePage.navigateToLoginPage()
+        this.aHomePage.navigateToLoginPage()
             .loginAsUser()
             .navigateToAllPatientsPage()
             .sortPatientsDateDesc()
@@ -399,11 +399,11 @@ public class PatientCreationOptionsTests extends BaseTest implements CommonInfoE
             .editThisPatient()
             .expandSection(SECTIONS.ClinicalSymptomsSection);
 
-        List<String> loAllPhenotypes = aCreationPage.cycleThroughAllPhenotypes();
+        List<String> loAllPhenotypes = this.aCreationPage.cycleThroughAllPhenotypes();
         System.out.println(loAllPhenotypes);
         Assert.assertEquals(loAllPhenotypes, checkPhenotypeLabels);
 
-        aCreationPage.logOut().dismissUnsavedChangesWarning();
+        this.aCreationPage.logOut().dismissUnsavedChangesWarning();
     }
 
     // Clicks on all input boxes within the Diagnosis section and tries to provide input.
@@ -411,7 +411,7 @@ public class PatientCreationOptionsTests extends BaseTest implements CommonInfoE
     @Test()
     public void cycleThroughDiagnosis()
     {
-        aHomePage.navigateToLoginPage()
+        this.aHomePage.navigateToLoginPage()
             .loginAsUser()
             .navigateToAllPatientsPage()
             .sortPatientsDateDesc()
@@ -419,28 +419,28 @@ public class PatientCreationOptionsTests extends BaseTest implements CommonInfoE
             .editThisPatient()
             .expandSection(SECTIONS.DiagnosisSection);
 
-        System.out.println("Case Solved should be False: " + aCreationPage.isCaseSolved());
-        Assert.assertFalse(aCreationPage.isCaseSolved());
-        Assert.assertFalse(aCreationPage.isPubMedAndResolutionBoxesClickable());
+        System.out.println("Case Solved should be False: " + this.aCreationPage.isCaseSolved());
+        Assert.assertFalse(this.aCreationPage.isCaseSolved());
+        Assert.assertFalse(this.aCreationPage.isPubMedAndResolutionBoxesClickable());
 
-        aCreationPage.cycleThroughDiagnosisBoxes();
-        System.out.println("Case Solved should be True: " + aCreationPage.isCaseSolved());
-        Assert.assertTrue(aCreationPage.isCaseSolved());
-        Assert.assertTrue(aCreationPage.isPubMedAndResolutionBoxesClickable());
+        this.aCreationPage.cycleThroughDiagnosisBoxes();
+        System.out.println("Case Solved should be True: " + this.aCreationPage.isCaseSolved());
+        Assert.assertTrue(this.aCreationPage.isCaseSolved());
+        Assert.assertTrue(this.aCreationPage.isPubMedAndResolutionBoxesClickable());
 
-        aCreationPage.toggleCaseSolved();
-        System.out.println("Case Solved should be False: " + aCreationPage.isCaseSolved());
-        Assert.assertFalse(aCreationPage.isCaseSolved());
-        Assert.assertFalse(aCreationPage.isPubMedAndResolutionBoxesClickable());
+        this.aCreationPage.toggleCaseSolved();
+        System.out.println("Case Solved should be False: " + this.aCreationPage.isCaseSolved());
+        Assert.assertFalse(this.aCreationPage.isCaseSolved());
+        Assert.assertFalse(this.aCreationPage.isPubMedAndResolutionBoxesClickable());
 
-        aCreationPage.logOut().dismissUnsavedChangesWarning();
+        this.aCreationPage.logOut().dismissUnsavedChangesWarning();
     }
 
     // Checks that the red error message when inputting an invalid PubMed ID shows up.
     @Test()
     public void checkDiagnosisErrorMessages()
     {
-        aHomePage.navigateToLoginPage()
+        this.aHomePage.navigateToLoginPage()
             .loginAsUser()
             .navigateToAllPatientsPage()
             .sortPatientsDateDesc()
@@ -448,16 +448,16 @@ public class PatientCreationOptionsTests extends BaseTest implements CommonInfoE
             .editThisPatient()
             .expandSection(SECTIONS.DiagnosisSection);
 
-        aCreationPage.toggleCaseSolved()
+        this.aCreationPage.toggleCaseSolved()
             .addPubMedID("This is an invalid ID");
 
-        Assert.assertFalse(aCreationPage.isNthPubMDBoxValid(1));
+        Assert.assertFalse(this.aCreationPage.isNthPubMDBoxValid(1));
 
-        aCreationPage.removeNthPubMedID(1)
+        this.aCreationPage.removeNthPubMedID(1)
             .addPubMedID("30699054");
 
-        Assert.assertTrue(aCreationPage.isNthPubMDBoxValid(1));
+        Assert.assertTrue(this.aCreationPage.isNthPubMDBoxValid(1));
 
-        aCreationPage.logOut().dismissUnsavedChangesWarning();
+        this.aCreationPage.logOut().dismissUnsavedChangesWarning();
     }
 }

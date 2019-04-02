@@ -34,7 +34,7 @@ public class SetupUsers extends BaseTest
     @Test()
     public void setEmailPort()
     {
-        aHomePage.navigateToLoginPage()
+        this.aHomePage.navigateToLoginPage()
             .loginAsAdmin()
             .navigateToAdminSettingsPage()
             .navigateToMailSendingSettingsPage()
@@ -47,7 +47,7 @@ public class SetupUsers extends BaseTest
     @Test()
     public void setupAutomationUsers()
     {
-        aHomePage.navigateToLoginPage()
+        this.aHomePage.navigateToLoginPage()
             .loginAsAdmin()
             .navigateToAdminSettingsPage()
             .navigateToAdminUsersPage()

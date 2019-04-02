@@ -73,7 +73,7 @@ public abstract class BaseTest
      * screenshot and to cleanup the state of the browser.
      *
      * @param testResult resulting status of a test method that has just run, as reported by TestNGs listener. Check
-     * this passed info for failure.
+     *            this passed info for failure.
      */
     @AfterMethod
     public void onTestEnd(ITestResult testResult)
@@ -178,7 +178,7 @@ public abstract class BaseTest
      *
      * @param testMethod The method name of the test that failed, as a String. Will be used to name the file.
      * @param URL the URL that the browser was at during a test failure. Used by Allure's listener in the Step
-     * annotation
+     *            annotation
      */
     @Step("Taking screenshot of {0} for URL {1}")
     private void captureScreenshot(String testMethod, String URL)

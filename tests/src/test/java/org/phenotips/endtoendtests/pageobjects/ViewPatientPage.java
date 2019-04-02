@@ -73,8 +73,8 @@ public class ViewPatientPage extends CommonInfoSelectors
     @Step("Retrieve the patient ID")
     public String getPatientID()
     {
-        waitForElementToBePresent(patientID);
-        return superDriver.findElement(patientID).getText();
+        waitForElementToBePresent(this.patientID);
+        return this.superDriver.findElement(this.patientID).getText();
     }
 
     /**
@@ -85,20 +85,20 @@ public class ViewPatientPage extends CommonInfoSelectors
     @Step("Edit the currently viewed patient")
     public CreatePatientPage editThisPatient()
     {
-        clickOnElement(editBtn);
-        return new CreatePatientPage(superDriver);
+        clickOnElement(this.editBtn);
+        return new CreatePatientPage(this.superDriver);
     }
 
     /**
      * Retrieves all the gene names found in the "Genotype information" section. The order of the table is preserved.
      *
      * @return A, possibly empty, list of strings containing the gene names found. This should not have empty strings
-     * (i.e. "").
+     *         (i.e. "").
      */
     @Step("Retrieve the gene names")
     public List<String> getGeneNames()
     {
-        return getLabelsFromList(geneNames);
+        return getLabelsFromList(this.geneNames);
     }
 
     /**
@@ -106,12 +106,12 @@ public class ViewPatientPage extends CommonInfoSelectors
      * preserved.
      *
      * @return A, possibly empty, list of strings containing the gene statuses found (the entire column). This might
-     * have empty strings (i.e. "") for genes with unspecified status.
+     *         have empty strings (i.e. "") for genes with unspecified status.
      */
     @Step("Retrieve gene statuses")
     public List<String> getGeneStatus()
     {
-        return getLabelsFromList(geneStatuses);
+        return getLabelsFromList(this.geneStatuses);
     }
 
     /**
@@ -119,12 +119,12 @@ public class ViewPatientPage extends CommonInfoSelectors
      * preserved.
      *
      * @return A, possibly empty, list of strings containing the gene strategies found. This might have empty strings
-     * (i.e. "") for genes with unspecified strategy.
+     *         (i.e. "") for genes with unspecified strategy.
      */
     @Step("Retrieve gene strategies")
     public List<String> getGeneStrategies()
     {
-        return getLabelsFromList(geneStrategies);
+        return getLabelsFromList(this.geneStrategies);
     }
 
     /**
@@ -132,12 +132,12 @@ public class ViewPatientPage extends CommonInfoSelectors
      * preserved.
      *
      * @return A, possibly empty, list of strings containing the gene strategies found. This might have empty strings
-     * (i.e. "") for genes with no comments.
+     *         (i.e. "") for genes with no comments.
      */
     @Step("Retrieve gene comments")
     public List<String> getGeneComments()
     {
-        return getLabelsFromList(geneComments);
+        return getLabelsFromList(this.geneComments);
     }
 
     /**
@@ -149,7 +149,7 @@ public class ViewPatientPage extends CommonInfoSelectors
     @Step("Retrieve the clinical diagnosis names")
     public List<String> getClinicalDiagnosisNames()
     {
-        return getLabelsFromList(clinicalDiagnosisNames);
+        return getLabelsFromList(this.clinicalDiagnosisNames);
     }
 
     /**
@@ -161,20 +161,20 @@ public class ViewPatientPage extends CommonInfoSelectors
     @Step("Retrieve the final diagnosis names")
     public List<String> getFinalDiagnosisNames()
     {
-        return getLabelsFromList(finalDiagnosisNames);
+        return getLabelsFromList(this.finalDiagnosisNames);
     }
 
     /**
      * Retrieves the additional comment under the Diagnosis section.
      *
      * @return A String containing the comment under Additional Comments. If there is no Additional Comments section,
-     * will return an empty String ("").
+     *         will return an empty String ("").
      */
     @Step("Retrieve any additional comments")
     public String getAdditionalComments()
     {
-        if (isElementPresent(additionalCommentsText)) {
-            return superDriver.findElement(additionalCommentsText).getText();
+        if (isElementPresent(this.additionalCommentsText)) {
+            return this.superDriver.findElement(this.additionalCommentsText).getText();
         } else {
             return "";
         }
@@ -189,7 +189,7 @@ public class ViewPatientPage extends CommonInfoSelectors
     @Step("Get existing PubMedIDs")
     public List<String> getExistingPubMedIDs()
     {
-        return getLabelsFromList(pubMedIDsPresent);
+        return getLabelsFromList(this.pubMedIDsPresent);
     }
 
     /**
@@ -201,8 +201,8 @@ public class ViewPatientPage extends CommonInfoSelectors
     @Step("Retrieve the resolution notes for the patient")
     public String getResolutionNotes()
     {
-        if (isElementPresent(resolutionNotesText)) {
-            return superDriver.findElement(resolutionNotesText).getText();
+        if (isElementPresent(this.resolutionNotesText)) {
+            return this.superDriver.findElement(this.resolutionNotesText).getText();
         } else {
             return "";
         }

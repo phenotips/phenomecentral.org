@@ -28,7 +28,8 @@ import io.qameta.allure.Step;
 
 /**
  * The admin page where match notifications can be sent. Administration -> PhenoTips -> Matching Notification in the
- * left accordion menu i.e. http://localhost:8083/admin/XWiki/XWikiPreferences?editor=globaladmin&section=Matching+Notification
+ * left accordion menu i.e.
+ * http://localhost:8083/admin/XWiki/XWikiPreferences?editor=globaladmin&section=Matching+Notification
  */
 public class AdminMatchNotificationPage extends AdminSettingsPage
 {
@@ -70,8 +71,8 @@ public class AdminMatchNotificationPage extends AdminSettingsPage
     @Step("Filter matches by identifier: {0}")
     public AdminMatchNotificationPage filterByID(String identifier)
     {
-        clickAndTypeOnElement(patientIDContainsBox, identifier);
-        clickOnElement(reloadMatchesBtn);
+        clickAndTypeOnElement(this.patientIDContainsBox, identifier);
+        clickOnElement(this.reloadMatchesBtn);
         waitForLoadingBarToDisappear();
         return this;
     }
@@ -87,11 +88,11 @@ public class AdminMatchNotificationPage extends AdminSettingsPage
     @Step("Send an email to the matched patients in the first row")
     public AdminMatchNotificationPage emailFirstRowUsers()
     {
-        clickOnElement(firstRowFirstEmailBox);
-        clickOnElement(firstRowSecondEmailBox);
-        clickOnElement(sendNotificationsBtn);
-        waitForElementToBePresent(sendingNotificationMessage);
-        waitForElementToBeGone(sendingNotificationMessage);
+        clickOnElement(this.firstRowFirstEmailBox);
+        clickOnElement(this.firstRowSecondEmailBox);
+        clickOnElement(this.sendNotificationsBtn);
+        waitForElementToBePresent(this.sendingNotificationMessage);
+        waitForElementToBeGone(this.sendingNotificationMessage);
         return this;
     }
 
@@ -101,8 +102,7 @@ public class AdminMatchNotificationPage extends AdminSettingsPage
      * the patient ID or Patient Name. Will take the first match where the respective substrings appear.
      *
      * @param referencePatient The patient name, or ID number, in the Reference Column
-     * @param matchedPatient The patient name, or ID number, in the Matched Column, on the same row as
-     * referencePatient.
+     * @param matchedPatient The patient name, or ID number, in the Matched Column, on the same row as referencePatient.
      * @return Stay on the same page so return the same object.
      */
     @Step("Find and email specific matched patients. Reference Patient ID: {0} with Matched Patient ID: {1}")
@@ -111,10 +111,10 @@ public class AdminMatchNotificationPage extends AdminSettingsPage
         filterByID(referencePatient);
         waitForLoadingBarToDisappear();
 
-        List<WebElement> loFoundReferencePatients = superDriver.findElements(referencePatientLink);
-        List<WebElement> loFoundMatchedPatients = superDriver.findElements(matchedPatientLink);
-        List<WebElement> loFoundReferenceEmailBoxes = superDriver.findElements(firstRowFirstEmailBox);
-        List<WebElement> loFoundMatchedEmailBoxes = superDriver.findElements(firstRowSecondEmailBox);
+        List<WebElement> loFoundReferencePatients = this.superDriver.findElements(this.referencePatientLink);
+        List<WebElement> loFoundMatchedPatients = this.superDriver.findElements(this.matchedPatientLink);
+        List<WebElement> loFoundReferenceEmailBoxes = this.superDriver.findElements(this.firstRowFirstEmailBox);
+        List<WebElement> loFoundMatchedEmailBoxes = this.superDriver.findElements(this.firstRowSecondEmailBox);
 
         System.out.println("Found reference email boxes number: " + loFoundReferenceEmailBoxes.size());
         System.out.println("Found matched email boxes number: " + loFoundMatchedEmailBoxes.size());
@@ -123,8 +123,7 @@ public class AdminMatchNotificationPage extends AdminSettingsPage
             System.out.println("For loop: Reference: " + loFoundMatchedPatients.get(i).getText() +
                 "Matched patient: " + loFoundReferencePatients.get(i).getText());
             if (loFoundMatchedPatients.get(i).getText().contains(matchedPatient) &&
-                loFoundReferencePatients.get(i).getText().contains(referencePatient))
-            {
+                loFoundReferencePatients.get(i).getText().contains(referencePatient)) {
                 clickOnElement(loFoundReferenceEmailBoxes.get(i));
                 clickOnElement(loFoundMatchedEmailBoxes.get(i));
                 System.out.println("Found a match");
@@ -132,10 +131,10 @@ public class AdminMatchNotificationPage extends AdminSettingsPage
             }
         }
 
-        clickOnElement(sendNotificationsBtn);
+        clickOnElement(this.sendNotificationsBtn);
 
         // Wait for the green "Sending emails..." message to disappear.
-        waitForElementToBeGone(sendingNotificationMessage);
+        waitForElementToBeGone(this.sendingNotificationMessage);
 
         return this;
     }
@@ -153,15 +152,14 @@ public class AdminMatchNotificationPage extends AdminSettingsPage
         filterByID(referencePatient);
         waitForLoadingBarToDisappear();
 
-        List<WebElement> loFoundReferencePatients = superDriver.findElements(referencePatientLink);
-        List<WebElement> loFoundMatchedPatients = superDriver.findElements(matchedPatientLink);
+        List<WebElement> loFoundReferencePatients = this.superDriver.findElements(this.referencePatientLink);
+        List<WebElement> loFoundMatchedPatients = this.superDriver.findElements(this.matchedPatientLink);
 
         for (int i = 0; i < loFoundMatchedPatients.size(); ++i) {
             System.out.println("For loop: Reference: " + loFoundMatchedPatients.get(i).getText() +
                 "Matched patient: " + loFoundReferencePatients.get(i).getText());
             if (loFoundMatchedPatients.get(i).getText().contains(matchedPatient) &&
-                loFoundReferencePatients.get(i).getText().contains(referencePatient))
-            {
+                loFoundReferencePatients.get(i).getText().contains(referencePatient)) {
                 return true;
             }
         }
@@ -177,7 +175,7 @@ public class AdminMatchNotificationPage extends AdminSettingsPage
     @Step("Toggle contacted status checkbox")
     public AdminMatchNotificationPage toggleContactedStatusCheckbox()
     {
-        clickOnElement(contactedStatusCheckbox);
+        clickOnElement(this.contactedStatusCheckbox);
         return this;
     }
 
@@ -189,7 +187,7 @@ public class AdminMatchNotificationPage extends AdminSettingsPage
     @Step("Toggle not contacted status checkbox")
     public AdminMatchNotificationPage toggleNotContactedStatusCheckbox()
     {
-        clickOnElement(notContactedStatusCheckbox);
+        clickOnElement(this.notContactedStatusCheckbox);
         return this;
     }
 
@@ -201,14 +199,14 @@ public class AdminMatchNotificationPage extends AdminSettingsPage
     @Step("Set genotype slider filter to zero")
     public AdminMatchNotificationPage setGenotypeSliderToZero()
     {
-        waitForElementToBePresent(matchesGenotypeScoreSlider);
+        waitForElementToBePresent(this.matchesGenotypeScoreSlider);
 
-        Actions actionBuilder = new Actions(superDriver);
-        actionBuilder.dragAndDropBy(superDriver.findElement(matchesGenotypeScoreSlider), -50, 0)
+        Actions actionBuilder = new Actions(this.superDriver);
+        actionBuilder.dragAndDropBy(this.superDriver.findElement(this.matchesGenotypeScoreSlider), -50, 0)
             .build().perform();
         System.out.println("Dragging Genotype score slider to 0.");
 
-        clickOnElement(reloadMatchesBtn);
+        clickOnElement(this.reloadMatchesBtn);
 
         return this;
     }
@@ -221,14 +219,14 @@ public class AdminMatchNotificationPage extends AdminSettingsPage
     @Step("Set the Average Score slider filter to the minimum value (hard left)")
     public AdminMatchNotificationPage setAverageScoreSliderToMinimum()
     {
-        waitForElementToBePresent(matchesAverageScoreSlider);
+        waitForElementToBePresent(this.matchesAverageScoreSlider);
 
-        Actions actionBuilder = new Actions(superDriver);
-        actionBuilder.dragAndDropBy(superDriver.findElement(matchesAverageScoreSlider), -50, 0)
+        Actions actionBuilder = new Actions(this.superDriver);
+        actionBuilder.dragAndDropBy(this.superDriver.findElement(this.matchesAverageScoreSlider), -50, 0)
             .build().perform();
         System.out.println("Dragging Average Score slider to 0.1");
 
-        clickOnElement(reloadMatchesBtn);
+        clickOnElement(this.reloadMatchesBtn);
 
         return this;
     }

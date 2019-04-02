@@ -77,7 +77,7 @@ public abstract class CommonInfoSelectors extends BasePage implements CommonInfo
 
     private final By similarCasesSection = By.id("HSimilarcases"); // Similar cases
 
-    protected Map<SECTIONS, By> sectionMap = new HashMap<SECTIONS, By>();
+    protected Map<SECTIONS, By> sectionMap = new HashMap<>();
 
     /**
      * CTOR. Initializes the map from an enum value to a specific element for the section
@@ -87,16 +87,16 @@ public abstract class CommonInfoSelectors extends BasePage implements CommonInfo
     public CommonInfoSelectors(WebDriver aDriver)
     {
         super(aDriver);
-        sectionMap.put(SECTIONS.ClinicalSymptomsSection, clinicalSymptomsSection);
-        sectionMap.put(SECTIONS.DiagnosisSection, diagnosisSection);
-        sectionMap.put(SECTIONS.FamilyHistorySection, familyHistorySection);
-        sectionMap.put(SECTIONS.GenotypeInfoSection, genotypeInfoSection);
-        sectionMap.put(SECTIONS.MeasurementSection, measurementsSection);
-        sectionMap.put(SECTIONS.MedicalHistorySection, medicalHistorySection);
-        sectionMap.put(SECTIONS.PatientInfoSection, patientInfoSection);
-        sectionMap.put(SECTIONS.PrenatalHistorySection, prenatalHistorySection);
-        sectionMap.put(SECTIONS.SuggestedGenesSection, suggestedGenesSection);
-        sectionMap.put(SECTIONS.SimilarCasesSection, similarCasesSection);
+        this.sectionMap.put(SECTIONS.ClinicalSymptomsSection, this.clinicalSymptomsSection);
+        this.sectionMap.put(SECTIONS.DiagnosisSection, this.diagnosisSection);
+        this.sectionMap.put(SECTIONS.FamilyHistorySection, this.familyHistorySection);
+        this.sectionMap.put(SECTIONS.GenotypeInfoSection, this.genotypeInfoSection);
+        this.sectionMap.put(SECTIONS.MeasurementSection, this.measurementsSection);
+        this.sectionMap.put(SECTIONS.MedicalHistorySection, this.medicalHistorySection);
+        this.sectionMap.put(SECTIONS.PatientInfoSection, this.patientInfoSection);
+        this.sectionMap.put(SECTIONS.PrenatalHistorySection, this.prenatalHistorySection);
+        this.sectionMap.put(SECTIONS.SuggestedGenesSection, this.suggestedGenesSection);
+        this.sectionMap.put(SECTIONS.SimilarCasesSection, this.similarCasesSection);
     }
 
     /**
@@ -109,7 +109,7 @@ public abstract class CommonInfoSelectors extends BasePage implements CommonInfo
     public Boolean checkForVisibleSections(SECTIONS[] loSections)
     {
         for (SECTIONS aSection : loSections) {
-            Boolean presence = isElementPresent(sectionMap.get(aSection));
+            Boolean presence = isElementPresent(this.sectionMap.get(aSection));
             System.out.println("CommonInfoSelectors Line 44");
             if (!presence) {
                 return false;
@@ -127,24 +127,24 @@ public abstract class CommonInfoSelectors extends BasePage implements CommonInfo
     @Step("Set patient's global visibility to: {0}")
     public void setGlobalVisibility(String theVisibility)
     {
-        clickOnElement(modifyPermissionsBtn);
-        waitForElementToBePresent(privateRadioBtn);
+        clickOnElement(this.modifyPermissionsBtn);
+        waitForElementToBePresent(this.privateRadioBtn);
         switch (theVisibility) {
             case "private":
-                clickOnElement(privateRadioBtn);
+                clickOnElement(this.privateRadioBtn);
                 break;
             case "matchable":
-                clickOnElement(matchableRadioBtn);
+                clickOnElement(this.matchableRadioBtn);
                 break;
             case "public":
-                clickOnElement(publicRadioBtn);
+                clickOnElement(this.publicRadioBtn);
                 break;
             default:
-                clickOnElement(privateRadioBtn);
+                clickOnElement(this.privateRadioBtn);
                 break;
         }
-        clickOnElement(updateConfirmBtn);
-        waitForElementToBeClickable(logOutLink);
+        clickOnElement(this.updateConfirmBtn);
+        waitForElementToBeClickable(this.logOutLink);
         unconditionalWaitNs(
             2); // This might be needed still. For some reason, modal does not close immediately and nothing to wait for.
     }
@@ -159,12 +159,13 @@ public abstract class CommonInfoSelectors extends BasePage implements CommonInfo
     @Step("Add collaborator to patient with: Collaborator name: {0} and Privilage level of: {1}")
     public void addCollaboratorToPatient(String collaboratorName, PRIVILAGE privilageLevel)
     {
-        clickOnElement(modifyPermissionsBtn);
-        clickAndTypeOnElement(newCollaboratorBox, collaboratorName);
-        clickOnElement(firstCollaboratorResult);
-        superDriver.findElement(newCollaboratorBox).sendKeys(Keys.ENTER); // Looks like we'll have to press enter
+        clickOnElement(this.modifyPermissionsBtn);
+        clickAndTypeOnElement(this.newCollaboratorBox, collaboratorName);
+        clickOnElement(this.firstCollaboratorResult);
+        // Looks like we'll have to press enter
+        this.superDriver.findElement(this.newCollaboratorBox).sendKeys(Keys.ENTER);
 
-        List<WebElement> loPrivilageDropdowns = superDriver.findElements(privilageLevelDrps);
+        List<WebElement> loPrivilageDropdowns = this.superDriver.findElements(this.privilageLevelDrps);
         Select bottomMostPDrop = new Select(loPrivilageDropdowns.get(loPrivilageDropdowns.size() - 1));
 
         switch (privilageLevel) {
@@ -179,8 +180,8 @@ public abstract class CommonInfoSelectors extends BasePage implements CommonInfo
                 break;
         }
 
-        forceClickOnElement(updateConfirmBtn);
-        waitForElementToBeClickable(logOutLink);
+        forceClickOnElement(this.updateConfirmBtn);
+        waitForElementToBeClickable(this.logOutLink);
         unconditionalWaitNs(2); // Modal does not seem to be fully closed even when logOut link turns to clickable?
     }
 
@@ -188,19 +189,19 @@ public abstract class CommonInfoSelectors extends BasePage implements CommonInfo
      * Deletes the Nth collaborator from the permissions modal.
      *
      * @param n is the Nth collaborator (n >= 1) Must supply valid Nth collaborator otherwise array out of bounds
-     * exception will be thrown.
+     *            exception will be thrown.
      */
     @Step("Remove the {0}th collaborator from the list")
     public void removeNthCollaborator(int n)
     {
-        clickOnElement(modifyPermissionsBtn);
-        waitForElementToBePresent(newCollaboratorBox);
+        clickOnElement(this.modifyPermissionsBtn);
+        waitForElementToBePresent(this.newCollaboratorBox);
 
-        List<WebElement> loDeleteCollaboratorBtns = superDriver.findElements(deleteCollaboratorBtn);
+        List<WebElement> loDeleteCollaboratorBtns = this.superDriver.findElements(this.deleteCollaboratorBtn);
         loDeleteCollaboratorBtns.get(n - 1).click();
 
-        forceClickOnElement(updateConfirmBtn);
-        waitForElementToBeClickable(logOutLink);
+        forceClickOnElement(this.updateConfirmBtn);
+        waitForElementToBeClickable(this.logOutLink);
         unconditionalWaitNs(2); // Likewise, the modal does not seem to be fully closed even when logOut is clickable?
     }
 }

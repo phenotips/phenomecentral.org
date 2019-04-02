@@ -46,10 +46,9 @@ public class UserSignUpPage extends BasePage implements CommonSignUpSelectors
      * @param firstName First Name as a String.
      * @param lastName Last name as a String.
      * @param password is password as a String.
-     * @param email is email for the user as a String. Should be either a dummy address or something that we can
-     * access.
+     * @param email is email for the user as a String. Should be either a dummy address or something that we can access.
      * @param affiliation is the value for the Affiliation box as a String.
-     * @param referral value for the "How did you hear about/  Who referred you" box as a String.
+     * @param referral value for the "How did you hear about/ Who referred you" box as a String.
      * @param justification value for the "Why are you requesting access" box as a String.
      * @return Stay on the same page so return the same object.
      */
@@ -76,7 +75,7 @@ public class UserSignUpPage extends BasePage implements CommonSignUpSelectors
         toggleCheckboxToChecked(cooperationCheckbox);
         toggleCheckboxToChecked(acknoledgementCheckbox);
 
-        clickOnElement(registerBtn);
+        clickOnElement(this.registerBtn);
         return this;
     }
 
@@ -90,8 +89,8 @@ public class UserSignUpPage extends BasePage implements CommonSignUpSelectors
     @Step("Retreieve the confirmation message that account has been requested")
     public String getConfirmationMessage()
     {
-        waitForElementToBePresent(infoMessageArea);
-        return superDriver.findElement(infoMessageArea).getText();
+        waitForElementToBePresent(this.infoMessageArea);
+        return this.superDriver.findElement(this.infoMessageArea).getText();
     }
 
     /**
@@ -102,7 +101,7 @@ public class UserSignUpPage extends BasePage implements CommonSignUpSelectors
     @Step("Cancel the account request going back to the home page.")
     public HomePage cancelRequestingAccount()
     {
-        clickOnElement(cancelAndReturnBtn);
-        return new HomePage(superDriver);
+        clickOnElement(this.cancelAndReturnBtn);
+        return new HomePage(this.superDriver);
     }
 }

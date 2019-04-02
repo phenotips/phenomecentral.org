@@ -54,7 +54,7 @@ public class EmailUIPage extends BasePage
     {
         if (getNumberOfEmails() > 0) {
             unconditionalWaitNs(1); // Wait is only used so that a human can see the emails.
-            clickOnElement(deleteAllEmailsLink);
+            clickOnElement(this.deleteAllEmailsLink);
         } else {
             System.out.println("There are no emails to delete!");
         }
@@ -69,12 +69,12 @@ public class EmailUIPage extends BasePage
     @Step("Retrieve a list of email titles")
     public List<String> getEmailTitles()
     {
-        List<String> loTitles = new Vector<String>();
+        List<String> loTitles = new Vector<>();
 
         unconditionalWaitNs(1); // Again, this wait was just for human readability
         if (getNumberOfEmails() > 0) {
-            waitForElementToBePresent(emailTitles);
-            superDriver.findElements(emailTitles).forEach(x -> loTitles.add(x.getText()));
+            waitForElementToBePresent(this.emailTitles);
+            this.superDriver.findElements(this.emailTitles).forEach(x -> loTitles.add(x.getText()));
         }
         return loTitles;
     }
@@ -87,10 +87,10 @@ public class EmailUIPage extends BasePage
     @Step("Retrieve the number of emails in the inbox")
     public int getNumberOfEmails()
     {
-        waitForElementToBePresent(emailStatus);
-        String emailText = superDriver.findElement(emailStatus).getText();
+        waitForElementToBePresent(this.emailStatus);
+        String emailText = this.superDriver.findElement(this.emailStatus).getText();
         if (emailText.contains("You have ")) {
-            return superDriver.findElements(emailRows).size();
+            return this.superDriver.findElements(this.emailRows).size();
         } else {
             return 0;
         }
@@ -107,7 +107,7 @@ public class EmailUIPage extends BasePage
     @Step("Navigate to the PC instance's homepage")
     public HomePage navigateToHomePage()
     {
-        superDriver.navigate().to(HOMEPAGE_URL);
-        return new HomePage(superDriver);
+        this.superDriver.navigate().to(this.HOMEPAGE_URL);
+        return new HomePage(this.superDriver);
     }
 }
