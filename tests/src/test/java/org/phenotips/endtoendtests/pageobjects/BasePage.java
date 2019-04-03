@@ -155,6 +155,15 @@ public abstract class BasePage
     ////////////////////////////////////////
 
     /**
+     * Explicitly wait for the page to finish loading the DOM. Useful for instances where page refreshes
+     * and when it is difficult to find a specific element to wait upon.
+     */
+    public void waitForPageToLoad()
+    {
+        pause.until(ExpectedConditions.jsReturnsValue("return document.readyState=='complete';"));
+    }
+
+    /**
      * Explicitly wait for the passed element to appear, upto the timeout specified in {@code pause} Checks immediately
      * and then keeps polling at the default interval.
      *
@@ -555,4 +564,5 @@ public abstract class BasePage
         this.superDriver.switchTo().alert().accept();
         this.superDriver.switchTo().defaultContent();
     }
+
 }

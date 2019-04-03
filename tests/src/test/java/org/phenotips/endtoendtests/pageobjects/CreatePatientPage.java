@@ -415,35 +415,19 @@ public class CreatePatientPage extends CommonInfoSelectors
     @Step("Toggle the {0}th consent box")
     public CreatePatientPage toggleNthConsentBox(int n)
     {
-        switch (n) {
-            case 1:
-                clickOnElement(this.realPatientConsentBox);
-                break;
-            case 2:
-                clickOnElement(this.geneticConsentBox);
-                break;
-            case 3:
-                clickOnElement(this.shareHistoryConsentBox);
-                break;
-            case 4:
-                clickOnElement(this.shareImagesConsentBox);
-                break;
-            case 5:
-                clickOnElement(this.matchingConsentBox);
-                break;
-            default:
-                System.out.println("Invalid nth consent box specified: " + n);
-                break;
-        }
+        final By nthConsentBox = By.cssSelector(".consents-list li::nth-of-type(" + n + ") input.consent-checkbox");
+
+        clickOnElement(nthConsentBox);
+
         return this;
     }
 
     /**
-     * Helper method to toggle the first four consent boxes. These boxes are unchecked when first creating a patient
-     * (Real patient, Genetic Sequencing data consent, Medical/Family History consent, Medical Images/Photos consent)
+     * Helper method to toggle the consent boxes that are default unchecked when creating a new patient.
      *
      * @return Stay on the same page, so return the same object.
      */
+    @Step("Toggle the consent boxes that are unchecked by default when creating a new patient")
     public CreatePatientPage toggleFirstFourConsentBoxes()
     {
         toggleRealPatientConsent();
@@ -454,7 +438,7 @@ public class CreatePatientPage extends CommonInfoSelectors
     }
 
     /**
-     * Clicks on the "Update" button under the "Consents granted" section. Waits 5 seconds for consent to update.
+     * Clicks on the "Update" button under the "Consents granted" section.
      *
      * @return same object as we stay on the same page
      */
@@ -462,7 +446,7 @@ public class CreatePatientPage extends CommonInfoSelectors
     public CreatePatientPage updateConsent()
     {
         clickOnElement(this.patientConsentUpdateBtn);
-        unconditionalWaitNs(5); // No element to wait on as the state of the consents might not have changed.
+        waitForPageToLoad();
         return this;
     }
 
@@ -482,7 +466,8 @@ public class CreatePatientPage extends CommonInfoSelectors
         clickOnElement(this.identifierBox);
         this.superDriver.findElement(this.identifierBox).clear();
         clickAndTypeOnElement(this.identifierBox, identifer);
-        unconditionalWaitNs(1); // Gives "identifier already exists" if we navigate away too fast.
+        // Gives "identifier already exists" if we navigate away too fast.
+        unconditionalWaitNs(1);
         return this;
     }
 
@@ -895,7 +880,8 @@ public class CreatePatientPage extends CommonInfoSelectors
     @Step("Change the measurement date to: {0} day {1} month and {2} year")
     public CreatePatientPage changeMeasurementDate(String day, String month, String year)
     {
-        By calendarDayBtn = By.xpath("//div[contains(text(), '" + day + "')]");
+        By calendarDayBtn = By.xpath(
+            "//div[@class='calendar_date_select']//tr/td/div[not(@class='other') and text() = '" + day + "']");
 
         clickOnElement(this.measurementDateBoxes);
 
