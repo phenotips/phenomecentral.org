@@ -225,10 +225,9 @@ public class CreatePatientPage extends CommonInfoSelectors
     // "Genotype information" Section - Selectors
     ////////////////////////////////////////
 
-    private final By addGeneBtn = By.cssSelector("a[title*='Add gene']");
+    private final By addGeneBtn = By.cssSelector("a.button.add-gene");
 
-    private final By geneNameBoxes = By.cssSelector(
-        "#extradata-list-PhenoTips\\.GeneClass_PhenoTips\\.GeneVariantClass > tbody > tr > td:nth-child(2) > input[type=text]");
+    private final By geneNameBoxes = By.cssSelector("div.genotype.chapter input.gene-name");
 
     private final By geneStatusDrps = By.cssSelector("td.Status > select");
 
@@ -351,6 +350,63 @@ public class CreatePatientPage extends CommonInfoSelectors
     ////////////////////////////////////////
 
     /**
+     * Toggles the confirmation that this is a real patient.
+     * @return Same page so same object
+     */
+    @Step("Toggle the checkbox which confirms patient is real")
+    public CreatePatientPage toggleRealPatientConsent()
+    {
+        clickOnElement(this.realPatientConsentBox);
+        return this;
+    }
+
+    /**
+     * Toggles the confirmation that consent is obtained to share genetic sequencing data on
+     * restricted databases.
+     * @return Same page so same object
+     */
+    @Step("Toggle genetic sequencing data consent checkbox")
+    public CreatePatientPage toggleGeneticConsent()
+    {
+        clickOnElement(this.geneticConsentBox);
+        return this;
+    }
+
+    /**
+     * Toggles the confirmation that consent is obtained to share the patient's family history
+     * @return Same page so same object
+     */
+    @Step("Toggle family history consent checkbox")
+    public CreatePatientPage toggleHistoryConsent()
+    {
+        clickOnElement(this.shareHistoryConsentBox);
+        return this;
+    }
+
+    /**
+     * Toggles the confirmation that consent is obtained to share patient's medical images and photos.
+     * @return Same page so same object
+     */
+    @Step("Toggle medical images consent checkbox")
+    public CreatePatientPage toggleImagesConsent()
+    {
+        clickOnElement(this.shareImagesConsentBox);
+        return this;
+    }
+
+    /**
+     * Toggles the confirmation that consent is obtained to have the patient matchable on MME and to
+     * recieve match notifications.
+     * @return Same page so same object
+     */
+    @Step("Toggle the matching consent checkbox")
+    public CreatePatientPage toggleMatchingConsent()
+    {
+        clickOnElement(this.matchingConsentBox);
+        return this;
+    }
+
+    /**
      * Toggles the nth consent checkbox in the "Consents granted" section
      *
      * @param n which is an integer between 1-5 representing the specified checkbox.
@@ -390,10 +446,10 @@ public class CreatePatientPage extends CommonInfoSelectors
      */
     public CreatePatientPage toggleFirstFourConsentBoxes()
     {
-        toggleNthConsentBox(1);
-        toggleNthConsentBox(2);
-        toggleNthConsentBox(3);
-        toggleNthConsentBox(4);
+        toggleRealPatientConsent();
+        toggleGeneticConsent();
+        toggleHistoryConsent();
+        toggleImagesConsent();
         return this;
     }
 
