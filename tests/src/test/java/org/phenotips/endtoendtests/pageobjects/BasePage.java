@@ -491,16 +491,16 @@ public abstract class BasePage
     /**
      * Navigates to the create patient page by "Create... -> New patient"
      *
-     * @return a new object of the CreatePatientPage where the creation of a new patient is performed.
+     * @return a new object of the PatientRecordEditPage where the creation of a new patient is performed.
      */
     @Step("Navigate to Create Patient Page (Create a new patient)")
-    public CreatePatientPage navigateToCreateANewPatientPage()
+    public PatientRecordEditPage navigateToCreateANewPatientPage()
     {
         clickOnElement(this.createMenuDrp);
 
         clickOnElement(this.newPatientLink);
 
-        return new CreatePatientPage(this.superDriver);
+        return new PatientRecordEditPage(this.superDriver);
     }
 
     /**

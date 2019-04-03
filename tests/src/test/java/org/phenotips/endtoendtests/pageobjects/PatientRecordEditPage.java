@@ -34,7 +34,7 @@ import io.qameta.allure.Step;
  * Represents the page reached when "Create... -> New patient" is clicked on the navbar Ex.
  * http://localhost:8083/edit/data/Pxxxxxxx (new patient ID)
  */
-public class CreatePatientPage extends CommonInfoSelectors
+public class PatientRecordEditPage extends CommonInfoSelectors
 {
     ////////////////////////////////////////
     // "Patient Consent" (Consents Granted) Section - Selectors
@@ -300,7 +300,7 @@ public class CreatePatientPage extends CommonInfoSelectors
     private final By cancelChangesSinceSaveBtn =
         By.cssSelector("div.bottombuttons input[value='Cancel changes since last save']");
 
-    public CreatePatientPage(WebDriver aDriver)
+    public PatientRecordEditPage(WebDriver aDriver)
     {
         super(aDriver);
     }
@@ -327,7 +327,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @return stay on the same page so return the same object
      */
     @Step("Quick Save of patient form")
-    public CreatePatientPage quickSave()
+    public PatientRecordEditPage quickSave()
     {
         clickOnElement(this.quickSaveBtn);
         return this;
@@ -354,7 +354,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @return Same page so same object
      */
     @Step("Toggle the checkbox which confirms patient is real")
-    public CreatePatientPage toggleRealPatientConsent()
+    public PatientRecordEditPage toggleRealPatientConsent()
     {
         clickOnElement(this.realPatientConsentBox);
         return this;
@@ -366,7 +366,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @return Same page so same object
      */
     @Step("Toggle genetic sequencing data consent checkbox")
-    public CreatePatientPage toggleGeneticConsent()
+    public PatientRecordEditPage toggleGeneticConsent()
     {
         clickOnElement(this.geneticConsentBox);
         return this;
@@ -377,7 +377,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @return Same page so same object
      */
     @Step("Toggle family history consent checkbox")
-    public CreatePatientPage toggleHistoryConsent()
+    public PatientRecordEditPage toggleHistoryConsent()
     {
         clickOnElement(this.shareHistoryConsentBox);
         return this;
@@ -388,7 +388,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @return Same page so same object
      */
     @Step("Toggle medical images consent checkbox")
-    public CreatePatientPage toggleImagesConsent()
+    public PatientRecordEditPage toggleImagesConsent()
     {
         clickOnElement(this.shareImagesConsentBox);
         return this;
@@ -400,7 +400,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @return Same page so same object
      */
     @Step("Toggle the matching consent checkbox")
-    public CreatePatientPage toggleMatchingConsent()
+    public PatientRecordEditPage toggleMatchingConsent()
     {
         clickOnElement(this.matchingConsentBox);
         return this;
@@ -413,7 +413,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @return the same object as we are on the same page
      */
     @Step("Toggle the {0}th consent box")
-    public CreatePatientPage toggleNthConsentBox(int n)
+    public PatientRecordEditPage toggleNthConsentBox(int n)
     {
         final By nthConsentBox = By.cssSelector(".consents-list li::nth-of-type(" + n + ") input.consent-checkbox");
 
@@ -428,7 +428,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @return Stay on the same page, so return the same object.
      */
     @Step("Toggle the consent boxes that are unchecked by default when creating a new patient")
-    public CreatePatientPage toggleDefaultUncheckedConsentBoxes()
+    public PatientRecordEditPage toggleDefaultUncheckedConsentBoxes()
     {
         toggleRealPatientConsent();
         toggleGeneticConsent();
@@ -443,7 +443,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @return same object as we stay on the same page
      */
     @Step("Click on 'Update' button for consent")
-    public CreatePatientPage updateConsent()
+    public PatientRecordEditPage updateConsent()
     {
         clickOnElement(this.patientConsentUpdateBtn);
         waitForPageToLoad();
@@ -461,7 +461,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @return stay on the same page so return the same instance of object
      */
     @Step("Set the patient's identifier to: {0}")
-    public CreatePatientPage setIdentifier(String identifier)
+    public PatientRecordEditPage setIdentifier(String identifier)
     {
         clickOnElement(this.identifierBox);
         this.superDriver.findElement(this.identifierBox).clear();
@@ -479,7 +479,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @return stay on the same page so return same object.
      */
     @Step("Set patient's life status to: {0}")
-    public CreatePatientPage setLifeStatus(String status)
+    public PatientRecordEditPage setLifeStatus(String status)
     {
         waitForElementToBePresent(this.lifeStatusDrp);
         Select statusDrp = new Select(this.superDriver.findElement(this.lifeStatusDrp));
@@ -498,7 +498,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @return stay on the same page so return same object.
      */
     @Step("Set the DOB for the patient to: {0} month and {1} year")
-    public CreatePatientPage setDOB(String month, String year)
+    public PatientRecordEditPage setDOB(String month, String year)
     {
         Select monthDrp;
         Select yearDrp;
@@ -523,7 +523,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @return stay on the same page so return same object.
      */
     @Step("Set the date of death for the patient to: {0} month and {1} year")
-    public CreatePatientPage setDateOfDeath(String month, String year)
+    public PatientRecordEditPage setDateOfDeath(String month, String year)
     {
         Select monthDrp;
         Select yearDrp;
@@ -545,7 +545,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @param theSection is the section from the enum that we want to expand
      * @return stay on the same page so the same object
      */
-    public CreatePatientPage expandSection(SECTIONS theSection)
+    public PatientRecordEditPage expandSection(SECTIONS theSection)
     {
         forceScrollToElement(this.sectionMap.get(theSection));
 
@@ -561,7 +561,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @return the same page so the same object.
      */
     @Step("Set the gender of the patient to: {0}")
-    public CreatePatientPage setGender(String theGender)
+    public PatientRecordEditPage setGender(String theGender)
     {
         waitForElementToBePresent(this.maleGenderBtn);
         switch (theGender) {
@@ -592,7 +592,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @return Stay on the same page, return same object.
      */
     @Step("Set the Age of Onset for the patient to: {0}")
-    public CreatePatientPage setOnset(String theOnset)
+    public PatientRecordEditPage setOnset(String theOnset)
     {
         waitForElementToBePresent(this.congenitalOnsentBtn);
 
@@ -645,7 +645,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @return stay on the same page so return the same object.
      */
     @Step("Set the indication for referral to: {0}")
-    public CreatePatientPage setIndicationForReferral(String neededText)
+    public PatientRecordEditPage setIndicationForReferral(String neededText)
     {
         clickAndTypeOnElement(this.indicationForReferralBox, neededText);
         return this;
@@ -708,7 +708,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @return Stay on the same page so return the same object.
      */
     @Step("Set the {0} ethnicity to {1}")
-    public CreatePatientPage setEthnicity(String maternity, String ethnicity)
+    public PatientRecordEditPage setEthnicity(String maternity, String ethnicity)
     {
         if (maternity.equals("Paternal")) {
             clickAndTypeOnElement(this.paternalEthnicityBox, ethnicity);
@@ -727,7 +727,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @return Stay on the same page so return the same object.
      */
     @Step("Set the Health Conditions in Family note box to: {0}")
-    public CreatePatientPage setHealthConditionsFoundInFamily(String note)
+    public PatientRecordEditPage setHealthConditionsFoundInFamily(String note)
     {
         clickAndTypeOnElement(this.healthConditionsFoundInFamily, note);
         return this;
@@ -784,7 +784,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @return Stay on the same page so return the same object.
      */
     @Step("Traverse through the prenatal options UI")
-    public CreatePatientPage cycleThroughPrenatalOptions()
+    public PatientRecordEditPage cycleThroughPrenatalOptions()
     {
         waitForElementToBePresent(this.apgarScore1MinDrp);
 
@@ -843,7 +843,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @return Stay on the same page so return the same object.
      */
     @Step("Add a measurement to patient as: {0}")
-    public CreatePatientPage addMeasurement(CommonPatientMeasurement aMeasurement)
+    public PatientRecordEditPage addMeasurement(CommonPatientMeasurement aMeasurement)
     {
         clickOnElement(this.addMeasurementBtn);
         clickAndTypeOnElement(this.weightBoxes, String.valueOf(aMeasurement.weight));
@@ -878,7 +878,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @return Stay on the same page so return the same object.
      */
     @Step("Change the measurement date to: {0} day {1} month and {2} year")
-    public CreatePatientPage changeMeasurementDate(String day, String month, String year)
+    public PatientRecordEditPage changeMeasurementDate(String day, String month, String year)
     {
         By calendarDayBtn = By.xpath(
             "//div[@class='calendar_date_select']//tr/td/div[not(@class='other') and text() = '" + day + "']");
@@ -961,7 +961,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @param thePhenotype phenotype needed. Be exact and as specific as possible.
      * @return Stay on the same page, so return same object.
      */
-    public CreatePatientPage addPhenotype(String thePhenotype)
+    public PatientRecordEditPage addPhenotype(String thePhenotype)
     {
         clickAndTypeOnElement(this.phenotypeSearchBox, thePhenotype);
         clickOnElement(this.firstPhenotypeSuggestion);
@@ -976,7 +976,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @return Stay on the same page so return the same object.
      */
     @Step("Add the following list of phenotypes: {0}")
-    public CreatePatientPage addPhenotypes(List<String> phenotypes)
+    public PatientRecordEditPage addPhenotypes(List<String> phenotypes)
     {
         for (String aPhenotype : phenotypes) {
             addPhenotype(aPhenotype);
@@ -1021,7 +1021,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @return Stay on the same page so return same object.
      */
     @Step("Add details to the {0}th phenotype")
-    public CreatePatientPage addDetailsToNthPhenotype(int n)
+    public PatientRecordEditPage addDetailsToNthPhenotype(int n)
     {
         waitForElementToBePresent(this.addPhenotypeDetailsBtns);
         List<WebElement> loPhenotypeAddBtnsPresent = this.superDriver.findElements(this.addPhenotypeDetailsBtns);
@@ -1144,7 +1144,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @return Stay on the same page so we return the same object.
      */
     @Step("Add gene: {0} with status: {1} and strategy: {2}")
-    public CreatePatientPage addGene(String theGene, String geneStatus, String strategy)
+    public PatientRecordEditPage addGene(String theGene, String geneStatus, String strategy)
     {
         forceScrollToElement(this.addGeneBtn);
         clickOnElement(this.addGeneBtn);
@@ -1214,7 +1214,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @return Stay on the same page so return the same object.
      */
     @Step("Add a clinical diagnosis with ORDO: {0}")
-    public CreatePatientPage addClinicalDiagnosis(String ORDO)
+    public PatientRecordEditPage addClinicalDiagnosis(String ORDO)
     {
         clickAndTypeOnElement(this.clinicalDiagnosisBox, ORDO);
         clickOnElement(this.firstGeneSuggestion);
@@ -1229,7 +1229,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @return Stay on the same page so return the same object.
      */
     @Step("Add final diagnosis with OMIM: {0}")
-    public CreatePatientPage addFinalDiagnosis(String OMIM)
+    public PatientRecordEditPage addFinalDiagnosis(String OMIM)
     {
         clickAndTypeOnElement(this.finalDiagnosisBox, OMIM);
         clickOnElement(this.firstGeneSuggestion);
@@ -1242,7 +1242,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @return Stay on the same page so return the same object.
      */
     @Step("Toggle the 'Case Solved' checkbox")
-    public CreatePatientPage toggleCaseSolved()
+    public PatientRecordEditPage toggleCaseSolved()
     {
         clickOnElement(this.caseSolvedCheckbox);
         return this;
@@ -1270,7 +1270,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @return Stay on the same page so return the same object.
      */
     @Step("Add a PubMed ID of {0}")
-    public CreatePatientPage addPubMedID(String ID)
+    public PatientRecordEditPage addPubMedID(String ID)
     {
         // Needed to defocus PubMed ID boxes.
         clickOnElement(this.additionalCommentsBox);
@@ -1296,7 +1296,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @return Stay on the same page so return the same object.
      */
     @Step("Remove the {0}th PubMed ID")
-    public CreatePatientPage removeNthPubMedID(int n)
+    public PatientRecordEditPage removeNthPubMedID(int n)
     {
         waitForElementToBePresent(this.deletePubMedBtns);
         List<WebElement> loDeletePubMedBtns = this.superDriver.findElements(this.deletePubMedBtns);
@@ -1314,7 +1314,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @return Stay on the same page so return the same object.
      */
     @Step("Add resolution notes of {0}")
-    public CreatePatientPage addResolutionNotes(String note)
+    public PatientRecordEditPage addResolutionNotes(String note)
     {
         clickAndTypeOnElement(this.resolutionNotesBox, note);
         return this;
@@ -1328,7 +1328,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @return Stay on the same page so return the same object.
      */
     @Step("Add additional comments in diagnosis section called {0}")
-    public CreatePatientPage addAdditionalComments(String comment)
+    public PatientRecordEditPage addAdditionalComments(String comment)
     {
         clickAndTypeOnElement(this.additionalCommentsBox, comment);
         return this;
@@ -1363,7 +1363,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @return Stay on the same page so return the same object.
      */
     @Step("Traverse through the diagnosis section UI")
-    public CreatePatientPage cycleThroughDiagnosisBoxes()
+    public PatientRecordEditPage cycleThroughDiagnosisBoxes()
     {
         addClinicalDiagnosis("Allergic bronchopulmonary aspergillosis");
         addClinicalDiagnosis("Essential iris atrophy");
@@ -1394,7 +1394,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @return Stay on the same page so return the same object.
      */
     @Step("Toggle the {0} clinical diagnosis checkbox.")
-    public CreatePatientPage toggleNthClinicalDiagnosisCheckbox(int n)
+    public PatientRecordEditPage toggleNthClinicalDiagnosisCheckbox(int n)
     {
         waitForElementToBePresent(this.clinicalDiagnosisCheckboxes);
         clickOnElement(this.superDriver.findElements(this.clinicalDiagnosisCheckboxes).get(n - 1));
@@ -1410,7 +1410,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @return Stay on the same page so return the same object.
      */
     @Step("Toggle the {0}th final diagnosis checkbox")
-    public CreatePatientPage toggleNthFinalDiagnosisCheckbox(int n)
+    public PatientRecordEditPage toggleNthFinalDiagnosisCheckbox(int n)
     {
         waitForElementToBePresent(this.finalDiagnosisCheckboxes);
         clickOnElement(this.superDriver.findElements(this.finalDiagnosisCheckboxes).get(n - 1));

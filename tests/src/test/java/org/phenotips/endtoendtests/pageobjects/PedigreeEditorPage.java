@@ -179,7 +179,7 @@ public class PedigreeEditorPage extends BasePage
      * @return Navigates back to the patient creation page so a return new instance of that.
      */
     @Step("Close the editor with save choice of {0}")
-    public CreatePatientPage closeEditor(String saveChoice)
+    public PatientRecordEditPage closeEditor(String saveChoice)
     {
         clickOnElement(this.closeEditor);
 
@@ -204,7 +204,7 @@ public class PedigreeEditorPage extends BasePage
         // We should wait for this to appear.
         waitForElementToBePresent(this.logOutLink);
 
-        return new CreatePatientPage(this.superDriver);
+        return new PatientRecordEditPage(this.superDriver);
     }
 
     /**

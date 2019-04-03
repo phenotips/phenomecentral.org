@@ -20,7 +20,7 @@ package org.phenotips.endtoendtests.testcases;
 import org.phenotips.endtoendtests.common.CommonInfoEnums;
 import org.phenotips.endtoendtests.common.CommonPatientMeasurement;
 import org.phenotips.endtoendtests.pageobjects.AdminRefreshMatchesPage;
-import org.phenotips.endtoendtests.pageobjects.CreatePatientPage;
+import org.phenotips.endtoendtests.pageobjects.PatientRecordEditPage;
 import org.phenotips.endtoendtests.pageobjects.EmailUIPage;
 import org.phenotips.endtoendtests.pageobjects.HomePage;
 import org.phenotips.endtoendtests.pageobjects.ViewPatientPage;
@@ -46,7 +46,7 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
 
     final private ViewPatientPage aViewPatientPage = new ViewPatientPage(theDriver);
 
-    final private CreatePatientPage aCreatePatientPage = new CreatePatientPage(theDriver);
+    final private PatientRecordEditPage aPatientRecordEditPage = new PatientRecordEditPage(theDriver);
 
     final private SECTIONS[] checkForTheseSections = {
     SECTIONS.PatientInfoSection,
@@ -277,11 +277,11 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
             .editThisPatient()
             .expandSection(SECTIONS.MeasurementSection);
 
-        CommonPatientMeasurement foundMeasurementOnPatientForm = this.aCreatePatientPage.getPatientMeasurement();
+        CommonPatientMeasurement foundMeasurementOnPatientForm = this.aPatientRecordEditPage.getPatientMeasurement();
         System.out.println(foundMeasurementOnPatientForm);
         Assert.assertEquals(foundMeasurementOnPatientForm, measurements);
 
-        this.aCreatePatientPage
+        this.aPatientRecordEditPage
             .saveAndViewSummary()
             .logOut();
     }
@@ -309,16 +309,16 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
             .expandSection(SECTIONS.ClinicalSymptomsSection)
             .addPhenotype("Blue irides");
 
-        List<String> automaticallyAddedPhenotypesFound = this.aCreatePatientPage.getPhenotypesLightning();
+        List<String> automaticallyAddedPhenotypesFound = this.aPatientRecordEditPage.getPhenotypesLightning();
         System.out.println(automaticallyAddedPhenotypesFound);
 
-        List<String> manuallyAddedPhenotypesFound = this.aCreatePatientPage.getPhenotypesNonLightning();
+        List<String> manuallyAddedPhenotypesFound = this.aPatientRecordEditPage.getPhenotypesNonLightning();
         System.out.println(manuallyAddedPhenotypesFound);
 
         Assert.assertEquals(automaticallyAddedPhenotypesFound, automaticallyAddedPhenotypesToCheck);
         Assert.assertEquals(manuallyAddedPhenotypesFound, manuallyAddedPhenotypesToCheck);
 
-        this.aCreatePatientPage
+        this.aPatientRecordEditPage
             .saveAndViewSummary()
             .logOut();
     }

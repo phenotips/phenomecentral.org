@@ -18,7 +18,7 @@
 package org.phenotips.endtoendtests.testcases;
 
 import org.phenotips.endtoendtests.common.CommonInfoEnums;
-import org.phenotips.endtoendtests.pageobjects.CreatePatientPage;
+import org.phenotips.endtoendtests.pageobjects.PatientRecordEditPage;
 import org.phenotips.endtoendtests.pageobjects.HomePage;
 import org.phenotips.endtoendtests.pageobjects.PedigreeEditorPage;
 import org.phenotips.endtoendtests.pageobjects.ViewPatientPage;
@@ -42,7 +42,7 @@ public class PedigreePageTest extends BaseTest implements CommonInfoEnums
 
     final private PedigreeEditorPage aPedigreeEditorPage = new PedigreeEditorPage(theDriver);
 
-    final private CreatePatientPage aCreatePatientPage = new CreatePatientPage(theDriver);
+    final private PatientRecordEditPage aPatientRecordEditPage = new PatientRecordEditPage(theDriver);
 
     final private ViewPatientPage aViewPatientPage = new ViewPatientPage(theDriver);
 
@@ -157,7 +157,7 @@ public class PedigreePageTest extends BaseTest implements CommonInfoEnums
             .closeEditor("Save")
             .expandSection(SECTIONS.ClinicalSymptomsSection);
 
-        List<String> foundPhenotypesOnPatientForm = this.aCreatePatientPage.getAllPhenotypes();
+        List<String> foundPhenotypesOnPatientForm = this.aPatientRecordEditPage.getAllPhenotypes();
 
         System.out.println("Before: " + foundPhenotypesOnPatientForm);
         System.out.println("Before loAdding: " + loPhenotypesToAdd);
@@ -169,7 +169,7 @@ public class PedigreePageTest extends BaseTest implements CommonInfoEnums
         System.out.println("After: " + foundPhenotypesOnPatientForm);
         System.out.println("After loAdding: " + loPhenotypesToAdd);
 
-        this.aCreatePatientPage
+        this.aPatientRecordEditPage
             .saveAndViewSummary()
             .logOut();
     }
@@ -221,7 +221,7 @@ public class PedigreePageTest extends BaseTest implements CommonInfoEnums
             .updateConsent()
             .expandSection(SECTIONS.ClinicalSymptomsSection);
 
-        List<String> foundPhenotypesFromPatientPage = this.aCreatePatientPage.getAllPhenotypes();
+        List<String> foundPhenotypesFromPatientPage = this.aPatientRecordEditPage.getAllPhenotypes();
 
         System.out.println("Before: " + foundPhenotypesFromPatientPage);
         System.out.println("Before loAdding: " + loPhenotypesToAdd);
@@ -233,7 +233,7 @@ public class PedigreePageTest extends BaseTest implements CommonInfoEnums
         System.out.println("After: " + foundPhenotypesFromPatientPage);
         System.out.println("After loAdding: " + loPhenotypesToAdd);
 
-        this.aCreatePatientPage.saveAndViewSummary();
+        this.aPatientRecordEditPage.saveAndViewSummary();
 
         List<String> foundGeneNamesOnPatientForm = this.aViewPatientPage.getGeneNames();
         List<String> checkGeneNames = new ArrayList<>(Arrays.asList("LIN7C", "TAOK3", "YKT6"));
@@ -276,6 +276,6 @@ public class PedigreePageTest extends BaseTest implements CommonInfoEnums
 
         Assert.assertTrue(this.aPedigreeEditorPage.doesWarningDialogueAppear());
 
-        this.aCreatePatientPage.saveAndViewSummary().logOut();
+        this.aPatientRecordEditPage.saveAndViewSummary().logOut();
     }
 }

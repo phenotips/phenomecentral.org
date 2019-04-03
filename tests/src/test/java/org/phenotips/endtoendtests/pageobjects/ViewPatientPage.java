@@ -83,10 +83,10 @@ public class ViewPatientPage extends CommonInfoSelectors
      * @return new patient editor page object as we navigate to the patient editing page
      */
     @Step("Edit the currently viewed patient")
-    public CreatePatientPage editThisPatient()
+    public PatientRecordEditPage editThisPatient()
     {
         clickOnElement(this.editBtn);
-        return new CreatePatientPage(this.superDriver);
+        return new PatientRecordEditPage(this.superDriver);
     }
 
     /**

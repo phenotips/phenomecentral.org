@@ -18,7 +18,7 @@
 package org.phenotips.endtoendtests.testcases;
 
 import org.phenotips.endtoendtests.common.CommonInfoEnums;
-import org.phenotips.endtoendtests.pageobjects.CreatePatientPage;
+import org.phenotips.endtoendtests.pageobjects.PatientRecordEditPage;
 import org.phenotips.endtoendtests.pageobjects.HomePage;
 
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ public class PatientCreationOptionsTests extends BaseTest implements CommonInfoE
 {
     private HomePage aHomePage = new HomePage(theDriver);
 
-    private CreatePatientPage aCreationPage = new CreatePatientPage(theDriver);
+    private PatientRecordEditPage aCreationPage = new PatientRecordEditPage(theDriver);
 
     // Cycle through all the options on the "Patient Information" Section.
     @Test()
