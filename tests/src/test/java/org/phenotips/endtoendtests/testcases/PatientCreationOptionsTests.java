@@ -60,11 +60,11 @@ public class PatientCreationOptionsTests extends BaseTest implements CommonInfoE
         this.aHomePage.navigateToLoginPage()
             .loginAsUser()
             .navigateToCreateANewPatientPage()
-            .toggleFirstFourConsentBoxes()
+            .toggleDefaultUncheckedConsentBoxes()
             .toggleNthConsentBox(5)
             .toggleNthConsentBox(5)
             .updateConsent()
-            .setIdentifer("Auto Cycling Options")
+            .setIdentifier("Auto Cycling Options")
             .setLifeStatus("Alive")
             .setLifeStatus("Deceased");
 

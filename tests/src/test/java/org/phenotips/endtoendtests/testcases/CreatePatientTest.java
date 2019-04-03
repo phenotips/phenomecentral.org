@@ -91,9 +91,9 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
         this.aHomePage.navigateToLoginPage()
             .loginAsUser()
             .navigateToCreateANewPatientPage()
-            .toggleFirstFourConsentBoxes()
+            .toggleDefaultUncheckedConsentBoxes()
             .updateConsent()
-            .setIdentifer(this.patientUniqueIdentifier)
+            .setIdentifier(this.patientUniqueIdentifier)
             .setDOB("02", "2012")
             .setGender("Male")
             .setOnset("Congenital onset ")
@@ -125,9 +125,9 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
             .sortPatientsDateDesc()
             .viewFirstPatientInTable()
             .editThisPatient()
-            .toggleFirstFourConsentBoxes()
+            .toggleDefaultUncheckedConsentBoxes()
             .updateConsent()
-            .setIdentifer(this.patientUniqueIdentifier + " Match")
+            .setIdentifier(this.patientUniqueIdentifier + " Match")
             .saveAndViewSummary();
 
         System.out.println("We just edited: " + this.aViewPatientPage.getPatientID());
@@ -268,7 +268,7 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
         this.aHomePage.navigateToLoginPage()
             .loginAsUser()
             .navigateToCreateANewPatientPage()
-            .toggleFirstFourConsentBoxes()
+            .toggleDefaultUncheckedConsentBoxes()
             .updateConsent()
             .expandSection(SECTIONS.MeasurementSection)
             .addMeasurement(measurements)

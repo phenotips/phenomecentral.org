@@ -428,7 +428,7 @@ public class CreatePatientPage extends CommonInfoSelectors
      * @return Stay on the same page, so return the same object.
      */
     @Step("Toggle the consent boxes that are unchecked by default when creating a new patient")
-    public CreatePatientPage toggleFirstFourConsentBoxes()
+    public CreatePatientPage toggleDefaultUncheckedConsentBoxes()
     {
         toggleRealPatientConsent();
         toggleGeneticConsent();
@@ -455,17 +455,17 @@ public class CreatePatientPage extends CommonInfoSelectors
     ////////////////////////////////////////
 
     /**
-     * Clears and then sets the patient identifer field box.
+     * Clears and then sets the patient identifier field box.
      *
-     * @param identifer the string that should be entered into the "Identifer" field under Patient Information
+     * @param identifier the string that should be entered into the "Identifer" field under Patient Information
      * @return stay on the same page so return the same instance of object
      */
     @Step("Set the patient's identifier to: {0}")
-    public CreatePatientPage setIdentifer(String identifer)
+    public CreatePatientPage setIdentifier(String identifier)
     {
         clickOnElement(this.identifierBox);
         this.superDriver.findElement(this.identifierBox).clear();
-        clickAndTypeOnElement(this.identifierBox, identifer);
+        clickAndTypeOnElement(this.identifierBox, identifier);
         // Gives "identifier already exists" if we navigate away too fast.
         unconditionalWaitNs(1);
         return this;
