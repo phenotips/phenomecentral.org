@@ -27,6 +27,7 @@
   </parent>
 
   <artifactId>phenomecentral-tests</artifactId>
+  <name>PhenomeCentral - Integration tests</name>
 
   <properties>
     <aspectj.version>1.9.2</aspectj.version>
