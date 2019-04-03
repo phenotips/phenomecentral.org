@@ -29,15 +29,17 @@ import org.openqa.selenium.interactions.Actions;
 import io.qameta.allure.Step;
 
 /**
- * This represents the pedigree editor page, i.e. http://localhost:8083/edit/Families/FAMxxxxxxx
+ * This represents the pedigree editor page,
+ * {@code http://localhost:8083/edit/Families/FAMxxxxxxx?sheet=PhenoTips.PedigreeEditor}.
  */
 public class PedigreeEditorPage extends BasePage
 {
     private final By probandTemplate = By.cssSelector("div[title=Proband]");
 
-    /**************************************
-     * Toolbar and save modal - Selectors
-     **************************************/
+    ////////////////////////////////////////
+    // Toolbar and save modal - Selectors
+    ////////////////////////////////////////
+
     private final By closeEditor = By.id("action-close");
 
     private final By saveAndQuitBtn = By.id("OK_button");
@@ -46,9 +48,10 @@ public class PedigreeEditorPage extends BasePage
 
     private final By keepEditingPedigreeBtn = By.cssSelector("input.button[value=\" Keep editing pedigree \"]");
 
-    /**********************************************************************
-     * Patient Nodes (Hoverboxes) and Add Family Member Links - Selectors
-     **********************************************************************/
+    ////////////////////////////////////////
+    // Patient Nodes (Hoverboxes) and Add Family Member Links - Selectors
+    ////////////////////////////////////////
+
     private final By hoverBox = By.cssSelector("#work-area > #canvas > svg > rect.pedigree-hoverbox");
 
     private final By hoverBoxPartnerLink = By.cssSelector(
@@ -73,9 +76,9 @@ public class PedigreeEditorPage extends BasePage
 
     private final By createMaleNode = By.cssSelector("a.node-type-M");
 
-    /**********************************************************************************
-     * Patient Information Form Modal (Opens when clicking on a patient) - Selectors
-     **********************************************************************************/
+    ////////////////////////////////////////
+    // Patient Information Form Modal (Opens when clicking on a patient) - Selectors
+    ////////////////////////////////////////
 
     // Tabs
     private final By personalTab = By.cssSelector("div.person-node-menu > div.tabholder > dl.tabs > dd:nth-child(1)");
@@ -163,9 +166,9 @@ public class PedigreeEditorPage extends BasePage
         }
     }
 
-    /********************
-     * Toolbar methods
-     ********************/
+    ////////////////////////////////////////
+    // Toolbar methods
+    ////////////////////////////////////////
 
     /**
      * Closes the editor and handles the warning dialogue if it appears. Requires that no modals are blocking the
@@ -198,7 +201,8 @@ public class PedigreeEditorPage extends BasePage
             }
         }
 
-        waitForElementToBePresent(this.logOutLink); // We should wait for this to appear.
+        // We should wait for this to appear.
+        waitForElementToBePresent(this.logOutLink);
 
         return new CreatePatientPage(this.superDriver);
     }
@@ -229,9 +233,10 @@ public class PedigreeEditorPage extends BasePage
         return appearance;
     }
 
-    /***********************************************
-     * Patient Information Form (Modal) - Methods
-     ***********************************************/
+    ////////////////////////////////////////
+    // Patient Information Form (Modal) - Methods
+    ////////////////////////////////////////
+
     /**
      * Switches the tab on the current patient info modal.
      *
@@ -253,7 +258,8 @@ public class PedigreeEditorPage extends BasePage
                 break;
             case "Cancers":
                 clickOnElement(this.cancersTab);
-                break; // Should add wait here
+                // Should add wait here
+                break;
             default:
                 clickOnElement(this.personalTab);
                 waitForElementToBePresent(this.ethnicitiesBox);
@@ -262,9 +268,10 @@ public class PedigreeEditorPage extends BasePage
         return this;
     }
 
-    /****************************************************
-     * Personal Tab (Patient Information Modal) Methods
-     ****************************************************/
+    ////////////////////////////////////////
+    // Personal Tab (Patient Information Modal) Methods
+    ////////////////////////////////////////
+
     /**
      * Retrieves the patient ID of the currently open patient modal. Requires that the patient to already be linked,
      * otherwise will cause an exception where element is not found. TODO: Improve this so that it returns some other
@@ -295,8 +302,8 @@ public class PedigreeEditorPage extends BasePage
             clickOnElement(this.createNewPatientBtn);
             clickOnElement(this.confirmNewPatientBtn);
             waitForElementToBeClickable(this.personalTab);
-            unconditionalWaitNs(
-                5); // PersonalTab is deemed clickable too early? Loading modal has not fully disappeared.
+            // PersonalTab is deemed clickable too early? Loading modal has not fully disappeared.
+            unconditionalWaitNs(5);
         } else {
             clickAndTypeOnElement(this.linkPatientBox, patientID);
             clickOnElement(this.linkPatientFirstSuggestion);
@@ -370,9 +377,10 @@ public class PedigreeEditorPage extends BasePage
         return getLabelsFromList(this.ethnicitiesList);
     }
 
-    /*****************************************************
-     * Clinical Tab (Patient Information Modal) Methods
-     *****************************************************/
+    ////////////////////////////////////////
+    // Clinical Tab (Patient Information Modal) Methods
+    ////////////////////////////////////////
+
     /**
      * Retrieves a list of entered phenotypes within the "Clinical" tab. Requires the patient information modal to be
      * open.
@@ -476,22 +484,24 @@ public class PedigreeEditorPage extends BasePage
         return this;
     }
 
-    /********************************************************
-     * Hover boxes and Patient/Family Member Nodes - Methods
-     ********************************************************/
+    ////////////////////////////////////////
+    // Hover boxes and Patient/Family Member Nodes - Methods
+    ////////////////////////////////////////
+
     /**
      * Opens the edit patient modal for the Nth patient it can find on the editor.
      *
-     * @return stay on the same page so return same object. TODO: Figure out how to traverse and search the possible
-     *         nodes for a patient, The js might might make this interesting... Ideas: Differentiate via width and
-     *         height. rect.pedigree-hoverbox[width=180, height=243] for people, rect.pedigree-hoverbox[width=52,
-     *         height=92] for relationship node.
+     * @return stay on the same page so return same object.
+     * @todo Figure out how to traverse and search the possible nodes for a patient, The js might might make this
+     *       interesting... Ideas: Differentiate via width and height. rect.pedigree-hoverbox[width=180, height=243] for
+     *       people, rect.pedigree-hoverbox[width=52, height=92] for relationship node.
      */
     @Step("Open the {0}th node's edit modal")
     public PedigreeEditorPage openNthEditModal(int n)
     {
         waitForElementToBePresent(this.hoverBox);
-        unconditionalWaitNs(3); // Figure out how to wait for animation to finish
+        // Figure out how to wait for animation to finish
+        unconditionalWaitNs(3);
 
         System.out.println("Wait for hover box is done - 3 secs. Now find and click.");
 
@@ -508,7 +518,8 @@ public class PedigreeEditorPage extends BasePage
             .perform();
 
         if (!isElementClickable(this.personalTab)) {
-            loHoverBoxes = this.superDriver.findElements(this.hoverBox); // Search again, maybe coordiantes changed.
+            // Search again, maybe coordiantes changed.
+            loHoverBoxes = this.superDriver.findElements(this.hoverBox);
             System.out.println("Note: Clicking " + n + "th hover box again...");
             System.out.println("Found hoverboxes, Second Try: " + loHoverBoxes.size());
             action.moveToElement(loHoverBoxes.get(n - 1), 10, 10)
@@ -604,8 +615,8 @@ public class PedigreeEditorPage extends BasePage
      *
      * @param partner1 is the patient node that has the left circle to be clicked and dragged on
      * @param partner2 is the patient node that is meant to be dragged to wards
-     * @return Stay on the same page so return the same object. TODO: I don't think this is working... we really need
-     *         better structure for it to be testable
+     * @return Stay on the same page so return the same object.
+     * @todo I don't think this is working... we really need better structure for it to be testable
      */
     public PedigreeEditorPage createPartnership(int partner1, int partner2)
     {

@@ -63,7 +63,7 @@ public class AdminMatchNotificationPage extends AdminSettingsPage
     }
 
     /**
-     * Filters the table by inputting a string into "Patient ID contains:" box and clicking "Refresh Matches"
+     * Filters the table by inputting a string into "Patient ID contains:" box and clicking "Refresh Matches".
      *
      * @param identifier String to search by. Usually an identifier or the Patient ID itself
      * @return the same object as we are still on the same page, just with the table filtered

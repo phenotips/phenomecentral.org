@@ -36,9 +36,10 @@ import io.qameta.allure.Step;
  */
 public class CreatePatientPage extends CommonInfoSelectors
 {
-    /************************************************************
-     * "Patient Consent" (Consents Granted) Section - Selectors
-     ************************************************************/
+    ////////////////////////////////////////
+    // "Patient Consent" (Consents Granted) Section - Selectors
+    ////////////////////////////////////////
+
     private final By realPatientConsentBox = By.id("real-consent-checkbox");
 
     private final By geneticConsentBox = By.id("genetic-consent-checkbox");
@@ -51,9 +52,10 @@ public class CreatePatientPage extends CommonInfoSelectors
 
     private final By patientConsentUpdateBtn = By.cssSelector("#patient-consent-update .button");
 
-    /*********************************************
-     * "Patient Information" Section - Selectors
-     *********************************************/
+    ////////////////////////////////////////
+    // "Patient Information" Section - Selectors
+    ////////////////////////////////////////
+
     private final By identifierBox = By.id("PhenoTips.PatientClass_0_external_id");
 
     private final By lifeStatusDrp = By.id("PhenoTips.PatientClass_0_life_status");
@@ -83,9 +85,10 @@ public class CreatePatientPage extends CommonInfoSelectors
 
     private final By indicationForReferralBox = By.id("PhenoTips.PatientClass_0_indication_for_referral");
 
-    /*******************************************************
-     * "Family history and pedigree" Section - Selectors
-     *******************************************************/
+    ////////////////////////////////////////
+    // "Family history and pedigree" Section - Selectors
+    ////////////////////////////////////////
+
     private final By editPedigreeBox = By.cssSelector("#pedigree-thumbnail");
 
     private final By editPedigreeOKBtn = By.cssSelector(".pedigree-family-chooser input.button[name=ok]");
@@ -104,9 +107,9 @@ public class CreatePatientPage extends CommonInfoSelectors
 
     private final By healthConditionsFoundInFamily = By.id("PhenoTips.PatientClass_0_family_history");
 
-    /*******************************************************
-     * "Prenatal and perinatal history" Section - Selectors
-     *******************************************************/
+    ////////////////////////////////////////
+    // "Prenatal and perinatal history" Section - Selectors
+    ////////////////////////////////////////
     private final By termBirthCheckbox = By.id("PhenoTips.PatientClass_0_gestation_term");
 
     private final By gestationWeeksBox =
@@ -189,9 +192,10 @@ public class CreatePatientPage extends CommonInfoSelectors
 
     private final By rightFootLengthBoxes = By.cssSelector(measurementSelectorPrefix + "[id$='foot_right']");
 
-    /******************************************************************************
-     * "Clinical symptoms and physical findings" (Phenotypes) Section - Selectors
-     ******************************************************************************/
+    ////////////////////////////////////////
+    // "Clinical symptoms and physical findings" (Phenotypes) Section - Selectors
+    ////////////////////////////////////////
+
     private final By phenotypeSearchBox = By.id("quick-phenotype-search");
 
     // Xwiki suggestion dialogue is overlayed ontop of entire page document rather than underneath
@@ -217,9 +221,10 @@ public class CreatePatientPage extends CommonInfoSelectors
     private final By phenotypesManuallySelectedLabels =
         By.xpath("//div[@class='summary-item' and not(span[@class='fa fa-bolt'])]/label[@class='yes']");
 
-    /*******************************************************
-     * "Genotype information" Section - Selectors
-     *******************************************************/
+    ////////////////////////////////////////
+    // "Genotype information" Section - Selectors
+    ////////////////////////////////////////
+
     private final By addGeneBtn = By.cssSelector("a[title*='Add gene']");
 
     private final By geneNameBoxes = By.cssSelector(
@@ -242,9 +247,10 @@ public class CreatePatientPage extends CommonInfoSelectors
     private final By firstGeneSuggestion = By.cssSelector("div.suggestItem > div > span.suggestValue");
     // First suggestion result for prenatal phenotypes too
 
-    /*******************************************************
-     * "Diagnosis" Section - Selectors
-     *******************************************************/
+    ////////////////////////////////////////
+    // "Diagnosis" Section - Selectors
+    ////////////////////////////////////////
+
     private final By clinicalDiagnosisBox = By.id("PhenoTips.PatientClass_0_clinical_diagnosis");
 
     private final By clinicalDiagnosisCheckboxes =
@@ -271,9 +277,10 @@ public class CreatePatientPage extends CommonInfoSelectors
 
     private final By resolutionNotesBox = By.id("PhenoTips.PatientClass_0_solved__notes");
 
-    /**************************************************
-     * Common Tree Traversal Selectors and Strings
-     **************************************************/
+    ////////////////////////////////////////
+    // Common Tree Traversal Selectors and Strings
+    ////////////////////////////////////////
+
     // For tree traversals
     private final By ageOfOnsetAndModeInheritanceChildBtn = By.cssSelector("ul > li.term-entry > input");
 
@@ -299,9 +306,10 @@ public class CreatePatientPage extends CommonInfoSelectors
         super(aDriver);
     }
 
-    /****************************
-     * Common Methods
-     ****************************/
+    ////////////////////////////////////////
+    // Common Methods
+    ////////////////////////////////////////
+
     /**
      * Hits the "Save and View Summary" button on the bottom left.
      *
@@ -338,9 +346,10 @@ public class CreatePatientPage extends CommonInfoSelectors
         return new ViewPatientPage(this.superDriver);
     }
 
-    /****************************
-     * Consent Methods
-     ****************************/
+    ////////////////////////////////////////
+    // Consent Methods
+    ////////////////////////////////////////
+
     /**
      * Toggles the nth consent checkbox in the "Consents granted" section
      *
@@ -401,9 +410,10 @@ public class CreatePatientPage extends CommonInfoSelectors
         return this;
     }
 
-    /********************************************
-     * "Patient Information" Section - Methods
-     ********************************************/
+    ////////////////////////////////////////
+    // "Patient Information" Section - Methods
+    ////////////////////////////////////////
+
     /**
      * Clears and then sets the patient identifer field box.
      *
@@ -600,9 +610,10 @@ public class CreatePatientPage extends CommonInfoSelectors
         return this;
     }
 
-    /***************************************************
-     * "Family history and pedigree" Section - Methods
-     ***************************************************/
+    ////////////////////////////////////////
+    // "Family history and pedigree" Section - Methods
+    ////////////////////////////////////////
+
     /**
      * Navigates to the Pedigree Editor page by clicking "OK" on the "Assign patient to family" modal. Assumes that the
      * "Create a new family" radio option is selected by default. Requires the "Family History" section to be expanded
@@ -681,9 +692,10 @@ public class CreatePatientPage extends CommonInfoSelectors
         return this;
     }
 
-    /*****************************************************
-     * "Prenatal and perinatal history" Section - Methods
-     *****************************************************/
+    ////////////////////////////////////////
+    // "Prenatal and perinatal history" Section - Methods
+    ////////////////////////////////////////
+
     /**
      * Traverses through the options for the health conditions found in Prenatal and perinatal history yes/no boxes.
      * Requires: The "Prenatal and perinatal history" section to be expanded and that none of the yes/no options are
@@ -775,9 +787,9 @@ public class CreatePatientPage extends CommonInfoSelectors
         return this;
     }
 
-    /*****************************************
-     * "Measurements" Section - Methods
-     *****************************************/
+    ////////////////////////////////////////
+    // "Measurements"Section-Methods
+    ////////////////////////////////////////
 
     // TODO: Methods for this section only support one measurement entry right now. I don't have test cases for
     // multiple measurement entries
@@ -896,9 +908,10 @@ public class CreatePatientPage extends CommonInfoSelectors
         return Float.parseFloat(this.superDriver.findElement(measurementBoxSelector).getAttribute("value"));
     }
 
-    /****************************************************************************
-     * "Clinical symptoms and physical findings" (Phenotypes) Section - Methods
-     ****************************************************************************/
+    ////////////////////////////////////////
+    // "Clinical symptoms and physical findings" (Phenotypes) Section - Methods
+    ////////////////////////////////////////
+
     /**
      * Adds a phenotype by searching. Selects the first suggested phenotype search result. Assumes that "Clinical
      * symptoms and physical findings" is expanded and there is at least one suggested search result.
@@ -1034,8 +1047,8 @@ public class CreatePatientPage extends CommonInfoSelectors
     }
 
     /**
-     * Retrieves all of the phenotypes already present (entered) in the Patient Information Form Requires: The "Clinical
-     * symptoms and physical findings" section to be expanded
+     * Retrieves all of the phenotypes already present (entered) in the Patient Information Form. Requires: The
+     * "Clinical symptoms and physical findings" section to be expanded.
      *
      * @return A (potentially empty) list of Strings representing the names of the phenotypes found.
      */
@@ -1071,9 +1084,10 @@ public class CreatePatientPage extends CommonInfoSelectors
         return getPresentPhenotypes(this.phenotypesManuallySelectedLabels);
     }
 
-    /********************************************
-     * "Genotype Information" Section - Methods
-     ********************************************/
+    ////////////////////////////////////////
+    // "Genotype Information" Section - Methods
+    ////////////////////////////////////////
+
     /**
      * Adds a gene to the "Genotype information" section, using the gene name, status, and strategy. Clicks the "add
      * gene" button before adding to the bottom-most row. Searches for gene and selects first suggestion. Assumes that
@@ -1145,9 +1159,10 @@ public class CreatePatientPage extends CommonInfoSelectors
         return this;
     }
 
-    /**********************************
-     * "Diagnosis" Section - Methods
-     **********************************/
+    ////////////////////////////////////////
+    // "Diagnosis" Section - Methods
+    ////////////////////////////////////////
+
     /**
      * Adds a clinical diagnosis in the "Diagnosis" section to the patient. Selects the first result from the suggestion
      * dropdown. Requires: Diagnosis section to be expanded and the ORDO name to be as exact as possible to the
@@ -1215,7 +1230,8 @@ public class CreatePatientPage extends CommonInfoSelectors
     @Step("Add a PubMed ID of {0}")
     public CreatePatientPage addPubMedID(String ID)
     {
-        clickOnElement(this.additionalCommentsBox); // Needed to defocus PubMed ID boxes.
+        // Needed to defocus PubMed ID boxes.
+        clickOnElement(this.additionalCommentsBox);
 
         if (isElementPresent(this.pubMedArticle)) {
             clickOnElement(this.addPubMedLink);
@@ -1290,7 +1306,8 @@ public class CreatePatientPage extends CommonInfoSelectors
     {
         final String invalidPubMedIDError = "Invalid Pubmed ID";
 
-        clickOnElement(this.additionalCommentsBox); // Needed so that pubMed boxes goes out of focus and does validation
+        // Needed so that pubMed boxes goes out of focus and does validation
+        clickOnElement(this.additionalCommentsBox);
         waitForElementToBePresent(this.pubMedIDCheckStatus);
 
         String statusText = this.superDriver.findElements(this.pubMedIDCheckStatus).get(n - 1).getText();

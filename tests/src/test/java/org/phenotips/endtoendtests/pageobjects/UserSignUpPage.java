@@ -24,7 +24,7 @@ import io.qameta.allure.Step;
 
 /**
  * Corresponds to the "Request An Account" page that the public can see to request to sign up. i.e.
- * http://localhost:8083/register/PhenomeCentral/WebHome
+ * {@code http://localhost:8083/register/PhenomeCentral/WebHome}
  */
 public class UserSignUpPage extends BasePage implements CommonSignUpSelectors
 {
@@ -53,11 +53,13 @@ public class UserSignUpPage extends BasePage implements CommonSignUpSelectors
      * @return Stay on the same page so return the same object.
      */
     @Step("Request an account for {0}. Information should be listed below.")
+    @SuppressWarnings("checkstyle:ParameterNumber")
     public UserSignUpPage requestAccount(String firstName, String lastName, String password, String confirmPassword,
         String email, String affiliation, String referral, String justification)
     {
         clickAndClearElement(userNameBox);
-        unconditionalWaitNs(1); // Needed as entering a firstname immediately does not regen username.
+        // Needed as entering a firstname immediately does not regen username.
+        unconditionalWaitNs(1);
 
         clickAndTypeOnElement(firstNameBox, firstName);
         clickAndTypeOnElement(lastNameBox, lastName);

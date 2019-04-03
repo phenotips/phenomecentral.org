@@ -27,7 +27,7 @@ import org.openqa.selenium.WebDriver;
 import io.qameta.allure.Step;
 
 /**
- * Represents the page on http://localhost:8083/ (HOMEPAGE_URL)
+ * Represents the homepage on {@code http://localhost:8083/}.
  */
 public class HomePage extends BasePage
 {
@@ -114,7 +114,7 @@ public class HomePage extends BasePage
      *
      * @return A String representing the message.
      */
-    @Step("Retrieve the unauthorized access error message 'You are not allowed to view this page or perform this action.'")
+    @Step("Retrieve the unauthorized access error message")
     public String getUnauthorizedErrorMessage()
     {
         waitForElementToBePresent(this.unauthorizedActionErrorMsg);

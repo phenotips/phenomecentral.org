@@ -100,7 +100,7 @@ public class AllPatientsPage extends BasePage
     }
 
     /**
-     * Deletes all the patients in the table if there are any, only for the first page
+     * Deletes all the patients in the table if there are any, only for the first page.
      *
      * @return stay on the same page, so return the same object.
      */
@@ -124,7 +124,7 @@ public class AllPatientsPage extends BasePage
     }
 
     /**
-     * Filters by the patient ID by sending keys to the "type to filter" box under the identifier column
+     * Filters by the patient ID by sending keys to the "type to filter" box under the identifier column.
      *
      * @param patientID the patient ID to enter, should be in Pxxxxxxx format.
      * @return stay on the same page so return the same object.

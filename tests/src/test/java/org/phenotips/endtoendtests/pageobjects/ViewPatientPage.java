@@ -78,7 +78,7 @@ public class ViewPatientPage extends CommonInfoSelectors
     }
 
     /**
-     * Clicks on the "Edit" link to edit the patient
+     * Clicks on the "Edit" link to edit the patient.
      *
      * @return new patient editor page object as we navigate to the patient editing page
      */
@@ -95,7 +95,7 @@ public class ViewPatientPage extends CommonInfoSelectors
      * @return A, possibly empty, list of strings containing the gene names found. This should not have empty strings
      *         (i.e. "").
      */
-    @Step("Retrieve the gene names")
+    @Step("Retrieve all gene names")
     public List<String> getGeneNames()
     {
         return getLabelsFromList(this.geneNames);
@@ -108,7 +108,7 @@ public class ViewPatientPage extends CommonInfoSelectors
      * @return A, possibly empty, list of strings containing the gene statuses found (the entire column). This might
      *         have empty strings (i.e. "") for genes with unspecified status.
      */
-    @Step("Retrieve gene statuses")
+    @Step("Retrieve all gene statuses")
     public List<String> getGeneStatus()
     {
         return getLabelsFromList(this.geneStatuses);
@@ -121,7 +121,7 @@ public class ViewPatientPage extends CommonInfoSelectors
      * @return A, possibly empty, list of strings containing the gene strategies found. This might have empty strings
      *         (i.e. "") for genes with unspecified strategy.
      */
-    @Step("Retrieve gene strategies")
+    @Step("Retrieve all gene strategies")
     public List<String> getGeneStrategies()
     {
         return getLabelsFromList(this.geneStrategies);
@@ -134,7 +134,7 @@ public class ViewPatientPage extends CommonInfoSelectors
      * @return A, possibly empty, list of strings containing the gene strategies found. This might have empty strings
      *         (i.e. "") for genes with no comments.
      */
-    @Step("Retrieve gene comments")
+    @Step("Retrieve all gene comments")
     public List<String> getGeneComments()
     {
         return getLabelsFromList(this.geneComments);
@@ -170,7 +170,7 @@ public class ViewPatientPage extends CommonInfoSelectors
      * @return A String containing the comment under Additional Comments. If there is no Additional Comments section,
      *         will return an empty String ("").
      */
-    @Step("Retrieve any additional comments")
+    @Step("Retrieve any additional diagnosis comments")
     public String getAdditionalComments()
     {
         if (isElementPresent(this.additionalCommentsText)) {

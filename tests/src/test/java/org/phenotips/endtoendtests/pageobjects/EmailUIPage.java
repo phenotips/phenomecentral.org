@@ -53,7 +53,8 @@ public class EmailUIPage extends BasePage
     public EmailUIPage deleteAllEmails()
     {
         if (getNumberOfEmails() > 0) {
-            unconditionalWaitNs(1); // Wait is only used so that a human can see the emails.
+            // Wait is only used so that a human can see the emails.
+            unconditionalWaitNs(1);
             clickOnElement(this.deleteAllEmailsLink);
         } else {
             System.out.println("There are no emails to delete!");
@@ -71,7 +72,8 @@ public class EmailUIPage extends BasePage
     {
         List<String> loTitles = new Vector<>();
 
-        unconditionalWaitNs(1); // Again, this wait was just for human readability
+        // Again, this wait was just for human readability
+        unconditionalWaitNs(1);
         if (getNumberOfEmails() > 0) {
             waitForElementToBePresent(this.emailTitles);
             this.superDriver.findElements(this.emailTitles).forEach(x -> loTitles.add(x.getText()));

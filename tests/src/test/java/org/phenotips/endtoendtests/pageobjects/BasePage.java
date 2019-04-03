@@ -39,10 +39,18 @@ import io.qameta.allure.Step;
  */
 public abstract class BasePage
 {
-    /***************************************************************************************
-     * Environment Information. You can change these as needed to run tests easily through IDE instead of passing in
-     * command line options to JVM.
-     ***************************************************************************************/
+    ////////////////////////////////////////
+    // Environment Information. You can change these as needed to run tests easily through IDE instead of passing in
+    // command line options to JVM.
+    ////////////////////////////////////////
+
+    /**
+     * Common URLs, specify address of the PC instance Possible mutation in BasePage ctor, get URLs from SystemProperty
+     */
+    protected String HOMEPAGE_URL = "http://localhost:8083";
+
+    protected String EMAIL_UI_URL = "http://localhost:8085";
+
     /**
      * Public selectors, the LoginPageTest touches these. Ideally, tests should not touch selectors.
      */
@@ -65,9 +73,10 @@ public abstract class BasePage
 
     protected final String USER_PASS2 = "123456";
 
-    /*******************************
-     * Selectors
-     *******************************/
+    ////////////////////////////////////////
+    // Selectors
+    ////////////////////////////////////////
+
     protected final By logOutLink = By.id("tmLogout"); // Used in child classes to check when modals close.
 
     // Approval Pending Message that appears on all pages for an unapproved user
@@ -99,13 +108,6 @@ public abstract class BasePage
     private final By loadingStatusBar = By.id("patients-ajax-loader");
 
     private final By inProgressMsg = By.cssSelector("div[class='xnotification xnotification-inprogress']");
-
-    /**
-     * Common URLs, specify address of the PC instance Possible mutation in BasePage ctor, get URLs from SystemProperty
-     */
-    protected String HOMEPAGE_URL = "http://localhost:8083";
-
-    protected String EMAIL_UI_URL = "http://localhost:8085";
 
     /**
      * Declaration of the webdriver and the explicit waiting objects. Will be initialized when a test runs and any page
@@ -148,9 +150,10 @@ public abstract class BasePage
         this.longPause = new WebDriverWait(this.superDriver, this.PAUSE_LENGTH + 55);
     }
 
-    /*************************************
-     * Generic page interaction methods
-     *************************************/
+    ////////////////////////////////////////
+    // Generic page interaction methods
+    ////////////////////////////////////////
+
     /**
      * Explicitly wait for the passed element to appear, upto the timeout specified in {@code pause} Checks immediately
      * and then keeps polling at the default interval.
@@ -415,9 +418,10 @@ public abstract class BasePage
         return loTextStrings;
     }
 
-    /**********************************************************************
-     * Common toolbar methods. These methods can be called from any page.
-     **********************************************************************/
+    ////////////////////////////////////////
+    // Common toolbar methods. These methods can be called from any page.
+    ////////////////////////////////////////
+
     /**
      * Logs out by clicking on the Log Out link on the navigation bar.
      *

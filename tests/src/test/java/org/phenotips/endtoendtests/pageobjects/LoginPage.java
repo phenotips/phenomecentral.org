@@ -23,13 +23,13 @@ import org.openqa.selenium.WebDriver;
 import io.qameta.allure.Step;
 
 /**
- * Represents the page http://localhost:8083/PhenomeCentral/login This is the user login page
+ * Represents the user login page, {@code http://localhost:8083/PhenomeCentral/login}.
  */
 public class LoginPage extends BasePage
 {
     private final By userNameField = By.id("j_username");
 
-    private final By passField = By.id("j_password"); // Note: There might be a typo there
+    private final By passField = By.id("j_password");
 
     private final By loginButton = By.cssSelector("input.button[value='Sign in']");
 
@@ -57,7 +57,7 @@ public class LoginPage extends BasePage
     }
 
     /**
-     * Logs in with the default admin credentials
+     * Logs in with the default admin credentials.
      *
      * @return a homepage object as we navigate there upon successful login
      */
