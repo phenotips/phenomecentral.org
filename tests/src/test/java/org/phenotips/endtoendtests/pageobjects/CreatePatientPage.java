@@ -142,50 +142,52 @@ public class CreatePatientPage extends CommonInfoSelectors
      *******************************************************/
     private final By addMeasurementBtn = By.cssSelector("div.measurement-info a.add-data-button");
 
-    private final By measurementYearDrp = By.cssSelector("div.calendar_date_select select.year");
+    private final By measurementYearDrps = By.cssSelector("div.calendar_date_select select.year");
 
-    private final By measurementMonthDrp = By.cssSelector("div.calendar_date_select select.month");
+    private final By measurementMonthDrps = By.cssSelector("div.calendar_date_select select.month");
 
     private final By todayCalendarLink = By.linkText("Today");
 
     private final By measurementDateBoxes = By.cssSelector("input[id^='PhenoTips.MeasurementsClass_'][id$='date']");
 
-    // Find all boxes, compatible with multiple measurements
-    private final By weightBox = By.cssSelector("input[id^='PhenoTips.MeasurementsClass_'][id$='weight']");
+    // Find all boxes, prepare support for multiple measurements
+    private final String measurementSelectorPrefix = "input[id^='PhenoTips.MeasurementsClass_']";
 
-    private final By heightBox = By.cssSelector("input[id^='PhenoTips.MeasurementsClass_'][id$='height']");
+    private final By weightBoxes = By.cssSelector(measurementSelectorPrefix + "[id$='weight']");
 
-    private final By armSpanBox = By.cssSelector("input[id^='PhenoTips.MeasurementsClass_'][id$='armspan']");
+    private final By heightBoxes = By.cssSelector(measurementSelectorPrefix + "[id$='height']");
 
-    private final By sittingHeightBox = By.cssSelector("input[id^='PhenoTips.MeasurementsClass_'][id$='sitting']");
+    private final By armSpanBoxes = By.cssSelector(measurementSelectorPrefix + "[id$='armspan']");
 
-    private final By headCircumferenceBox = By.cssSelector("input[id^='PhenoTips.MeasurementsClass_'][id$='hc']");
+    private final By sittingHeightBoxes = By.cssSelector(measurementSelectorPrefix + "[id$='sitting']");
 
-    private final By philtrumLengthBox = By.cssSelector("input[id^='PhenoTips.MeasurementsClass_'][id$='philtrum']");
+    private final By headCircumferenceBoxes = By.cssSelector(measurementSelectorPrefix + "[id$='hc']");
 
-    private final By leftEarLengthBox = By.cssSelector("input[id^='PhenoTips.MeasurementsClass_'][id$='ear']");
+    private final By philtrumLengthBoxes = By.cssSelector(measurementSelectorPrefix + "[id$='philtrum']");
 
-    private final By rightEarLengthBox = By.cssSelector("input[id^='PhenoTips.MeasurementsClass_'][id$='ear_right']");
+    private final By leftEarLengthBoxes = By.cssSelector(measurementSelectorPrefix + "[id$='ear']");
 
-    private final By outherCanthalDistanceBox = By.cssSelector("input[id^='PhenoTips.MeasurementsClass_'][id$='ocd']");
+    private final By rightEarLengthBoxes = By.cssSelector(measurementSelectorPrefix + "[id$='ear_right']");
 
-    private final By innterCanthalDistanceBox = By.cssSelector("input[id^='PhenoTips.MeasurementsClass_'][id$='icd']");
+    private final By outherCanthalDistanceBoxes = By.cssSelector(measurementSelectorPrefix + "[id$='ocd']");
 
-    private final By palpebralFissureLengthBox = By.cssSelector("input[id^='PhenoTips.MeasurementsClass_'][id$='pfl']");
+    private final By innterCanthalDistanceBoxes = By.cssSelector(measurementSelectorPrefix + "[id$='icd']");
 
-    private final By interpupilaryDistanceBox = By.cssSelector("input[id^='PhenoTips.MeasurementsClass_'][id$='ipd']");
+    private final By palpebralFissureLengthBoxes = By.cssSelector(measurementSelectorPrefix + "[id$='pfl']");
 
-    private final By leftHandLengthBox = By.cssSelector("input[id^='PhenoTips.MeasurementsClass_'][id$='hand']");
+    private final By interpupilaryDistanceBoxes = By.cssSelector(measurementSelectorPrefix + "[id$='ipd']");
 
-    private final By leftPalmLengthBox = By.cssSelector("input[id^='PhenoTips.MeasurementsClass_'][id$='palm']");
+    private final By leftHandLengthBoxes = By.cssSelector(measurementSelectorPrefix + "[id$='hand']");
 
-    private final By leftFootLengthBox = By.cssSelector("input[id^='PhenoTips.MeasurementsClass_'][id$='foot']");
+    private final By leftPalmLengthBoxes = By.cssSelector(measurementSelectorPrefix + "[id$='palm']");
 
-    private final By rightHandLengthBox = By.cssSelector("input[id^='PhenoTips.MeasurementsClass_'][id$='hand_right']");
+    private final By leftFootLengthBoxes = By.cssSelector(measurementSelectorPrefix + "[id$='foot']");
 
-    private final By rightPalmLengthBox = By.cssSelector("input[id^='PhenoTips.MeasurementsClass_'][id$='palm_right']");
+    private final By rightHandLengthBoxes = By.cssSelector(measurementSelectorPrefix + "[id$='hand_right']");
 
-    private final By rightFootLengthBox = By.cssSelector("input[id^='PhenoTips.MeasurementsClass_'][id$='foot_right']");
+    private final By rightPalmLengthBoxes = By.cssSelector(measurementSelectorPrefix + "[id$='palm_right']");
+
+    private final By rightFootLengthBoxes = By.cssSelector(measurementSelectorPrefix + "[id$='foot_right']");
 
     /******************************************************************************
      * "Clinical symptoms and physical findings" (Phenotypes) Section - Selectors
@@ -791,24 +793,24 @@ public class CreatePatientPage extends CommonInfoSelectors
     public CreatePatientPage addMeasurement(CommonPatientMeasurement aMeasurement)
     {
         clickOnElement(this.addMeasurementBtn);
-        clickAndTypeOnElement(this.weightBox, String.valueOf(aMeasurement.weight));
-        clickAndTypeOnElement(this.heightBox, String.valueOf(aMeasurement.height));
-        clickAndTypeOnElement(this.armSpanBox, String.valueOf(aMeasurement.armSpan));
-        clickAndTypeOnElement(this.sittingHeightBox, String.valueOf(aMeasurement.sittingHeight));
-        clickAndTypeOnElement(this.headCircumferenceBox, String.valueOf(aMeasurement.headCircumference));
-        clickAndTypeOnElement(this.philtrumLengthBox, String.valueOf(aMeasurement.philtrumLength));
-        clickAndTypeOnElement(this.leftEarLengthBox, String.valueOf(aMeasurement.leftEarLength));
-        clickAndTypeOnElement(this.rightEarLengthBox, String.valueOf(aMeasurement.rightEarLength));
-        clickAndTypeOnElement(this.outherCanthalDistanceBox, String.valueOf(aMeasurement.outerCanthalDistance));
-        clickAndTypeOnElement(this.innterCanthalDistanceBox, String.valueOf(aMeasurement.inntercanthalDistance));
-        clickAndTypeOnElement(this.palpebralFissureLengthBox, String.valueOf(aMeasurement.palpebralFissureLength));
-        clickAndTypeOnElement(this.interpupilaryDistanceBox, String.valueOf(aMeasurement.interpupilaryDistance));
-        clickAndTypeOnElement(this.leftHandLengthBox, String.valueOf(aMeasurement.leftHandLength));
-        clickAndTypeOnElement(this.leftPalmLengthBox, String.valueOf(aMeasurement.leftPalmLength));
-        clickAndTypeOnElement(this.leftFootLengthBox, String.valueOf(aMeasurement.leftFootLength));
-        clickAndTypeOnElement(this.rightHandLengthBox, String.valueOf(aMeasurement.rightHandLength));
-        clickAndTypeOnElement(this.rightPalmLengthBox, String.valueOf(aMeasurement.rightPalmLength));
-        clickAndTypeOnElement(this.rightFootLengthBox, String.valueOf(aMeasurement.rightFootLength));
+        clickAndTypeOnElement(this.weightBoxes, String.valueOf(aMeasurement.weight));
+        clickAndTypeOnElement(this.heightBoxes, String.valueOf(aMeasurement.height));
+        clickAndTypeOnElement(this.armSpanBoxes, String.valueOf(aMeasurement.armSpan));
+        clickAndTypeOnElement(this.sittingHeightBoxes, String.valueOf(aMeasurement.sittingHeight));
+        clickAndTypeOnElement(this.headCircumferenceBoxes, String.valueOf(aMeasurement.headCircumference));
+        clickAndTypeOnElement(this.philtrumLengthBoxes, String.valueOf(aMeasurement.philtrumLength));
+        clickAndTypeOnElement(this.leftEarLengthBoxes, String.valueOf(aMeasurement.leftEarLength));
+        clickAndTypeOnElement(this.rightEarLengthBoxes, String.valueOf(aMeasurement.rightEarLength));
+        clickAndTypeOnElement(this.outherCanthalDistanceBoxes, String.valueOf(aMeasurement.outerCanthalDistance));
+        clickAndTypeOnElement(this.innterCanthalDistanceBoxes, String.valueOf(aMeasurement.inntercanthalDistance));
+        clickAndTypeOnElement(this.palpebralFissureLengthBoxes, String.valueOf(aMeasurement.palpebralFissureLength));
+        clickAndTypeOnElement(this.interpupilaryDistanceBoxes, String.valueOf(aMeasurement.interpupilaryDistance));
+        clickAndTypeOnElement(this.leftHandLengthBoxes, String.valueOf(aMeasurement.leftHandLength));
+        clickAndTypeOnElement(this.leftPalmLengthBoxes, String.valueOf(aMeasurement.leftPalmLength));
+        clickAndTypeOnElement(this.leftFootLengthBoxes, String.valueOf(aMeasurement.leftFootLength));
+        clickAndTypeOnElement(this.rightHandLengthBoxes, String.valueOf(aMeasurement.rightHandLength));
+        clickAndTypeOnElement(this.rightPalmLengthBoxes, String.valueOf(aMeasurement.rightPalmLength));
+        clickAndTypeOnElement(this.rightFootLengthBoxes, String.valueOf(aMeasurement.rightFootLength));
 
         return this;
     }
@@ -829,15 +831,15 @@ public class CreatePatientPage extends CommonInfoSelectors
 
         clickOnElement(this.measurementDateBoxes);
 
-        waitForElementToBePresent(this.measurementMonthDrp);
-        Select monthDrp = new Select(this.superDriver.findElement(this.measurementMonthDrp));
-        Select yearDrp = new Select(this.superDriver.findElement(this.measurementYearDrp));
+        waitForElementToBePresent(this.measurementMonthDrps);
+        Select monthDrp = new Select(this.superDriver.findElement(this.measurementMonthDrps));
+        Select yearDrp = new Select(this.superDriver.findElement(this.measurementYearDrps));
 
         monthDrp.selectByVisibleText(month);
         yearDrp.selectByVisibleText(year);
 
         clickOnElement(calendarDayBtn);
-        waitForElementToBeGone(this.measurementMonthDrp);
+        waitForElementToBeGone(this.measurementMonthDrps);
 
         return this;
     }
@@ -851,29 +853,29 @@ public class CreatePatientPage extends CommonInfoSelectors
     @Step("Retrieve the patients measurement")
     public CommonPatientMeasurement getPatientMeasurement()
     {
-        waitForElementToBePresent(this.weightBox);
+        waitForElementToBePresent(this.weightBoxes);
 
-        float weight = getSpecificMeasurement(this.weightBox);
-        float armSpan = getSpecificMeasurement(this.armSpanBox);
-        float headCircumference = getSpecificMeasurement(this.headCircumferenceBox);
-        float outerCanthalDistance = getSpecificMeasurement(this.outherCanthalDistanceBox);
-        float leftHandLength = getSpecificMeasurement(this.leftHandLengthBox);
-        float rightHandLength = getSpecificMeasurement(this.rightHandLengthBox);
+        float weight = getSpecificMeasurement(this.weightBoxes);
+        float armSpan = getSpecificMeasurement(this.armSpanBoxes);
+        float headCircumference = getSpecificMeasurement(this.headCircumferenceBoxes);
+        float outerCanthalDistance = getSpecificMeasurement(this.outherCanthalDistanceBoxes);
+        float leftHandLength = getSpecificMeasurement(this.leftHandLengthBoxes);
+        float rightHandLength = getSpecificMeasurement(this.rightHandLengthBoxes);
 
-        float height = getSpecificMeasurement(this.heightBox);
-        float sittingHeight = getSpecificMeasurement(this.sittingHeightBox);
-        float philtrumLength = getSpecificMeasurement(this.philtrumLengthBox);
-        float inntercanthalDistance = getSpecificMeasurement(this.innterCanthalDistanceBox);
-        float leftPalmLength = getSpecificMeasurement(this.leftPalmLengthBox);
-        float rightPalmLength = getSpecificMeasurement(this.rightPalmLengthBox);
+        float height = getSpecificMeasurement(this.heightBoxes);
+        float sittingHeight = getSpecificMeasurement(this.sittingHeightBoxes);
+        float philtrumLength = getSpecificMeasurement(this.philtrumLengthBoxes);
+        float inntercanthalDistance = getSpecificMeasurement(this.innterCanthalDistanceBoxes);
+        float leftPalmLength = getSpecificMeasurement(this.leftPalmLengthBoxes);
+        float rightPalmLength = getSpecificMeasurement(this.rightPalmLengthBoxes);
 
-        float leftEarLength = getSpecificMeasurement(this.leftEarLengthBox);
-        float palpebralFissureLength = getSpecificMeasurement(this.palpebralFissureLengthBox);
-        float leftFootLength = getSpecificMeasurement(this.leftFootLengthBox);
-        float rightFootLength = getSpecificMeasurement(this.rightFootLengthBox);
+        float leftEarLength = getSpecificMeasurement(this.leftEarLengthBoxes);
+        float palpebralFissureLength = getSpecificMeasurement(this.palpebralFissureLengthBoxes);
+        float leftFootLength = getSpecificMeasurement(this.leftFootLengthBoxes);
+        float rightFootLength = getSpecificMeasurement(this.rightFootLengthBoxes);
 
-        float rightEarLength = getSpecificMeasurement(this.rightEarLengthBox);
-        float interpupilaryDistance = getSpecificMeasurement(this.interpupilaryDistanceBox);
+        float rightEarLength = getSpecificMeasurement(this.rightEarLengthBoxes);
+        float interpupilaryDistance = getSpecificMeasurement(this.interpupilaryDistanceBoxes);
 
         return new CommonPatientMeasurement(
             weight, armSpan, headCircumference, outerCanthalDistance, leftHandLength, rightHandLength,
