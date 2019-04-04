@@ -1395,9 +1395,9 @@ public class PatientRecordEditPage extends CommonInfoSelectors
      *         message is displayed).
      */
     @Step("Determine if {0}th PubMedID box has valid input")
-    public boolean isNthPubMDBoxValid(int n)
+    public boolean isNthPubMedBoxValid(int n)
     {
-        final String invalidPubMedIDError = "Invalid Pubmed ID";
+        final String invalidPubMedIDError = "Invalid PubMed ID";
 
         // Needed so that pubMed boxes goes out of focus and does validation
         clickOnElement(this.additionalCommentsBox);

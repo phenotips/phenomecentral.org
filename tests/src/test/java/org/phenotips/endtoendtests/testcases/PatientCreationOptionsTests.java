@@ -451,12 +451,12 @@ public class PatientCreationOptionsTests extends BaseTest implements CommonInfoE
         this.aCreationPage.toggleCaseSolved()
             .addPubMedID("This is an invalid ID");
 
-        Assert.assertFalse(this.aCreationPage.isNthPubMDBoxValid(1));
+        Assert.assertFalse(this.aCreationPage.isNthPubMedBoxValid(1));
 
         this.aCreationPage.removeNthPubMedID(1)
             .addPubMedID("30699054");
 
-        Assert.assertTrue(this.aCreationPage.isNthPubMDBoxValid(1));
+        Assert.assertTrue(this.aCreationPage.isNthPubMedBoxValid(1));
 
         this.aCreationPage.logOut().dismissUnsavedChangesWarning();
     }
