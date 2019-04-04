@@ -20,9 +20,9 @@ package org.phenotips.endtoendtests.testcases;
 import org.phenotips.endtoendtests.common.CommonInfoEnums;
 import org.phenotips.endtoendtests.common.CommonPatientMeasurement;
 import org.phenotips.endtoendtests.pageobjects.AdminRefreshMatchesPage;
-import org.phenotips.endtoendtests.pageobjects.PatientRecordEditPage;
 import org.phenotips.endtoendtests.pageobjects.EmailUIPage;
 import org.phenotips.endtoendtests.pageobjects.HomePage;
+import org.phenotips.endtoendtests.pageobjects.PatientRecordEditPage;
 import org.phenotips.endtoendtests.pageobjects.ViewPatientPage;
 
 import java.util.ArrayList;
@@ -182,7 +182,7 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
 
         emailPage.deleteAllEmails();
         emailPage.navigateToHomePage();
-        this.aViewPatientPage.logOut();
+        this.aHomePage.logOut();
     }
 
     // Adjusts Patient created by User 1 to public, ensures User 2 can now see it.
@@ -212,7 +212,7 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
 
         this.aViewPatientPage.logOut().loginAsUserTwo();
         this.aViewPatientPage.setGlobalVisibility("matchable"); // Set patient back to private to allow for other tests.
-        this.aHomePage.logOut();
+        this.aViewPatientPage.logOut();
     }
 
     // Adds a collaborator to a patient belong to User 2. Asserts that User 1 can then access it.
@@ -374,6 +374,6 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
         Assert.assertEquals(sortedPubMedIDsFound, pubMedIDsCheck);
         Assert.assertEquals(this.aViewPatientPage.getResolutionNotes(), resolutionNoteCheck);
 
-        this.aHomePage.logOut();
+        this.aViewPatientPage.logOut();
     }
 }
