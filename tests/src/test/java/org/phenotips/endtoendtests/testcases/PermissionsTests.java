@@ -141,6 +141,6 @@ public class PermissionsTests extends BaseTest
 
         Assert.assertEquals(this.aHomePage.getUnauthorizedErrorMessage(), unauthorizedActionMsgCheck);
 
-        this.anAdminRefreshMatchesPage.logOut();
+        this.aViewPatientPage.logOut();
     }
 }
