@@ -73,7 +73,7 @@ public class AddingUsersTests extends BaseTest
             .addUser("AutoAdded1" + RANDOM_CHARS, "AutoAdded1Last", PASSWORD,
                 "AutoAdded1" + RANDOM_CHARS + "@somethingsomething.cjasdfj", AFFILIATION, REFERRER, JUSTIFICATION)
             .navigateToPendingUsersPage()
-            .approveNthPendingUser(1);
+            .approvePendingUser("AutoAdded1");
 
         this.aHomePage.logOut()
             .loginAs("AutoAdded1" + RANDOM_CHARS + "AutoAdded1Last", PASSWORD)
