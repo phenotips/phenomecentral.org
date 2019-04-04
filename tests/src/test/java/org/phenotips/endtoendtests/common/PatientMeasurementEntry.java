@@ -25,7 +25,7 @@ import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
  * This class represents the values for one measurement entry on a patient form. Fields will be null when
  * no value was entered for the particular measurement.
  */
-public class CommonPatientMeasurement
+public class PatientMeasurementEntry
 {
     private Float weight;
 
@@ -83,109 +83,109 @@ public class CommonPatientMeasurement
 
     // Builder pattern instead of a giant constructor. All fields are optional and unset ones will remain null.
 
-    public CommonPatientMeasurement withWeight(Float weight)
+    public PatientMeasurementEntry withWeight(Float weight)
     {
         this.weight = weight;
         return this;
     }
 
-    public CommonPatientMeasurement withArmSpan(Float armSpan)
+    public PatientMeasurementEntry withArmSpan(Float armSpan)
     {
         this.armSpan = armSpan;
         return this;
     }
 
-    public CommonPatientMeasurement withHeadCircumference(Float headCircumference)
+    public PatientMeasurementEntry withHeadCircumference(Float headCircumference)
     {
         this.headCircumference = headCircumference;
         return this;
     }
 
-    public CommonPatientMeasurement withOuterCanthalDistance(Float outerCanthalDistance)
+    public PatientMeasurementEntry withOuterCanthalDistance(Float outerCanthalDistance)
     {
         this.outerCanthalDistance = outerCanthalDistance;
         return this;
     }
 
-    public CommonPatientMeasurement withLeftHandLength(Float leftHandLength)
+    public PatientMeasurementEntry withLeftHandLength(Float leftHandLength)
     {
         this.leftHandLength = leftHandLength;
         return this;
     }
 
-    public CommonPatientMeasurement withRightHandLength(Float rightHandLength)
+    public PatientMeasurementEntry withRightHandLength(Float rightHandLength)
     {
         this.rightHandLength = rightHandLength;
         return this;
     }
 
-    public CommonPatientMeasurement withHeight(Float height)
+    public PatientMeasurementEntry withHeight(Float height)
     {
         this.height = height;
         return this;
     }
 
-    public CommonPatientMeasurement withSittingHeight(Float sittingHeight)
+    public PatientMeasurementEntry withSittingHeight(Float sittingHeight)
     {
         this.sittingHeight = sittingHeight;
         return this;
     }
 
-    public CommonPatientMeasurement withPhiltrumLength(Float philtrumLength)
+    public PatientMeasurementEntry withPhiltrumLength(Float philtrumLength)
     {
         this.philtrumLength = philtrumLength;
         return this;
     }
 
-    public CommonPatientMeasurement withInnercanthalDistance(Float inntercanthalDistance)
+    public PatientMeasurementEntry withInnercanthalDistance(Float inntercanthalDistance)
     {
         this.innerCanthalDistance = inntercanthalDistance;
         return this;
     }
 
-    public CommonPatientMeasurement withLeftPalmLength(Float leftPalmLength)
+    public PatientMeasurementEntry withLeftPalmLength(Float leftPalmLength)
     {
         this.leftPalmLength = leftPalmLength;
         return this;
     }
 
-    public CommonPatientMeasurement withRightPalmLength(Float rightPalmLength)
+    public PatientMeasurementEntry withRightPalmLength(Float rightPalmLength)
     {
         this.rightPalmLength = rightPalmLength;
         return this;
     }
 
-    public CommonPatientMeasurement withLeftEarLength(Float leftEarLength)
+    public PatientMeasurementEntry withLeftEarLength(Float leftEarLength)
     {
         this.leftEarLength = leftEarLength;
         return this;
     }
 
-    public CommonPatientMeasurement withPalpebralFissureLength(Float palpebralFissureLength)
+    public PatientMeasurementEntry withPalpebralFissureLength(Float palpebralFissureLength)
     {
         this.palpebralFissureLength = palpebralFissureLength;
         return this;
     }
 
-    public CommonPatientMeasurement withLeftFootLength(Float leftFootLength)
+    public PatientMeasurementEntry withLeftFootLength(Float leftFootLength)
     {
         this.leftFootLength = leftFootLength;
         return this;
     }
 
-    public CommonPatientMeasurement withRightFootLength(Float rightFootLength)
+    public PatientMeasurementEntry withRightFootLength(Float rightFootLength)
     {
         this.rightFootLength = rightFootLength;
         return this;
     }
 
-    public CommonPatientMeasurement withRightEarLength(Float rightEarLength)
+    public PatientMeasurementEntry withRightEarLength(Float rightEarLength)
     {
         this.rightEarLength = rightEarLength;
         return this;
     }
 
-    public CommonPatientMeasurement withInterpupilaryDistance(Float interpupilaryDistance)
+    public PatientMeasurementEntry withInterpupilaryDistance(Float interpupilaryDistance)
     {
         this.interpupilaryDistance = interpupilaryDistance;
         return this;

@@ -17,7 +17,7 @@
  */
 package org.phenotips.endtoendtests.pageobjects;
 
-import org.phenotips.endtoendtests.common.CommonPatientMeasurement;
+import org.phenotips.endtoendtests.common.PatientMeasurementEntry;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -871,7 +871,7 @@ public class PatientRecordEditPage extends CommonInfoSelectors
      * @return Stay on the same page so return the same object.
      */
     @Step("Add a measurement to patient as: {0}")
-    public PatientRecordEditPage addMeasurement(CommonPatientMeasurement aMeasurement)
+    public PatientRecordEditPage addMeasurement(PatientMeasurementEntry aMeasurement)
     {
         clickOnElement(this.addMeasurementBtn);
         waitForInProgressMsgToDisappear();
@@ -941,11 +941,11 @@ public class PatientRecordEditPage extends CommonInfoSelectors
      * @return A Measurement object constructed with the measurement data gathered from the patient.
      */
     @Step("Retrieve the {0}th measurement entry")
-    public CommonPatientMeasurement getNthMeasurement(int nthMeasurement)
+    public PatientMeasurementEntry getNthMeasurement(int nthMeasurement)
     {
         waitForElementToBePresent(this.weightBoxes);
 
-        return new CommonPatientMeasurement()
+        return new PatientMeasurementEntry()
             .withWeight(getSpecificMeasurement(this.weightBoxes, nthMeasurement))
             .withArmSpan(getSpecificMeasurement(this.armSpanBoxes, nthMeasurement))
             .withHeadCircumference(getSpecificMeasurement(this.headCircumferenceBoxes, nthMeasurement))

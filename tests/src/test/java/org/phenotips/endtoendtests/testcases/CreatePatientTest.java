@@ -18,7 +18,7 @@
 package org.phenotips.endtoendtests.testcases;
 
 import org.phenotips.endtoendtests.common.CommonInfoEnums;
-import org.phenotips.endtoendtests.common.CommonPatientMeasurement;
+import org.phenotips.endtoendtests.common.PatientMeasurementEntry;
 import org.phenotips.endtoendtests.pageobjects.AdminRefreshMatchesPage;
 import org.phenotips.endtoendtests.pageobjects.EmailUIPage;
 import org.phenotips.endtoendtests.pageobjects.HomePage;
@@ -259,7 +259,7 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
     @Test()
     public void addMeasurements()
     {
-        CommonPatientMeasurement measurements = new CommonPatientMeasurement()
+        PatientMeasurementEntry measurements = new PatientMeasurementEntry()
             .withWeight(1f)
             .withArmSpan(2f)
             .withHeadCircumference(3f)
@@ -292,7 +292,7 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
             .editThisPatient()
             .expandSection(SECTIONS.MeasurementSection);
 
-        CommonPatientMeasurement foundMeasurementOnPatientForm = this.aPatientRecordEditPage.getNthMeasurement(1);
+        PatientMeasurementEntry foundMeasurementOnPatientForm = this.aPatientRecordEditPage.getNthMeasurement(1);
         System.out.println(foundMeasurementOnPatientForm);
         Assert.assertEquals(foundMeasurementOnPatientForm, measurements);
 
