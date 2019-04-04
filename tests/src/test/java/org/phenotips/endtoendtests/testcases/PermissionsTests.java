@@ -37,15 +37,15 @@ import org.testng.annotations.Test;
  */
 public class PermissionsTests extends BaseTest
 {
-    final private String randomChars = RandomStringUtils.randomAlphanumeric(5);
+    private final String randomChars = RandomStringUtils.randomAlphanumeric(5);
 
-    HomePage aHomePage = new HomePage(theDriver);
+    private final HomePage aHomePage = new HomePage(theDriver);
 
-    ViewPatientPage aViewPatientPage = new ViewPatientPage(theDriver);
+    private final ViewPatientPage aViewPatientPage = new ViewPatientPage(theDriver);
 
-    AdminRefreshMatchesPage anAdminRefreshMatchesPage = new AdminRefreshMatchesPage(theDriver);
+    private final AdminRefreshMatchesPage anAdminRefreshMatchesPage = new AdminRefreshMatchesPage(theDriver);
 
-    AdminMatchNotificationPage anAdminMatchNotificationPage = new AdminMatchNotificationPage(theDriver);
+    private final AdminMatchNotificationPage anAdminMatchNotificationPage = new AdminMatchNotificationPage(theDriver);
 
     /**
      * Creates two patients with identical phenotypes and genotypes. One is "Private" and the other is "Matchable".
@@ -67,7 +67,8 @@ public class PermissionsTests extends BaseTest
             .loginAsAdmin()
             .navigateToAdminSettingsPage()
             .navigateToRefreshMatchesPage()
-            .refreshMatchesSinceLastUpdate() // Refresh Matches so that "Since last update" goes to 0 first
+            // Refresh Matches so that "Since last update" goes to 0 first
+            .refreshMatchesSinceLastUpdate()
             .logOut()
 
             .loginAsUser()
