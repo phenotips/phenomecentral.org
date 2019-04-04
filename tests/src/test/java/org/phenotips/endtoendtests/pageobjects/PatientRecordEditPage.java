@@ -172,9 +172,9 @@ public class PatientRecordEditPage extends CommonInfoSelectors
 
     private final By rightEarLengthBoxes = By.cssSelector(measurementSelectorPrefix + "[id$='ear_right']");
 
-    private final By outherCanthalDistanceBoxes = By.cssSelector(measurementSelectorPrefix + "[id$='ocd']");
+    private final By outerCanthalDistanceBoxes = By.cssSelector(measurementSelectorPrefix + "[id$='ocd']");
 
-    private final By innterCanthalDistanceBoxes = By.cssSelector(measurementSelectorPrefix + "[id$='icd']");
+    private final By innerCanthalDistanceBoxes = By.cssSelector(measurementSelectorPrefix + "[id$='icd']");
 
     private final By palpebralFissureLengthBoxes = By.cssSelector(measurementSelectorPrefix + "[id$='pfl']");
 
@@ -832,44 +832,76 @@ public class PatientRecordEditPage extends CommonInfoSelectors
     // "Measurements"Section-Methods
     ////////////////////////////////////////
 
-    // TODO: Methods for this section only support one measurement entry right now. I don't have test cases for
-    // multiple measurement entries
+    // TODO: Measurements now support multiple entries, but methods could be more concise with proper enum
+
+    /**
+     * Enter a specific measurement datum given its generic selector and the desired occurrence of it.
+     * This helper method handles case where value is null which means no value shall be entered.
+     * Requires the nthOccurrence of the passed measurement box selector to actually be present.
+     * @param measurementBoxSelector the box which the entry is supposed to go in.
+     * @param nthOccurrence int >= 1 indicating which measurement entry the data should go into.
+     *                      Pass 0 to specify last occurrence.
+     * @param value Desired measurement value. Can be null to indicate no value entry.
+     */
+    private void enterSpecificMeasurement(By measurementBoxSelector, int nthOccurrence, Float value)
+    {
+        if (value != null) {
+            List<WebElement> results = superDriver.findElements(measurementBoxSelector);
+            WebElement desiredBox;
+
+            // Get the last occurrence.
+            if (nthOccurrence == 0) {
+                desiredBox = results.get(results.size() - 1);
+            }
+            else {
+                desiredBox = results.get(nthOccurrence - 1);
+            }
+
+            clickOnElement(desiredBox);
+            desiredBox.clear();
+            desiredBox.sendKeys(value.toString());
+        }
+    }
 
     /**
      * Adds a new entry of measurement data to the patient under the "Measurements" section. Requires: The
      * "Measurements" section to already be expanded.
      *
-     * @param aMeasurement is a measurement object (instantiated struct) containing all the measurement fields to enter.
+     * @param aMeasurement is a measurement object containing the desired measurement fields to enter.
      * @return Stay on the same page so return the same object.
      */
     @Step("Add a measurement to patient as: {0}")
     public PatientRecordEditPage addMeasurement(CommonPatientMeasurement aMeasurement)
     {
         clickOnElement(this.addMeasurementBtn);
-        clickAndTypeOnElement(this.weightBoxes, String.valueOf(aMeasurement.weight));
-        clickAndTypeOnElement(this.heightBoxes, String.valueOf(aMeasurement.height));
-        clickAndTypeOnElement(this.armSpanBoxes, String.valueOf(aMeasurement.armSpan));
-        clickAndTypeOnElement(this.sittingHeightBoxes, String.valueOf(aMeasurement.sittingHeight));
-        clickAndTypeOnElement(this.headCircumferenceBoxes, String.valueOf(aMeasurement.headCircumference));
-        clickAndTypeOnElement(this.philtrumLengthBoxes, String.valueOf(aMeasurement.philtrumLength));
-        clickAndTypeOnElement(this.leftEarLengthBoxes, String.valueOf(aMeasurement.leftEarLength));
-        clickAndTypeOnElement(this.rightEarLengthBoxes, String.valueOf(aMeasurement.rightEarLength));
-        clickAndTypeOnElement(this.outherCanthalDistanceBoxes, String.valueOf(aMeasurement.outerCanthalDistance));
-        clickAndTypeOnElement(this.innterCanthalDistanceBoxes, String.valueOf(aMeasurement.inntercanthalDistance));
-        clickAndTypeOnElement(this.palpebralFissureLengthBoxes, String.valueOf(aMeasurement.palpebralFissureLength));
-        clickAndTypeOnElement(this.interpupilaryDistanceBoxes, String.valueOf(aMeasurement.interpupilaryDistance));
-        clickAndTypeOnElement(this.leftHandLengthBoxes, String.valueOf(aMeasurement.leftHandLength));
-        clickAndTypeOnElement(this.leftPalmLengthBoxes, String.valueOf(aMeasurement.leftPalmLength));
-        clickAndTypeOnElement(this.leftFootLengthBoxes, String.valueOf(aMeasurement.leftFootLength));
-        clickAndTypeOnElement(this.rightHandLengthBoxes, String.valueOf(aMeasurement.rightHandLength));
-        clickAndTypeOnElement(this.rightPalmLengthBoxes, String.valueOf(aMeasurement.rightPalmLength));
-        clickAndTypeOnElement(this.rightFootLengthBoxes, String.valueOf(aMeasurement.rightFootLength));
+        waitForInProgressMsgToDisappear();
+
+        // Try to fill in all boxes, method call handles case where measurement entry is null
+
+        enterSpecificMeasurement(this.weightBoxes, 0, aMeasurement.getWeight());
+        enterSpecificMeasurement(this.heightBoxes, 0, aMeasurement.getHeight());
+        enterSpecificMeasurement(this.armSpanBoxes, 0, aMeasurement.getArmSpan());
+        enterSpecificMeasurement(this.sittingHeightBoxes, 0, aMeasurement.getSittingHeight());
+        enterSpecificMeasurement(this.headCircumferenceBoxes, 0, aMeasurement.getHeadCircumference());
+        enterSpecificMeasurement(this.philtrumLengthBoxes, 0, aMeasurement.getPhiltrumLength());
+        enterSpecificMeasurement(this.leftEarLengthBoxes, 0, aMeasurement.getLeftEarLength());
+        enterSpecificMeasurement(this.rightEarLengthBoxes, 0, aMeasurement.getRightEarLength());
+        enterSpecificMeasurement(this.outerCanthalDistanceBoxes, 0, aMeasurement.getOuterCanthalDistance());
+        enterSpecificMeasurement(this.innerCanthalDistanceBoxes, 0, aMeasurement.getInnerCanthalDistance());
+        enterSpecificMeasurement(this.palpebralFissureLengthBoxes, 0, aMeasurement.getPalpebralFissureLength());
+        enterSpecificMeasurement(this.interpupilaryDistanceBoxes, 0, aMeasurement.getInterpupilaryDistance());
+        enterSpecificMeasurement(this.leftHandLengthBoxes, 0, aMeasurement.getLeftHandLength());
+        enterSpecificMeasurement(this.leftPalmLengthBoxes, 0, aMeasurement.getLeftPalmLength());
+        enterSpecificMeasurement(this.leftFootLengthBoxes, 0, aMeasurement.getLeftFootLength());
+        enterSpecificMeasurement(this.rightHandLengthBoxes, 0, aMeasurement.getRightHandLength());
+        enterSpecificMeasurement(this.rightPalmLengthBoxes, 0, aMeasurement.getRightPalmLength());
+        enterSpecificMeasurement(this.rightFootLengthBoxes, 0, aMeasurement.getRightFootLength());
 
         return this;
     }
 
     /**
-     * Changes the date of the first measurement to the specified month and year and date. Must be valid date otherwise
+     * Changes the date of the nth measurement to the specified month and year and date. Must be valid date otherwise
      * Selenium will throw an ElementNotFound exception. Requires: The measurement section to be open and at least one
      * measurement entry to be present.
      *
@@ -877,13 +909,15 @@ public class PatientRecordEditPage extends CommonInfoSelectors
      * @param year is the year as a String "1920" to current year (ex. "2019"). Must be exact.
      * @return Stay on the same page so return the same object.
      */
-    @Step("Change the measurement date to: {0} day {1} month and {2} year")
-    public PatientRecordEditPage changeMeasurementDate(String day, String month, String year)
+    @Step("Change the {0}th measurement date to: {1} day {2} month and {3} year")
+    public PatientRecordEditPage changeMeasurementDate(int nthMeasurement, String day, String month, String year)
     {
         By calendarDayBtn = By.xpath(
             "//div[@class='calendar_date_select']//tr/td/div[not(@class='other') and text() = '" + day + "']");
 
-        clickOnElement(this.measurementDateBoxes);
+        waitForElementToBePresent(this.measurementDateBoxes);
+
+        superDriver.findElements(this.measurementDateBoxes).get(nthMeasurement - 1).click();
 
         waitForElementToBePresent(this.measurementMonthDrps);
         Select monthDrp = new Select(this.superDriver.findElement(this.measurementMonthDrps));
@@ -899,55 +933,72 @@ public class PatientRecordEditPage extends CommonInfoSelectors
     }
 
     /**
-     * Retrieves the first measurement entry for the patient that has measurement data entered. Requires: The
-     * "Measurement" section to be open and there be at least one measurmenet entry already there.
+     * Retrieves the nth measurement entry for the patient being edited. Requires: The
+     * "Measurement" section to be open and there be at least one measurement entry already there.
      *
+     * @param nthMeasurement is int >= 1 to indicate the nth measurement entry to retrieve data from.
+     *                       To indicate the last (bottom-most) entry, pass 0.
      * @return A Measurement object constructed with the measurement data gathered from the patient.
      */
-    @Step("Retrieve the patients measurement")
-    public CommonPatientMeasurement getPatientMeasurement()
+    @Step("Retrieve the {0}th measurement entry")
+    public CommonPatientMeasurement getNthMeasurement(int nthMeasurement)
     {
         waitForElementToBePresent(this.weightBoxes);
 
-        float weight = getSpecificMeasurement(this.weightBoxes);
-        float armSpan = getSpecificMeasurement(this.armSpanBoxes);
-        float headCircumference = getSpecificMeasurement(this.headCircumferenceBoxes);
-        float outerCanthalDistance = getSpecificMeasurement(this.outherCanthalDistanceBoxes);
-        float leftHandLength = getSpecificMeasurement(this.leftHandLengthBoxes);
-        float rightHandLength = getSpecificMeasurement(this.rightHandLengthBoxes);
+        return new CommonPatientMeasurement()
+            .withWeight(getSpecificMeasurement(this.weightBoxes, nthMeasurement))
+            .withArmSpan(getSpecificMeasurement(this.armSpanBoxes, nthMeasurement))
+            .withHeadCircumference(getSpecificMeasurement(this.headCircumferenceBoxes, nthMeasurement))
+            .withOuterCanthalDistance(getSpecificMeasurement(this.outerCanthalDistanceBoxes, nthMeasurement))
+            .withLeftHandLength(getSpecificMeasurement(this.leftHandLengthBoxes, nthMeasurement))
+            .withRightHandLength(getSpecificMeasurement(this.rightHandLengthBoxes, nthMeasurement))
 
-        float height = getSpecificMeasurement(this.heightBoxes);
-        float sittingHeight = getSpecificMeasurement(this.sittingHeightBoxes);
-        float philtrumLength = getSpecificMeasurement(this.philtrumLengthBoxes);
-        float inntercanthalDistance = getSpecificMeasurement(this.innterCanthalDistanceBoxes);
-        float leftPalmLength = getSpecificMeasurement(this.leftPalmLengthBoxes);
-        float rightPalmLength = getSpecificMeasurement(this.rightPalmLengthBoxes);
+            .withHeight(getSpecificMeasurement(this.heightBoxes, nthMeasurement))
+            .withSittingHeight(getSpecificMeasurement(this.sittingHeightBoxes, nthMeasurement))
+            .withPhiltrumLength(getSpecificMeasurement(this.philtrumLengthBoxes, nthMeasurement))
+            .withInnercanthalDistance(getSpecificMeasurement(this.innerCanthalDistanceBoxes, nthMeasurement))
+            .withLeftPalmLength(getSpecificMeasurement(this.leftPalmLengthBoxes, nthMeasurement))
+            .withRightPalmLength(getSpecificMeasurement(this.rightPalmLengthBoxes, nthMeasurement))
 
-        float leftEarLength = getSpecificMeasurement(this.leftEarLengthBoxes);
-        float palpebralFissureLength = getSpecificMeasurement(this.palpebralFissureLengthBoxes);
-        float leftFootLength = getSpecificMeasurement(this.leftFootLengthBoxes);
-        float rightFootLength = getSpecificMeasurement(this.rightFootLengthBoxes);
+            .withLeftEarLength(getSpecificMeasurement(this.leftEarLengthBoxes, nthMeasurement))
+            .withPalpebralFissureLength(getSpecificMeasurement(this.palpebralFissureLengthBoxes, nthMeasurement))
+            .withLeftFootLength(getSpecificMeasurement(this.leftFootLengthBoxes, nthMeasurement))
+            .withRightFootLength(getSpecificMeasurement(this.rightFootLengthBoxes, nthMeasurement))
 
-        float rightEarLength = getSpecificMeasurement(this.rightEarLengthBoxes);
-        float interpupilaryDistance = getSpecificMeasurement(this.interpupilaryDistanceBoxes);
-
-        return new CommonPatientMeasurement(
-            weight, armSpan, headCircumference, outerCanthalDistance, leftHandLength, rightHandLength,
-            height, sittingHeight, philtrumLength, inntercanthalDistance, leftPalmLength, rightPalmLength,
-            leftEarLength, palpebralFissureLength, leftFootLength, rightFootLength,
-            rightEarLength, interpupilaryDistance);
+            .withRightEarLength(getSpecificMeasurement(this.rightEarLengthBoxes, nthMeasurement))
+            .withInterpupilaryDistance(getSpecificMeasurement(this.interpupilaryDistanceBoxes, nthMeasurement));
     }
 
     /**
      * Retrieves the measurement value within the specified measurement box as a float. This is a helper function for
-     * getPatientMeasurement()
+     * getNthMeasurement()
      *
      * @param measurementBoxSelector Selector of the specific box
-     * @return The float value of what was in the measurement box. If it were empty, returns 0.
+     * @return The float value of what was in the measurement box. If it was empty, returns null
      */
-    private float getSpecificMeasurement(By measurementBoxSelector)
+    private Float getSpecificMeasurement(By measurementBoxSelector, int nthOccurrence)
     {
-        return Float.parseFloat(this.superDriver.findElement(measurementBoxSelector).getAttribute("value"));
+        List<WebElement> results = superDriver.findElements(measurementBoxSelector);
+        WebElement desiredBox;
+
+        // Get the last occurrence.
+        if (nthOccurrence == 0) {
+            desiredBox = results.get(results.size() - 1);
+        }
+        else {
+            desiredBox = results.get(nthOccurrence - 1);
+        }
+
+        String textInBox = desiredBox.getAttribute("value");
+
+        // There was no text, so return null Float
+        if (textInBox.equals("")) {
+            return null;
+        }
+        else {
+            return Float.parseFloat(textInBox);
+        }
+
     }
 
     ////////////////////////////////////////

@@ -259,25 +259,40 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
     @Test()
     public void addMeasurements()
     {
-        CommonPatientMeasurement measurements = new CommonPatientMeasurement(
-            1, 2, 3, 4, 5,
-            6, 7, 8, 9, 10,
-            11, 12, 13, 14, 15,
-            16, 17, 18);
+        CommonPatientMeasurement measurements = new CommonPatientMeasurement()
+            .withWeight(1f)
+            .withArmSpan(2f)
+            .withHeadCircumference(3f)
+            .withOuterCanthalDistance(4f)
+            .withLeftHandLength(5f)
+            .withRightHandLength(6f)
+            .withHeight(7f)
+            .withSittingHeight(8f)
+            .withPhiltrumLength(9f)
+            .withInnercanthalDistance(10f)
+            .withLeftPalmLength(11f)
+            .withRightPalmLength(12f)
+            .withLeftEarLength(13f)
+            .withRightEarLength(14f)
+            .withPalpebralFissureLength(15f)
+            .withLeftFootLength(16f)
+            .withRightFootLength(17f)
+            .withInterpupilaryDistance(18f);
 
         this.aHomePage.navigateToLoginPage()
             .loginAsUser()
             .navigateToCreateANewPatientPage()
             .toggleDefaultUncheckedConsentBoxes()
             .updateConsent()
+            .setIdentifier("Add Measurements " + randomChars)
             .expandSection(SECTIONS.MeasurementSection)
             .addMeasurement(measurements)
-            .changeMeasurementDate("11", "March", "2015")
+            .changeMeasurementDate(1, "11", "March", "2015")
             .saveAndViewSummary()
             .editThisPatient()
             .expandSection(SECTIONS.MeasurementSection);
 
-        CommonPatientMeasurement foundMeasurementOnPatientForm = this.aPatientRecordEditPage.getPatientMeasurement();
+        CommonPatientMeasurement foundMeasurementOnPatientForm = this.aPatientRecordEditPage.getNthMeasurement(1);
         System.out.println(foundMeasurementOnPatientForm);
         Assert.assertEquals(foundMeasurementOnPatientForm, measurements);
 

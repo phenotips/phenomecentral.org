@@ -17,141 +17,269 @@
  */
 package org.phenotips.endtoendtests.common;
 
-import java.util.Objects;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
 /**
- * This class acts as a public struct for patient measurements, too many fields to just pass as a List of Strings. All
- * the possible numerical fields for a patient's measurements should go here.
+ * This class represents the values for one measurement entry on a patient form. Fields will be null when
+ * no value was entered for the particular measurement.
  */
 public class CommonPatientMeasurement
 {
-    public float weight;
+    private Float weight;
 
-    public float armSpan;
+    private Float armSpan;
 
-    public float headCircumference;
+    private Float headCircumference;
 
-    public float outerCanthalDistance;
+    private Float outerCanthalDistance;
 
-    public float leftHandLength;
+    private Float leftHandLength;
 
-    public float rightHandLength;
+    private Float rightHandLength;
 
-    public float height;
+    private Float height;
 
-    public float sittingHeight;
+    private Float sittingHeight;
 
-    public float philtrumLength;
+    private Float philtrumLength;
 
-    public float inntercanthalDistance;
+    private Float innerCanthalDistance;
 
-    public float leftPalmLength;
+    private Float leftPalmLength;
 
-    public float rightPalmLength;
+    private Float rightPalmLength;
 
-    public float leftEarLength;
+    private Float leftEarLength;
 
-    public float palpebralFissureLength;
+    private Float palpebralFissureLength;
 
-    public float leftFootLength;
+    private Float leftFootLength;
 
-    public float rightFootLength;
+    private Float rightFootLength;
 
-    public float rightEarLength;
+    private Float rightEarLength;
 
-    public float interpupilaryDistance;
-
-    // Ctor
-    public CommonPatientMeasurement(float weight, float armSpan, float headCircumference, float outerCanthalDistance,
-        float leftHandLength, float rightHandLength, float height, float sittingHeight, float philtrumLength,
-        float inntercanthalDistance, float leftPalmLength, float rightPalmLength, float leftEarLength,
-        float palpebralFissureLength, float leftFootLength, float rightFootLength, float rightEarLength,
-        float interpupilaryDistance)
-    {
-        this.weight = weight;
-        this.armSpan = armSpan;
-        this.headCircumference = headCircumference;
-        this.outerCanthalDistance = outerCanthalDistance;
-        this.leftHandLength = leftHandLength;
-        this.rightHandLength = rightHandLength;
-        this.height = height;
-        this.sittingHeight = sittingHeight;
-        this.philtrumLength = philtrumLength;
-        this.inntercanthalDistance = inntercanthalDistance;
-        this.leftPalmLength = leftPalmLength;
-        this.rightPalmLength = rightPalmLength;
-        this.leftEarLength = leftEarLength;
-        this.palpebralFissureLength = palpebralFissureLength;
-        this.leftFootLength = leftFootLength;
-        this.rightFootLength = rightFootLength;
-        this.rightEarLength = rightEarLength;
-        this.interpupilaryDistance = interpupilaryDistance;
-    }
+    private Float interpupilaryDistance;
 
     @Override
     public boolean equals(Object o)
     {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        CommonPatientMeasurement that = (CommonPatientMeasurement) o;
-        return Float.compare(that.weight, this.weight) == 0 &&
-            Float.compare(that.armSpan, this.armSpan) == 0 &&
-            Float.compare(that.headCircumference, this.headCircumference) == 0 &&
-            Float.compare(that.outerCanthalDistance, this.outerCanthalDistance) == 0 &&
-            Float.compare(that.leftHandLength, this.leftHandLength) == 0 &&
-            Float.compare(that.rightHandLength, this.rightHandLength) == 0 &&
-            Float.compare(that.height, this.height) == 0 &&
-            Float.compare(that.sittingHeight, this.sittingHeight) == 0 &&
-            Float.compare(that.philtrumLength, this.philtrumLength) == 0 &&
-            Float.compare(that.inntercanthalDistance, this.inntercanthalDistance) == 0 &&
-            Float.compare(that.leftPalmLength, this.leftPalmLength) == 0 &&
-            Float.compare(that.rightPalmLength, this.rightPalmLength) == 0 &&
-            Float.compare(that.leftEarLength, this.leftEarLength) == 0 &&
-            Float.compare(that.palpebralFissureLength, this.palpebralFissureLength) == 0 &&
-            Float.compare(that.leftFootLength, this.leftFootLength) == 0 &&
-            Float.compare(that.rightFootLength, this.rightFootLength) == 0 &&
-            Float.compare(that.rightEarLength, this.rightEarLength) == 0 &&
-            Float.compare(that.interpupilaryDistance, this.interpupilaryDistance) == 0;
+        return EqualsBuilder.reflectionEquals(this, o, false);
     }
 
     @Override
     public int hashCode()
     {
-        return Objects
-            .hash(this.weight, this.armSpan, this.headCircumference, this.outerCanthalDistance, this.leftHandLength,
-                this.rightHandLength, this.height,
-                this.sittingHeight, this.philtrumLength, this.inntercanthalDistance, this.leftPalmLength,
-                this.rightPalmLength, this.leftEarLength,
-                this.palpebralFissureLength, this.leftFootLength, this.rightFootLength, this.rightEarLength,
-                this.interpupilaryDistance);
+        return HashCodeBuilder.reflectionHashCode(this);
     }
 
     @Override
     public String toString()
     {
-        return "CommonPatientMeasurement{" +
-            "weight=" + this.weight +
-            ", armSpan=" + this.armSpan +
-            ", headCircumference=" + this.headCircumference +
-            ", outerCanthalDistance=" + this.outerCanthalDistance +
-            ", leftHandLength=" + this.leftHandLength +
-            ", rightHandLength=" + this.rightHandLength +
-            ", height=" + this.height +
-            ", sittingHeight=" + this.sittingHeight +
-            ", philtrumLength=" + this.philtrumLength +
-            ", inntercanthalDistance=" + this.inntercanthalDistance +
-            ", leftPalmLength=" + this.leftPalmLength +
-            ", rightPalmLength=" + this.rightPalmLength +
-            ", leftEarLength=" + this.leftEarLength +
-            ", palpebralFissureLength=" + this.palpebralFissureLength +
-            ", leftFootLength=" + this.leftFootLength +
-            ", rightFootLength=" + this.rightFootLength +
-            ", rightEarLength=" + this.rightEarLength +
-            ", interpupilaryDistance=" + this.interpupilaryDistance +
-            '}';
+        return ReflectionToStringBuilder.toString(this);
+    }
+
+    // Builder pattern instead of a giant constructor. All fields are optional and unset ones will remain null.
+
+    public CommonPatientMeasurement withWeight(Float weight)
+    {
+        this.weight = weight;
+        return this;
+    }
+
+    public CommonPatientMeasurement withArmSpan(Float armSpan)
+    {
+        this.armSpan = armSpan;
+        return this;
+    }
+
+    public CommonPatientMeasurement withHeadCircumference(Float headCircumference)
+    {
+        this.headCircumference = headCircumference;
+        return this;
+    }
+
+    public CommonPatientMeasurement withOuterCanthalDistance(Float outerCanthalDistance)
+    {
+        this.outerCanthalDistance = outerCanthalDistance;
+        return this;
+    }
+
+    public CommonPatientMeasurement withLeftHandLength(Float leftHandLength)
+    {
+        this.leftHandLength = leftHandLength;
+        return this;
+    }
+
+    public CommonPatientMeasurement withRightHandLength(Float rightHandLength)
+    {
+        this.rightHandLength = rightHandLength;
+        return this;
+    }
+
+    public CommonPatientMeasurement withHeight(Float height)
+    {
+        this.height = height;
+        return this;
+    }
+
+    public CommonPatientMeasurement withSittingHeight(Float sittingHeight)
+    {
+        this.sittingHeight = sittingHeight;
+        return this;
+    }
+
+    public CommonPatientMeasurement withPhiltrumLength(Float philtrumLength)
+    {
+        this.philtrumLength = philtrumLength;
+        return this;
+    }
+
+    public CommonPatientMeasurement withInnercanthalDistance(Float inntercanthalDistance)
+    {
+        this.innerCanthalDistance = inntercanthalDistance;
+        return this;
+    }
+
+    public CommonPatientMeasurement withLeftPalmLength(Float leftPalmLength)
+    {
+        this.leftPalmLength = leftPalmLength;
+        return this;
+    }
+
+    public CommonPatientMeasurement withRightPalmLength(Float rightPalmLength)
+    {
+        this.rightPalmLength = rightPalmLength;
+        return this;
+    }
+
+    public CommonPatientMeasurement withLeftEarLength(Float leftEarLength)
+    {
+        this.leftEarLength = leftEarLength;
+        return this;
+    }
+
+    public CommonPatientMeasurement withPalpebralFissureLength(Float palpebralFissureLength)
+    {
+        this.palpebralFissureLength = palpebralFissureLength;
+        return this;
+    }
+
+    public CommonPatientMeasurement withLeftFootLength(Float leftFootLength)
+    {
+        this.leftFootLength = leftFootLength;
+        return this;
+    }
+
+    public CommonPatientMeasurement withRightFootLength(Float rightFootLength)
+    {
+        this.rightFootLength = rightFootLength;
+        return this;
+    }
+
+    public CommonPatientMeasurement withRightEarLength(Float rightEarLength)
+    {
+        this.rightEarLength = rightEarLength;
+        return this;
+    }
+
+    public CommonPatientMeasurement withInterpupilaryDistance(Float interpupilaryDistance)
+    {
+        this.interpupilaryDistance = interpupilaryDistance;
+        return this;
+    }
+
+    // Getters for all fields
+    
+    public Float getWeight()
+    {
+        return weight;
+    }
+
+    public Float getArmSpan()
+    {
+        return armSpan;
+    }
+
+    public Float getHeadCircumference()
+    {
+        return headCircumference;
+    }
+
+    public Float getOuterCanthalDistance()
+    {
+        return outerCanthalDistance;
+    }
+
+    public Float getLeftHandLength()
+    {
+        return leftHandLength;
+    }
+
+    public Float getRightHandLength()
+    {
+        return rightHandLength;
+    }
+
+    public Float getHeight()
+    {
+        return height;
+    }
+
+    public Float getSittingHeight()
+    {
+        return sittingHeight;
+    }
+
+    public Float getPhiltrumLength()
+    {
+        return philtrumLength;
+    }
+
+    public Float getInnerCanthalDistance()
+    {
+        return innerCanthalDistance;
+    }
+
+    public Float getLeftPalmLength()
+    {
+        return leftPalmLength;
+    }
+
+    public Float getRightPalmLength()
+    {
+        return rightPalmLength;
+    }
+
+    public Float getLeftEarLength()
+    {
+        return leftEarLength;
+    }
+
+    public Float getPalpebralFissureLength()
+    {
+        return palpebralFissureLength;
+    }
+
+    public Float getLeftFootLength()
+    {
+        return leftFootLength;
+    }
+
+    public Float getRightFootLength()
+    {
+        return rightFootLength;
+    }
+
+    public Float getRightEarLength()
+    {
+        return rightEarLength;
+    }
+
+    public Float getInterpupilaryDistance()
+    {
+        return interpupilaryDistance;
     }
 }
