@@ -31,22 +31,11 @@
 
   <properties>
     <aspectj.version>1.9.2</aspectj.version>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <selenium.version>3.141.59</selenium.version>
   </properties>
 
   <build>
     <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
-        </configuration>
-        <version>3.8.0</version>
-      </plugin>
-
       <plugin>
         <groupId>io.qameta.allure</groupId>
         <artifactId>allure-maven</artifactId>
@@ -79,7 +68,6 @@
           </dependency>
         </dependencies>
       </plugin>
-
     </plugins>
   </build>
 
@@ -127,5 +115,4 @@
     </dependency>
 
   </dependencies>
-
 </project>
