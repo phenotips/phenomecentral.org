@@ -47,20 +47,10 @@ import io.qameta.allure.Step;
  */
 public abstract class BaseTest extends BaseSuite
 {
-    protected static WebDriver theDriver = DRIVER;
-
     /**
-     * Instantiate the webDriver instance here. The WebDriverManager takes care of setting up the environment including
-     * the intermediary protocol used to communicate with the browser. This allows a user to just run the tests and the
-     * manager should take care of finding the path to the desired executable and setting up environment.
+     * Now uses default constructor. Superclass instantiates the WebDriver.
      */
-    public BaseTest()
-    {
-//        if (theDriver == null) {
-//            printCommandLinePropertyMessages();
-//            setUpBrowser();
-//        }
-    }
+    public BaseTest() { }
 
     /**
      * Runs after every test method. In the case that TestNG's listener reports a failure, call methods to take a
@@ -76,7 +66,7 @@ public abstract class BaseTest extends BaseSuite
 
         if (ITestResult.FAILURE == testResult.getStatus()) {
             System.out.println("Test:" + testMethod + " has failed. Taking a screenshot and cleaning up...");
-            captureScreenshot(testMethod, theDriver.getCurrentUrl());
+            captureScreenshot(testMethod, DRIVER.getCurrentUrl());
             cleanupBrowserState();
         } else if (ITestResult.SKIP == testResult.getStatus()) {
             System.out.println("Test:" + testMethod +
@@ -108,7 +98,7 @@ public abstract class BaseTest extends BaseSuite
     {
         // Screenshot mechanism
         // Cast webDriver over to TakeScreenshot. Call getScreenshotAs method to create image file
-        File srcFile = ((TakesScreenshot) theDriver).getScreenshotAs(OutputType.FILE);
+        File srcFile = ((TakesScreenshot) DRIVER).getScreenshotAs(OutputType.FILE);
 
         LocalDateTime dateTime = ZonedDateTime.now().toLocalDateTime();
 
@@ -140,6 +130,7 @@ public abstract class BaseTest extends BaseSuite
      * unsaved edits before navigating back to the login page so that the next tests can continue. Called by the
      * AfterMethod in case of test failure.
      */
+    @Step("Test failed. Cleaning up browser state.")
     private void cleanupBrowserState()
     {
         HomePage tempHomePage = new HomePage();
@@ -148,8 +139,8 @@ public abstract class BaseTest extends BaseSuite
             tempHomePage.navigateToLoginPage();
             System.out.println("Test failure, navigate to login page. There is no unsaved changes warning.");
         } catch (UnhandledAlertException e) {
-            theDriver.switchTo().alert().accept();
-            theDriver.switchTo().defaultContent();
+            DRIVER.switchTo().alert().accept();
+            DRIVER.switchTo().defaultContent();
             tempHomePage.navigateToLoginPage();
             System.out.println("Test failure, navigate to login page. Closed an unsaved changes warning dialogue");
         }

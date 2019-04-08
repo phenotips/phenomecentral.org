@@ -24,7 +24,6 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.pagefactory.ByChained;
@@ -77,41 +76,10 @@ public abstract class BasePage extends BaseSuite
     private final By inProgressMsg = By.cssSelector("div[class='xnotification xnotification-inprogress']");
 
     /**
-     * Declaration of the webdriver and the explicit waiting objects. Will be initialized when a test runs and any page
-     * class instantiated. See BasePage ctor.
-     */
-//    protected WebDriver superDriver = DRIVER;
-    // Initialized only when a test suite runs and needs a page, so see BaseTest class.
-
-    /**
-     * CTOR. The timeout period is defined here. We can also set the polling interval if need be.
-     *
+     * Constructor. Now uses default.
      */
 
-    public BasePage()
-    {
-//        // Sets the HOMEPAGE_URL and EMAIL_UI_URL if they were passed in as command line
-//        // property to JVM. Otherwise, will use what HOMEPAGE_URL and EMAIL_UI_URL as defined
-//        // in its declaration at the top of this page.
-//        final String homePageParameter = System.getProperty("homePageURL");
-//        final String emailUIPageParameter = System.getProperty("emailUIPageURL");
-//
-//        if (homePageParameter != null) {
-//            this.HOMEPAGE_URL = homePageParameter;
-//            // Debug message in BaseTest when static webDriver gets instantiated
-//        }
-//
-//        if (emailUIPageParameter != null) {
-//            this.EMAIL_UI_URL = emailUIPageParameter;
-//            // Debug message in BaseTest when static webDriver gets instantiated
-//        }
-//
-//        // Set the reference to the webdriver passed from a test case and initialize waiting times
-//        // longPause is used to wait for something to disappear. Ex. loading bar, or a sending message.
-//        // Might take longer than PAUSE_LENGTH seconds, so give it up to a minute.
-//        DRIVER = aDriver;
-
-    }
+    public BasePage() { }
 
     ////////////////////////////////////////
     // Generic page interaction methods
@@ -123,11 +91,11 @@ public abstract class BasePage extends BaseSuite
      */
     public void waitForPageToLoad()
     {
-        pause.until(ExpectedConditions.jsReturnsValue("return document.readyState=='complete';"));
+        PAUSE.until(ExpectedConditions.jsReturnsValue("return document.readyState=='complete';"));
     }
 
     /**
-     * Explicitly wait for the passed element to appear, upto the timeout specified in {@code pause} Checks immediately
+     * Explicitly wait for the passed element to appear, upto the timeout specified in {@code PAUSE} Checks immediately
      * and then keeps polling at the default interval.
      *
      * @param elementSelector specifies the element selector on the page. Must not be {@code null}
@@ -135,11 +103,11 @@ public abstract class BasePage extends BaseSuite
      */
     public void waitForElementToBePresent(By elementSelector)
     {
-        this.pause.until(ExpectedConditions.presenceOfElementLocated(elementSelector));
+        this.PAUSE.until(ExpectedConditions.presenceOfElementLocated(elementSelector));
     }
 
     /**
-     * Explicitly wait for the passed element to disappear, upto the timeout specified in {@code pause} Checks
+     * Explicitly wait for the passed element to disappear, upto the timeout specified in {@code PAUSE} Checks
      * immediately and then keeps polling at the default interval. Will return immediately if it cannot find element on
      * that immediate first try.
      *
@@ -148,7 +116,7 @@ public abstract class BasePage extends BaseSuite
      */
     public void waitForElementToBeGone(By elementSelector)
     {
-        this.longPause.until(ExpectedConditions.invisibilityOfElementLocated(elementSelector));
+        this.LONG_PAUSE.until(ExpectedConditions.invisibilityOfElementLocated(elementSelector));
     }
 
     /**
@@ -159,7 +127,7 @@ public abstract class BasePage extends BaseSuite
      */
     public void waitForElementToBeClickable(By elementSelector)
     {
-        this.pause.until(ExpectedConditions.elementToBeClickable(elementSelector));
+        this.PAUSE.until(ExpectedConditions.elementToBeClickable(elementSelector));
     }
 
     /**
@@ -182,7 +150,7 @@ public abstract class BasePage extends BaseSuite
      * Explicitly sleep for a full n seconds. Does not wait on anything specific. Useful when it is difficult to specify
      * an element to wait and check upon. Ex. Filtering update
      *
-     * @param n is time to pause in seconds.
+     * @param n is time to PAUSE in seconds.
      * @Throws InterruptedException (implicit) if thread is interrupted, ex. SIGIGNT. Handles it by just continuing
      *         after printing a message.
      */

@@ -625,7 +625,7 @@ public class PedigreeEditorPage extends BasePage
         List<WebElement> loHoverBoxes = DRIVER.findElements(this.hoverBox);
 
         act.moveToElement(loHoverBoxes.get(partner1 - 1))
-            // .pause(2000)
+            // .PAUSE(2000)
             .build().perform();
 
         forceClickOnElement(this.createPartnerNode);

@@ -16,19 +16,15 @@ import org.testng.annotations.AfterSuite;
  */
 
 public abstract class BaseSuite {
-    ////////////////////////////////////////
-    // Environment Information. You can change these as needed to run tests easily through IDE instead of passing in
-    // command line options to JVM.
-    ////////////////////////////////////////
 
     /**
-     * Common URLs, specify address of the PC instance
+     * Environment Information. Change the default as needed.
      */
-    protected static String HOMEPAGE_URL = System.getProperty("homePageURL", "http://localhost:8083");
+    protected static final String HOMEPAGE_URL = System.getProperty("homePageURL", "http://localhost:8083");
 
-    protected static String EMAIL_UI_URL = System.getProperty("emailUIPageURL", "http://localhost:8085");
+    protected static final String EMAIL_UI_URL = System.getProperty("emailUIPageURL", "http://localhost:8085");
 
-    private static String BROWSER_TO_USE = System.getProperty("browser", "chrome");
+    private static final String BROWSER_TO_USE = System.getProperty("browser", "chrome");
 
     /**
      * Common login credentials.
@@ -46,22 +42,29 @@ public abstract class BaseSuite {
     protected static final String USER_2_PASS = "123456";
 
     /**
-     * WebDriver variables
+     * WebDriver variables. WebDriver is static to force one instance only.
      */
-
     protected static WebDriver DRIVER;
 
     /**
      * Default "maximum" waiting time in seconds. Notably it is used when waiting for an element to appear. This can be
      * thought of the timeout time if no additional wait was added to a method. Increase if your system is slow.
      */
-    private final int PAUSE_LENGTH = 5;
+    private static final int PAUSE_LENGTH = 5;
 
-    protected WebDriverWait pause;
+    private static final int PAUSE_LENGTH_LONG = 60;
+
+    // Initialize the following two vars in constructor as they require an instantiated WebDriver
+    protected WebDriverWait PAUSE;
 
     // Use to wait for element to disappear.
-    protected WebDriverWait longPause;
+    protected WebDriverWait LONG_PAUSE;
 
+    /**
+     * Instantiate the WebDriver instance in the CTOR. The WebDriverManager takes care of setting up the environment
+     * including the intermediary protocol used to communicate with the browser. This allows a user to just run the
+     * tests and the manager should take care of finding the path to the desired executable and setting up environment.
+     */
     public BaseSuite()
     {
         if (DRIVER == null) {
@@ -69,12 +72,12 @@ public abstract class BaseSuite {
             setUpBrowser();
         }
 
-        this.pause = new WebDriverWait(DRIVER, this.PAUSE_LENGTH);
-        this.longPause = new WebDriverWait(DRIVER, this.PAUSE_LENGTH + 55);
+        this.PAUSE = new WebDriverWait(BaseSuite.DRIVER, BaseSuite.PAUSE_LENGTH);
+        this.LONG_PAUSE = new WebDriverWait(BaseSuite.DRIVER, BaseSuite.PAUSE_LENGTH_LONG);
     }
 
     /**
-     * Helper function called in ctor to instantiate the desired browser. See BaseTest ctor.
+     * Helper function called in ctor to instantiate the desired browser.
      */
     private void setUpBrowser()
     {
