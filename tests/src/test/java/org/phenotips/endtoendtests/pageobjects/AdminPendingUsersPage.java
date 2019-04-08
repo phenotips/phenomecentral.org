@@ -50,10 +50,10 @@ public class AdminPendingUsersPage extends AdminSettingsPage
     public AdminPendingUsersPage approveNthPendingUser(int n)
     {
         waitForElementToBePresent(this.approveUserBtns); // Should wait for first button to appear.
-        clickOnElement(this.superDriver.findElements(this.approveUserBtns).get(n - 1));
+        clickOnElement(DRIVER.findElements(this.approveUserBtns).get(n - 1));
 
-        this.superDriver.switchTo().alert().accept();
-        this.superDriver.switchTo().defaultContent();
+        DRIVER.switchTo().alert().accept();
+        DRIVER.switchTo().defaultContent();
 
         return this;
     }
@@ -71,14 +71,14 @@ public class AdminPendingUsersPage extends AdminSettingsPage
         waitForElementToBePresent(this.approveUserBtns);
 
         List<String> usernamesFound = new ArrayList<>();
-        this.superDriver.findElements(this.usernamesLinks).forEach(x -> usernamesFound.add(x.getText()));
+        DRIVER.findElements(this.usernamesLinks).forEach(x -> usernamesFound.add(x.getText()));
 
         int indexOfUsername = usernamesFound.indexOf(userName);
 
-        clickOnElement(this.superDriver.findElements(this.approveUserBtns).get(indexOfUsername));
+        clickOnElement(DRIVER.findElements(this.approveUserBtns).get(indexOfUsername));
 
-        this.superDriver.switchTo().alert().accept();
-        this.superDriver.switchTo().defaultContent();
+        DRIVER.switchTo().alert().accept();
+        DRIVER.switchTo().defaultContent();
 
         return this;
     }

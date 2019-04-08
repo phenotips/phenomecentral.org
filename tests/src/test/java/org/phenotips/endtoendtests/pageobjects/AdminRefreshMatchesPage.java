@@ -64,7 +64,7 @@ public class AdminRefreshMatchesPage extends BasePage
         waitForElementToBePresent(this.findMatchesText); // Must wait for this to appear before passing to loop.
         waitForSuccessMessage();
 
-        this.superDriver.navigate().refresh();
+        DRIVER.navigate().refresh();
         waitForElementToBePresent(this.selectLocalServerForMatchBox);
 
         return this;
@@ -84,7 +84,7 @@ public class AdminRefreshMatchesPage extends BasePage
         waitForElementToBePresent(this.findMatchesText); // Must wait for this to appear before passing to loop.
         waitForSuccessMessage();
 
-        this.superDriver.navigate().refresh();
+        DRIVER.navigate().refresh();
         unconditionalWaitNs(1); // It might find the element before refresh is completed.
         waitForElementToBePresent(this.selectLocalServerForMatchBox);
 
@@ -101,7 +101,7 @@ public class AdminRefreshMatchesPage extends BasePage
     public String getNumberOfLocalPatientsProcessed()
     {
         waitForElementToBePresent(this.numberPatientsProcessed);
-        return this.superDriver.findElement(this.numberPatientsProcessed).getText();
+        return DRIVER.findElement(this.numberPatientsProcessed).getText();
     }
 
     /**
@@ -114,7 +114,7 @@ public class AdminRefreshMatchesPage extends BasePage
     public String getTotalMatchesFound()
     {
         waitForElementToBePresent(this.totalMatchesFound);
-        return this.superDriver.findElement(this.totalMatchesFound).getText();
+        return DRIVER.findElement(this.totalMatchesFound).getText();
     }
 
     /**
@@ -129,7 +129,7 @@ public class AdminRefreshMatchesPage extends BasePage
         int secondsToWait = 30;
 
         // While the green matches message text is not "Done, refresh page to see...", wait 5 secs and check again.
-        while (!(this.superDriver.findElement(this.findMatchesText).getText().equals(this.completedMatchesMessage))) {
+        while (!(DRIVER.findElement(this.findMatchesText).getText().equals(this.completedMatchesMessage))) {
             if (secondsWaited > secondsToWait) {
                 break;
             }

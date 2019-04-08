@@ -73,7 +73,7 @@ public class ViewPatientPage extends CommonInfoSelectors
     public String getPatientID()
     {
         waitForElementToBePresent(this.patientID);
-        return this.superDriver.findElement(this.patientID).getText();
+        return DRIVER.findElement(this.patientID).getText();
     }
 
     /**
@@ -173,7 +173,7 @@ public class ViewPatientPage extends CommonInfoSelectors
     public String getAdditionalComments()
     {
         if (isElementPresent(this.additionalCommentsText)) {
-            return this.superDriver.findElement(this.additionalCommentsText).getText();
+            return DRIVER.findElement(this.additionalCommentsText).getText();
         } else {
             return "";
         }
@@ -201,7 +201,7 @@ public class ViewPatientPage extends CommonInfoSelectors
     public String getResolutionNotes()
     {
         if (isElementPresent(this.resolutionNotesText)) {
-            return this.superDriver.findElement(this.resolutionNotesText).getText();
+            return DRIVER.findElement(this.resolutionNotesText).getText();
         } else {
             return "";
         }

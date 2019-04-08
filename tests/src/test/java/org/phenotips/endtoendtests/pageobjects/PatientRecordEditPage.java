@@ -463,7 +463,7 @@ public class PatientRecordEditPage extends CommonInfoSelectors
     public PatientRecordEditPage setIdentifier(String identifier)
     {
         clickOnElement(this.identifierBox);
-        this.superDriver.findElement(this.identifierBox).clear();
+        DRIVER.findElement(this.identifierBox).clear();
         clickAndTypeOnElement(this.identifierBox, identifier);
         // Gives "identifier already exists" if we navigate away too fast.
         unconditionalWaitNs(1);
@@ -481,7 +481,7 @@ public class PatientRecordEditPage extends CommonInfoSelectors
     public PatientRecordEditPage setLifeStatus(String status)
     {
         waitForElementToBePresent(this.lifeStatusDrp);
-        Select statusDrp = new Select(this.superDriver.findElement(this.lifeStatusDrp));
+        Select statusDrp = new Select(DRIVER.findElement(this.lifeStatusDrp));
 
         statusDrp.selectByVisibleText(status);
 
@@ -503,8 +503,8 @@ public class PatientRecordEditPage extends CommonInfoSelectors
         Select yearDrp;
 
         waitForElementToBePresent(this.dobMonthDrp);
-        monthDrp = new Select(this.superDriver.findElement(this.dobMonthDrp));
-        yearDrp = new Select(this.superDriver.findElement(this.dobYearDrp));
+        monthDrp = new Select(DRIVER.findElement(this.dobMonthDrp));
+        yearDrp = new Select(DRIVER.findElement(this.dobYearDrp));
 
         monthDrp.selectByVisibleText(month);
         yearDrp.selectByVisibleText(year);
@@ -528,8 +528,8 @@ public class PatientRecordEditPage extends CommonInfoSelectors
         Select yearDrp;
 
         waitForElementToBePresent(this.doDeathMonthDrp);
-        monthDrp = new Select(this.superDriver.findElement(this.doDeathMonthDrp));
-        yearDrp = new Select(this.superDriver.findElement(this.doDeathYearDrp));
+        monthDrp = new Select(DRIVER.findElement(this.doDeathMonthDrp));
+        yearDrp = new Select(DRIVER.findElement(this.doDeathYearDrp));
 
         monthDrp.selectByVisibleText(month);
         yearDrp.selectByVisibleText(year);
@@ -794,8 +794,8 @@ public class PatientRecordEditPage extends CommonInfoSelectors
         clickAndTypeOnElement(this.paternalAgeBox, "30");
 
         forceScrollToElement(this.apgarScore1MinDrp);
-        Select apgarScore1Min = new Select(this.superDriver.findElement(this.apgarScore1MinDrp));
-        Select apgarScore5Min = new Select(this.superDriver.findElement(this.apgarScore5MinDrp));
+        Select apgarScore1Min = new Select(DRIVER.findElement(this.apgarScore1MinDrp));
+        Select apgarScore5Min = new Select(DRIVER.findElement(this.apgarScore5MinDrp));
         List<String> loAPGARScores = new ArrayList<>(Arrays.asList(
             "Unknown", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"));
 
@@ -845,7 +845,7 @@ public class PatientRecordEditPage extends CommonInfoSelectors
     private void enterSpecificMeasurement(By measurementBoxSelector, int nthOccurrence, Float value)
     {
         if (value != null) {
-            List<WebElement> results = superDriver.findElements(measurementBoxSelector);
+            List<WebElement> results = DRIVER.findElements(measurementBoxSelector);
             WebElement desiredBox;
 
             // Get the last occurrence.
@@ -916,11 +916,11 @@ public class PatientRecordEditPage extends CommonInfoSelectors
 
         waitForElementToBePresent(this.measurementDateBoxes);
 
-        superDriver.findElements(this.measurementDateBoxes).get(nthMeasurement - 1).click();
+        DRIVER.findElements(this.measurementDateBoxes).get(nthMeasurement - 1).click();
 
         waitForElementToBePresent(this.measurementMonthDrps);
-        Select monthDrp = new Select(this.superDriver.findElement(this.measurementMonthDrps));
-        Select yearDrp = new Select(this.superDriver.findElement(this.measurementYearDrps));
+        Select monthDrp = new Select(DRIVER.findElement(this.measurementMonthDrps));
+        Select yearDrp = new Select(DRIVER.findElement(this.measurementYearDrps));
 
         monthDrp.selectByVisibleText(month);
         yearDrp.selectByVisibleText(year);
@@ -977,7 +977,7 @@ public class PatientRecordEditPage extends CommonInfoSelectors
      */
     private Float getSpecificMeasurement(By measurementBoxSelector, int nthOccurrence)
     {
-        List<WebElement> results = superDriver.findElements(measurementBoxSelector);
+        List<WebElement> results = DRIVER.findElements(measurementBoxSelector);
         WebElement desiredBox;
 
         // Get the last occurrence.
@@ -1047,7 +1047,7 @@ public class PatientRecordEditPage extends CommonInfoSelectors
     {
         waitForElementToBePresent(this.phenotypeDetailsLabels);
 
-        List<WebElement> loExpandCarets = this.superDriver.findElements(this.expandCaretBtns);
+        List<WebElement> loExpandCarets = DRIVER.findElements(this.expandCaretBtns);
         List<String> loLabels = new ArrayList<>();
 
         // Expand all first
@@ -1058,7 +1058,7 @@ public class PatientRecordEditPage extends CommonInfoSelectors
             }
         }
 
-        this.superDriver.findElements(this.phenotypeDetailsLabels).forEach(x -> loLabels.add(x.getText()));
+        DRIVER.findElements(this.phenotypeDetailsLabels).forEach(x -> loLabels.add(x.getText()));
 
         return loLabels;
     }
@@ -1074,7 +1074,7 @@ public class PatientRecordEditPage extends CommonInfoSelectors
     public PatientRecordEditPage addDetailsToNthPhenotype(int n)
     {
         waitForElementToBePresent(this.addPhenotypeDetailsBtns);
-        List<WebElement> loPhenotypeAddBtnsPresent = this.superDriver.findElements(this.addPhenotypeDetailsBtns);
+        List<WebElement> loPhenotypeAddBtnsPresent = DRIVER.findElements(this.addPhenotypeDetailsBtns);
 
         loPhenotypeAddBtnsPresent.get(n - 1).click();
 
@@ -1133,7 +1133,7 @@ public class PatientRecordEditPage extends CommonInfoSelectors
     {
         List<String> loPhenotypesFound = new ArrayList<>();
         waitForElementToBePresent(this.phenotypeSearchBox);
-        this.superDriver.findElements(phenotypeLabelsSelector).forEach(x -> loPhenotypesFound.add(x.getText()));
+        DRIVER.findElements(phenotypeLabelsSelector).forEach(x -> loPhenotypesFound.add(x.getText()));
 
         return loPhenotypesFound;
     }
@@ -1202,8 +1202,8 @@ public class PatientRecordEditPage extends CommonInfoSelectors
         waitForElementToBePresent(this.geneNameBoxes); // Must wait before search for elements
         unconditionalWaitNs(1);
 
-        List<WebElement> foundGeneBoxes = this.superDriver.findElements(this.geneNameBoxes);
-        List<WebElement> foundStatusDrps = this.superDriver.findElements(this.geneStatusDrps);
+        List<WebElement> foundGeneBoxes = DRIVER.findElements(this.geneNameBoxes);
+        List<WebElement> foundStatusDrps = DRIVER.findElements(this.geneStatusDrps);
 
         // Get the last element of each list for the most bottom one
         WebElement bottommostGeneNameBox = foundGeneBoxes.get(foundGeneBoxes.size() - 1);
@@ -1222,24 +1222,24 @@ public class PatientRecordEditPage extends CommonInfoSelectors
 
         switch (strategy) {
             case "Sequencing":
-                foundDesiredStrategyCheckboxes = this.superDriver.findElements(this.geneStrategySequencingCheckboxes);
+                foundDesiredStrategyCheckboxes = DRIVER.findElements(this.geneStrategySequencingCheckboxes);
                 foundDesiredStrategyCheckboxes.get(foundDesiredStrategyCheckboxes.size() - 1).click();
                 break;
 
             case "Deletion/duplication":
-                foundDesiredStrategyCheckboxes = this.superDriver.findElements(this.geneStrategyDeletionCheckboxes);
+                foundDesiredStrategyCheckboxes = DRIVER.findElements(this.geneStrategyDeletionCheckboxes);
                 foundDesiredStrategyCheckboxes.get(foundDesiredStrategyCheckboxes.size() - 1).click();
                 break;
 
             case "Familial mutation":
                 foundDesiredStrategyCheckboxes =
-                    this.superDriver.findElements(this.geneStrategyFamilialMutationCheckboxes);
+                    DRIVER.findElements(this.geneStrategyFamilialMutationCheckboxes);
                 foundDesiredStrategyCheckboxes.get(foundDesiredStrategyCheckboxes.size() - 1).click();
                 break;
 
             case "Common mutations":
                 foundDesiredStrategyCheckboxes =
-                    this.superDriver.findElements(this.geneStrategyCommonMutationCheckboxes);
+                    DRIVER.findElements(this.geneStrategyCommonMutationCheckboxes);
                 foundDesiredStrategyCheckboxes.get(foundDesiredStrategyCheckboxes.size() - 1).click();
                 break;
 
@@ -1308,7 +1308,7 @@ public class PatientRecordEditPage extends CommonInfoSelectors
     public boolean isCaseSolved()
     {
         waitForElementToBePresent(this.caseSolvedCheckbox);
-        return this.superDriver.findElement(this.caseSolvedCheckbox).isSelected();
+        return DRIVER.findElement(this.caseSolvedCheckbox).isSelected();
     }
 
     /**
@@ -1329,7 +1329,7 @@ public class PatientRecordEditPage extends CommonInfoSelectors
             clickOnElement(this.addPubMedLink);
         }
 
-        List<WebElement> loPubMedIDBoxes = this.superDriver.findElements(this.pubMedIDBoxes);
+        List<WebElement> loPubMedIDBoxes = DRIVER.findElements(this.pubMedIDBoxes);
         clickOnElement(loPubMedIDBoxes.get(loPubMedIDBoxes.size() - 1));
         loPubMedIDBoxes.get(loPubMedIDBoxes.size() - 1).sendKeys(ID);
 
@@ -1349,7 +1349,7 @@ public class PatientRecordEditPage extends CommonInfoSelectors
     public PatientRecordEditPage removeNthPubMedID(int n)
     {
         waitForElementToBePresent(this.deletePubMedBtns);
-        List<WebElement> loDeletePubMedBtns = this.superDriver.findElements(this.deletePubMedBtns);
+        List<WebElement> loDeletePubMedBtns = DRIVER.findElements(this.deletePubMedBtns);
 
         clickOnElement(loDeletePubMedBtns.get(n - 1));
 
@@ -1402,7 +1402,7 @@ public class PatientRecordEditPage extends CommonInfoSelectors
         clickOnElement(this.additionalCommentsBox);
         waitForElementToBePresent(this.pubMedIDCheckStatus);
 
-        String statusText = this.superDriver.findElements(this.pubMedIDCheckStatus).get(n - 1).getText();
+        String statusText = DRIVER.findElements(this.pubMedIDCheckStatus).get(n - 1).getText();
 
         return !statusText.equals(invalidPubMedIDError);
     }
@@ -1447,7 +1447,7 @@ public class PatientRecordEditPage extends CommonInfoSelectors
     public PatientRecordEditPage toggleNthClinicalDiagnosisCheckbox(int n)
     {
         waitForElementToBePresent(this.clinicalDiagnosisCheckboxes);
-        clickOnElement(this.superDriver.findElements(this.clinicalDiagnosisCheckboxes).get(n - 1));
+        clickOnElement(DRIVER.findElements(this.clinicalDiagnosisCheckboxes).get(n - 1));
 
         return this;
     }
@@ -1463,7 +1463,7 @@ public class PatientRecordEditPage extends CommonInfoSelectors
     public PatientRecordEditPage toggleNthFinalDiagnosisCheckbox(int n)
     {
         waitForElementToBePresent(this.finalDiagnosisCheckboxes);
-        clickOnElement(this.superDriver.findElements(this.finalDiagnosisCheckboxes).get(n - 1));
+        clickOnElement(DRIVER.findElements(this.finalDiagnosisCheckboxes).get(n - 1));
 
         return this;
     }

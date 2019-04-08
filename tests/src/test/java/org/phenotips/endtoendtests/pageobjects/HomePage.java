@@ -55,7 +55,7 @@ public class HomePage extends BasePage
     @Step("Navigate to login page")
     public LoginPage navigateToLoginPage()
     {
-        this.superDriver.navigate().to(HOMEPAGE_URL);
+        DRIVER.navigate().to(HOMEPAGE_URL);
         // Try to click on the link immediately, rather than checking for a logOut link
         // being present. That causes five seconds of whenever trying to navigate to login page.
         try {
@@ -77,7 +77,7 @@ public class HomePage extends BasePage
     @Step("Navigate to sign up page")
     public UserSignUpPage navigateToSignUpPage()
     {
-        this.superDriver.navigate().to(HOMEPAGE_URL);
+        DRIVER.navigate().to(HOMEPAGE_URL);
         if (isElementPresent(this.logOutLink)) {
             logOut();
         }
@@ -100,7 +100,7 @@ public class HomePage extends BasePage
         waitForElementToBePresent(this.logOutLink);
         List<String> loTitles = new ArrayList<>();
 
-        this.superDriver.findElements(this.sectionTitles).forEach(x -> loTitles.add(x.getText()));
+        DRIVER.findElements(this.sectionTitles).forEach(x -> loTitles.add(x.getText()));
 
         return loTitles;
     }
@@ -118,6 +118,6 @@ public class HomePage extends BasePage
     {
         waitForElementToBePresent(this.unauthorizedActionErrorMsg);
 
-        return this.superDriver.findElement(this.unauthorizedActionErrorMsg).getText();
+        return DRIVER.findElement(this.unauthorizedActionErrorMsg).getText();
     }
 }

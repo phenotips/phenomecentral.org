@@ -80,7 +80,7 @@ public abstract class BasePage extends BaseSuite
      * Declaration of the webdriver and the explicit waiting objects. Will be initialized when a test runs and any page
      * class instantiated. See BasePage ctor.
      */
-    protected WebDriver superDriver;
+//    protected WebDriver superDriver = DRIVER;
     // Initialized only when a test suite runs and needs a page, so see BaseTest class.
 
     /**
@@ -109,7 +109,7 @@ public abstract class BasePage extends BaseSuite
 //        // Set the reference to the webdriver passed from a test case and initialize waiting times
 //        // longPause is used to wait for something to disappear. Ex. loading bar, or a sending message.
 //        // Might take longer than PAUSE_LENGTH seconds, so give it up to a minute.
-//        this.superDriver = aDriver;
+//        DRIVER = aDriver;
 
     }
 
@@ -205,7 +205,7 @@ public abstract class BasePage extends BaseSuite
     public void clickOnElement(By elementSelector)
     {
         waitForElementToBePresent(elementSelector);
-        clickOnElement(this.superDriver.findElement(elementSelector));
+        clickOnElement(DRIVER.findElement(elementSelector));
     }
 
     /**
@@ -221,11 +221,11 @@ public abstract class BasePage extends BaseSuite
         try {
             aWebElement.click();
         } catch (WebDriverException e) {
-            ((JavascriptExecutor) this.superDriver).executeScript("arguments[0].scrollIntoView();", aWebElement);
+            ((JavascriptExecutor) DRIVER).executeScript("arguments[0].scrollIntoView();", aWebElement);
             try {
                 aWebElement.click();
             } catch (WebDriverException f) {
-                ((JavascriptExecutor) this.superDriver).executeScript("arguments[0].click();", aWebElement);
+                ((JavascriptExecutor) DRIVER).executeScript("arguments[0].click();", aWebElement);
                 System.out.println("Warning: Force click on element: " + aWebElement);
             }
         }
@@ -242,8 +242,8 @@ public abstract class BasePage extends BaseSuite
     public void clickAndTypeOnElement(By elementSelector, String input)
     {
         clickOnElement(elementSelector);
-        this.superDriver.findElement(elementSelector).clear(); // Clear first
-        this.superDriver.findElement(elementSelector).sendKeys(input);
+        DRIVER.findElement(elementSelector).clear(); // Clear first
+        DRIVER.findElement(elementSelector).sendKeys(input);
     }
 
     /**
@@ -254,7 +254,7 @@ public abstract class BasePage extends BaseSuite
     public void clickAndClearElement(By elementSelector)
     {
         clickOnElement(elementSelector);
-        this.superDriver.findElement(elementSelector).clear(); // Clear first
+        DRIVER.findElement(elementSelector).clear(); // Clear first
     }
 
     /**
@@ -266,7 +266,7 @@ public abstract class BasePage extends BaseSuite
     public void toggleCheckboxToChecked(By checkboxSelector)
     {
         waitForElementToBePresent(checkboxSelector);
-        if (!this.superDriver.findElement(checkboxSelector).isSelected()) {
+        if (!DRIVER.findElement(checkboxSelector).isSelected()) {
             clickOnElement(checkboxSelector);
         }
     }
@@ -298,8 +298,8 @@ public abstract class BasePage extends BaseSuite
     {
         waitForElementToBePresent(elementSelector);
 
-        WebElement webElement = this.superDriver.findElement(elementSelector);
-        ((JavascriptExecutor) this.superDriver).executeScript("arguments[0].scrollIntoView();", webElement);
+        WebElement webElement = DRIVER.findElement(elementSelector);
+        ((JavascriptExecutor) DRIVER).executeScript("arguments[0].scrollIntoView();", webElement);
     }
 
     /**
@@ -312,8 +312,8 @@ public abstract class BasePage extends BaseSuite
     {
         waitForElementToBePresent(elementSelector);
 
-        WebElement webElement = this.superDriver.findElement(elementSelector);
-        ((JavascriptExecutor) this.superDriver).executeScript("arguments[0].click();", webElement);
+        WebElement webElement = DRIVER.findElement(elementSelector);
+        ((JavascriptExecutor) DRIVER).executeScript("arguments[0].click();", webElement);
     }
 
     /**
@@ -336,10 +336,10 @@ public abstract class BasePage extends BaseSuite
         List<String> loLabels = new ArrayList<>();
 
         // Finds all children, pre-order, no recursion needed?
-        List<WebElement> loButtons = this.superDriver
+        List<WebElement> loButtons = DRIVER
             .findElements(new ByChained(rootPath, childrenPath));
 
-        List<WebElement> loButtonsLabels = this.superDriver
+        List<WebElement> loButtonsLabels = DRIVER
             .findElements(new ByChained(rootPath, childrenLabelLocation));
 
         Iterator<WebElement> buttonIter = loButtons.iterator();
@@ -381,7 +381,7 @@ public abstract class BasePage extends BaseSuite
         waitForElementToBePresent(labelsSelector);
 
         List<String> loTextStrings = new ArrayList<>();
-        List<WebElement> loFoundLabels = this.superDriver.findElements(labelsSelector);
+        List<WebElement> loFoundLabels = DRIVER.findElements(labelsSelector);
 
         for (WebElement e : loFoundLabels) {
             loTextStrings.add(e.getText());
@@ -447,7 +447,7 @@ public abstract class BasePage extends BaseSuite
     @Step("Navigate to Email Inbox Page (Fake SMTP UI)")
     public EmailUIPage navigateToEmailInboxPage()
     {
-        this.superDriver.navigate().to(this.EMAIL_UI_URL);
+        DRIVER.navigate().to(this.EMAIL_UI_URL);
         return new EmailUIPage();
     }
 
@@ -475,7 +475,7 @@ public abstract class BasePage extends BaseSuite
     public String getApprovalPendingMessage()
     {
         waitForElementToBePresent(this.approvalPendingMessage);
-        return this.superDriver.findElement(this.approvalPendingMessage).getText();
+        return DRIVER.findElement(this.approvalPendingMessage).getText();
     }
 
     /**
@@ -524,8 +524,8 @@ public abstract class BasePage extends BaseSuite
     @Step("Dismiss the unsaved changes warning dialogue")
     public void dismissUnsavedChangesWarning()
     {
-        this.superDriver.switchTo().alert().accept();
-        this.superDriver.switchTo().defaultContent();
+        DRIVER.switchTo().alert().accept();
+        DRIVER.switchTo().defaultContent();
     }
 
 }

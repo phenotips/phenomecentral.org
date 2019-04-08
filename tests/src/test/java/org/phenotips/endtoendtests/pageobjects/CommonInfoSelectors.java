@@ -161,9 +161,9 @@ public abstract class CommonInfoSelectors extends BasePage implements CommonInfo
         clickAndTypeOnElement(this.newCollaboratorBox, collaboratorName);
         clickOnElement(this.firstCollaboratorResult);
         // Looks like we'll have to press enter
-        this.superDriver.findElement(this.newCollaboratorBox).sendKeys(Keys.ENTER);
+        DRIVER.findElement(this.newCollaboratorBox).sendKeys(Keys.ENTER);
 
-        List<WebElement> loPrivilegeDropdowns = this.superDriver.findElements(this.privilegeLevelDrps);
+        List<WebElement> loPrivilegeDropdowns = DRIVER.findElements(this.privilegeLevelDrps);
         Select bottomMostPDrop = new Select(loPrivilegeDropdowns.get(loPrivilegeDropdowns.size() - 1));
 
         switch (privilegeLevel) {
@@ -195,7 +195,7 @@ public abstract class CommonInfoSelectors extends BasePage implements CommonInfo
         clickOnElement(this.modifyPermissionsBtn);
         waitForElementToBePresent(this.newCollaboratorBox);
 
-        List<WebElement> loDeleteCollaboratorBtns = this.superDriver.findElements(this.deleteCollaboratorBtn);
+        List<WebElement> loDeleteCollaboratorBtns = DRIVER.findElements(this.deleteCollaboratorBtn);
         loDeleteCollaboratorBtns.get(n - 1).click();
 
         forceClickOnElement(this.updateConfirmBtn);

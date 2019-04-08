@@ -75,7 +75,7 @@ public class EmailUIPage extends BasePage
         unconditionalWaitNs(1);
         if (getNumberOfEmails() > 0) {
             waitForElementToBePresent(this.emailTitles);
-            this.superDriver.findElements(this.emailTitles).forEach(x -> loTitles.add(x.getText()));
+            DRIVER.findElements(this.emailTitles).forEach(x -> loTitles.add(x.getText()));
         }
         return loTitles;
     }
@@ -89,9 +89,9 @@ public class EmailUIPage extends BasePage
     public int getNumberOfEmails()
     {
         waitForElementToBePresent(this.emailStatus);
-        String emailText = this.superDriver.findElement(this.emailStatus).getText();
+        String emailText = DRIVER.findElement(this.emailStatus).getText();
         if (emailText.contains("You have ")) {
-            return this.superDriver.findElements(this.emailRows).size();
+            return DRIVER.findElements(this.emailRows).size();
         } else {
             return 0;
         }
@@ -108,7 +108,7 @@ public class EmailUIPage extends BasePage
     @Step("Navigate to the PC instance's homepage")
     public HomePage navigateToHomePage()
     {
-        this.superDriver.navigate().to(HOMEPAGE_URL);
+        DRIVER.navigate().to(HOMEPAGE_URL);
         return new HomePage();
     }
 }

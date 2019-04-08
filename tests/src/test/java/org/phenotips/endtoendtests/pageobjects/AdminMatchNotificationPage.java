@@ -110,10 +110,10 @@ public class AdminMatchNotificationPage extends AdminSettingsPage
         filterByID(referencePatient);
         waitForLoadingBarToDisappear();
 
-        List<WebElement> loFoundReferencePatients = this.superDriver.findElements(this.referencePatientLink);
-        List<WebElement> loFoundMatchedPatients = this.superDriver.findElements(this.matchedPatientLink);
-        List<WebElement> loFoundReferenceEmailBoxes = this.superDriver.findElements(this.firstRowFirstEmailBox);
-        List<WebElement> loFoundMatchedEmailBoxes = this.superDriver.findElements(this.firstRowSecondEmailBox);
+        List<WebElement> loFoundReferencePatients = DRIVER.findElements(this.referencePatientLink);
+        List<WebElement> loFoundMatchedPatients = DRIVER.findElements(this.matchedPatientLink);
+        List<WebElement> loFoundReferenceEmailBoxes = DRIVER.findElements(this.firstRowFirstEmailBox);
+        List<WebElement> loFoundMatchedEmailBoxes = DRIVER.findElements(this.firstRowSecondEmailBox);
 
         System.out.println("Found reference email boxes number: " + loFoundReferenceEmailBoxes.size());
         System.out.println("Found matched email boxes number: " + loFoundMatchedEmailBoxes.size());
@@ -151,8 +151,8 @@ public class AdminMatchNotificationPage extends AdminSettingsPage
         filterByID(referencePatient);
         waitForLoadingBarToDisappear();
 
-        List<WebElement> loFoundReferencePatients = this.superDriver.findElements(this.referencePatientLink);
-        List<WebElement> loFoundMatchedPatients = this.superDriver.findElements(this.matchedPatientLink);
+        List<WebElement> loFoundReferencePatients = DRIVER.findElements(this.referencePatientLink);
+        List<WebElement> loFoundMatchedPatients = DRIVER.findElements(this.matchedPatientLink);
 
         for (int i = 0; i < loFoundMatchedPatients.size(); ++i) {
             System.out.println("For loop: Reference: " + loFoundMatchedPatients.get(i).getText() +
@@ -200,8 +200,8 @@ public class AdminMatchNotificationPage extends AdminSettingsPage
     {
         waitForElementToBePresent(this.matchesGenotypeScoreSlider);
 
-        Actions actionBuilder = new Actions(this.superDriver);
-        actionBuilder.dragAndDropBy(this.superDriver.findElement(this.matchesGenotypeScoreSlider), -50, 0)
+        Actions actionBuilder = new Actions(DRIVER);
+        actionBuilder.dragAndDropBy(DRIVER.findElement(this.matchesGenotypeScoreSlider), -50, 0)
             .build().perform();
         System.out.println("Dragging Genotype score slider to 0.");
 
@@ -220,8 +220,8 @@ public class AdminMatchNotificationPage extends AdminSettingsPage
     {
         waitForElementToBePresent(this.matchesAverageScoreSlider);
 
-        Actions actionBuilder = new Actions(this.superDriver);
-        actionBuilder.dragAndDropBy(this.superDriver.findElement(this.matchesAverageScoreSlider), -50, 0)
+        Actions actionBuilder = new Actions(DRIVER);
+        actionBuilder.dragAndDropBy(DRIVER.findElement(this.matchesAverageScoreSlider), -50, 0)
             .build().perform();
         System.out.println("Dragging Average Score slider to 0.1");
 

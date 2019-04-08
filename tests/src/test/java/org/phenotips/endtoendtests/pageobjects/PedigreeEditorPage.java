@@ -282,7 +282,7 @@ public class PedigreeEditorPage extends BasePage
     public String getPatientIDFromModal()
     {
         waitForElementToBePresent(this.patientIDInModal);
-        return this.superDriver.findElement(this.patientIDInModal).getText();
+        return DRIVER.findElement(this.patientIDInModal).getText();
     }
 
     /**
@@ -319,11 +319,11 @@ public class PedigreeEditorPage extends BasePage
     @Step("Retrieve the gender of the patient")
     public String getGender()
     {
-        if (this.superDriver.findElement(this.maleGenderBtn).isSelected()) {
+        if (DRIVER.findElement(this.maleGenderBtn).isSelected()) {
             return "Male";
-        } else if (this.superDriver.findElement(this.femaleGenderBtn).isSelected()) {
+        } else if (DRIVER.findElement(this.femaleGenderBtn).isSelected()) {
             return "Female";
-        } else if (this.superDriver.findElement(this.otherGenderBtn).isSelected()) {
+        } else if (DRIVER.findElement(this.otherGenderBtn).isSelected()) {
             return "Other";
         } else {
             return "Unknown";
@@ -504,11 +504,11 @@ public class PedigreeEditorPage extends BasePage
 
         System.out.println("Wait for hover box is done - 3 secs. Now find and click.");
 
-        List<WebElement> loHoverBoxes = this.superDriver.findElements(this.hoverBox);
+        List<WebElement> loHoverBoxes = DRIVER.findElements(this.hoverBox);
 
         System.out.println("Found hoverboxes: " + loHoverBoxes.size());
 
-        Actions action = new Actions(this.superDriver);
+        Actions action = new Actions(DRIVER);
         action.moveToElement(loHoverBoxes.get(n - 1)) // Wiggles the mouse a little bit
             .moveToElement(loHoverBoxes.get(n - 1), 10, 10)
             .pause(1000)
@@ -518,7 +518,7 @@ public class PedigreeEditorPage extends BasePage
 
         if (!isElementClickable(this.personalTab)) {
             // Search again, maybe coordiantes changed.
-            loHoverBoxes = this.superDriver.findElements(this.hoverBox);
+            loHoverBoxes = DRIVER.findElements(this.hoverBox);
             System.out.println("Note: Clicking " + n + "th hover box again...");
             System.out.println("Found hoverboxes, Second Try: " + loHoverBoxes.size());
             action.moveToElement(loHoverBoxes.get(n - 1), 10, 10)
@@ -547,7 +547,7 @@ public class PedigreeEditorPage extends BasePage
         openNthEditModal(1);
         waitForElementToBeClickable(this.createChildNode);
 
-        List<WebElement> loChildCreateNodes = this.superDriver.findElements(this.createChildNode);
+        List<WebElement> loChildCreateNodes = DRIVER.findElements(this.createChildNode);
         loChildCreateNodes.get(1).click();
         forceClickOnElement(this.createMaleNode);
 
@@ -564,7 +564,7 @@ public class PedigreeEditorPage extends BasePage
     public int getNumberOfNodes()
     {
         waitForElementToBePresent(this.closeEditor);
-        return this.superDriver.findElements(this.hoverBox).size();
+        return DRIVER.findElements(this.hoverBox).size();
     }
 
     /**
@@ -577,7 +577,7 @@ public class PedigreeEditorPage extends BasePage
     public int getNumberOfPartnerLinks()
     {
         waitForElementToBePresent(this.closeEditor);
-        return this.superDriver.findElements(this.hoverBoxPartnerLink).size();
+        return DRIVER.findElements(this.hoverBoxPartnerLink).size();
     }
 
     /**
@@ -602,7 +602,7 @@ public class PedigreeEditorPage extends BasePage
     {
         List<String> loPatientIDs = new ArrayList<>();
         waitForElementToBePresent(this.closeEditor);
-        this.superDriver.findElements(this.linkedPatientIDLink)
+        DRIVER.findElements(this.linkedPatientIDLink)
             .forEach(element -> loPatientIDs.add(element.getText()));
 
         return loPatientIDs;
@@ -619,10 +619,10 @@ public class PedigreeEditorPage extends BasePage
      */
     public PedigreeEditorPage createPartnership(int partner1, int partner2)
     {
-        Actions act = new Actions(this.superDriver);
+        Actions act = new Actions(DRIVER);
 
         waitForElementToBePresent(this.hoverBox);
-        List<WebElement> loHoverBoxes = this.superDriver.findElements(this.hoverBox);
+        List<WebElement> loHoverBoxes = DRIVER.findElements(this.hoverBox);
 
         act.moveToElement(loHoverBoxes.get(partner1 - 1))
             // .pause(2000)
@@ -630,7 +630,7 @@ public class PedigreeEditorPage extends BasePage
 
         forceClickOnElement(this.createPartnerNode);
         waitForElementToBePresent(this.createPartnerNode);
-        List<WebElement> loPartnerNodes = this.superDriver.findElements(this.createPartnerNode);
+        List<WebElement> loPartnerNodes = DRIVER.findElements(this.createPartnerNode);
 
         act.dragAndDrop(loPartnerNodes.get(partner1 - 1),
             loHoverBoxes.get(partner2 - 1))
@@ -654,8 +654,8 @@ public class PedigreeEditorPage extends BasePage
         openNthEditModal(NthHoverBox);
         waitForElementToBePresent(this.createSiblingNode);
 
-        List<WebElement> loChildCreateNodes = this.superDriver.findElements(this.createSiblingNode);
-        List<WebElement> loMaleNodes = this.superDriver.findElements(this.createMaleNode);
+        List<WebElement> loChildCreateNodes = DRIVER.findElements(this.createSiblingNode);
+        List<WebElement> loMaleNodes = DRIVER.findElements(this.createMaleNode);
 
         System.out.println("DEBUG Create Nodes found: " + loChildCreateNodes.size());
 

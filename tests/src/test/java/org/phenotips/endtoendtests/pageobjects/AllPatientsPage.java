@@ -108,7 +108,7 @@ public class AllPatientsPage extends BasePage
     {
         waitForLoadingBarToDisappear();
 
-        List<WebElement> loDeleteBtns = this.superDriver.findElements(this.deleteBtns);
+        List<WebElement> loDeleteBtns = DRIVER.findElements(this.deleteBtns);
 
         // theElement just acts as an iterator for the array size, we don't use it.
         for (WebElement theElement : loDeleteBtns) { // Use the original number of rows a counter

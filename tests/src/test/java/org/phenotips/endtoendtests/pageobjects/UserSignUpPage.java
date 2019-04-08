@@ -91,7 +91,7 @@ public class UserSignUpPage extends BasePage implements CommonSignUpSelectors
     public String getConfirmationMessage()
     {
         waitForElementToBePresent(this.infoMessageArea);
-        return this.superDriver.findElement(this.infoMessageArea).getText();
+        return DRIVER.findElement(this.infoMessageArea).getText();
     }
 
     /**

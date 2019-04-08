@@ -47,7 +47,7 @@ import io.qameta.allure.Step;
  */
 public abstract class BaseTest extends BaseSuite
 {
-    protected static WebDriver theDriver;
+    protected static WebDriver theDriver = DRIVER;
 
     /**
      * Instantiate the webDriver instance here. The WebDriverManager takes care of setting up the environment including
