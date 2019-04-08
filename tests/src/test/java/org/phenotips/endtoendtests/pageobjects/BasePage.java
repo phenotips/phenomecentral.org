@@ -32,46 +32,20 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.qameta.allure.Step;
+import org.phenotips.endtoendtests.common.BaseSuite;
 
 /**
  * This abstract class contains the toolbar (navbar) elements which is visible on all pages. All page classes should
  * inherit this base class
  */
-public abstract class BasePage
+public abstract class BasePage extends BaseSuite
 {
-    ////////////////////////////////////////
-    // Environment Information. You can change these as needed to run tests easily through IDE instead of passing in
-    // command line options to JVM.
-    ////////////////////////////////////////
-
-    /**
-     * Common URLs, specify address of the PC instance Possible mutation in BasePage ctor, get URLs from SystemProperty
-     */
-    protected String HOMEPAGE_URL = "http://localhost:8083";
-
-    protected String EMAIL_UI_URL = "http://localhost:8085";
-
     /**
      * Public selectors, the LoginPageTest touches these. Ideally, tests should not touch selectors.
      */
     public final By adminLink = By.id("tmAdminSpace");
 
     public final By aboutLink = By.id("tmAbout");
-
-    /**
-     * Common login credentials.
-     */
-    protected final String ADMIN_USERNAME = "Admin";
-
-    protected final String ADMIN_PASS = "admin";
-
-    protected final String USER_USERNAME = "TestUser1Uno";
-
-    protected final String USER_PASS = "123456";
-
-    protected final String USER_USERNAME2 = "TestUser2Dos";
-
-    protected final String USER_PASS2 = "123456";
 
     ////////////////////////////////////////
     // Selectors
@@ -84,12 +58,6 @@ public abstract class BasePage
 
     // PC logo at top left to navigate to homepage
     protected final By phenomeCentralLogoBtn = By.cssSelector("#companylogo > a > img");
-
-    /**
-     * Default "maximum" waiting time in seconds. Notably it is used when waiting for an element to appear. This can be
-     * thought of the timeout time if no additional wait was added to a method. Increase if your system is slow.
-     */
-    private final int PAUSE_LENGTH = 5;
 
     /**
      * Private selectors from the navigation toolbar
@@ -113,17 +81,15 @@ public abstract class BasePage
      * Declaration of the webdriver and the explicit waiting objects. Will be initialized when a test runs and any page
      * class instantiated. See BasePage ctor.
      */
-    protected WebDriver superDriver; // Initialized only when a test suite runs and needs a page, so see BaseTest class.
-
-    private WebDriverWait pause;
-
-    private WebDriverWait longPause; // Use to wait for element to disappear.
+    protected WebDriver superDriver;
+    // Initialized only when a test suite runs and needs a page, so see BaseTest class.
 
     /**
      * CTOR. The timeout period is defined here. We can also set the polling interval if need be.
      *
      * @param aDriver is the instance of webdriver created for the test. Must not be {@code null}
      */
+
     public BasePage(WebDriver aDriver)
     {
         // Sets the HOMEPAGE_URL and EMAIL_UI_URL if they were passed in as command line
@@ -146,9 +112,12 @@ public abstract class BasePage
         // longPause is used to wait for something to disappear. Ex. loading bar, or a sending message.
         // Might take longer than PAUSE_LENGTH seconds, so give it up to a minute.
         this.superDriver = aDriver;
-        this.pause = new WebDriverWait(this.superDriver, this.PAUSE_LENGTH);
-        this.longPause = new WebDriverWait(this.superDriver, this.PAUSE_LENGTH + 55);
+
     }
+
+
+
+    public BasePage() {}
 
     ////////////////////////////////////////
     // Generic page interaction methods
@@ -367,7 +336,7 @@ public abstract class BasePage
      */
     public List<String> preOrderTraverseAndClick(By rootPath, By childrenPath, By childrenLabelLocation)
     {
-        waitForElementToBePresent(rootPath); // Must wait before any driver does a find
+        waitForElementToBePresent(rootPath); // Must wait before any DRIVER does a find
         unconditionalWaitNs(2); // Wait two more seconds in case the expansion is actually still loading.
 
         List<String> loLabels = new ArrayList<>();

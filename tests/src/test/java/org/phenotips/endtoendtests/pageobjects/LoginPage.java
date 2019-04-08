@@ -75,7 +75,7 @@ public class LoginPage extends BasePage
     @Step("Login as User 1")
     public HomePage loginAsUser()
     {
-        return loginAs(this.USER_USERNAME, this.USER_PASS);
+        return loginAs(this.USER_1_USERNAME, this.USER_1_PASS);
     }
 
     /**
@@ -86,6 +86,6 @@ public class LoginPage extends BasePage
     @Step("Login as User 2")
     public HomePage loginAsUserTwo()
     {
-        return loginAs(this.USER_USERNAME2, this.USER_PASS2);
+        return loginAs(this.USER_2_USERNAME, this.USER_2_PASS);
     }
 }
