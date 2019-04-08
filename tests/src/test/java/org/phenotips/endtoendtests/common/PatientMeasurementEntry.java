@@ -137,9 +137,9 @@ public class PatientMeasurementEntry
         return this;
     }
 
-    public PatientMeasurementEntry withInnercanthalDistance(Float inntercanthalDistance)
+    public PatientMeasurementEntry withInnercanthalDistance(Float innerCanthalDistance)
     {
-        this.innerCanthalDistance = inntercanthalDistance;
+        this.innerCanthalDistance = innerCanthalDistance;
         return this;
     }
 
