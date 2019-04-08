@@ -41,13 +41,13 @@ public class MatchNotificationPageTests extends BaseTest implements CommonInfoEn
 {
     final private String randomChars = RandomStringUtils.randomAlphanumeric(5);
 
-    HomePage aHomePage = new HomePage(theDriver);
+    HomePage aHomePage = new HomePage();
 
-    EmailUIPage aEmailUIPage = new EmailUIPage(theDriver);
+    EmailUIPage aEmailUIPage = new EmailUIPage();
 
-    ViewPatientPage aViewPatientPage = new ViewPatientPage(theDriver);
+    ViewPatientPage aViewPatientPage = new ViewPatientPage();
 
-    AdminRefreshMatchesPage anAdminRefreshMatchesPage = new AdminRefreshMatchesPage(theDriver);
+    AdminRefreshMatchesPage anAdminRefreshMatchesPage = new AdminRefreshMatchesPage();
 
     /**
      * Refresh "matches since last modified" so that the number goes to zero before beginning these tests. This ensures

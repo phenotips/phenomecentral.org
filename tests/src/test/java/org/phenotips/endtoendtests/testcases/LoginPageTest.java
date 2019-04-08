@@ -28,9 +28,9 @@ import org.testng.annotations.Test;
  */
 public class LoginPageTest extends BaseTest
 {
-    HomePage currentPage = new HomePage(theDriver);
+    HomePage currentPage = new HomePage();
 
-    LoginPage aLoginPage = new LoginPage(theDriver);
+    LoginPage aLoginPage = new LoginPage();
 
     /**
      * Login as Admin, assert that both Administrator Settings link and About link are visible

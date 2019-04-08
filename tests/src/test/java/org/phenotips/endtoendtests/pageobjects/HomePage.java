@@ -22,7 +22,6 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebDriver;
 
 import io.qameta.allure.Step;
 
@@ -40,9 +39,9 @@ public class HomePage extends BasePage
     final By unauthorizedActionErrorMsg = By.cssSelector("p.xwikimessage");
     // Error message that users get when trying to view patients that aren't theirs.
 
-    public HomePage(WebDriver aDriver)
+    public HomePage()
     {
-        super(aDriver);
+        super();
     } // Give the webdriver to the superclass
 
     /**
@@ -56,7 +55,7 @@ public class HomePage extends BasePage
     @Step("Navigate to login page")
     public LoginPage navigateToLoginPage()
     {
-        this.superDriver.navigate().to(this.HOMEPAGE_URL);
+        this.superDriver.navigate().to(HOMEPAGE_URL);
         // Try to click on the link immediately, rather than checking for a logOut link
         // being present. That causes five seconds of whenever trying to navigate to login page.
         try {
@@ -65,7 +64,7 @@ public class HomePage extends BasePage
             logOut();
         }
 
-        return new LoginPage(this.superDriver);
+        return new LoginPage();
     }
 
     /**
@@ -78,13 +77,13 @@ public class HomePage extends BasePage
     @Step("Navigate to sign up page")
     public UserSignUpPage navigateToSignUpPage()
     {
-        this.superDriver.navigate().to(this.HOMEPAGE_URL);
+        this.superDriver.navigate().to(HOMEPAGE_URL);
         if (isElementPresent(this.logOutLink)) {
             logOut();
         }
         clickOnElement(this.signUpButton);
 
-        return new UserSignUpPage(this.superDriver);
+        return new UserSignUpPage();
     }
 
     /**

@@ -22,7 +22,6 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
@@ -151,9 +150,9 @@ public class PedigreeEditorPage extends BasePage
     private final By carrierGeneList = By.cssSelector(
         "div.field-carrier_genes > ul.accepted-suggestions > li > label.accepted-suggestion > span.value");
 
-    public PedigreeEditorPage(WebDriver aDriver)
+    public PedigreeEditorPage()
     {
-        super(aDriver);
+        super();
 
         // Try to click on the default Proband template. If there is no template modal present, catch the error
         // and just assume that there was no modal in the first place.
@@ -204,7 +203,7 @@ public class PedigreeEditorPage extends BasePage
         // We should wait for this to appear.
         waitForElementToBePresent(this.logOutLink);
 
-        return new PatientRecordEditPage(this.superDriver);
+        return new PatientRecordEditPage();
     }
 
     /**

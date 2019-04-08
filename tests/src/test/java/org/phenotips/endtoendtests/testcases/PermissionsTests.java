@@ -39,13 +39,13 @@ public class PermissionsTests extends BaseTest
 {
     private final String randomChars = RandomStringUtils.randomAlphanumeric(5);
 
-    private final HomePage aHomePage = new HomePage(theDriver);
+    private final HomePage aHomePage = new HomePage();
 
-    private final ViewPatientPage aViewPatientPage = new ViewPatientPage(theDriver);
+    private final ViewPatientPage aViewPatientPage = new ViewPatientPage();
 
-    private final AdminRefreshMatchesPage anAdminRefreshMatchesPage = new AdminRefreshMatchesPage(theDriver);
+    private final AdminRefreshMatchesPage anAdminRefreshMatchesPage = new AdminRefreshMatchesPage();
 
-    private final AdminMatchNotificationPage anAdminMatchNotificationPage = new AdminMatchNotificationPage(theDriver);
+    private final AdminMatchNotificationPage anAdminMatchNotificationPage = new AdminMatchNotificationPage();
 
     /**
      * Creates two patients with identical phenotypes and genotypes. One is "Private" and the other is "Matchable".

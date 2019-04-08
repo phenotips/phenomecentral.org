@@ -18,7 +18,6 @@
 package org.phenotips.endtoendtests.pageobjects;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 
 import io.qameta.allure.Step;
 
@@ -33,9 +32,9 @@ public class LoginPage extends BasePage
 
     private final By loginButton = By.cssSelector("input.button[value='Sign in']");
 
-    public LoginPage(WebDriver aDriver)
+    public LoginPage()
     {
-        super(aDriver);
+        super();
     }
 
     /**
@@ -53,7 +52,7 @@ public class LoginPage extends BasePage
 
         clickOnElement(this.loginButton);
 
-        return new HomePage(this.superDriver);
+        return new HomePage();
     }
 
     /**
@@ -64,7 +63,7 @@ public class LoginPage extends BasePage
     @Step("Login as an admin")
     public HomePage loginAsAdmin()
     {
-        return loginAs(this.ADMIN_USERNAME, this.ADMIN_PASS);
+        return loginAs(ADMIN_USERNAME, ADMIN_PASS);
     }
 
     /**
@@ -75,7 +74,7 @@ public class LoginPage extends BasePage
     @Step("Login as User 1")
     public HomePage loginAsUser()
     {
-        return loginAs(this.USER_1_USERNAME, this.USER_1_PASS);
+        return loginAs(USER_1_USERNAME, USER_1_PASS);
     }
 
     /**
@@ -86,6 +85,6 @@ public class LoginPage extends BasePage
     @Step("Login as User 2")
     public HomePage loginAsUserTwo()
     {
-        return loginAs(this.USER_2_USERNAME, this.USER_2_PASS);
+        return loginAs(USER_2_USERNAME, USER_2_PASS);
     }
 }

@@ -59,9 +59,9 @@ public class AddingUsersTests extends BaseTest
         new ArrayList<>(Arrays.asList("MY MATCHES", "MY PATIENTS\n ",
             "PATIENTS SHARED WITH ME\n ", "MY GROUPS\n ", "PUBLIC DATA\n "));
 
-    private final HomePage aHomePage = new HomePage(theDriver);
+    private final HomePage aHomePage = new HomePage();
 
-    private final UserSignUpPage aUserSignUpPage = new UserSignUpPage(theDriver);
+    private final UserSignUpPage aUserSignUpPage = new UserSignUpPage();
 
     // Adds a user through the admin's Users page. Approve the user and login and ensure that dashboard widgets (i.e.
     // My Patients, My Families, etc. are visible.

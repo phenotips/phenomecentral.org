@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 
 import io.qameta.allure.Step;
 
@@ -35,9 +34,9 @@ public class AdminPendingUsersPage extends AdminSettingsPage
 
     private final By usernamesLinks = By.cssSelector("#userstable td.username > a");
 
-    public AdminPendingUsersPage(WebDriver aDriver)
+    public AdminPendingUsersPage()
     {
-        super(aDriver);
+        super();
     }
 
     /**

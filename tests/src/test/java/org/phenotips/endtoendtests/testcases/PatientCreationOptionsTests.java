@@ -34,9 +34,9 @@ import org.testng.annotations.Test;
  */
 public class PatientCreationOptionsTests extends BaseTest implements CommonInfoEnums
 {
-    private HomePage aHomePage = new HomePage(theDriver);
+    private HomePage aHomePage = new HomePage();
 
-    private PatientRecordEditPage aCreationPage = new PatientRecordEditPage(theDriver);
+    private PatientRecordEditPage aCreationPage = new PatientRecordEditPage();
 
     // Cycle through all the options on the "Patient Information" Section.
     @Test()

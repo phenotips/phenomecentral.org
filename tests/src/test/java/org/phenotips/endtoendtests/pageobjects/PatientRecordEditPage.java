@@ -24,7 +24,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
@@ -300,9 +299,9 @@ public class PatientRecordEditPage extends CommonInfoSelectors
     private final By cancelChangesSinceSaveBtn =
         By.cssSelector("div.bottombuttons input[value='Cancel changes since last save']");
 
-    public PatientRecordEditPage(WebDriver aDriver)
+    public PatientRecordEditPage()
     {
-        super(aDriver);
+        super();
     }
 
     ////////////////////////////////////////
@@ -318,7 +317,7 @@ public class PatientRecordEditPage extends CommonInfoSelectors
     public ViewPatientPage saveAndViewSummary()
     {
         clickOnElement(this.saveAndViewSummaryBtn);
-        return new ViewPatientPage(this.superDriver);
+        return new ViewPatientPage();
     }
 
     /**
@@ -342,7 +341,7 @@ public class PatientRecordEditPage extends CommonInfoSelectors
     public ViewPatientPage cancelChanges()
     {
         clickOnElement(this.cancelChangesSinceSaveBtn);
-        return new ViewPatientPage(this.superDriver);
+        return new ViewPatientPage();
     }
 
     ////////////////////////////////////////
@@ -681,7 +680,7 @@ public class PatientRecordEditPage extends CommonInfoSelectors
             clickOnElement(this.editPedigreeOKBtn);
         }
 
-        return new PedigreeEditorPage(this.superDriver);
+        return new PedigreeEditorPage();
     }
 
     /**

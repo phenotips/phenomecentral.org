@@ -25,7 +25,6 @@ import java.util.Map;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
@@ -82,11 +81,10 @@ public abstract class CommonInfoSelectors extends BasePage implements CommonInfo
     /**
      * CTOR. Initializes the map from an enum value to a specific element for the section
      *
-     * @param aDriver is not {@code null}
      */
-    public CommonInfoSelectors(WebDriver aDriver)
+    public CommonInfoSelectors()
     {
-        super(aDriver);
+        super();
         this.sectionMap.put(SECTIONS.ClinicalSymptomsSection, this.clinicalSymptomsSection);
         this.sectionMap.put(SECTIONS.DiagnosisSection, this.diagnosisSection);
         this.sectionMap.put(SECTIONS.FamilyHistorySection, this.familyHistorySection);

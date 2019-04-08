@@ -29,7 +29,7 @@ import org.testng.annotations.Test;
  */
 public class SetupUsers extends BaseTest
 {
-    HomePage aHomePage = new HomePage(theDriver);
+    HomePage aHomePage = new HomePage();
 
     @Test()
     public void setEmailPort()

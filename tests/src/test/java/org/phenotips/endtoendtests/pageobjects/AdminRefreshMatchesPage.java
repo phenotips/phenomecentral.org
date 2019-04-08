@@ -18,7 +18,6 @@
 package org.phenotips.endtoendtests.pageobjects;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 
 import io.qameta.allure.Step;
 
@@ -45,9 +44,9 @@ public class AdminRefreshMatchesPage extends BasePage
 
     private final String completedMatchesMessage = "Done - refresh page to see the updated table above.";
 
-    public AdminRefreshMatchesPage(WebDriver aDriver)
+    public AdminRefreshMatchesPage()
     {
-        super(aDriver);
+        super();
     }
 
     /**

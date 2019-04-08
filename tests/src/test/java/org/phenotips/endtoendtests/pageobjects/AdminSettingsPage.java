@@ -18,7 +18,6 @@
 package org.phenotips.endtoendtests.pageobjects;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 
 import io.qameta.allure.Step;
 
@@ -38,9 +37,9 @@ public class AdminSettingsPage extends BasePage
 
     private final By mailSendingMenu = By.id("vertical-menu-emailSend");
 
-    public AdminSettingsPage(WebDriver aDriver)
+    public AdminSettingsPage()
     {
-        super(aDriver);
+        super();
     }
 
     /**
@@ -52,7 +51,7 @@ public class AdminSettingsPage extends BasePage
     public AdminMatchNotificationPage navigateToMatchingNotificationPage()
     {
         clickOnElement(this.matchingNotificationMenu);
-        return new AdminMatchNotificationPage(this.superDriver);
+        return new AdminMatchNotificationPage();
     }
 
     /**
@@ -64,7 +63,7 @@ public class AdminSettingsPage extends BasePage
     public AdminRefreshMatchesPage navigateToRefreshMatchesPage()
     {
         clickOnElement(this.refreshMatchesMenu);
-        return new AdminRefreshMatchesPage(this.superDriver);
+        return new AdminRefreshMatchesPage();
     }
 
     /**
@@ -76,7 +75,7 @@ public class AdminSettingsPage extends BasePage
     public AdminUsersPage navigateToAdminUsersPage()
     {
         clickOnElement(this.usersMenu);
-        return new AdminUsersPage(this.superDriver);
+        return new AdminUsersPage();
     }
 
     /**
@@ -88,7 +87,7 @@ public class AdminSettingsPage extends BasePage
     public AdminPendingUsersPage navigateToPendingUsersPage()
     {
         clickOnElement(this.pendingUsersMenu);
-        return new AdminPendingUsersPage(this.superDriver);
+        return new AdminPendingUsersPage();
     }
 
     /**
@@ -100,6 +99,6 @@ public class AdminSettingsPage extends BasePage
     public AdminEmailSendingSettingsPage navigateToMailSendingSettingsPage()
     {
         clickOnElement(this.mailSendingMenu);
-        return new AdminEmailSendingSettingsPage(this.superDriver);
+        return new AdminEmailSendingSettingsPage();
     }
 }

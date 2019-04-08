@@ -20,7 +20,6 @@ package org.phenotips.endtoendtests.pageobjects;
 import java.util.List;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
@@ -57,9 +56,9 @@ public class AdminMatchNotificationPage extends AdminSettingsPage
 
     private final By matchesAverageScoreSlider = By.cssSelector("#show-matches-score > div.handle");
 
-    public AdminMatchNotificationPage(WebDriver aDriver)
+    public AdminMatchNotificationPage()
     {
-        super(aDriver);
+        super();
     }
 
     /**

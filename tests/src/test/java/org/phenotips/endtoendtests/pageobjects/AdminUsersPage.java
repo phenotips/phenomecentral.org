@@ -18,7 +18,6 @@
 package org.phenotips.endtoendtests.pageobjects;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 
 import io.qameta.allure.Step;
 
@@ -32,9 +31,9 @@ public class AdminUsersPage extends AdminSettingsPage implements CommonSignUpSel
 
     private final By cancelBtn = By.cssSelector("input[value='Cancel changes since last save']");
 
-    public AdminUsersPage(WebDriver aDriver)
+    public AdminUsersPage()
     {
-        super(aDriver);
+        super();
     }
 
     /**

@@ -20,7 +20,6 @@ package org.phenotips.endtoendtests.pageobjects;
 import java.util.List;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 
 import io.qameta.allure.Step;
 
@@ -59,9 +58,9 @@ public class ViewPatientPage extends CommonInfoSelectors
 
     private final By resolutionNotesText = By.cssSelector("div.solved__notes > div > p");
 
-    public ViewPatientPage(WebDriver aDriver)
+    public ViewPatientPage()
     {
-        super(aDriver);
+        super();
     }
 
     /**
@@ -86,7 +85,7 @@ public class ViewPatientPage extends CommonInfoSelectors
     public PatientRecordEditPage editThisPatient()
     {
         clickOnElement(this.editBtn);
-        return new PatientRecordEditPage(this.superDriver);
+        return new PatientRecordEditPage();
     }
 
     /**

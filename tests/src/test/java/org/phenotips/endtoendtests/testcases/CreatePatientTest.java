@@ -42,11 +42,11 @@ import org.testng.annotations.Test;
  */
 public class CreatePatientTest extends BaseTest implements CommonInfoEnums
 {
-    final private HomePage aHomePage = new HomePage(theDriver);
+    final private HomePage aHomePage = new HomePage();
 
-    final private ViewPatientPage aViewPatientPage = new ViewPatientPage(theDriver);
+    final private ViewPatientPage aViewPatientPage = new ViewPatientPage();
 
-    final private PatientRecordEditPage aPatientRecordEditPage = new PatientRecordEditPage(theDriver);
+    final private PatientRecordEditPage aPatientRecordEditPage = new PatientRecordEditPage();
 
     final private SECTIONS[] checkForTheseSections = {
     SECTIONS.PatientInfoSection,
@@ -143,7 +143,7 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
     @Test()
     public void refreshMatchesForTwoPatients()
     {
-        AdminRefreshMatchesPage aRefreshMatchesPage = new AdminRefreshMatchesPage(theDriver);
+        AdminRefreshMatchesPage aRefreshMatchesPage = new AdminRefreshMatchesPage();
 
         this.aHomePage.navigateToLoginPage()
             .loginAsAdmin()
@@ -166,7 +166,7 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
     @Test()
     public void verifyEmailNotifications()
     {
-        EmailUIPage emailPage = new EmailUIPage(theDriver);
+        EmailUIPage emailPage = new EmailUIPage();
 
         this.aViewPatientPage.navigateToEmailInboxPage()
             .deleteAllEmails();

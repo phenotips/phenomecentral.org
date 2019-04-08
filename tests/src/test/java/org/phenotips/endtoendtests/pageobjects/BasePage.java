@@ -29,7 +29,6 @@ import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.pagefactory.ByChained;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.qameta.allure.Step;
 import org.phenotips.endtoendtests.common.BaseSuite;
@@ -87,37 +86,32 @@ public abstract class BasePage extends BaseSuite
     /**
      * CTOR. The timeout period is defined here. We can also set the polling interval if need be.
      *
-     * @param aDriver is the instance of webdriver created for the test. Must not be {@code null}
      */
 
-    public BasePage(WebDriver aDriver)
+    public BasePage()
     {
-        // Sets the HOMEPAGE_URL and EMAIL_UI_URL if they were passed in as command line
-        // property to JVM. Otherwise, will use what HOMEPAGE_URL and EMAIL_UI_URL as defined
-        // in its declaration at the top of this page.
-        final String homePageParameter = System.getProperty("homePageURL");
-        final String emailUIPageParameter = System.getProperty("emailUIPageURL");
-
-        if (homePageParameter != null) {
-            this.HOMEPAGE_URL = homePageParameter;
-            // Debug message in BaseTest when static webDriver gets instantiated
-        }
-
-        if (emailUIPageParameter != null) {
-            this.EMAIL_UI_URL = emailUIPageParameter;
-            // Debug message in BaseTest when static webDriver gets instantiated
-        }
-
-        // Set the reference to the webdriver passed from a test case and initialize waiting times
-        // longPause is used to wait for something to disappear. Ex. loading bar, or a sending message.
-        // Might take longer than PAUSE_LENGTH seconds, so give it up to a minute.
-        this.superDriver = aDriver;
+//        // Sets the HOMEPAGE_URL and EMAIL_UI_URL if they were passed in as command line
+//        // property to JVM. Otherwise, will use what HOMEPAGE_URL and EMAIL_UI_URL as defined
+//        // in its declaration at the top of this page.
+//        final String homePageParameter = System.getProperty("homePageURL");
+//        final String emailUIPageParameter = System.getProperty("emailUIPageURL");
+//
+//        if (homePageParameter != null) {
+//            this.HOMEPAGE_URL = homePageParameter;
+//            // Debug message in BaseTest when static webDriver gets instantiated
+//        }
+//
+//        if (emailUIPageParameter != null) {
+//            this.EMAIL_UI_URL = emailUIPageParameter;
+//            // Debug message in BaseTest when static webDriver gets instantiated
+//        }
+//
+//        // Set the reference to the webdriver passed from a test case and initialize waiting times
+//        // longPause is used to wait for something to disappear. Ex. loading bar, or a sending message.
+//        // Might take longer than PAUSE_LENGTH seconds, so give it up to a minute.
+//        this.superDriver = aDriver;
 
     }
-
-
-
-    public BasePage() {}
 
     ////////////////////////////////////////
     // Generic page interaction methods
@@ -410,7 +404,7 @@ public abstract class BasePage extends BaseSuite
     public LoginPage logOut()
     {
         clickOnElement(this.logOutLink);
-        return new LoginPage(this.superDriver);
+        return new LoginPage();
     }
 
     /**
@@ -428,7 +422,7 @@ public abstract class BasePage extends BaseSuite
 
         waitForLoadingBarToDisappear();
 
-        return new AllPatientsPage(this.superDriver);
+        return new AllPatientsPage();
     }
 
     /**
@@ -442,7 +436,7 @@ public abstract class BasePage extends BaseSuite
     public AdminSettingsPage navigateToAdminSettingsPage()
     {
         clickOnElement(this.adminLink);
-        return new AdminSettingsPage(this.superDriver);
+        return new AdminSettingsPage();
     }
 
     /**
@@ -454,7 +448,7 @@ public abstract class BasePage extends BaseSuite
     public EmailUIPage navigateToEmailInboxPage()
     {
         this.superDriver.navigate().to(this.EMAIL_UI_URL);
-        return new EmailUIPage(this.superDriver);
+        return new EmailUIPage();
     }
 
     /**
@@ -469,7 +463,7 @@ public abstract class BasePage extends BaseSuite
 
         clickOnElement(this.newPatientLink);
 
-        return new PatientRecordEditPage(this.superDriver);
+        return new PatientRecordEditPage();
     }
 
     /**
@@ -495,7 +489,7 @@ public abstract class BasePage extends BaseSuite
     public HomePage navigateToHomePage()
     {
         clickOnElement(this.phenomeCentralLogoBtn);
-        return new HomePage(this.superDriver);
+        return new HomePage();
     }
 
     /**

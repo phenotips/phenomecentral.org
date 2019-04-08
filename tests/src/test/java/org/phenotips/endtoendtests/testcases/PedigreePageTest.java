@@ -38,13 +38,13 @@ import org.testng.annotations.Test;
  */
 public class PedigreePageTest extends BaseTest implements CommonInfoEnums
 {
-    final private HomePage aHomePage = new HomePage(theDriver);
+    final private HomePage aHomePage = new HomePage();
 
-    final private PedigreeEditorPage aPedigreeEditorPage = new PedigreeEditorPage(theDriver);
+    final private PedigreeEditorPage aPedigreeEditorPage = new PedigreeEditorPage();
 
-    final private PatientRecordEditPage aPatientRecordEditPage = new PatientRecordEditPage(theDriver);
+    final private PatientRecordEditPage aPatientRecordEditPage = new PatientRecordEditPage();
 
-    final private ViewPatientPage aViewPatientPage = new ViewPatientPage(theDriver);
+    final private ViewPatientPage aViewPatientPage = new ViewPatientPage();
 
     final private String randomChars = RandomStringUtils.randomAlphanumeric(5);
 

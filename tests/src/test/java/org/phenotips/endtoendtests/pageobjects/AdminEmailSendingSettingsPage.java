@@ -18,7 +18,6 @@
 package org.phenotips.endtoendtests.pageobjects;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 
 import io.qameta.allure.Step;
 
@@ -33,9 +32,9 @@ public class AdminEmailSendingSettingsPage extends AdminSettingsPage
 
     private final By saveBtn = By.cssSelector("input[value='Save']");
 
-    public AdminEmailSendingSettingsPage(WebDriver aDriver)
+    public AdminEmailSendingSettingsPage()
     {
-        super(aDriver);
+        super();
     }
 
     /**

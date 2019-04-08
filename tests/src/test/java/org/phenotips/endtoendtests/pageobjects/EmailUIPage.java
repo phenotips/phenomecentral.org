@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.Vector;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 
 import io.qameta.allure.Step;
 
@@ -39,9 +38,9 @@ public class EmailUIPage extends BasePage
 
     private final By emailTitles = By.cssSelector("table > tbody > tr > td:nth-child(3) > a");
 
-    public EmailUIPage(WebDriver aDriver)
+    public EmailUIPage()
     {
-        super(aDriver);
+        super();
     }
 
     /**
@@ -109,7 +108,7 @@ public class EmailUIPage extends BasePage
     @Step("Navigate to the PC instance's homepage")
     public HomePage navigateToHomePage()
     {
-        this.superDriver.navigate().to(this.HOMEPAGE_URL);
-        return new HomePage(this.superDriver);
+        this.superDriver.navigate().to(HOMEPAGE_URL);
+        return new HomePage();
     }
 }

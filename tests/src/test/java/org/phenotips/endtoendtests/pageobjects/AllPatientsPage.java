@@ -20,7 +20,6 @@ package org.phenotips.endtoendtests.pageobjects;
 import java.util.List;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import io.qameta.allure.Step;
@@ -48,9 +47,9 @@ public class AllPatientsPage extends BasePage
 
     private final By patientIDFilterBox = By.cssSelector("input[title=\"Filter for the Identifier column\"]");
 
-    public AllPatientsPage(WebDriver aDriver)
+    public AllPatientsPage()
     {
-        super(aDriver);
+        super();
     }
 
     /**
@@ -96,7 +95,7 @@ public class AllPatientsPage extends BasePage
     public ViewPatientPage viewFirstPatientInTable()
     {
         clickOnElement(this.firstPatientRowLink);
-        return new ViewPatientPage(this.superDriver);
+        return new ViewPatientPage();
     }
 
     /**

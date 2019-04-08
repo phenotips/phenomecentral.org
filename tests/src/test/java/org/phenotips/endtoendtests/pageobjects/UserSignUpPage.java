@@ -18,7 +18,6 @@
 package org.phenotips.endtoendtests.pageobjects;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 
 import io.qameta.allure.Step;
 
@@ -34,9 +33,9 @@ public class UserSignUpPage extends BasePage implements CommonSignUpSelectors
 
     private final By infoMessageArea = By.cssSelector("div.infomessage");
 
-    public UserSignUpPage(WebDriver aDriver)
+    public UserSignUpPage()
     {
-        super(aDriver);
+        super();
     }
 
     /**
@@ -104,6 +103,6 @@ public class UserSignUpPage extends BasePage implements CommonSignUpSelectors
     public HomePage cancelRequestingAccount()
     {
         clickOnElement(this.cancelAndReturnBtn);
-        return new HomePage(this.superDriver);
+        return new HomePage();
     }
 }
