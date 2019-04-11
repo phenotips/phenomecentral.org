@@ -19,8 +19,6 @@ package org.phenotips.endtoendtests.testcases;
 
 import org.phenotips.endtoendtests.common.CommonInfoEnums;
 import org.phenotips.endtoendtests.common.PatientMeasurementEntry;
-import org.phenotips.endtoendtests.pageobjects.AdminRefreshMatchesPage;
-import org.phenotips.endtoendtests.pageobjects.EmailUIPage;
 import org.phenotips.endtoendtests.pageobjects.HomePage;
 import org.phenotips.endtoendtests.pageobjects.PatientRecordEditPage;
 import org.phenotips.endtoendtests.pageobjects.ViewPatientPage;
@@ -34,11 +32,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 /**
- * Testing the creation of two very similar patients via JSON import and manually. Asserts a match at end.
- *
- * The entire class should be run together. We need the first two methods to be run first to have two patients created.
- *
- * The remaining tests depend on them. Requires MockMock email SMTP service to be running for it to check emails.
+ * Test patient creation and data entry to patient form. No matching is being tested.
  */
 public class CreatePatientTest extends BaseTest implements CommonInfoEnums
 {
@@ -49,11 +43,11 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
     final private PatientRecordEditPage aPatientRecordEditPage = new PatientRecordEditPage();
 
     final private SECTIONS[] checkForTheseSections = {
-    SECTIONS.PatientInfoSection,
-    SECTIONS.ClinicalSymptomsSection,
-    SECTIONS.SuggestedGenesSection,
-    SECTIONS.GenotypeInfoSection,
-    SECTIONS.SimilarCasesSection
+        SECTIONS.PatientInfoSection,
+        SECTIONS.ClinicalSymptomsSection,
+        SECTIONS.SuggestedGenesSection,
+        SECTIONS.GenotypeInfoSection,
+        SECTIONS.SimilarCasesSection
     };
 
     final private String randomChars = RandomStringUtils.randomAlphanumeric(5);
@@ -67,22 +61,66 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
             +
             "]";
 
-    // This is a helper test to ensure matches are refreshed before any of the following tests are run.
+    final private PatientMeasurementEntry fullMeasurement =
+        new PatientMeasurementEntry()
+            .withWeight(1f)
+            .withArmSpan(2f)
+            .withHeadCircumference(3f)
+            .withOuterCanthalDistance(4f)
+            .withLeftHandLength(5f)
+            .withRightHandLength(6f)
+            .withHeight(7f)
+            .withSittingHeight(8f)
+            .withPhiltrumLength(9f)
+            .withInnercanthalDistance(10f)
+            .withLeftPalmLength(11f)
+            .withRightPalmLength(12f)
+            .withLeftEarLength(13f)
+            .withRightEarLength(14f)
+            .withPalpebralFissureLength(15f)
+            .withLeftFootLength(16f)
+            .withRightFootLength(17f)
+            .withInterpupilaryDistance(18f);
+
+    final private PatientMeasurementEntry partialMeasurement =
+        new PatientMeasurementEntry().withArmSpan(3f)
+            .withHeight(88f)
+            .withLeftEarLength(3f)
+            .withHeadCircumference(9f)
+            .withLeftEarLength(3f);
+
+    // Create a patient as User 1 with basic information. Asserts that this info is visible after save.
     @Test
-    public void initialMatchesRefresh()
+    public void createPatientInformation()
     {
         this.aHomePage.navigateToLoginPage()
-            .loginAsAdmin()
-            .navigateToAdminSettingsPage()
-            .navigateToRefreshMatchesPage()
-            .refreshMatchesSinceLastUpdate()
-            .logOut();
+            .loginAsUser()
+            .navigateToCreateANewPatientPage()
+            .toggleDefaultUncheckedConsentBoxes()
+            .updateConsent()
+            .setIdentifier("Basic Patient Information " + randomChars)
+            .setLifeStatus("Deceased")
+            .setDOB("03", "1998")
+            .setDateOfDeath("08", "2006")
+            .setGender("Male")
+            .setOnset("Congenital Onset")
+            .setIndicationForReferral("Not a text-mining test")
+            .saveAndViewSummary();
+
+        Assert.assertEquals(this.aViewPatientPage.getPatientIdentifier(),
+            "Basic Patient Information " + randomChars);
+        Assert.assertEquals(this.aViewPatientPage.getDateOfBirth(), "03 1998");
+        Assert.assertEquals(this.aViewPatientPage.getIndicationForReferral(), "Not a text-mining test");
+
+        this.aViewPatientPage.getPatientID();
+        this.aViewPatientPage.logOut();
     }
 
-    // Create a patient manually as User 1. Assert that the required section titles in checkForTheseSections are
-    // visible.
-    @Test()
-    public void createPatientManually()
+    // Create a patient as User 1 with various genes and phenotypes.
+    // Assert that the required section titles in checkForTheseSections are
+    // visible and the genes and phenotypes are present after save.
+    @Test
+    public void createPatientGenesAndPhenotypes()
     {
         List<String> loPhenotypesToAdd = new ArrayList<>(Arrays.asList(
             "Blindness", "Visual impairment", "Small earlobe", "Small hand", "Absence seizures",
@@ -109,14 +147,17 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
 
         System.out.println("We just edited: " + this.aViewPatientPage.getPatientID());
         Assert.assertTrue(this.aViewPatientPage.checkForVisibleSections(this.checkForTheseSections));
+        Assert.assertEquals(this.aViewPatientPage.getPatientIdentifier(), this.patientUniqueIdentifier);
+        Assert.assertEquals(this.aViewPatientPage.getDateOfBirth(), "02 2012");
+        Assert.assertEquals(this.aViewPatientPage.getGeneNames(), Arrays.asList("PLS1", "PLS3", "QSOX1", "TXNL1"));
 
         this.aViewPatientPage.logOut();
     }
 
     // Creates an identical patient as User 2 via JSON import. Asserts that the section titles are visible.
-    // Updates consent, and changes modifies the identifier so that it is unique and matchable.
-    @Test()
-    public void importSecondJSONPatient()
+    // Asserts that information is corroborated after consents are enabled.
+    @Test
+    public void importingJSONPatient()
     {
         this.aHomePage.navigateToLoginPage()
             .loginAsUserTwo()
@@ -127,74 +168,30 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
             .editThisPatient()
             .toggleDefaultUncheckedConsentBoxes()
             .updateConsent()
-            .setIdentifier(this.patientUniqueIdentifier + " Match")
+            .setIdentifier(this.patientUniqueIdentifier + " JSON")
             .saveAndViewSummary();
 
         System.out.println("We just edited: " + this.aViewPatientPage.getPatientID());
         Assert.assertTrue(this.aViewPatientPage.checkForVisibleSections(this.checkForTheseSections));
+        Assert.assertEquals(this.aViewPatientPage.getPatientIdentifier(),
+            this.patientUniqueIdentifier + " JSON");
+        Assert.assertEquals(this.aViewPatientPage.getDateOfBirth(), "03 2011");
 
-        this.aHomePage.logOut();
+        this.aViewPatientPage.logOut();
     }
 
-    // Refresh the matches and assert that two new matches are found.
-    // @Test(dependsOnMethods = {"createPatientManually", "importSecondJSONPatient"})
-    // dependsOnMethods causes order on XML to be ignored as they will have higher priority,
-    // which is a global variable.
-    @Test()
-    public void refreshMatchesForTwoPatients()
-    {
-        AdminRefreshMatchesPage aRefreshMatchesPage = new AdminRefreshMatchesPage();
-
-        this.aHomePage.navigateToLoginPage()
-            .loginAsAdmin()
-            .navigateToAdminSettingsPage()
-            .navigateToRefreshMatchesPage()
-            .refreshMatchesSinceLastUpdate();
-
-        int initialRefreshMatchCount = Integer.parseInt(aRefreshMatchesPage.getTotalMatchesFound());
-        String expectedMatchCount = Integer.toString(initialRefreshMatchCount + 2);
-
-        Assert.assertEquals(aRefreshMatchesPage.getNumberOfLocalPatientsProcessed(), "2");
-        Assert.assertEquals(aRefreshMatchesPage.getTotalMatchesFound(), expectedMatchCount);
-
-        this.aHomePage.logOut();
-    }
-
-    // Sends the email notification of an identical (100%) match to the two newly created
-    // patients, checks that the inbox has emails.
-    // @Test(, dependsOnMethods = {"createPatientManually", "importSecondJSONPatient"})
-    @Test()
-    public void verifyEmailNotifications()
-    {
-        EmailUIPage emailPage = new EmailUIPage();
-
-        this.aViewPatientPage.navigateToEmailInboxPage()
-            .deleteAllEmails();
-
-        this.aHomePage.navigateToLoginPage()
-            .loginAsAdmin()
-            .navigateToAdminSettingsPage()
-            .navigateToMatchingNotificationPage()
-            .filterByID(this.patientUniqueIdentifier + " Match")
-            .emailFirstRowUsers()
-            .navigateToEmailInboxPage();
-        Assert.assertEquals(emailPage.getNumberOfEmails(), 2);
-
-        emailPage.deleteAllEmails();
-        emailPage.navigateToHomePage();
-        this.aHomePage.logOut();
-    }
-
-    // Adjusts Patient created by User 1 to public, ensures User 2 can now see it.
-    // @Test(, dependsOnMethods = {"createPatientManually", "importSecondJSONPatient"})
-    @Test()
-    public void publicVisiblityTest()
+    // User Two Creates a publicly visible patient. Ensure that User 1 is able to view.
+    @Test
+    public void publicVisibilityTest()
     {
         this.aHomePage.navigateToLoginPage()
             .loginAsUserTwo()
-            .navigateToAllPatientsPage()
-            .sortPatientsDateDesc()
-            .viewFirstPatientInTable();
+            .navigateToCreateANewPatientPage()
+            .toggleDefaultUncheckedConsentBoxes()
+            .updateConsent()
+            .setIdentifier("Public Visibility " + randomChars)
+            .setIndicationForReferral("This test checks that a public patient is visible by another user")
+            .saveAndViewSummary();
 
         String ID1 = this.aViewPatientPage.getPatientID();
 
@@ -203,28 +200,29 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
         this.aViewPatientPage.logOut()
             .loginAsUser()
             .navigateToAllPatientsPage()
-            .sortPatientsDateDesc()
+            .filterByPatientID(ID1)
             .viewFirstPatientInTable();
 
         String ID2 = this.aViewPatientPage.getPatientID();
 
         Assert.assertEquals(ID1, ID2);
 
-        this.aViewPatientPage.logOut().loginAsUserTwo();
-        this.aViewPatientPage.setGlobalVisibility("matchable"); // Set patient back to private to allow for other tests.
         this.aViewPatientPage.logOut();
     }
 
     // Adds a collaborator to a patient belong to User 2. Asserts that User 1 can then access it.
-    // @Test(, dependsOnMethods = {"createPatientManually", "importSecondJSONPatient"})
-    @Test()
+    @Test
     public void collaboratorVisibilityTest()
     {
         this.aHomePage
             .navigateToLoginPage()
             .loginAsUser()
-            .navigateToAllPatientsPage()
-            .viewFirstPatientInTable()
+            .navigateToCreateANewPatientPage()
+            .toggleDefaultUncheckedConsentBoxes()
+            .updateConsent()
+            .setIdentifier("Collaborator Visibility " + randomChars)
+            .setIndicationForReferral("Tests that User Two can see this patient")
+            .saveAndViewSummary()
             .addCollaboratorToPatient("TestUser2Dos", PRIVILEGE.CanViewAndModifyAndManageRights);
 
         String patientIDThroughUser1 = this.aViewPatientPage.getPatientID();
@@ -239,46 +237,14 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
 
         Assert.assertEquals(patientIDThroughUser1, patientIDThroughUser2);
 
-        this.aViewPatientPage.removeNthCollaborator(1); // Remove the collaborator to reset the state.
-
         this.aViewPatientPage.logOut();
     }
 
-    // Deletes all patients, helper test in case we want to clean up all patients after this class in the future.
-    @Test(enabled = false)
-    public void deleteAllUsersHelper()
-    {
-        this.aHomePage
-            .navigateToLoginPage()
-            .loginAsAdmin()
-            .navigateToAllPatientsPage()
-            .deleteAllPatients();
-    }
-
-    // Adds measurements to User 1's patient, ensures that they are saved and viewable on the view patient form.
-    @Test()
+    // Adds partialMeasurement to User 1's patient, ensures that they are saved and viewable on the view patient form.
+    // Does not enter a birthday.
+    @Test
     public void addMeasurements()
     {
-        PatientMeasurementEntry measurements = new PatientMeasurementEntry()
-            .withWeight(1f)
-            .withArmSpan(2f)
-            .withHeadCircumference(3f)
-            .withOuterCanthalDistance(4f)
-            .withLeftHandLength(5f)
-            .withRightHandLength(6f)
-            .withHeight(7f)
-            .withSittingHeight(8f)
-            .withPhiltrumLength(9f)
-            .withInnercanthalDistance(10f)
-            .withLeftPalmLength(11f)
-            .withRightPalmLength(12f)
-            .withLeftEarLength(13f)
-            .withRightEarLength(14f)
-            .withPalpebralFissureLength(15f)
-            .withLeftFootLength(16f)
-            .withRightFootLength(17f)
-            .withInterpupilaryDistance(18f);
-
         this.aHomePage.navigateToLoginPage()
             .loginAsUser()
             .navigateToCreateANewPatientPage()
@@ -286,25 +252,24 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
             .updateConsent()
             .setIdentifier("Add Measurements " + randomChars)
             .expandSection(SECTIONS.MeasurementSection)
-            .addMeasurement(measurements)
-            .changeMeasurementDate(1, "11", "March", "2015")
+            .addMeasurement(this.partialMeasurement)
+            .changeMeasurementDate(1, "15", "April", "2005")
             .saveAndViewSummary()
             .editThisPatient()
             .expandSection(SECTIONS.MeasurementSection);
 
         PatientMeasurementEntry foundMeasurementOnPatientForm = this.aPatientRecordEditPage.getNthMeasurement(1);
         System.out.println(foundMeasurementOnPatientForm);
-        Assert.assertEquals(foundMeasurementOnPatientForm, measurements);
+        Assert.assertEquals(foundMeasurementOnPatientForm, this.partialMeasurement);
 
         this.aPatientRecordEditPage
             .saveAndViewSummary()
             .logOut();
     }
 
-    // Adds a custom phenotype and then asserts that the automatically added phenotypes show up with the
-    // lightning bolt symbol and the manually added phenotype doesn't have that symbol.
-    // DependsOn the addMeasurements() test to have completed.
-    @Test()
+    // Creates a patient with a complete measurement data entry. Asserts that phenotypes are automatically added
+    // (lightning bolt symbol) and the manually added phenotype doesn't have that symbol.
+    @Test
     public void checkPhenotypesDueToMeasurements()
     {
         final List<String> automaticallyAddedPhenotypesToCheck = new ArrayList<>(
@@ -316,11 +281,20 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
 
         this.aHomePage.navigateToLoginPage()
             .loginAsUser()
-            .navigateToAllPatientsPage()
-            .sortPatientsDateDesc()
-            .viewFirstPatientInTable()
-            .editThisPatient()
+            .navigateToCreateANewPatientPage()
+            .toggleDefaultUncheckedConsentBoxes()
+            .updateConsent()
+            .setIdentifier("Phenotypes due to Measurement Data " + randomChars)
+            .setIndicationForReferral("Ensure that phenotypes are automatically generated due to measurement data")
             .setDOB("10", "1992")
+            .expandSection(SECTIONS.MeasurementSection)
+            .addMeasurement(this.fullMeasurement)
+            .changeMeasurementDate(1, "11", "March", "2015");
+
+        // Have to wait for AJAX calls to finish. Better way would be to wait for standard dev calc element to appear.
+        this.aPatientRecordEditPage.unconditionalWaitNs(5);
+
+        this.aPatientRecordEditPage
             .expandSection(SECTIONS.ClinicalSymptomsSection)
             .addPhenotype("Blue irides");
 
@@ -330,8 +304,11 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
         List<String> manuallyAddedPhenotypesFound = this.aPatientRecordEditPage.getPhenotypesNonLightning();
         System.out.println(manuallyAddedPhenotypesFound);
 
-        Assert.assertEquals(automaticallyAddedPhenotypesFound, automaticallyAddedPhenotypesToCheck);
         Assert.assertEquals(manuallyAddedPhenotypesFound, manuallyAddedPhenotypesToCheck);
+
+        // Phenotype order depends on when AJAX completes for each one. No definite order.
+        Assert.assertEqualsNoOrder(automaticallyAddedPhenotypesFound.toArray(),
+            automaticallyAddedPhenotypesToCheck.toArray());
 
         this.aPatientRecordEditPage
             .saveAndViewSummary()
@@ -340,7 +317,7 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
 
     // Enters information to the diagnosis form. Asserts that the diagnosis section has the appropriate fields
     // as seen on the view patient form.
-    @Test()
+    @Test
     public void checkDiagnosisSection()
     {
         final List<String> clinicalDiagnosisCheck = new ArrayList<>(
@@ -359,10 +336,11 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
 
         this.aHomePage.navigateToLoginPage()
             .loginAsUser()
-            .navigateToAllPatientsPage()
-            .sortPatientsDateDesc()
-            .viewFirstPatientInTable()
-            .editThisPatient()
+            .navigateToCreateANewPatientPage()
+            .toggleDefaultUncheckedConsentBoxes()
+            .updateConsent()
+            .setIdentifier("Check diagnosis section " + randomChars)
+            .setIndicationForReferral("Ensure that proper diagnosis appear on patient form")
             .expandSection(SECTIONS.DiagnosisSection)
             .cycleThroughDiagnosisBoxes()
             .addClinicalDiagnosis("Pseudo-von Willebrand disease")

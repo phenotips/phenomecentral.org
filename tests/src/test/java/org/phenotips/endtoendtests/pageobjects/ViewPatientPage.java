@@ -24,15 +24,25 @@ import org.openqa.selenium.By;
 import io.qameta.allure.Step;
 
 /**
- * Represents viewing a specifc patient's full information page. Ex. http://localhost:8083/P0000005
+ * Represents viewing a specific patient's full information page. Ex. http://localhost:8083/P0000005
  */
 public class ViewPatientPage extends CommonInfoSelectors
 {
+    // This is essentially the document ID number: Pxxxxxxx
     private final By patientID = By.cssSelector("#document-title > h1:nth-child(1)");
+
+    // This is the customizable patient identifier. Aka "Report Name" on patient table. Can be any unique string.
+    private final By patientIdentifier = By.xpath("//*[@id='HPatientinformation']/..//span[contains(text(), 'Identifier:')]/../span[@class='displayed-value']");
+
+    private final By dateOfBirth = By.cssSelector("#date-of-birth-block span.date");
+
+    private final By indicationForReferral = By.cssSelector("div.indication_for_referral > div.displayed-value > p");
 
     private final By editBtn = By.id("prActionEdit");
 
     private final By similarityTable = By.cssSelector(".similarity-results");
+
+    private final By phenotypeNames = By.cssSelector("div.phenotype-info div.value-checked.yes-selected");
 
     private final By geneNames =
         By.cssSelector("#extradata-list-PhenoTips\\2e GeneClass_PhenoTips\\2e GeneVariantClass td.Gene > p");
@@ -77,6 +87,44 @@ public class ViewPatientPage extends CommonInfoSelectors
     }
 
     /**
+     * Retrieves the associated patient identifier (aka "Report Name" on Patient Table).
+     * Requires that an identifier was actually saved in the Patient Information section,
+     * otherwise element will not be there.
+     * @return A String which is the identifier of the patient.
+     */
+    @Step("Retrieve the patient identifier (aka Report Name)")
+    public String getPatientIdentifier()
+    {
+        waitForElementToBePresent(this.patientIdentifier);
+        return DRIVER.findElement(this.patientIdentifier).getText();
+    }
+
+    /**
+     * Retrieves the patient's date of birth.
+     * Requires: The date of birth to actually have been entered, otherwise element will not be found.
+     * @return A String in format "mm yyyy" representing date of birth
+     */
+    @Step("Retrieve the date of birth")
+    public String getDateOfBirth()
+    {
+        waitForElementToBePresent(this.dateOfBirth);
+        return DRIVER.findElement(this.dateOfBirth).getText();
+    }
+
+    /**
+     * Retrieves the indication for referral text.
+     * Requires: That there was something entered and saved for the indication for referral.
+     *           Otherwise, element will not be found.
+     * @return A String in free text representing what was entered and saved in the "Indication for Referral" box.
+     */
+    @Step("Retrieve the indication for referral")
+    public String getIndicationForReferral()
+    {
+        waitForElementToBePresent(this.indicationForReferral);
+        return DRIVER.findElement(this.indicationForReferral).getText();
+    }
+
+    /**
      * Clicks on the "Edit" link to edit the patient.
      *
      * @return new patient editor page object as we navigate to the patient editing page
@@ -87,6 +135,13 @@ public class ViewPatientPage extends CommonInfoSelectors
         clickOnElement(this.editBtn);
         return new PatientRecordEditPage();
     }
+
+    /**
+     * Retrieves a list of phenotypes, regardless of whether they were entered automatically or manually.
+     * @return A, possibly empty, list of Strings representing the specific phenotype names. No category names.
+     */
+    @Step("Retrieve list of phenotypes")
+    public List<String> getPhenotypeNames() { return getLabelsFromList(this.phenotypeNames); }
 
     /**
      * Retrieves all the gene names found in the "Genotype information" section. The order of the table is preserved.
