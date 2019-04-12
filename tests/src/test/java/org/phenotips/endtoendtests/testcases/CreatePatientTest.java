@@ -29,6 +29,7 @@ import java.util.List;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 /**
@@ -89,15 +90,23 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
             .withHeadCircumference(9f)
             .withLeftEarLength(3f);
 
-    // Create a patient as User 1 with basic information. Asserts that this info is visible after save.
-    @Test
-    public void createPatientInformation()
+
+    // Each of these tests creates a new patient as User 1 with all consents enabled
+    @BeforeMethod
+    public void createPatientWithConsents()
     {
         this.aHomePage.navigateToLoginPage()
             .loginAsUser()
             .navigateToCreateANewPatientPage()
             .toggleDefaultUncheckedConsentBoxes()
-            .updateConsent()
+            .updateConsent();
+    }
+
+    // Create a patient as User 1 with basic information. Asserts that this info is visible after save.
+    @Test
+    public void addPatientInformation()
+    {
+        this.aPatientRecordEditPage
             .setIdentifier("Basic Patient Information " + randomChars)
             .setLifeStatus("Deceased")
             .setDOB("03", "1998")
@@ -112,46 +121,61 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
         Assert.assertEquals(this.aViewPatientPage.getDateOfBirth(), "03 1998");
         Assert.assertEquals(this.aViewPatientPage.getIndicationForReferral(), "Not a text-mining test");
 
-        this.aViewPatientPage.getPatientID();
         this.aViewPatientPage.logOut();
     }
 
-    // Create a patient as User 1 with various genes and phenotypes.
+    // Create a patient as User 1 with various, non-overlapping phenotypes.
     // Assert that the required section titles in checkForTheseSections are
-    // visible and the genes and phenotypes are present after save.
+    // visible and the added phenotypes are present after save.
     @Test
-    public void createPatientGenesAndPhenotypes()
+    public void addPhenotypesUsingSearch()
     {
+        // No overlapping phenotypes that would appear higher in list, exact names for now
         List<String> loPhenotypesToAdd = new ArrayList<>(Arrays.asList(
-            "Blindness", "Visual impairment", "Small earlobe", "Small hand", "Absence seizures",
-            "Diapleptic Seizures", "Typical absence seizures", "Seizures", "Small placenta"));
+            "Blindness", "Small earlobe", "Small hand",
+            "Typical absence seizures", "Immune dysregulation", "Liver abscess", "Small placenta"));
 
-        this.aHomePage.navigateToLoginPage()
-            .loginAsUser()
-            .navigateToCreateANewPatientPage()
-            .toggleDefaultUncheckedConsentBoxes()
-            .updateConsent()
+        this.aPatientRecordEditPage
             .setIdentifier(this.patientUniqueIdentifier)
             .setDOB("02", "2012")
             .setGender("Male")
             .setOnset("Congenital onset ")
             .expandSection(SECTIONS.ClinicalSymptomsSection)
             .addPhenotypes(loPhenotypesToAdd)
-            .expandSection(SECTIONS.ClinicalSymptomsSection)
-            .expandSection(SECTIONS.GenotypeInfoSection)
-            .addGene("PLS1", "Candidate", "Sequencing")
-            .addGene("PLS3", "Candidate", "Sequencing")
-            .addGene("QSOX1", "Confirmed causal", "Sequencing")
-            .addGene("TXNL1", "Carrier", "Sequencing")
             .saveAndViewSummary();
 
         System.out.println("We just edited: " + this.aViewPatientPage.getPatientID());
         Assert.assertTrue(this.aViewPatientPage.checkForVisibleSections(this.checkForTheseSections));
         Assert.assertEquals(this.aViewPatientPage.getPatientIdentifier(), this.patientUniqueIdentifier);
         Assert.assertEquals(this.aViewPatientPage.getDateOfBirth(), "02 2012");
-        Assert.assertEquals(this.aViewPatientPage.getGeneNames(), Arrays.asList("PLS1", "PLS3", "QSOX1", "TXNL1"));
+
+        Assert.assertEquals(this.aViewPatientPage.getPhenotypeNames(), loPhenotypesToAdd);
 
         this.aViewPatientPage.logOut();
+    }
+
+    // Adds various genes manually. Assert they appear on the view patient page.
+    @Test
+    public void addGenesUsingSearch()
+    {
+        this.aPatientRecordEditPage
+            .setIdentifier(this.patientUniqueIdentifier + " Genes")
+            .expandSection(SECTIONS.GenotypeInfoSection)
+            .addGene("PLS1", "Candidate", "Sequencing")
+            .addGene("PLS3", "Rejected candidate", "Deletion/duplication")
+            .addGene("QSOX1", "Confirmed causal", "Familial mutation")
+            .addGene("TXNL1", "Carrier", "Common mutations")
+            .addGene("IL1B", "Tested negative", "Sequencing")
+            .saveAndViewSummary();
+
+        Assert.assertEquals(this.aViewPatientPage.getPatientIdentifier(), this.patientUniqueIdentifier + " Genes");
+        Assert.assertEquals(this.aViewPatientPage.getGeneNames(),
+            Arrays.asList("PLS1", "PLS3", "QSOX1", "TXNL1", "IL1B"));
+        Assert.assertEquals(this.aViewPatientPage.getGeneStatus(),
+            Arrays.asList("Candidate", "Rejected candidate", "Confirmed causal", "Carrier", "Tested negative"));
+        Assert.assertEquals(this.aViewPatientPage.getGeneStrategies(),
+            Arrays.asList("Sequencing", "Deletion/duplication", "Familial mutation", "Common mutations", "Sequencing"));
+
     }
 
     // Creates an identical patient as User 2 via JSON import. Asserts that the section titles are visible.
@@ -159,8 +183,7 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
     @Test
     public void importingJSONPatient()
     {
-        this.aHomePage.navigateToLoginPage()
-            .loginAsUserTwo()
+        this.aPatientRecordEditPage.cancelChanges()
             .navigateToAllPatientsPage()
             .importJSONPatient(this.JSONToImport)
             .sortPatientsDateDesc()
@@ -176,6 +199,10 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
         Assert.assertEquals(this.aViewPatientPage.getPatientIdentifier(),
             this.patientUniqueIdentifier + " JSON");
         Assert.assertEquals(this.aViewPatientPage.getDateOfBirth(), "03 2011");
+        Assert.assertEquals(this.aViewPatientPage.getGeneNames(), Arrays.asList("PLS1", "PLS3", "QSOX1", "TXNL1"));
+        Assert.assertEquals(this.aViewPatientPage.getPhenotypeNames(), Arrays.asList(
+            "Visual impairment", "Blindness", "Congenital blindness", "Small earlobe", "Small hand",
+            "Seizures", "Absence seizures", "Typical absence seizures",  "Small placenta"));
 
         this.aViewPatientPage.logOut();
     }
@@ -184,16 +211,13 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
     @Test
     public void publicVisibilityTest()
     {
-        this.aHomePage.navigateToLoginPage()
-            .loginAsUserTwo()
-            .navigateToCreateANewPatientPage()
-            .toggleDefaultUncheckedConsentBoxes()
-            .updateConsent()
+        this.aPatientRecordEditPage
             .setIdentifier("Public Visibility " + randomChars)
             .setIndicationForReferral("This test checks that a public patient is visible by another user")
             .saveAndViewSummary();
 
         String ID1 = this.aViewPatientPage.getPatientID();
+        Assert.assertEquals(this.aViewPatientPage.getPatientIdentifier(), "Public Visibility " + randomChars);
 
         this.aViewPatientPage.setGlobalVisibility("public");
 
@@ -206,26 +230,23 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
         String ID2 = this.aViewPatientPage.getPatientID();
 
         Assert.assertEquals(ID1, ID2);
+        Assert.assertEquals(this.aViewPatientPage.getPatientIdentifier(), "Public Visibility " + randomChars);
 
         this.aViewPatientPage.logOut();
     }
 
-    // Adds a collaborator to a patient belong to User 2. Asserts that User 1 can then access it.
+    // Adds a collaborator, User 2, to a patient belonging to Usre 1. Asserts that User 2 can then access it.
     @Test
     public void collaboratorVisibilityTest()
     {
-        this.aHomePage
-            .navigateToLoginPage()
-            .loginAsUser()
-            .navigateToCreateANewPatientPage()
-            .toggleDefaultUncheckedConsentBoxes()
-            .updateConsent()
+        this.aPatientRecordEditPage
             .setIdentifier("Collaborator Visibility " + randomChars)
             .setIndicationForReferral("Tests that User Two can see this patient")
             .saveAndViewSummary()
             .addCollaboratorToPatient("TestUser2Dos", PRIVILEGE.CanViewAndModifyAndManageRights);
 
         String patientIDThroughUser1 = this.aViewPatientPage.getPatientID();
+        Assert.assertEquals(this.aViewPatientPage.getPatientIdentifier(), "Collaborator Visibility " + randomChars);
 
         this.aViewPatientPage.logOut()
             .loginAsUserTwo()
@@ -236,6 +257,7 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
         String patientIDThroughUser2 = this.aViewPatientPage.getPatientID();
 
         Assert.assertEquals(patientIDThroughUser1, patientIDThroughUser2);
+        Assert.assertEquals(this.aViewPatientPage.getPatientIdentifier(), "Collaborator Visibility " + randomChars);
 
         this.aViewPatientPage.logOut();
     }
@@ -245,11 +267,7 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
     @Test
     public void addMeasurements()
     {
-        this.aHomePage.navigateToLoginPage()
-            .loginAsUser()
-            .navigateToCreateANewPatientPage()
-            .toggleDefaultUncheckedConsentBoxes()
-            .updateConsent()
+        this.aPatientRecordEditPage
             .setIdentifier("Add Measurements " + randomChars)
             .expandSection(SECTIONS.MeasurementSection)
             .addMeasurement(this.partialMeasurement)
@@ -279,11 +297,7 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
 
         final List<String> manuallyAddedPhenotypesToCheck = new ArrayList<>(Arrays.asList("Blue irides"));
 
-        this.aHomePage.navigateToLoginPage()
-            .loginAsUser()
-            .navigateToCreateANewPatientPage()
-            .toggleDefaultUncheckedConsentBoxes()
-            .updateConsent()
+        this.aPatientRecordEditPage
             .setIdentifier("Phenotypes due to Measurement Data " + randomChars)
             .setIndicationForReferral("Ensure that phenotypes are automatically generated due to measurement data")
             .setDOB("10", "1992")
@@ -312,13 +326,20 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
 
         this.aPatientRecordEditPage
             .saveAndViewSummary()
-            .logOut();
+            .editThisPatient();
+
+        // Assert measurement data stays after a save
+        this.aPatientRecordEditPage
+            .expandSection(SECTIONS.MeasurementSection);
+        Assert.assertEquals(this.aPatientRecordEditPage.getNthMeasurement(1), this.fullMeasurement);
+
+        this.aPatientRecordEditPage.saveAndViewSummary().logOut();
     }
 
     // Enters information to the diagnosis form. Asserts that the diagnosis section has the appropriate fields
     // as seen on the view patient form.
     @Test
-    public void checkDiagnosisSection()
+    public void addToDiagnosisSection()
     {
         final List<String> clinicalDiagnosisCheck = new ArrayList<>(
             Arrays.asList("1164 Allergic bronchopulmonary aspergillosis", "52530 Pseudo-von Willebrand disease"));
@@ -334,11 +355,7 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
         List<String> pubMedIDsCheck = new ArrayList<>(
             Arrays.asList("PMID: 30700955", "PMID: 30699054", "PMID: 30699052"));
 
-        this.aHomePage.navigateToLoginPage()
-            .loginAsUser()
-            .navigateToCreateANewPatientPage()
-            .toggleDefaultUncheckedConsentBoxes()
-            .updateConsent()
+        this.aPatientRecordEditPage
             .setIdentifier("Check diagnosis section " + randomChars)
             .setIndicationForReferral("Ensure that proper diagnosis appear on patient form")
             .expandSection(SECTIONS.DiagnosisSection)
@@ -368,5 +385,33 @@ public class CreatePatientTest extends BaseTest implements CommonInfoEnums
         Assert.assertEquals(this.aViewPatientPage.getResolutionNotes(), resolutionNoteCheck);
 
         this.aViewPatientPage.logOut();
+    }
+
+    // Edits a created patient, modifies data and enters new data. Asserts that modified and new
+    // data are present after save.
+    @Test
+    public void editExistingPatient()
+    {
+        this.aPatientRecordEditPage
+            .setIdentifier("Editing Patient " + randomChars)
+            .setDOB("02", "1980s")
+            .expandSection(SECTIONS.ClinicalSymptomsSection)
+            .addPhenotype("Long foot")
+            .saveAndViewSummary();
+
+        Assert.assertEquals(this.aViewPatientPage.getPatientIdentifier(), "Editing Patient " + randomChars);
+        Assert.assertEquals(this.aViewPatientPage.getDateOfBirth(), "1980s");
+        Assert.assertEquals(this.aViewPatientPage.getPhenotypeNames(), Arrays.asList("Long foot"));
+
+        this.aViewPatientPage.editThisPatient()
+            .setIdentifier("Editing Patient Modified " + randomChars)
+            .setDOB("05", "1900s")
+            .expandSection(SECTIONS.ClinicalSymptomsSection)
+            .addPhenotype("Long nose")
+            .saveAndViewSummary();
+
+        Assert.assertEquals(this.aViewPatientPage.getPatientIdentifier(), "Editing Patient Modified " + randomChars);
+        Assert.assertEquals(this.aViewPatientPage.getDateOfBirth(), "1900s");
+        Assert.assertEquals(this.aViewPatientPage.getPhenotypeNames(), Arrays.asList("Long nose", "Long foot"));
     }
 }
