@@ -38,13 +38,6 @@ import org.phenotips.endtoendtests.common.BaseSuite;
  */
 public abstract class BasePage extends BaseSuite
 {
-    /**
-     * Public selectors, the LoginPageTest touches these. Ideally, tests should not touch selectors.
-     */
-    public final By adminLink = By.id("tmAdminSpace");
-
-    public final By aboutLink = By.id("tmAbout");
-
     ////////////////////////////////////////
     // Selectors
     ////////////////////////////////////////
@@ -56,6 +49,10 @@ public abstract class BasePage extends BaseSuite
 
     // PC logo at top left to navigate to homepage
     protected final By phenomeCentralLogoBtn = By.cssSelector("#companylogo > a > img");
+
+    private final By adminLink = By.id("tmAdminSpace");
+
+    private final By aboutLink = By.id("tmAbout");
 
     /**
      * Private selectors from the navigation toolbar
@@ -495,5 +492,29 @@ public abstract class BasePage extends BaseSuite
         DRIVER.switchTo().alert().accept();
         DRIVER.switchTo().defaultContent();
     }
+
+    /**
+     * Checks if the Administrator settings can be reached from a link on the toolbar. It should be
+     * when logged in as an Admin.
+     * @return A boolean indicating whether or not the 'Administrator' link on the toolbar is clickable.
+     */
+    @Step("Check if 'Administrator' link on the toolbar is clickable")
+    public boolean isAdminLinkClickable()
+    {
+        return isElementClickable(adminLink);
+    }
+
+    /**
+     * Checks if the About page can be reached from a link on the toolbar. It should be when logged in as
+     * any user.
+     * @return A boolean indicating whether or not the "About" link on the toolbar is clickable.
+     */
+    @Step("Check if 'About' link on the toolbar is clickable")
+    public boolean isAboutLinkClickable()
+    {
+        return isElementClickable(aboutLink);
+    }
+
+
 
 }

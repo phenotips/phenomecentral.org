@@ -28,7 +28,7 @@ import org.testng.annotations.Test;
  */
 public class LoginPageTest extends BaseTest
 {
-    HomePage currentPage = new HomePage();
+    HomePage aHomePage = new HomePage();
 
     LoginPage aLoginPage = new LoginPage();
 
@@ -38,17 +38,13 @@ public class LoginPageTest extends BaseTest
     @Test
     public void loginAdminTest()
     {
-        this.currentPage.navigateToLoginPage()
+        this.aHomePage.navigateToLoginPage()
             .loginAsAdmin();
 
-        // This is a basic test so we touch a selector directly.
-        // But for all other tests, don't touch selectors directly - abstract the action out to a method in a
-        // pageObject.
-        // Ex. isAdminLinkVisible()
-        Assert.assertTrue(this.currentPage.isElementPresent(this.currentPage.adminLink));
-        Assert.assertTrue(this.currentPage.isElementPresent(this.currentPage.aboutLink));
+        Assert.assertTrue(this.aHomePage.isAdminLinkClickable());
+        Assert.assertTrue(this.aHomePage.isAboutLinkClickable());
 
-        this.currentPage.logOut();
+        this.aHomePage.logOut();
     }
 
     /**
@@ -57,28 +53,69 @@ public class LoginPageTest extends BaseTest
     @Test
     public void loginUserTest()
     {
-        this.currentPage.navigateToLoginPage()
+        this.aHomePage.navigateToLoginPage()
             .loginAsUser();
 
-        Assert.assertFalse(this.currentPage.isElementPresent(this.currentPage.adminLink));
-        Assert.assertTrue(this.currentPage.isElementPresent(this.currentPage.aboutLink));
+        Assert.assertFalse(this.aHomePage.isAdminLinkClickable());
+        Assert.assertTrue(this.aHomePage.isAboutLinkClickable());
 
-        this.currentPage.logOut();
+        this.aHomePage.logOut();
     }
 
     /**
-     * Test for invalid credentials. This implicitly tests for it as we should have stayed on the login page rather than
-     * being redirected to the homepage. If we got logged in at any point, test fails as it cannot login again without
-     * having logging out.
+     * Test for invalid credentials - bad password. Assert that the appropriate error message appears.
      */
     @Test
-    public void invalidCredentials()
+    public void badPasswordTest()
     {
-        this.currentPage.navigateToLoginPage()
-            .loginAs("TestUser1Uno", "BadPassword"); // Valid username but invalid password.
-        this.aLoginPage.loginAs("", "123"); // Empty username
-        this.aLoginPage.loginAs("SomeoneLikeYou", ""); // Empty password
+        // Valid username but invalid password.
+        this.aHomePage.navigateToLoginPage()
+            .loginAs(USER_1_USERNAME, "BadPassword");
 
-        this.aLoginPage.loginAsAdmin().logOut();
+        Assert.assertEquals(this.aLoginPage.getErrorMessage(), "Invalid credentials");
+
+        this.aLoginPage.cancelAndReturnToHomepage();
+    }
+
+    /**
+     * Test for invalid credentials - non-existent username. Assert that the appropriate error message appears.
+     */
+    @Test
+    public void invalidUsernameTest()
+    {
+        this.aHomePage.navigateToLoginPage()
+            .loginAs("Non-existent user[{}]", USER_1_PASS);
+
+        Assert.assertEquals(this.aLoginPage.getErrorMessage(), "Invalid credentials");
+
+        this.aLoginPage.cancelAndReturnToHomepage();
+    }
+
+    /**
+     * Test for invalid credentials - empty username. Assert that the appropriate error message appears.
+     */
+    @Test
+    public void emptyUsernameTest()
+    {
+        this.aHomePage.navigateToLoginPage()
+            .loginAs("", "123");
+
+        Assert.assertEquals(this.aLoginPage.getErrorMessage(), "No user name given");
+
+        this.aLoginPage.cancelAndReturnToHomepage();
+    }
+
+    /**
+     * Test for invalid credentials - empty password. Assert that the appropriate error message appears.
+     */
+    @Test
+    public void emptyPasswordTest()
+    {
+        this.aHomePage.navigateToLoginPage()
+            .loginAs("EmptyPasswordTest", "");
+
+        Assert.assertEquals(this.aLoginPage.getErrorMessage(), "No password given");
+
+        this.aLoginPage.cancelAndReturnToHomepage();
     }
 }

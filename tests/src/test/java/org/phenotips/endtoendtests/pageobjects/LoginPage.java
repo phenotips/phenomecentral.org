@@ -26,11 +26,15 @@ import io.qameta.allure.Step;
  */
 public class LoginPage extends BasePage
 {
+    private final By errorMessage = By.cssSelector("div.errormessage");
+
     private final By userNameField = By.id("j_username");
 
     private final By passField = By.id("j_password");
 
-    private final By loginButton = By.cssSelector("input.button[value='Sign in']");
+    private final By loginButton = By.cssSelector("input.button[type=submit]");
+
+    private final By cancelButton = By.cssSelector("a.button.secondary[href='/']");
 
     public LoginPage()
     {
@@ -86,5 +90,27 @@ public class LoginPage extends BasePage
     public HomePage loginAsUserTwo()
     {
         return loginAs(USER_2_USERNAME, USER_2_PASS);
+    }
+
+    /**
+     * Retrieve the associated error message when invalid credentials are passed in an attempt to login.
+     * @return A String representing the red error message that appears above the form after a failed login attempt.
+     */
+    @Step("Retrieve error message upon failed login attempt")
+    public String getErrorMessage()
+    {
+        waitForElementToBePresent(errorMessage);
+        return DRIVER.findElement(errorMessage).getText();
+    }
+
+    /**
+     * Clicks on the cancel button. Used when a user no longer wants to attempt to login to return to the splash page.
+     * @return A new HomePage object which is the splash homepage of PC as no one is logged in.
+     */
+    @Step("Cancel logging in and return to the home page")
+    public HomePage cancelAndReturnToHomepage()
+    {
+        clickOnElement(cancelButton);
+        return new HomePage();
     }
 }
