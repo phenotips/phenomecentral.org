@@ -48,7 +48,7 @@ public abstract class BasePage extends BaseSuite
     protected final By approvalPendingMessage = By.cssSelector("#mainContentArea > div.infomessage");
 
     // PC logo at top left to navigate to homepage
-    protected final By phenomeCentralLogoBtn = By.cssSelector("#companylogo > a > img");
+    protected final By phenomeCentralLogoBtn = By.cssSelector("#companylogo img");
 
     private final By adminLink = By.id("tmAdminSpace");
 
@@ -58,15 +58,15 @@ public abstract class BasePage extends BaseSuite
      * Private selectors from the navigation toolbar
      */
     private final By createMenuDrp = By.cssSelector(
-        "#phenotips-globalTools > div > div > ul > li:nth-child(1) > span");
+        "#phenotips-globalTools > .rightmenu > .menu > ul > li:nth-of-type(1) > .xDropdown");
 
     private final By newPatientLink = By.id("create-patient-record");
 
     private final By browseMenuDrp = By.cssSelector(
-        "#phenotips-globalTools > div > div > ul > li:nth-child(2) > span");
+        "#phenotips-globalTools > .rightmenu > .menu > ul > li:nth-of-type(2) > .xDropdown");
 
     private final By viewAllPatientsLink = By.cssSelector(
-        "#phenotips-globalTools > div > div > ul > li:nth-child(2) > ul > li:nth-child(1) > span > a");
+        "#phenotips-globalTools > .rightmenu > .menu > ul > li:nth-of-type(2) > ul > li:nth-child(1) > .wikilink > a");
 
     private final By loadingStatusBar = By.id("patients-ajax-loader");
 
@@ -514,7 +514,5 @@ public abstract class BasePage extends BaseSuite
     {
         return isElementClickable(aboutLink);
     }
-
-
 
 }
