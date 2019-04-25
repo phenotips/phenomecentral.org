@@ -32,9 +32,9 @@ public class LoginPage extends BasePage
 
     private final By passField = By.id("j_password");
 
-    private final By loginButton = By.cssSelector("input.button[type=submit]");
+    private final By loginButton = By.cssSelector("form.pc-login .button[type=submit]");
 
-    private final By cancelButton = By.cssSelector("a.button.secondary[href='/']");
+    private final By cancelButton = By.cssSelector("form.pc-login .secondary.button");
 
     public LoginPage()
     {
