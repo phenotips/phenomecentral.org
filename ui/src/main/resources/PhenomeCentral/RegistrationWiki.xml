@@ -55,7 +55,7 @@ $xwiki.jsfx.use('uicomponents/widgets/validation/uniquenessvalidation.js')##
 ## If this document is changed such that it must have programming permission in order to run, change this to false.
 #set($sandbox = true)
 ##
-## Load the configuration from a seperate document.
+## Load the configuration from a separate document.
 #loadConfig('XWiki.RegistrationConfig')
 ##
 ## Defines what server generated error messages should look like
