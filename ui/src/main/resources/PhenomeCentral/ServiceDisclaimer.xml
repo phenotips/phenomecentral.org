@@ -38,7 +38,6 @@
   <syntaxId>xwiki/2.1</syntaxId>
   <hidden>false</hidden>
   <content>
-{{velocity}}
 PhenomeCentral provides data in good faith as a research tool, but without verifying the accuracy, clinical validity or utility of the data. PhenomeCentral makes no warranty, express or implied, nor assumes any legal liability or responsibility for any purpose for which the data are used.
 
 
@@ -49,6 +48,5 @@ Prior to using PhenomeCentral data in a publication, the user will contact the o
 
 
 If PhenomeCentral enables a research publication, the authors must acknowledge PhenomeCentral using the following wording: "//This study makes use of data shared through the PhenomeCentral repository. Funding for PhenomeCentral was provided by Genome Canada and Canadian Institute of Health Research (CIHR).//"
-{{/velocity}}
 </content>
 </xwikidoc>
