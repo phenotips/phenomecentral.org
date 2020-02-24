@@ -37,7 +37,7 @@
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.0</syntaxId>
   <hidden>true</hidden>
-  <content>{{velocity}}
+  <content>{{velocity wiki="false"}}
 #if ($xcontext.action != 'get')
   #break
 #end
@@ -66,16 +66,16 @@ $response.setContentType("application/json")
   #set($stringDate = $dateTimeDate.toLocalDate().toString('MMM dd'))
   #if($wikiname != "xwiki" || $wikiname == $xcontext.database) #set($wikiname = "local") #end
   #if( $velocityCount &gt; 1 ) , #end
-  {"username" : "$!{escapetool.javascript($user.name)}",
-    "fullname" : "$!{escapetool.javascript($user.fullName)}",
-    "wikiname" : "$!{escapetool.javascript($wikiname)}",
-    "firstname" : "$!{escapetool.javascript($user.getObject('XWiki.XWikiUsers').getProperty('first_name').getValue())}",
-    "lastname" : "$!{escapetool.javascript($user.getObject('XWiki.XWikiUsers').getProperty('last_name').getValue())}",
-    "email" : "$!{escapetool.javascript($user.getObject('XWiki.XWikiUsers').getProperty('email').getValue())}",
-    "affiliation" : "$!{escapetool.javascript($user.getObject('XWiki.XWikiUsers').getProperty('affiliation').getValue())}",
-    "referral" : "$!{escapetool.javascript($user.getObject('XWiki.XWikiUsers').getProperty('referral').getValue())}",
-    "comment" : "$!{escapetool.javascript($user.getObject('XWiki.XWikiUsers').getProperty('comment').getValue())}",
-    "date" : "$!{escapetool.javascript($stringDate)}",
+  {"username" : "$!{escapetool.json($user.name)}",
+    "fullname" : "$!{escapetool.json($user.fullName)}",
+    "wikiname" : "$!{escapetool.json($wikiname)}",
+    "firstname" : "$!{escapetool.json($user.getObject('XWiki.XWikiUsers').getProperty('first_name').getValue())}",
+    "lastname" : "$!{escapetool.json($user.getObject('XWiki.XWikiUsers').getProperty('last_name').getValue())}",
+    "email" : "$!{escapetool.json($user.getObject('XWiki.XWikiUsers').getProperty('email').getValue())}",
+    "affiliation" : "$!{escapetool.json($user.getObject('XWiki.XWikiUsers').getProperty('affiliation').getValue())}",
+    "referral" : "$!{escapetool.json($user.getObject('XWiki.XWikiUsers').getProperty('referral').getValue())}",
+    "comment" : "$!{escapetool.json($user.getObject('XWiki.XWikiUsers').getProperty('comment').getValue())}",
+    "date" : "$!{escapetool.json($stringDate)}",
     "active" : $user.getObject('XWiki.XWikiUsers').getProperty('active').getValue(),
     "objectNumber" : $user.getObject('XWiki.XWikiUsers').number,
     "userurl" : "$xwiki.getURL($user.fullName)",
